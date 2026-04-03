@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organisational Burnout Diagnostic — Burnout OS</title>
+<meta name="description" content="Know what burnout is costing your organisation in dollars — in 30 days. Validated psychometric diagnostic, cost analysis, risk heat map, and 90-day action plan. AUD 5,500–16,500.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ember:    #e84b2a;
+    --ember-60: rgba(232,75,42,0.6);
+    --ember-20: rgba(232,75,42,0.2);
+    --ember-10: rgba(232,75,42,0.1);
+    --teal:     #00c4a7;
+    --teal-20:  rgba(0,196,167,0.2);
+    --teal-10:  rgba(0,196,167,0.1);
+    /* B2B: coldest, most authoritative */
+    --ink:      #0a0c10;
+    --ink-80:   #0f1118;
+    --ink-60:   #141820;
+    --white:    #e8edf5;
+    --muted:    rgba(232,237,245,0.45);
+    --border:   rgba(232,237,245,0.07);
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--ink);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1000; opacity: 0.5;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    padding: 0 40px; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,12,16,0.9); backdrop-filter: blur(20px);
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-mark { width: 28px; height: 28px; border-radius: 6px; background: var(--ember-20); border: 1px solid var(--ember-60); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 12px; color: var(--ember); }
+  .nav-logo-text { font-family: var(--font-display); font-weight: 800; font-size: 15px; letter-spacing: -0.03em; color: var(--white); }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--ember); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 13px; padding: 8px 18px; border-radius: 8px; text-decoration: none; transition: opacity 0.2s; }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ── Scarcity bar ── */
+  .scarcity-bar {
+    background: rgba(232,75,42,0.08); border-bottom: 1px solid var(--ember-20);
+    padding: 10px 40px; display: flex; align-items: center; justify-content: center;
+    gap: 20px; flex-wrap: wrap;
+  }
+  .scarcity-bar-text { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--ember); }
+  .scarcity-slots { display: flex; gap: 5px; }
+  .slot { width: 10px; height: 10px; border-radius: 2px; }
+  .slot.taken { background: var(--ember); }
+  .slot.available { background: var(--ember-20); border: 1px solid var(--ember-20); }
+
+  /* ── Layout ── */
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+  .section { padding: 88px 0; }
+  .section-sm { padding: 56px 0; }
+
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ember); margin-bottom: 14px; display: block; }
+  .eyebrow-teal { color: var(--teal); }
+
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.04em; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── Hero ── */
+  .hero { padding: 72px 0 64px; border-bottom: 1px solid var(--border); }
+  .hero .container { display: grid; grid-template-columns: 1fr 380px; gap: 64px; align-items: start; }
+
+  .hero-title { font-size: clamp(42px, 5.5vw, 64px); font-weight: 800; line-height: 1.02; color: var(--white); margin-bottom: 22px; animation: fadeUp 0.6s ease both; }
+  .hero-title em { font-style: normal; color: var(--ember); }
+
+  .hero-body { font-size: 16px; color: var(--muted); font-weight: 300; line-height: 1.7; margin-bottom: 32px; animation: fadeUp 0.6s 0.1s ease both; }
+
+  .hero-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; animation: fadeUp 0.6s 0.2s ease both; }
+
+  .btn-primary { display: inline-block; background: var(--ember); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 14px; padding: 13px 24px; border-radius: 10px; text-decoration: none; transition: all 0.2s; letter-spacing: -0.01em; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,75,42,0.3); }
+
+  .btn-outline { display: inline-block; border: 1px solid var(--border); color: var(--muted); font-size: 14px; font-weight: 500; padding: 12px 22px; border-radius: 10px; text-decoration: none; transition: all 0.2s; }
+  .btn-outline:hover { border-color: var(--ember); color: var(--white); }
+
+  /* ── Calculator panel ── */
+  .calc-panel { background: var(--ink-60); border: 1px solid var(--border); border-radius: 16px; padding: 24px; animation: fadeUp 0.6s 0.15s ease both; }
+  .calc-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+  .calc-slider-group { margin-bottom: 24px; }
+  .calc-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+  .calc-label-text { font-size: 13px; color: var(--muted); }
+  .calc-label-value { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--white); }
+  input[type=range] {
+    width: 100%; -webkit-appearance: none; appearance: none;
+    height: 4px; border-radius: 99px; outline: none; cursor: pointer;
+    background: rgba(232,237,245,0.1);
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--ember); border: 3px solid var(--ink);
+    box-shadow: 0 0 0 2px var(--ember); cursor: grab; transition: transform 0.15s;
+  }
+  input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); cursor: grabbing; }
+  .calc-result { background: rgba(232,75,42,0.06); border: 1px solid var(--ember-20); border-radius: 12px; padding: 20px; }
+  .calc-result-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(232,75,42,0.7); margin-bottom: 8px; }
+  .calc-result-value { font-family: var(--font-display); font-size: 36px; font-weight: 800; letter-spacing: -0.04em; color: var(--ember); line-height: 1; margin-bottom: 6px; }
+  .calc-result-sub { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .risk-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 99px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; margin-top: 10px; }
+
+  /* ── Stats bar ── */
+  .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 36px 0; }
+  .stats-bar .container { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
+  .stat-cell { padding: 0 28px; border-right: 1px solid var(--border); }
+  .stat-cell:first-child { padding-left: 0; }
+  .stat-cell:last-child { border-right: none; }
+  .stat-num { font-family: var(--font-display); font-size: 30px; font-weight: 800; letter-spacing: -0.04em; color: var(--ember); margin-bottom: 4px; }
+  .stat-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .stat-source { font-family: var(--font-mono); font-size: 10px; color: rgba(232,237,245,0.2); margin-top: 4px; letter-spacing: 0.06em; }
+
+  /* ── Offer stack ── */
+  .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 44px; }
+  .offer-item { background: var(--ink-60); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: border-color 0.2s; }
+  .offer-item:hover { border-color: rgba(232,75,42,0.25); }
+  .offer-item-num { font-family: var(--font-mono); font-size: 10px; color: var(--ember); letter-spacing: 0.1em; margin-bottom: 10px; }
+  .offer-item-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; letter-spacing: -0.02em; color: var(--white); margin-bottom: 8px; }
+  .offer-item-body { font-size: 13px; color: var(--muted); line-height: 1.6; font-weight: 300; margin-bottom: 10px; }
+  .offer-item-value { font-family: var(--font-mono); font-size: 11px; color: rgba(232,75,42,0.6); letter-spacing: 0.05em; }
+
+  /* ── Pricing tiers ── */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 44px; }
+  .tier-card { border-radius: 14px; padding: 28px; border: 1px solid var(--border); background: var(--ink-80); display: flex; flex-direction: column; }
+  .tier-card.featured { border-color: var(--ember-60); background: rgba(232,75,42,0.05); }
+  .tier-badge { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); margin-bottom: 12px; }
+  .tier-badge.featured-badge { color: var(--ember); background: var(--ember-10); border: 1px solid var(--ember-20); display: inline-block; padding: 3px 10px; border-radius: 99px; }
+  .tier-name { font-family: var(--font-display); font-size: 18px; font-weight: 800; letter-spacing: -0.03em; color: var(--white); margin-bottom: 6px; }
+  .tier-target { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+  .tier-price { font-family: var(--font-display); font-size: 36px; font-weight: 800; letter-spacing: -0.04em; color: var(--white); margin-bottom: 4px; }
+  .tier-price-sub { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-bottom: 20px; }
+  .tier-guarantee { font-family: var(--font-mono); font-size: 10px; color: var(--ember); padding: 8px 12px; border: 1px solid var(--ember-20); border-radius: 6px; margin-bottom: 20px; line-height: 1.5; }
+  .tier-includes { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; flex: 1; }
+  .tier-include { font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; }
+  .tier-include::before { content: '✓'; color: var(--ember); flex-shrink: 0; }
+  .tier-include.not-included { opacity: 0.3; }
+  .tier-include.not-included::before { content: '—'; color: var(--muted); }
+  .tier-cta { display: block; text-align: center; padding: 12px; border-radius: 8px; font-family: var(--font-display); font-weight: 700; font-size: 13px; text-decoration: none; transition: all 0.2s; margin-top: auto; }
+  .tier-cta.primary { background: var(--ember); color: #fff; }
+  .tier-cta.primary:hover { opacity: 0.88; }
+  .tier-cta.outline { border: 1px solid var(--border); color: var(--muted); }
+  .tier-cta.outline:hover { border-color: var(--ember); color: var(--white); }
+
+  /* ── Retainer strip ── */
+  .retainer-strip { background: var(--ink-60); border: 1px solid var(--border); border-radius: 14px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+  .retainer-left .retainer-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+  .retainer-left .retainer-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.03em; color: var(--white); margin-bottom: 4px; }
+  .retainer-left .retainer-body { font-size: 13px; color: var(--muted); }
+  .retainer-right { text-align: right; }
+  .retainer-price { font-family: var(--font-display); font-size: 24px; font-weight: 800; letter-spacing: -0.03em; color: var(--white); }
+  .retainer-price-sub { font-size: 12px; color: var(--muted); }
+
+  /* ── Guarantee ── */
+  .guarantee-box { background: rgba(232,75,42,0.05); border: 1px solid var(--ember-20); border-radius: 16px; padding: 36px; margin-top: 48px; }
+  .guarantee-box h3 { font-size: 22px; font-weight: 800; color: var(--white); margin-bottom: 12px; }
+  .guarantee-box p { font-size: 15px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+  .guarantee-condition { font-family: var(--font-mono); font-size: 11px; color: var(--ember); margin-top: 14px; letter-spacing: 0.05em; }
+
+  /* ── After diagnostic (pathways) ── */
+  .pathways-section { background: var(--ink-80); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .pathways-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 44px; }
+  .pathway-card { border-radius: 14px; padding: 26px; border: 1px solid var(--border); background: var(--ink-60); transition: border-color 0.2s; }
+  .pathway-card:hover { border-color: rgba(0,196,167,0.25); }
+  .pathway-card.recommended { border-color: var(--teal-20); }
+  .pathway-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+  .pathway-recommended-tag { display: inline-block; background: var(--teal-10); border: 1px solid var(--teal-20); color: var(--teal); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; margin-left: 8px; }
+  .pathway-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; letter-spacing: -0.02em; color: var(--white); margin-bottom: 10px; }
+  .pathway-body { font-size: 13px; color: var(--muted); line-height: 1.6; font-weight: 300; margin-bottom: 16px; }
+  .pathway-meta { display: flex; flex-direction: column; gap: 6px; }
+  .pathway-meta-row { display: flex; justify-content: space-between; font-size: 12px; }
+  .pathway-meta-label { color: rgba(232,237,245,0.3); }
+  .pathway-meta-value { color: var(--muted); font-family: var(--font-mono); }
+  .pathway-note { margin-top: 32px; padding: 18px 22px; background: var(--ink-60); border: 1px solid var(--border); border-radius: 10px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── Platform subscription ── */
+  .platform-table { width: 100%; border-collapse: collapse; margin-top: 32px; }
+  .platform-table th { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+  .platform-table td { padding: 14px 16px; border-bottom: 1px solid rgba(232,237,245,0.04); font-size: 14px; color: var(--muted); }
+  .platform-table tr:hover td { background: rgba(232,237,245,0.02); }
+  .platform-table .rate { font-family: var(--font-mono); color: var(--white); }
+  .platform-table .annual { font-family: var(--font-mono); color: var(--ember); }
+  .platform-truup { margin-top: 16px; padding: 14px 18px; background: rgba(232,237,245,0.03); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ── Process ── */
+  .process-steps { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; margin-top: 44px; position: relative; }
+  .process-steps::before { content: ''; position: absolute; top: 20px; left: calc(10% + 10px); right: calc(10% + 10px); height: 1px; background: var(--border); z-index: 0; }
+  .process-step { text-align: center; padding: 0 12px; position: relative; z-index: 1; }
+  .process-num { width: 40px; height: 40px; border-radius: 50%; background: var(--ink-60); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--ember); margin: 0 auto 14px; }
+  .process-title { font-family: var(--font-display); font-size: 13px; font-weight: 700; letter-spacing: -0.02em; color: var(--white); margin-bottom: 6px; }
+  .process-body { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .process-optional { font-family: var(--font-mono); font-size: 9px; color: rgba(232,237,245,0.25); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+  .process-note { margin-top: 28px; padding: 16px 20px; background: rgba(232,237,245,0.03); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--muted); line-height: 1.6; text-align: center; }
+
+  /* ── About ── */
+  .about-section { display: grid; grid-template-columns: 1fr 360px; gap: 64px; align-items: start; }
+  .about-title { font-size: clamp(28px,3.5vw,40px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 16px; }
+  .about-body { font-size: 15px; color: var(--muted); line-height: 1.75; font-weight: 300; }
+  .about-creds { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+  .cred { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 99px; background: rgba(232,237,245,0.05); border: 1px solid var(--border); color: var(--muted); }
+  .about-card { background: var(--ink-60); border: 1px solid var(--border); border-radius: 14px; padding: 28px; }
+  .about-card-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; letter-spacing: -0.02em; color: var(--white); margin-bottom: 12px; }
+  .about-card-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .about-contact { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .about-contact a { font-family: var(--font-mono); font-size: 13px; color: var(--ember); text-decoration: none; }
+
+  /* ── CTA ── */
+  .final-cta { background: rgba(232,75,42,0.05); border-top: 1px solid var(--ember-20); padding: 80px 0; text-align: center; }
+  .final-cta h2 { font-size: clamp(32px,5vw,56px); font-weight: 800; line-height: 1.05; color: var(--white); margin-bottom: 16px; }
+  .final-cta p { font-size: 16px; color: var(--muted); font-weight: 300; max-width: 480px; margin: 0 auto 36px; line-height: 1.65; }
+  .final-cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ── Footer ── */
+  .site-footer { border-top: 1px solid var(--border); padding: 22px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-brand { font-family: var(--font-display); font-size: 13px; font-weight: 700; letter-spacing: -0.02em; color: var(--muted); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 12px; color: rgba(232,237,245,0.25); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--muted); }
+
+  /* ── Responsive ── */
+  @media (max-width: 960px) {
+    .hero .container, .about-section { grid-template-columns: 1fr; gap: 40px; }
+    .pricing-grid, .pathways-grid { grid-template-columns: 1fr; }
+    .stats-bar .container { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .stat-cell { border-right: none; padding: 0; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .process-steps::before { display: none; }
+    .offer-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 20px; }
+    .container { padding: 0 20px; }
+    .scarcity-bar, .site-footer { padding: 10px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Scarcity bar -->
+<div class="scarcity-bar">
+  <span class="scarcity-bar-text">CURRENTLY BOOKING · JULY 2026</span>
+  <div class="scarcity-slots">
+    <div class="slot taken"></div>
+    <div class="slot taken"></div>
+    <div class="slot available"></div>
+    <div class="slot available"></div>
+    <div class="slot available"></div>
+  </div>
+  <span class="scarcity-bar-text">3 OF 3 SPRINT SLOTS REMAINING THIS MONTH</span>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-mark">B</div>
+    <span class="nav-logo-text">Burnout OS</span>
+  </a>
+  <div class="nav-links">
+    <a href="#offer">The Diagnostic</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#after">After the Diagnostic</a>
+    <a href="#process">Process</a>
+    <a href="/burnoutprogramme.html">For Individuals</a>
+    <a href="mailto:hello@burnout-os.app" class="nav-cta">Book Discovery Call</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div>
+      <span class="eyebrow">Organisational Burnout Diagnostic</span>
+      <h1 class="hero-title">Know what burnout is<br>costing your organisation.<br><em>In dollars. In 30 days.</em></h1>
+      <p class="hero-body">
+        We deploy a validated workforce diagnostic, calculate your specific burnout cost using your own data, and deliver a boardroom-ready report with a 90-day action plan. Guaranteed.
+      </p>
+      <div class="hero-actions">
+        <a href="mailto:hello@burnout-os.app?subject=Burnout Diagnostic Enquiry" class="btn-primary">Book a discovery call →</a>
+        <a href="#pricing" class="btn-outline">View pricing</a>
+      </div>
+    </div>
+
+    <!-- Calculator -->
+    <div class="calc-panel">
+      <div class="calc-title">BURNOUT COST ESTIMATOR</div>
+
+      <div class="calc-slider-group">
+        <div class="calc-label">
+          <span class="calc-label-text">Employees</span>
+          <span class="calc-label-value" id="emp-val">200</span>
+        </div>
+        <input type="range" id="emp" min="50" max="2000" step="10" value="200"
+          style="background:linear-gradient(to right,#e84b2a 9.5%,rgba(232,237,245,0.1) 9.5%)"
+          oninput="updateCalc()">
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-family:var(--font-mono);font-size:10px;color:rgba(232,237,245,0.25)">50</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:rgba(232,237,245,0.25)">2,000</span>
+        </div>
+      </div>
+
+      <div class="calc-slider-group">
+        <div class="calc-label">
+          <span class="calc-label-text">Burnout severity</span>
+          <span class="calc-label-value" id="sev-val">5<span style="font-size:13px;color:var(--muted)">/10</span></span>
+        </div>
+        <input type="range" id="sev" min="1" max="10" step="0.5" value="5"
+          style="background:linear-gradient(to right,#e84b2a 44.4%,rgba(232,237,245,0.1) 44.4%)"
+          oninput="updateCalc()">
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-family:var(--font-mono);font-size:10px;color:rgba(232,237,245,0.25)">1 — Healthy</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:rgba(232,237,245,0.25)">10 — Critical</span>
+        </div>
+      </div>
+
+      <div class="calc-result">
+        <div class="calc-result-label">Estimated annual cost</div>
+        <div class="calc-result-value" id="cost-val">AUD 1.0M</div>
+        <div class="calc-result-sub" id="cost-sub">≈ 36 employees affected · 18% of workforce</div>
+        <div id="risk-badge" class="risk-badge" style="background:rgba(245,158,11,0.12);color:#f59e0b">● MODERATE RISK</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stat-cell">
+      <div class="stat-num">34%</div>
+      <div class="stat-text">annual salary lost per burned-out employee in productivity</div>
+      <div class="stat-source">GALLUP 2024</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">$97K</div>
+      <div class="stat-text">average replacement cost for a burned-out employee</div>
+      <div class="stat-source">SHRM RESEARCH</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">3–6%</div>
+      <div class="stat-text">average EAP utilisation rate — the current fallback isn't working</div>
+      <div class="stat-source">INDUSTRY AVERAGE</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">6 mo</div>
+      <div class="stat-text">warning window before burnout becomes attrition — act now</div>
+      <div class="stat-source">MASLACH INSTITUTE</div>
+    </div>
+  </div>
+</div>
+
+<!-- What's included -->
+<section class="section" id="offer">
+  <div class="container">
+    <span class="eyebrow">The Diagnostic Sprint</span>
+    <h2 style="font-size:clamp(32px,4vw,48px);font-weight:800;line-height:1.1;max-width:600px">
+      Seven components. Thirty days. Boardroom-ready output.
+    </h2>
+
+    <div class="offer-grid">
+      <div class="offer-item">
+        <div class="offer-item-num">01 — ASSESSMENT</div>
+        <div class="offer-item-title">Workforce Burnout Risk Assessment</div>
+        <div class="offer-item-body">Validated psychometric diagnostic deployed across your workforce via secure anonymous link. Benchmarked against Australian industry norms. Employee communication templates provided. 5–7 business day completion window.</div>
+        <div class="offer-item-value">INCLUDED VALUE: AUD 2,500</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-item-num">02 — REPORT</div>
+        <div class="offer-item-title">Burnout Cost Analysis Report</div>
+        <div class="offer-item-body">Finance-ready report quantifying your organisation's burnout cost across absenteeism, presenteeism, and turnover. Built for board presentation — not a psychology report. Every figure sourced and cited.</div>
+        <div class="offer-item-value">INCLUDED VALUE: AUD 1,500</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-item-num">03 — HEAT MAP</div>
+        <div class="offer-item-title">Team-Level Risk Heat Map</div>
+        <div class="offer-item-body">Department-by-department risk stratification. Identifies your highest-priority cohorts for intervention. Privacy-compliant — no individual identification, minimum group size of 5 enforced.</div>
+        <div class="offer-item-value">INCLUDED VALUE: AUD 1,000</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-item-num">04 — ROADMAP</div>
+        <div class="offer-item-title">90-Day Action Plan</div>
+        <div class="offer-item-body">Prioritised evidence-based interventions mapped to each risk cohort. Manager capability recommendations, structural levers, and Burnout OS platform deployment options. Built to be implemented — not filed.</div>
+        <div class="offer-item-value">INCLUDED VALUE: AUD 1,500</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-item-num">05 — DEBRIEF</div>
+        <div class="offer-item-title">Executive Debrief Session</div>
+        <div class="offer-item-body">90-minute live presentation to your senior leadership team. Facilitated by Werner Teichert MClinPsych, MBA. Delivered in the language of business, not clinical psychology. Structured for the upsell question: "How do we act on this?"</div>
+        <div class="offer-item-value">INCLUDED VALUE: AUD 1,200</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-item-num">06 + 07 — INCLUDED</div>
+        <div class="offer-item-title">Calculator Licence + 3-Month Platform Access</div>
+        <div class="offer-item-body">Leave-behind Burnout Cost Calculator for your People team's ongoing use. Plus 3-month workforce access to BurnoutOS self-directed recovery modules — immediate deployment post-debrief.</div>
+        <div class="offer-item-value">INCLUDED VALUE: AUD 2,300</div>
+      </div>
+    </div>
+
+    <!-- Guarantee -->
+    <div class="guarantee-box">
+      <h3>The Guarantee</h3>
+      <p>If our diagnostic does not identify at least the minimum threshold in estimated productivity and retention costs within your organisation, the diagnostic is complimentary. We have never invoked this clause — the numbers consistently exceed it significantly.</p>
+      <div class="guarantee-condition">CONDITION: MINIMUM 60% WORKFORCE PARTICIPATION IN THE ASSESSMENT</div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="section section-sm" style="border-top:1px solid var(--border);background:var(--ink-80)" id="pricing">
+  <div class="container">
+    <span class="eyebrow">Diagnostic Sprint Tiers</span>
+    <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:800;line-height:1.1;margin-bottom:8px">
+      Three tiers. One methodology.
+    </h2>
+    <p style="font-size:15px;color:var(--muted);font-weight:300;max-width:520px">
+      Each tier applies the same validated instrument and cost model. Scope and support scale with your organisation's size.
+    </p>
+
+    <div class="pricing-grid">
+      <!-- Essentials -->
+      <div class="tier-card">
+        <div class="tier-badge">Diagnostic Essentials</div>
+        <div class="tier-name">Essentials</div>
+        <div class="tier-target">50–150 employees</div>
+        <div class="tier-price">AUD 5,500</div>
+        <div class="tier-price-sub">Fixed engagement fee</div>
+        <div class="tier-guarantee">GUARANTEE: If diagnostic doesn't identify ≥ AUD 50K in estimated costs, fee is waived.</div>
+        <div class="tier-includes">
+          <div class="tier-include">Workforce burnout assessment</div>
+          <div class="tier-include">Burnout Cost Analysis Report</div>
+          <div class="tier-include">90-Day Action Plan</div>
+          <div class="tier-include">Executive Debrief (90 min)</div>
+          <div class="tier-include">Calculator licence</div>
+          <div class="tier-include">3-month platform access</div>
+          <div class="tier-include not-included">Team-level heat map</div>
+          <div class="tier-include not-included">Async advisory support</div>
+        </div>
+        <a href="mailto:hello@burnout-os.app?subject=Essentials Tier Enquiry" class="tier-cta outline">Enquire — Essentials</a>
+      </div>
+
+      <!-- Sprint (featured) -->
+      <div class="tier-card featured">
+        <div class="tier-badge featured-badge">★ Most Popular</div>
+        <div class="tier-name">Diagnostic Sprint</div>
+        <div class="tier-target">150–500 employees</div>
+        <div class="tier-price">AUD 9,500</div>
+        <div class="tier-price-sub">Fixed engagement fee</div>
+        <div class="tier-guarantee">GUARANTEE: If diagnostic doesn't identify ≥ AUD 100K in estimated costs, fee is waived.</div>
+        <div class="tier-includes">
+          <div class="tier-include">Workforce burnout assessment</div>
+          <div class="tier-include">Burnout Cost Analysis Report</div>
+          <div class="tier-include">Team-level risk heat map</div>
+          <div class="tier-include">90-Day Action Plan</div>
+          <div class="tier-include">Executive Debrief (90 min)</div>
+          <div class="tier-include">Calculator licence</div>
+          <div class="tier-include">3-month platform access</div>
+          <div class="tier-include">3× advisory calls post-debrief</div>
+        </div>
+        <a href="mailto:hello@burnout-os.app?subject=Diagnostic Sprint Enquiry" class="tier-cta primary">Book Discovery Call →</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="tier-card">
+        <div class="tier-badge">Diagnostic Enterprise</div>
+        <div class="tier-name">Enterprise</div>
+        <div class="tier-target">500–2,000 employees</div>
+        <div class="tier-price">AUD 16,500</div>
+        <div class="tier-price-sub">Fixed engagement fee</div>
+        <div class="tier-guarantee">GUARANTEE: If diagnostic doesn't identify ≥ AUD 200K in estimated costs, fee is waived.</div>
+        <div class="tier-includes">
+          <div class="tier-include">Everything in Sprint</div>
+          <div class="tier-include">Division-level segmentation</div>
+          <div class="tier-include">2× executive debrief sessions</div>
+          <div class="tier-include">6× advisory calls (90 days)</div>
+          <div class="tier-include">90-day re-diagnostic included</div>
+          <div class="tier-include">12-month platform access</div>
+        </div>
+        <a href="mailto:hello@burnout-os.app?subject=Enterprise Diagnostic Enquiry" class="tier-cta outline">Enquire — Enterprise</a>
+      </div>
+    </div>
+
+    <!-- Retainer -->
+    <div class="retainer-strip">
+      <div class="retainer-left">
+        <div class="retainer-label">Ongoing Partnership</div>
+        <div class="retainer-title">Implementation Advisory Retainer</div>
+        <div class="retainer-body">Werner stays on as advisor during the 90-day implementation window. Monthly calls + async support. Three retainer clients = AUD 162K/year recurring.</div>
+      </div>
+      <div class="retainer-right">
+        <div class="retainer-price">AUD 4,500/mo</div>
+        <div class="retainer-price-sub">3-month minimum · post-diagnostic</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- After the diagnostic — implementation pathways -->
+<section class="pathways-section section" id="after">
+  <div class="container">
+    <span class="eyebrow eyebrow-teal">After the Diagnostic</span>
+    <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:800;line-height:1.1;margin-bottom:12px">
+      The diagnostic is where we start — not where we finish.
+    </h2>
+    <p style="font-size:15px;color:var(--muted);font-weight:300;max-width:580px">
+      Three optional implementation pathways follow naturally from the diagnostic findings. Each is separately scoped and separately priced. None are assumed — all are earned.
+    </p>
+
+    <div class="pathways-grid">
+      <!-- Pathway A -->
+      <div class="pathway-card">
+        <div class="pathway-label">Pathway A</div>
+        <div class="pathway-title">Implementation Advisory Retainer</div>
+        <div class="pathway-body">Werner advises your People and OD team through the 90-day implementation of the Action Plan. Monthly calls plus async access. Your team does the work — Werner ensures you're doing the right things in the right order.</div>
+        <div class="pathway-meta">
+          <div class="pathway-meta-row"><span class="pathway-meta-label">Best for</span><span class="pathway-meta-value">Strong internal People team</span></div>
+          <div class="pathway-meta-row"><span class="pathway-meta-label">When</span><span class="pathway-meta-value">Immediately post-debrief</span></div>
+          <div class="pathway-meta-row"><span class="pathway-meta-label">Price</span><span class="pathway-meta-value">AUD 4,500/month × 3</span></div>
+        </div>
+      </div>
+
+      <!-- Pathway B — recommended -->
+      <div class="pathway-card recommended">
+        <div class="pathway-label">Pathway B <span class="pathway-recommended-tag">Recommended</span></div>
+        <div class="pathway-title">ACT for Burnout Corporate Group</div>
+        <div class="pathway-body">Closed 8-week ACT-based group programme facilitated by Werner for the specific high-risk cohort identified in the diagnostic. Maximum 8 employees. The diagnostic identifies the problem; this treats it. Pre/post measurement demonstrates ROI.</div>
+        <div class="pathway-meta">
+          <div class="pathway-meta-row"><span class="pathway-meta-label">Best for</span><span class="pathway-meta-value">Identified high-risk team/cohort</span></div>
+          <div class="pathway-meta-row"><span class="pathway-meta-label">When</span><span class="pathway-meta-value">2–4 weeks post-debrief</span></div>
+          <div class="pathway-meta-row"><span class="pathway-meta-label">Price</span><span class="pathway-meta-value">AUD 6,500 per cohort</span></div>
+        </div>
+      </div>
+
+      <!-- Pathway C -->
+      <div class="pathway-card">
+        <div class="pathway-label">Pathway C</div>
+        <div class="pathway-title">BurnoutOS Workforce Platform</div>
+        <div class="pathway-body">Self-directed recovery access for your full workforce — not just the high-risk cohort. AI-coached, clinician-developed, available 24/7. Annual licence priced by headcount. Billed as a flat annual fee at signing.</div>
+        <div class="pathway-meta">
+          <div class="pathway-meta-row"><span class="pathway-meta-label">Best for</span><span class="pathway-meta-value">Population-level prevention</span></div>
+          <div class="pathway-meta-row"><span class="pathway-meta-label">When</span><span class="pathway-meta-value">Immediately post-debrief</span></div>
+          <div class="pathway-meta-row"><span class="pathway-meta-label">Rate</span><span class="pathway-meta-value">From AUD 6.50 PEPM</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform subscription table -->
+    <div style="margin-top:44px">
+      <span class="eyebrow eyebrow-teal">Platform Subscription Rates</span>
+      <h3 style="font-size:20px;font-weight:700;margin-bottom:4px">AUD 9.90 per employee per month — billed as an annual flat licence</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:8px">No per-seat complexity mid-contract. Headcount reviewed at annual renewal.</p>
+
+      <table class="platform-table">
+        <thead>
+          <tr>
+            <th>Employees</th>
+            <th>PEPM Rate</th>
+            <th>Annual Licence</th>
+            <th>Monthly Equivalent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Up to 100</td>
+            <td class="rate">AUD 9.90/employee</td>
+            <td class="annual">AUD 11,880</td>
+            <td style="color:var(--muted)">AUD 990/mo</td>
+          </tr>
+          <tr>
+            <td>101–250</td>
+            <td class="rate">AUD 8.50/employee</td>
+            <td class="annual">AUD 10,285–25,500</td>
+            <td style="color:var(--muted)">AUD 858–2,125/mo</td>
+          </tr>
+          <tr>
+            <td>251–500</td>
+            <td class="rate">AUD 7.50/employee</td>
+            <td class="annual">AUD 22,590–45,000</td>
+            <td style="color:var(--muted)">AUD 1,882–3,750/mo</td>
+          </tr>
+          <tr>
+            <td>500+</td>
+            <td class="rate">AUD 6.50/employee</td>
+            <td class="annual">Custom</td>
+            <td style="color:var(--muted)">Scoped on enquiry</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="platform-truup">
+        <strong style="color:var(--white)">True-up policy:</strong> Annual licence is based on headcount at signing. 10% growth buffer is included — normal hiring doesn't trigger a conversation. If headcount grows more than 25% mid-contract (acquisition, restructure), a contract amendment is triggered. Headcount reconciled at annual renewal — no mid-contract invoices.
+      </div>
+    </div>
+
+    <div class="pathway-note">
+      Every implementation pathway is optional. Many organisations find the diagnostic report alone gives their leadership team the clarity to act independently. We design the upsell to be earned — not assumed. The diagnostic investment is credited toward your first implementation pathway if you proceed within 60 days.
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="section section-sm" style="border-top:1px solid var(--border)" id="process">
+  <div class="container">
+    <span class="eyebrow">The Process</span>
+    <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:800;line-height:1.1;margin-bottom:44px">
+      From discovery call to delivered report in 30 days.
+    </h2>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <div class="process-title">Discovery Call</div>
+        <div class="process-body">30 minutes. Werner understands your organisation, validates fit, and confirms the cost threshold your diagnostic will need to hit.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <div class="process-title">Assessment</div>
+        <div class="process-body">Survey deployed to workforce. 5–7 business days. Employee communication templates provided. Anonymous, aggregated.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <div class="process-title">Analysis</div>
+        <div class="process-body">Burnout cost modelling from your specific data. Risk heat map generated by department. 90-Day Action Plan drafted.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <div class="process-title">Debrief</div>
+        <div class="process-body">90-minute live presentation to leadership. Findings, cost analysis, and action plan delivered. Implementation pathways presented.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">05</div>
+        <div class="process-title">Implementation</div>
+        <div class="process-body">Advisory retainer, ACT corporate group, or platform subscription — or all three. Optional, earned, separately scoped.</div>
+        <div class="process-optional">OPTIONAL</div>
+      </div>
+    </div>
+
+    <div class="process-note">
+      Steps 1–4 are the diagnostic engagement (AUD 5,500–16,500 depending on tier). Step 5 is optional. The diagnostic investment is credited toward the first implementation pathway if you proceed within 60 days.
+    </div>
+  </div>
+</section>
+
+<!-- About Werner -->
+<section class="section section-sm" style="border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="about-section">
+      <div>
+        <span class="eyebrow">Who delivers this</span>
+        <h2 class="about-title">Werner Teichert<br>MClinPsych, MBA</h2>
+        <p class="about-body">
+          Registered clinical psychologist and organisational consultant with dual AHPRA (Australia) and HPCSA (South Africa) registration. Consulting experience since 2015 across executive leadership, HR functions, and inpatient clinical settings in Australia and South Africa.
+          <br><br>
+          The BurnoutOS Diagnostic Sprint is delivered in the language of business — not clinical psychology. Werner's MBA and decade of organisational consulting means the executive debrief feels like a strategy session, not a wellbeing seminar. The clinical rigour is the foundation, not the presentation.
+          <br><br>
+          PhD candidate at UNISA in Organisational Consulting Psychology. The diagnostic instrument is grounded in validated psychometric research and contributes to active research into workforce burnout in the Australian and South African markets.
+        </p>
+        <div class="about-creds">
+          <span class="cred">MClinPsych</span>
+          <span class="cred">MLeadership</span>
+          <span class="cred">MBA</span>
+          <span class="cred">AHPRA Registered</span>
+          <span class="cred">HPCSA Registered</span>
+          <span class="cred">PhD Candidate — UNISA</span>
+          <span class="cred">Consulting Since 2015</span>
+        </div>
+      </div>
+      <div>
+        <div class="about-card">
+          <div class="about-card-title">Positioning this correctly</div>
+          <div class="about-card-body">
+            BurnoutOS is an organisational consulting and diagnostic service — not a clinical mental health service to employees. The instrument is validated. The cost model is evidence-based. The debrief is designed for boardrooms, not therapy rooms.
+            <br><br>
+            Werner's clinical registration is a credibility marker — it means the methodology is built on decades of peer-reviewed burnout science, not wellness industry conventions.
+          </div>
+          <div class="about-contact">
+            <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Know the number.<br>Then fix it.</h2>
+    <p>The diagnostic pays for itself before the report lands. Most organisations find the number — once they see it — makes the case for action without Werner having to.</p>
+    <div class="final-cta-actions">
+      <a href="mailto:hello@burnout-os.app?subject=Burnout Diagnostic Enquiry" class="btn-primary">Book a discovery call →</a>
+      <a href="#pricing" class="btn-outline">View pricing tiers</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-brand">Burnout OS · by Katalis Health</div>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/burnoutprogramme.html">For Individuals</a>
+    <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>
+    <span style="color:rgba(232,237,245,0.15)">© 2026 Behavioural Health Pty Ltd · ABN TBC</span>
+  </div>
+</footer>
+
+<script>
+  const RISK = {
+    low:      { label: 'LOW RISK',      color: '#10b981', bg: 'rgba(16,185,129,0.12)', pct: 0.08 },
+    moderate: { label: 'MODERATE RISK', color: '#f59e0b', bg: 'rgba(245,158,11,0.12)',  pct: 0.18 },
+    high:     { label: 'HIGH RISK',     color: '#f97316', bg: 'rgba(249,115,22,0.12)',  pct: 0.28 },
+    critical: { label: 'CRITICAL',      color: '#e84b2a', bg: 'rgba(232,75,42,0.15)',   pct: 0.40 },
+  };
+
+  function getRisk(sev) {
+    if (sev >= 8) return 'critical';
+    if (sev >= 6) return 'high';
+    if (sev >= 4) return 'moderate';
+    return 'low';
+  }
+
+  function fmtAUD(n) {
+    if (n >= 1000000) return 'AUD ' + (n/1000000).toFixed(1) + 'M';
+    if (n >= 1000)    return 'AUD ' + Math.round(n/1000) + 'K';
+    return 'AUD ' + n.toLocaleString();
+  }
+
+  function updateCalc() {
+    const emp = parseInt(document.getElementById('emp').value);
+    const sev = parseFloat(document.getElementById('sev').value);
+
+    document.getElementById('emp-val').textContent = emp.toLocaleString();
+    document.getElementById('sev-val').innerHTML = sev + '<span style="font-size:13px;color:var(--muted)">/10</span>';
+
+    // Update slider tracks
+    const empPct = ((emp - 50) / 1950 * 100).toFixed(1);
+    const sevPct = ((sev - 1) / 9 * 100).toFixed(1);
+    document.getElementById('emp').style.background = `linear-gradient(to right,#e84b2a ${empPct}%,rgba(232,237,245,0.1) ${empPct}%)`;
+    document.getElementById('sev').style.background = `linear-gradient(to right,#e84b2a ${sevPct}%,rgba(232,237,245,0.1) ${sevPct}%)`;
+
+    const risk = getRisk(sev);
+    const r = RISK[risk];
+    const affected = Math.round(emp * r.pct);
+    const cost = Math.round(emp * r.pct * 90000 * 0.34);
+
+    document.getElementById('cost-val').textContent = fmtAUD(cost);
+    document.getElementById('cost-sub').textContent = `≈ ${affected} employees affected · ${(r.pct*100).toFixed(0)}% of workforce`;
+
+    const badge = document.getElementById('risk-badge');
+    badge.textContent = '● ' + r.label;
+    badge.style.background = r.bg;
+    badge.style.color = r.color;
+  }
+
+  updateCalc();
+</script>
+
+</body>
+</html>
