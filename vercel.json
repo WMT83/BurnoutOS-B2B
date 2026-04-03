@@ -1,5 +1,10 @@
 {
   "rewrites": [
-    { "source": "/diagnostic/:path*", "destination": "/app.html" }
+    { "source": "/diagnostic/:path*", "destination": "/app.html" },
+    { "source": "/signup", "destination": "/app.html" },
+    { "source": "/login", "destination": "/app.html" },
+    { "source": "/dashboard", "destination": "/app.html" },
+    { "source": "/programme/:path*", "destination": "/app.html" },
+    { "source": "/onboarding", "destination": "/app.html" }
   ]
 }
