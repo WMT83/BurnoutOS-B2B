@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/calculator", "destination": "/calculator.html", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/diagnostic/:path*", "destination": "/app.html" },
     { "source": "/signup", "destination": "/app.html" },
