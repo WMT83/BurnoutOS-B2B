@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/diagnostic/:path*", "destination": "/index.html" }
+    { "source": "/diagnostic/:path*", "destination": "/app.html" }
   ]
 }
