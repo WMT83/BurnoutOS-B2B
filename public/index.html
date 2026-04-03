@@ -1,448 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Burnout OS — Evidence-Based Burnout Recovery & Diagnostics</title>
-<meta name="description" content="Burnout OS: clinician-developed burnout recovery for individuals and a data-driven organisational diagnostic platform for employers. Built by a registered psychologist.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BurnoutOS — Evidence-Based Burnout Recovery & Organisational Diagnostics</title>
+  <meta name="description" content="BurnoutOS offers evidence-based burnout recovery for individuals and a validated organisational diagnostic sprint for People leaders. Developed by a registered clinical psychologist." />
+  <link rel="canonical" href="https://burnout-os.app" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --ember:    #e84b2a;
-    --ember-60: rgba(232,75,42,0.6);
-    --ember-20: rgba(232,75,42,0.2);
-    --ember-10: rgba(232,75,42,0.1);
-    --teal:     #00c4a7;
-    --teal-10:  rgba(0,196,167,0.1);
-    --teal-20:  rgba(0,196,167,0.2);
-    --ink:      #0c0e14;
-    --ink-80:   #12151e;
-    --ink-60:   #191d28;
-    --white:    #f0ece4;
-    --muted:    rgba(240,236,228,0.45);
-    --border:   rgba(240,236,228,0.08);
-    --font-display: 'Syne', sans-serif;
-    --font-body:    'DM Sans', sans-serif;
-    --font-mono:    'DM Mono', monospace;
-  }
+    :root {
+      --ember:     #e84b2a;
+      --ember-dim: #c73d20;
+      --ink:       #0c1018;
+      --ink-soft:  #2a3040;
+      --ink-muted: #5a6480;
+      --warm:      #f5f0e8;
+      --warm-mid:  #ede8df;
+      --white:     #ffffff;
+      --teal:      #1a6b72;
+      --rule:      rgba(255,255,255,0.1);
+      --rule-light:rgba(0,0,0,0.08);
+    }
 
-  html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; }
 
-  body {
-    font-family: var(--font-body);
-    background: var(--ink);
-    color: var(--white);
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
 
-  /* ── Grain overlay ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.6;
-  }
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
 
-  /* ── Nav ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 0 40px; height: 58px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-    background: rgba(12,14,20,0.8);
-    backdrop-filter: blur(20px);
-  }
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(12,16,24,0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--rule);
+    }
 
-  .nav-logo {
-    display: flex; align-items: center; gap: 10px;
-    font-family: var(--font-display); font-weight: 800;
-    font-size: 15px; letter-spacing: -0.03em; color: var(--white);
-    text-decoration: none;
-  }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
 
-  .nav-logo-mark {
-    width: 28px; height: 28px; border-radius: 6px;
-    background: var(--ember-20); border: 1px solid var(--ember-60);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-mono); font-weight: 500; font-size: 12px;
-    color: var(--ember); letter-spacing: 0;
-  }
+    .logo-dot {
+      width: 7px; height: 7px;
+      background: var(--ember);
+      border-radius: 50%;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
 
-  .nav-links { display: flex; align-items: center; gap: 32px; }
-  .nav-links a {
-    font-size: 13px; font-weight: 500; color: var(--muted);
-    text-decoration: none; transition: color 0.2s; letter-spacing: 0.01em;
-  }
-  .nav-links a:hover { color: var(--white); }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
 
-  /* ── Hero ── */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 80px 40px 60px;
-    position: relative; text-align: center;
-    overflow: hidden;
-  }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
 
-  /* Ember glow behind hero */
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px; height: 400px;
-    background: radial-gradient(ellipse at center, rgba(232,75,42,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
+    .nav-link {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--white); }
 
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 5px 14px; border-radius: 99px;
-    border: 1px solid var(--ember-20);
-    background: var(--ember-10);
-    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--ember);
-    margin-bottom: 32px;
-    animation: fadeUp 0.7s ease both;
-  }
+    .nav-btn {
+      font-size: 0.825rem;
+      font-weight: 600;
+      font-family: 'Syne', sans-serif;
+      color: var(--white);
+      background: var(--ember);
+      padding: 0.5rem 1.1rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: var(--ember-dim); }
 
-  .hero-tag-dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: var(--ember); animation: pulse 2s infinite;
-  }
+    /* Hero */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+    }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
-  }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 20%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(232,75,42,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(52px, 9vw, 100px);
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    line-height: 0.95;
-    margin-bottom: 28px;
-    animation: fadeUp 0.7s 0.1s ease both;
-  }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(232,75,42,0.12);
+      border: 1px solid rgba(232,75,42,0.3);
+      border-radius: 100px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
 
-  .hero-title em {
-    font-style: normal;
-    color: var(--ember);
-  }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--ember);
+      border-radius: 50%;
+    }
 
-  .hero-sub {
-    font-size: clamp(16px, 2vw, 19px);
-    color: var(--muted);
-    font-weight: 300;
-    line-height: 1.65;
-    max-width: 540px;
-    margin: 0 auto 56px;
-    animation: fadeUp 0.7s 0.2s ease both;
-  }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      max-width: 14ch;
+      margin: 0 auto 1.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
 
-  /* ── Path cards ── */
-  .path-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    max-width: 780px;
-    width: 100%;
-    animation: fadeUp 0.7s 0.3s ease both;
-  }
+    h1 em {
+      font-style: normal;
+      color: var(--ember);
+    }
 
-  .path-card {
-    border-radius: 16px;
-    padding: 32px 28px;
-    text-decoration: none;
-    display: flex; flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    transition: transform 0.25s, box-shadow 0.25s;
-    position: relative; overflow: hidden;
-  }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      max-width: 52ch;
+      margin: 0 auto 3.5rem;
+      line-height: 1.65;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
 
-  .path-card:hover { transform: translateY(-3px); }
+    /* Path cards */
+    .paths {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 820px;
+      width: 100%;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
 
-  .path-card-b2c {
-    background: rgba(232,75,42,0.07);
-    border: 1px solid rgba(232,75,42,0.2);
-  }
-  .path-card-b2c:hover {
-    border-color: rgba(232,75,42,0.45);
-    box-shadow: 0 20px 60px rgba(232,75,42,0.12);
-  }
+    .path-card {
+      position: relative;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      text-align: left;
+      text-decoration: none;
+      color: var(--white);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, background 0.3s;
+      cursor: pointer;
+    }
 
-  .path-card-b2b {
-    background: rgba(0,196,167,0.05);
-    border: 1px solid rgba(0,196,167,0.15);
-  }
-  .path-card-b2b:hover {
-    border-color: rgba(0,196,167,0.35);
-    box-shadow: 0 20px 60px rgba(0,196,167,0.10);
-  }
+    .path-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
 
-  .path-icon {
-    width: 44px; height: 44px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-  }
+    .path-card.b2c::before {
+      background: radial-gradient(circle at 30% 50%, rgba(232,75,42,0.1) 0%, transparent 70%);
+    }
 
-  .path-card-b2c .path-icon { background: var(--ember-10); }
-  .path-card-b2b .path-icon { background: var(--teal-10); }
+    .path-card.b2b::before {
+      background: radial-gradient(circle at 70% 50%, rgba(26,107,114,0.12) 0%, transparent 70%);
+    }
 
-  .path-label {
-    font-family: var(--font-mono); font-size: 10px;
-    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .path-card-b2c .path-label { color: var(--ember); }
-  .path-card-b2b .path-label { color: var(--teal); }
+    .path-card:hover {
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.05);
+    }
 
-  .path-title {
-    font-family: var(--font-display);
-    font-size: 20px; font-weight: 700;
-    letter-spacing: -0.03em; color: var(--white);
-    margin-bottom: 6px;
-  }
+    .path-card:hover::before { opacity: 1; }
 
-  .path-body {
-    font-size: 14px; color: var(--muted);
-    line-height: 1.6; font-weight: 300;
-  }
+    .path-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 100px;
+    }
 
-  .path-arrow {
-    margin-top: auto; padding-top: 8px;
-    font-family: var(--font-mono); font-size: 12px;
-    font-weight: 500; letter-spacing: 0.05em;
-    display: flex; align-items: center; gap: 6px;
-    transition: gap 0.2s;
-  }
-  .path-card:hover .path-arrow { gap: 10px; }
-  .path-card-b2c .path-arrow { color: var(--ember); }
-  .path-card-b2b .path-arrow { color: var(--teal); }
+    .path-tag.personal {
+      background: rgba(232,75,42,0.15);
+      color: var(--ember);
+      border: 1px solid rgba(232,75,42,0.25);
+    }
 
-  /* ── Proof strip ── */
-  .proof {
-    border-top: 1px solid var(--border);
-    padding: 32px 40px;
-    display: flex; align-items: center; justify-content: center;
-    gap: 48px; flex-wrap: wrap;
-  }
+    .path-tag.org {
+      background: rgba(26,107,114,0.15);
+      color: #4db8c0;
+      border: 1px solid rgba(26,107,114,0.3);
+    }
 
-  .proof-item {
-    text-align: center;
-  }
+    .path-card h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+    }
 
-  .proof-num {
-    font-family: var(--font-display);
-    font-size: 28px; font-weight: 800;
-    letter-spacing: -0.04em; color: var(--white);
-    margin-bottom: 3px;
-  }
+    .path-card p {
+      font-size: 0.9375rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      font-weight: 300;
+      margin-bottom: 1.75rem;
+    }
 
-  .proof-label {
-    font-size: 11px; color: var(--muted);
-    font-weight: 500; letter-spacing: 0.05em;
-  }
+    .path-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Syne', sans-serif;
+      letter-spacing: -0.01em;
+      transition: gap 0.2s;
+    }
 
-  .proof-div {
-    width: 1px; height: 36px; background: var(--border);
-  }
+    .path-cta.ember { color: var(--ember); }
+    .path-cta.teal  { color: #4db8c0; }
 
-  /* ── About strip ── */
-  .about {
-    border-top: 1px solid var(--border);
-    padding: 40px;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 32px; flex-wrap: wrap;
-  }
+    .path-card:hover .path-cta { gap: 0.75rem; }
 
-  .about-bio {
-    max-width: 580px;
-  }
+    /* Proof strip */
+    .proof-strip {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.45s ease both;
+    }
 
-  .about-name {
-    font-family: var(--font-display);
-    font-size: 15px; font-weight: 700;
-    letter-spacing: -0.02em; color: var(--white);
-    margin-bottom: 6px;
-  }
+    .proof-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
 
-  .about-text {
-    font-size: 13px; color: var(--muted);
-    line-height: 1.65; font-weight: 300;
-  }
+    .proof-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--white);
+    }
 
-  .about-creds {
-    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;
-  }
+    .proof-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
 
-  .cred-tag {
-    font-family: var(--font-mono); font-size: 10px;
-    font-weight: 500; letter-spacing: 0.08em;
-    padding: 4px 10px; border-radius: 99px;
-    background: rgba(240,236,228,0.06);
-    border: 1px solid var(--border); color: var(--muted);
-  }
+    .proof-sep {
+      width: 1px;
+      height: 36px;
+      background: rgba(255,255,255,0.1);
+    }
 
-  .about-contact a {
-    font-family: var(--font-mono); font-size: 12px;
-    color: var(--ember); text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .about-contact a:hover { opacity: 0.7; }
+    /* About strip */
+    #about {
+      padding: 5rem 2rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  /* ── Footer ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 20px 40px;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 12px;
-  }
+    .about-inner {
+      max-width: 780px;
+      text-align: center;
+    }
 
-  .footer-brand {
-    font-family: var(--font-display); font-size: 13px;
-    font-weight: 700; letter-spacing: -0.02em; color: var(--muted);
-  }
+    .about-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 1rem;
+    }
 
-  .footer-right {
-    font-family: var(--font-mono); font-size: 11px;
-    color: rgba(240,236,228,0.2); letter-spacing: 0.04em;
-  }
+    #about h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
 
-  /* ── Animations ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+    #about p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      font-weight: 300;
+      max-width: 58ch;
+      margin: 0 auto;
+    }
 
-  /* ── Responsive ── */
-  @media (max-width: 640px) {
-    nav { padding: 0 20px; }
-    .hero { padding: 80px 20px 40px; }
-    .path-grid { grid-template-columns: 1fr; }
-    .proof { padding: 24px 20px; gap: 28px; }
-    .proof-div { display: none; }
-    .about { padding: 28px 20px; }
-    footer { padding: 16px 20px; }
-  }
-</style>
+    .cred-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.75rem;
+    }
+
+    .cred-tag {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      font-weight: 400;
+    }
+
+    /* Footer */
+    footer {
+      padding: 2rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.6); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .paths { grid-template-columns: 1fr; }
+      nav { padding: 1rem 1.25rem; }
+      .nav-link { display: none; }
+      h1 { font-size: 2.8rem; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Navigation -->
-<nav>
-  <a href="/" class="nav-logo">
-    <div class="nav-logo-mark">B</div>
-    Burnout OS
-  </a>
-  <div class="nav-links">
-    <a href="/burnoutprogramme.html">For Individuals</a>
-    <a href="/organisations.html">For Organisations</a>
-    <a href="mailto:hello@burnout-os.app">Contact</a>
-    <a href="/diagnostic/admin" style="color: var(--ember);">Admin →</a>
-  </div>
-</nav>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-tag">
-    <div class="hero-tag-dot"></div>
-    Clinician-Developed · Evidence-Based
-  </div>
-
-  <h1 class="hero-title">
-    Burnout<br><em>OS</em>
-  </h1>
-
-  <p class="hero-sub">
-    A registered psychologist's approach to burnout — structured recovery for individuals, and data-driven diagnostics for organisations.
-  </p>
-
-  <div class="path-grid">
-    <!-- B2C path -->
-    <a href="/burnoutprogramme.html" class="path-card path-card-b2c">
-      <div class="path-icon">🔥</div>
-      <div>
-        <div class="path-label">For Individuals</div>
-        <div class="path-title">8-Week Recovery Programme</div>
-        <div class="path-body">Evidence-based programme using ACT, CBT and behavioural activation. AI coaching, micro-practices, and clinician oversight.</div>
-      </div>
-      <div class="path-arrow">Begin recovery →</div>
-    </a>
-
-    <!-- B2B path -->
-    <a href="/organisations.html" class="path-card path-card-b2b">
-      <div class="path-icon">📊</div>
-      <div>
-        <div class="path-label">For Organisations</div>
-        <div class="path-title">Organisational Diagnostic</div>
-        <div class="path-body">Quantify what burnout is costing your workforce in dollar terms. Validated diagnostic, cost analysis, and 90-day action plan.</div>
-      </div>
-      <div class="path-arrow">Calculate your cost →</div>
-    </a>
-  </div>
-</section>
-
-<!-- Proof strip -->
-<div class="proof">
-  <div class="proof-item">
-    <div class="proof-num">34%</div>
-    <div class="proof-label">salary lost per burned-out employee</div>
-  </div>
-  <div class="proof-div"></div>
-  <div class="proof-item">
-    <div class="proof-num">8 wks</div>
-    <div class="proof-label">structured recovery programme</div>
-  </div>
-  <div class="proof-div"></div>
-  <div class="proof-item">
-    <div class="proof-num">AUD 9,500</div>
-    <div class="proof-label">diagnostic engagement</div>
-  </div>
-  <div class="proof-div"></div>
-  <div class="proof-item">
-    <div class="proof-num">ACT+CBT</div>
-    <div class="proof-label">evidence-based frameworks</div>
-  </div>
-</div>
-
-<!-- About -->
-<div class="about">
-  <div class="about-bio">
-    <div class="about-name">Werner Teichert</div>
-    <div class="about-text">
-      Registered Clinical Psychologist and Organisational Consultant. Burnout OS is built on over a decade of clinical practice — not a wellness startup. Every component is evidence-based, clinician-developed, and designed for how professionals actually experience burnout.
+  <nav>
+    <a href="/" class="logo">BurnoutOS <span class="logo-dot"></span></a>
+    <div class="nav-right">
+      <a href="/burnoutprogramme.html" class="nav-link">Recovery Programme</a>
+      <a href="/organisations.html" class="nav-link">For Organisations</a>
+      <a href="https://katalis.health" class="nav-link">By Katalis</a>
+      <a href="/burnoutprogramme.html" class="nav-btn">Get Started</a>
     </div>
-    <div class="about-creds">
-      <span class="cred-tag">MClinPsych</span>
-      <span class="cred-tag">MBA</span>
-      <span class="cred-tag">MLeadership</span>
-      <span class="cred-tag">AHPRA Registered</span>
-      <span class="cred-tag">HPCSA Registered</span>
-      <span class="cred-tag">PhD Candidate</span>
-    </div>
-  </div>
-  <div class="about-contact">
-    <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>
-  </div>
-</div>
+  </nav>
 
-<!-- Footer -->
-<footer>
-  <div class="footer-brand">Burnout OS · by Katalis Health</div>
-  <div class="footer-right">© 2026 BEHAVIOURAL HEALTH PTY LTD · AUSTRALIA</div>
-</footer>
+  <section id="hero">
+    <div class="hero-badge">Clinician-developed · Evidence-based</div>
+
+    <h1>Burnout has a <em>cost.</em> We help you address it.</h1>
+
+    <p class="hero-sub">
+      Whether you're personally running on empty, or leading an organisation where
+      burnout is affecting performance — BurnoutOS provides the tools, data, and
+      support to change that.
+    </p>
+
+    <div class="paths">
+      <a href="/burnoutprogramme.html" class="path-card b2c">
+        <div class="path-tag personal">For Individuals</div>
+        <h2>Burnout Recovery Programme</h2>
+        <p>An evidence-based 8-week programme built on ACT, sleep science, and behavioural health principles. Self-paced, AI-supported, clinically grounded.</p>
+        <div class="path-cta ember">Start your recovery →</div>
+      </a>
+
+      <a href="/organisations.html" class="path-card b2b">
+        <div class="path-tag org">For Organisations</div>
+        <h2>Organisational Diagnostic Sprint</h2>
+        <p>A 30-day diagnostic delivering a dollar-quantified burnout risk analysis, team-level heat map, and 90-day action plan for your leadership team.</p>
+        <div class="path-cta teal">View the diagnostic →</div>
+      </a>
+    </div>
+
+    <div class="proof-strip">
+      <div class="proof-item">
+        <div class="proof-num">80+</div>
+        <div class="proof-label">Evidence-based practices</div>
+      </div>
+      <div class="proof-sep"></div>
+      <div class="proof-item">
+        <div class="proof-num">8wk</div>
+        <div class="proof-label">Structured programme</div>
+      </div>
+      <div class="proof-sep"></div>
+      <div class="proof-item">
+        <div class="proof-num">30d</div>
+        <div class="proof-label">Org diagnostic sprint</div>
+      </div>
+      <div class="proof-sep"></div>
+      <div class="proof-item">
+        <div class="proof-num">AU+SA</div>
+        <div class="proof-label">Dual registered clinician</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-eyebrow">Developed by</div>
+      <h2>Clinical depth. Business fluency. Built for both.</h2>
+      <p>
+        BurnoutOS was developed by Werner Teichert — a registered clinical psychologist,
+        organisational consultant, and MBA with dual registration under AHPRA (Australia)
+        and HPCSA (South Africa). Every tool, programme, and diagnostic in the BurnoutOS
+        ecosystem is grounded in peer-reviewed evidence and designed for real-world application.
+      </p>
+      <div class="cred-tags">
+        <span class="cred-tag">MClinPsych</span>
+        <span class="cred-tag">MBA</span>
+        <span class="cred-tag">MLeadership</span>
+        <span class="cred-tag">AHPRA Registered</span>
+        <span class="cred-tag">HPCSA Registered</span>
+        <span class="cred-tag">PhD Candidate — UNISA</span>
+        <span class="cred-tag">Consulting since 2015</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">BurnoutOS · by Katalis</div>
+    <div class="footer-links">
+      <a href="/burnoutprogramme.html">Recovery Programme</a>
+      <a href="/organisations.html">For Organisations</a>
+      <a href="https://katalis.health">Katalis Health</a>
+      <a href="https://learn.dbtcentral.com">DBT Central</a>
+      <a href="mailto:hello@katalis.health">hello@katalis.health</a>
+    </div>
+    <div class="footer-copy">© 2026 Katalis (Behavioural Health Pty Ltd)</div>
+  </footer>
 
 </body>
 </html>
