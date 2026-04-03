@@ -20,6 +20,8 @@ type Metrics = {
 };
 
 const SURVEY_BASE = import.meta.env.VITE_SURVEY_BASE_URL || window.location.origin;
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 function StatCard({ icon: Icon, label, value, sub }: { icon: any; label: string; value: string; sub?: string }) {
   return (
@@ -54,6 +56,29 @@ export default function Admin() {
   const [orgForm, setOrgForm] = useState({ name: '', industry: '', employee_count: '', primary_contact_name: '', primary_contact_email: '', primary_contact_role: '', source: 'diagnostic' });
   // New assessment form
   const [assessmentOrgId, setAssessmentOrgId] = useState('');
+
+  const [scoringId, setScoringId] = useState('');
+
+  async function scoreAssessment(assessment: Assessment) {
+    setScoringId(assessment.id);
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/aggregate-assessment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ assessment_id: assessment.id }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Scoring failed');
+      load();
+    } catch (err: any) {
+      alert(`Scoring error: ${err.message}`);
+    } finally {
+      setScoringId('');
+    }
+  }
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -232,6 +257,15 @@ export default function Admin() {
                 {a.total_score != null && <span style={{ fontSize: 13, color: 'var(--muted)' }}>Score: <strong>{a.total_score}</strong></span>}
                 {a.burnout_cost_aud != null && <span style={{ fontSize: 13, color: 'var(--muted)' }}>Est. cost: <strong>{fmtCurrency(a.burnout_cost_aud)}</strong></span>}
                 <div style={{ display: 'flex', gap: 8, marginLeft: 'auto' }}>
+                  {(a.status === 'responses_received' || a.status === 'survey_sent') && (
+                    <button
+                      className="btn-primary"
+                      onClick={() => scoreAssessment(a)}
+                      disabled={scoringId === a.id}
+                      style={{ fontSize: 12, padding: '6px 14px' }}>
+                      {scoringId === a.id ? 'Scoring…' : '⚡ Run Scoring'}
+                    </button>
+                  )}
                   <button
                     className="btn-outline"
                     onClick={() => sendSurvey(a)}
