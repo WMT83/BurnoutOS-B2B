@@ -5,21 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BurnoutOS for Organisations — Workforce Burnout Diagnostic & Recovery</title>
   <meta name="description" content="Know what workforce burnout is costing your organisation — in dollars — within 30 days. The BurnoutOS Diagnostic Sprint delivers a data-driven burnout risk analysis and 90-day action plan. Australian organisations, 150–2,000 employees." />
-  <meta name="keywords" content="workforce burnout, employee burnout diagnostic, organisational psychology, burnout cost, people and culture, HR wellbeing, Australia" />
-  <meta property="og:title" content="BurnoutOS for Organisations — Workforce Burnout Diagnostic" />
-  <meta property="og:description" content="Know what burnout is costing your organisation in dollars. 30-day diagnostic sprint. ROI guarantee." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://burnout-os.app/organisations" />
   <link rel="canonical" href="https://burnout-os.app/organisations" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-
   <style>
-    /* ── Reset & Base ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --ink:       #0a0f1a;
       --ink-soft:  #2d3548;
@@ -31,938 +22,217 @@
       --teal:      #1a6b72;
       --teal-light:#e8f4f5;
       --rule:      #e2e0da;
-      --gap-xs: 0.5rem;
-      --gap-s:  1rem;
-      --gap-m:  1.75rem;
-      --gap-l:  3rem;
-      --gap-xl: 5rem;
-      --gap-2xl:8rem;
+      --gap-xs: 0.5rem; --gap-s: 1rem; --gap-m: 1.75rem; --gap-l: 3rem; --gap-xl: 5rem; --gap-2xl: 8rem;
       --max: 1100px;
       --mono: 'Courier New', monospace;
     }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1.0625rem;
-      line-height: 1.65;
-      color: var(--ink);
-      background: var(--paper);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── Typography ───────────────────────────────────────────── */
-    h1, h2, h3, h4 {
-      font-family: 'Syne', sans-serif;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-
+    body { font-family: 'DM Sans', sans-serif; font-size: 1.0625rem; line-height: 1.65; color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Syne', sans-serif; line-height: 1.1; letter-spacing: -0.02em; }
     h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; }
     h2 { font-size: clamp(1.8rem, 3.5vw, 2.75rem); font-weight: 700; }
     h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 600; }
     h4 { font-size: 1rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-
-    p { max-width: 62ch; }
-    p + p { margin-top: var(--gap-s); }
-
-    a { color: var(--ember); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
+    p { max-width: 62ch; } p + p { margin-top: var(--gap-s); }
+    a { color: var(--ember); text-decoration: none; } a:hover { text-decoration: underline; }
     strong { font-weight: 500; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gap-m); }
+    section { padding: var(--gap-2xl) 0; } section + section { border-top: 1px solid var(--rule); }
 
-    /* ── Layout ───────────────────────────────────────────────── */
-    .wrap {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 var(--gap-m);
-    }
-
-    section { padding: var(--gap-2xl) 0; }
-    section + section { border-top: 1px solid var(--rule); }
-
-    /* ── Nav ──────────────────────────────────────────────────── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(247,246,243,0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--rule);
-      padding: 1rem var(--gap-m);
-    }
-
-    .nav-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--gap-m);
-    }
-
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.125rem;
-      color: var(--ink);
-      letter-spacing: -0.03em;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      text-decoration: none;
-    }
-
-    .nav-logo span {
-      display: inline-block;
-      width: 8px; height: 8px;
-      background: var(--ember);
-      border-radius: 50%;
-      margin-bottom: 1px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: var(--gap-m);
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--ink-soft);
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
+    /* Nav */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(247,246,243,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); padding: 1rem var(--gap-m); }
+    .nav-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: var(--gap-m); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.125rem; color: var(--ink); letter-spacing: -0.03em; display: flex; align-items: center; gap: 0.4rem; text-decoration: none; }
+    .nav-logo span { display: inline-block; width: 8px; height: 8px; background: var(--ember); border-radius: 50%; margin-bottom: 1px; }
+    .nav-links { display: flex; align-items: center; gap: var(--gap-m); list-style: none; }
+    .nav-links a { color: var(--ink-soft); font-size: 0.9rem; font-weight: 500; }
     .nav-links a:hover { color: var(--ink); text-decoration: none; }
-
-    .nav-cta {
-      background: var(--ember);
-      color: var(--white) !important;
-      padding: 0.55rem 1.25rem;
-      border-radius: 4px;
-      font-size: 0.875rem !important;
-      font-weight: 600 !important;
-      transition: background 0.2s;
-      text-decoration: none !important;
-    }
-
+    .nav-cta { background: var(--ember); color: var(--white) !important; padding: 0.55rem 1.25rem; border-radius: 4px; font-size: 0.875rem !important; font-weight: 600 !important; transition: background 0.2s; }
     .nav-cta:hover { background: var(--ember-dim) !important; text-decoration: none !important; }
 
-    /* ── Hero ─────────────────────────────────────────────────── */
-    #hero {
-      padding: var(--gap-2xl) 0 var(--gap-xl);
-      border-top: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--gap-l);
-      align-items: center;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ember);
-      margin-bottom: var(--gap-m);
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--ember);
-    }
-
+    /* Hero */
+    #hero { padding: var(--gap-2xl) 0 var(--gap-xl); border-top: none; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-l); align-items: center; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); margin-bottom: var(--gap-m); }
+    .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--ember); }
     .hero-title { margin-bottom: var(--gap-m); }
     .hero-title em { font-style: normal; color: var(--ember); }
-
-    .hero-sub {
-      font-size: 1.125rem;
-      color: var(--ink-soft);
-      font-weight: 300;
-      line-height: 1.6;
-      margin-bottom: var(--gap-l);
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: var(--gap-m);
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--ember);
-      color: var(--white);
-      padding: 0.85rem 1.75rem;
-      border-radius: 4px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: -0.01em;
-      transition: background 0.2s, transform 0.15s;
-      text-decoration: none;
-    }
-
-    .btn-primary:hover {
-      background: var(--ember-dim);
-      transform: translateY(-1px);
-      text-decoration: none;
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--ink);
-      font-weight: 500;
-      font-size: 0.95rem;
-      border-bottom: 2px solid var(--ink);
-      padding-bottom: 2px;
-      text-decoration: none;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .btn-secondary:hover {
-      color: var(--ember);
-      border-color: var(--ember);
-      text-decoration: none;
-    }
-
-    /* Hero stat panel */
-    .hero-panel {
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: var(--gap-l);
-      position: relative;
-    }
-
-    .hero-panel::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--ember), var(--teal));
-      border-radius: 8px 8px 0 0;
-    }
-
-    .panel-label {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-      margin-bottom: var(--gap-m);
-    }
-
+    .hero-sub { font-size: 1.125rem; color: var(--ink-soft); font-weight: 300; line-height: 1.6; margin-bottom: var(--gap-l); }
+    .hero-actions { display: flex; align-items: center; gap: var(--gap-m); flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--ember); color: var(--white); padding: 0.85rem 1.75rem; border-radius: 4px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; transition: background 0.2s, transform 0.15s; text-decoration: none; }
+    .btn-primary:hover { background: var(--ember-dim); transform: translateY(-1px); text-decoration: none; }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--ink); font-weight: 500; font-size: 0.95rem; border-bottom: 2px solid var(--ink); padding-bottom: 2px; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+    .btn-secondary:hover { color: var(--ember); border-color: var(--ember); text-decoration: none; }
+    .hero-panel { background: var(--white); border: 1px solid var(--rule); border-radius: 8px; padding: var(--gap-l); position: relative; }
+    .hero-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--ember), var(--teal)); border-radius: 8px 8px 0 0; }
+    .panel-label { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: var(--gap-m); }
     .stat-row { display: flex; flex-direction: column; gap: var(--gap-m); }
-
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      padding-bottom: var(--gap-m);
-      border-bottom: 1px solid var(--rule);
-    }
-
+    .stat-item { display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: var(--gap-m); border-bottom: 1px solid var(--rule); }
     .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
-
-    .stat-number {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--ink);
-      line-height: 1;
-    }
-
+    .stat-number { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.04em; color: var(--ink); line-height: 1; }
     .stat-number.ember { color: var(--ember); }
+    .stat-desc { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.4; max-width: none; }
+    .stat-source { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-muted); letter-spacing: 0.05em; text-transform: uppercase; }
 
-    .stat-desc {
-      font-size: 0.875rem;
-      color: var(--ink-muted);
-      line-height: 1.4;
-      max-width: none;
-    }
-
-    .stat-source {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      color: var(--ink-muted);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    /* ── Problem section ──────────────────────────────────────── */
+    /* Problem */
     #problem { background: var(--ink); color: var(--white); }
     #problem p { color: rgba(255,255,255,0.75); }
     #problem h2 { color: var(--white); }
     #problem .section-eyebrow { color: var(--ember); }
-
-    .problem-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--gap-xl);
-      align-items: start;
-    }
-
-    .problem-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: var(--gap-m);
-      margin-top: var(--gap-l);
-    }
-
-    .problem-list li {
-      display: flex;
-      gap: var(--gap-s);
-      align-items: flex-start;
-      color: rgba(255,255,255,0.8);
-      font-size: 1.0625rem;
-      line-height: 1.5;
-    }
-
-    .problem-list li::before {
-      content: '—';
-      color: var(--ember);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 0.05em;
-    }
-
-    .cost-box {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: var(--gap-l);
-    }
-
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-xl); align-items: start; }
+    .problem-list { list-style: none; display: flex; flex-direction: column; gap: var(--gap-m); margin-top: var(--gap-l); }
+    .problem-list li { display: flex; gap: var(--gap-s); align-items: flex-start; color: rgba(255,255,255,0.8); font-size: 1.0625rem; line-height: 1.5; }
+    .problem-list li::before { content: '—'; color: var(--ember); font-weight: 700; flex-shrink: 0; margin-top: 0.05em; }
+    .cost-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: var(--gap-l); }
     .cost-calc { display: flex; flex-direction: column; gap: var(--gap-m); }
-
-    .cost-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: var(--gap-s);
-      padding-bottom: var(--gap-m);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      font-size: 0.9rem;
-    }
-
+    .cost-line { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--gap-s); padding-bottom: var(--gap-m); border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.9rem; }
     .cost-line:last-of-type { border-bottom: none; }
-
     .cost-label { color: rgba(255,255,255,0.6); }
-    .cost-value {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      color: var(--white);
-      white-space: nowrap;
-    }
-
-    .cost-total {
-      margin-top: var(--gap-s);
-      padding-top: var(--gap-m);
-      border-top: 2px solid var(--ember);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
+    .cost-value { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--white); white-space: nowrap; }
+    .cost-total { margin-top: var(--gap-s); padding-top: var(--gap-m); border-top: 2px solid var(--ember); display: flex; justify-content: space-between; align-items: center; }
     .cost-total .cost-label { color: var(--white); font-weight: 600; font-size: 1rem; }
     .cost-total .cost-value { font-size: 1.75rem; color: var(--ember); }
+    .cost-note { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: var(--gap-s); }
 
-    .cost-note {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      margin-top: var(--gap-s);
-    }
+    /* Shared */
+    .section-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); margin-bottom: var(--gap-s); }
+    .section-eyebrow::before { content: ''; display: block; width: 18px; height: 2px; background: currentColor; }
 
-    /* ── Section shared ───────────────────────────────────────── */
-    .section-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ember);
-      margin-bottom: var(--gap-s);
-    }
-
-    .section-eyebrow::before {
-      content: '';
-      display: block;
-      width: 18px;
-      height: 2px;
-      background: currentColor;
-    }
-
-    /* ── Offer section ────────────────────────────────────────── */
+    /* Offer */
     #offer .offer-header { max-width: 700px; margin-bottom: var(--gap-xl); }
-
     .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-l); }
-
-    .offer-card {
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: var(--gap-l);
-      display: flex;
-      flex-direction: column;
-      gap: var(--gap-s);
-      position: relative;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .offer-card:hover {
-      border-color: var(--teal);
-      box-shadow: 0 4px 24px rgba(26,107,114,0.08);
-    }
-
-    .offer-card-num {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      color: var(--ink-muted);
-      text-transform: uppercase;
-    }
-
+    .offer-card { background: var(--white); border: 1px solid var(--rule); border-radius: 8px; padding: var(--gap-l); display: flex; flex-direction: column; gap: var(--gap-s); transition: border-color 0.2s, box-shadow 0.2s; }
+    .offer-card:hover { border-color: var(--teal); box-shadow: 0 4px 24px rgba(26,107,114,0.08); }
+    .offer-card-num { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--ink-muted); text-transform: uppercase; }
     .offer-card h3 { font-size: 1.125rem; color: var(--ink); }
-
-    .offer-card p {
-      font-size: 0.9375rem;
-      color: var(--ink-soft);
-      line-height: 1.55;
-    }
-
-    .offer-card-value {
-      margin-top: auto;
-      padding-top: var(--gap-m);
-      border-top: 1px solid var(--rule);
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      text-transform: uppercase;
-    }
-
+    .offer-card p { font-size: 0.9375rem; color: var(--ink-soft); line-height: 1.55; }
+    .offer-card-value { margin-top: auto; padding-top: var(--gap-m); border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; color: var(--ink-muted); text-transform: uppercase; }
     .offer-card-value strong { font-weight: 700; color: var(--ink); }
 
-    /* ── Pricing tiers ─────────────────────────────────────────── */
+    /* Pricing */
     #pricing { background: var(--white); }
-
     .pricing-header { max-width: 640px; margin-bottom: var(--gap-xl); }
-
-    .tiers-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.15fr 1fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .tier-card {
-      border: 1px solid var(--rule);
-      border-radius: 10px;
-      overflow: hidden;
-      background: var(--white);
-      transition: box-shadow 0.25s, border-color 0.25s;
-    }
-
+    .tiers-grid { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 1.5rem; align-items: start; }
+    .tier-card { border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--white); transition: box-shadow 0.25s, border-color 0.25s; }
     .tier-card:hover { box-shadow: 0 6px 30px rgba(0,0,0,0.07); }
-
-    .tier-card.featured {
-      border-color: var(--ember);
-      box-shadow: 0 4px 24px rgba(232,75,42,0.1);
-    }
-
-    .tier-badge {
-      background: var(--ember);
-      color: var(--white);
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 0.4rem 1rem;
-    }
-
+    .tier-card.featured { border-color: var(--ember); box-shadow: 0 4px 24px rgba(232,75,42,0.1); }
+    .tier-badge { background: var(--ember); color: var(--white); font-family: var(--mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; text-align: center; padding: 0.4rem 1rem; }
     .tier-body { padding: var(--gap-m) var(--gap-m) var(--gap-l); }
-
-    .tier-tag {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-      margin-bottom: var(--gap-s);
-    }
-
-    .tier-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      margin-bottom: 0.35rem;
-    }
-
-    .tier-size {
-      font-size: 0.825rem;
-      color: var(--ink-muted);
-      margin-bottom: var(--gap-m);
-      padding-bottom: var(--gap-m);
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .tier-price {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.4rem;
-      font-weight: 800;
-      letter-spacing: -0.05em;
-      color: var(--ink);
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-
+    .tier-tag { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: var(--gap-s); }
+    .tier-name { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.35rem; }
+    .tier-size { font-size: 0.825rem; color: var(--ink-muted); margin-bottom: var(--gap-m); padding-bottom: var(--gap-m); border-bottom: 1px solid var(--rule); }
+    .tier-price { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; letter-spacing: -0.05em; color: var(--ink); line-height: 1; margin-bottom: 0.3rem; }
     .tier-card.featured .tier-price { color: var(--ember); }
-
-    .tier-rate {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      text-transform: uppercase;
-      margin-bottom: var(--gap-m);
-    }
-
-    .tier-guarantee {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--teal);
-      margin-bottom: var(--gap-m);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
+    .tier-rate { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.06em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: var(--gap-m); }
+    .tier-guarantee { font-size: 0.8rem; font-weight: 600; color: var(--teal); margin-bottom: var(--gap-m); display: flex; align-items: center; gap: 0.4rem; }
     .tier-guarantee::before { content: '◎'; font-size: 0.7rem; }
-
-    .tier-includes {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: var(--gap-m);
-    }
-
-    .tier-includes li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      font-size: 0.825rem;
-      color: var(--ink-soft);
-      line-height: 1.4;
-    }
-
+    .tier-includes { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: var(--gap-m); }
+    .tier-includes li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.825rem; color: var(--ink-soft); line-height: 1.4; }
     .tier-includes li::before { content: '✓'; color: var(--ember); font-weight: 700; flex-shrink: 0; font-size: 0.75rem; margin-top: 0.1em; }
     .tier-includes li.muted::before { color: var(--rule); }
     .tier-includes li.muted { color: var(--ink-muted); }
-
-    .tier-cta {
-      display: block;
-      text-align: center;
-      padding: 0.7rem 1rem;
-      border-radius: 4px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.875rem;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-      letter-spacing: -0.01em;
-    }
-
+    .tier-cta { display: block; text-align: center; padding: 0.7rem 1rem; border-radius: 4px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: background 0.2s, transform 0.15s; letter-spacing: -0.01em; }
     .tier-cta.primary { background: var(--ember); color: var(--white); }
     .tier-cta.primary:hover { background: var(--ember-dim); transform: translateY(-1px); text-decoration: none; }
     .tier-cta.secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--rule); }
-    .tier-cta.secondary:hover { text-decoration: none; }
-
-    .retainer-strip {
-      margin-top: var(--gap-l);
-      background: var(--ink);
-      color: var(--white);
-      border-radius: 10px;
-      padding: var(--gap-m) var(--gap-l);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--gap-l);
-      flex-wrap: wrap;
-    }
-
+    .tier-cta.secondary:hover { background: #ede8df; text-decoration: none; }
+    .retainer-strip { margin-top: var(--gap-l); background: var(--ink); color: var(--white); border-radius: 10px; padding: var(--gap-m) var(--gap-l); display: flex; align-items: center; justify-content: space-between; gap: var(--gap-l); flex-wrap: wrap; }
     .retainer-left { flex: 1; min-width: 200px; }
-
-    .retainer-tag {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 0.4rem;
-    }
-
+    .retainer-tag { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.4rem; }
     .retainer-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
     .retainer-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); max-width: none; line-height: 1.5; }
+    .retainer-price { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.04em; white-space: nowrap; flex-shrink: 0; }
+    .retainer-price span { font-size: 0.8rem; font-weight: 400; font-family: var(--mono); letter-spacing: 0.05em; color: rgba(255,255,255,0.45); text-transform: uppercase; display: block; margin-top: 0.2rem; }
 
-    .retainer-price {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.75rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .retainer-price span {
-      font-size: 0.8rem;
-      font-weight: 400;
-      font-family: var(--mono);
-      letter-spacing: 0.05em;
-      color: rgba(255,255,255,0.45);
-      text-transform: uppercase;
-      display: block;
-      margin-top: 0.2rem;
-    }
-
-    /* ── Guarantee ────────────────────────────────────────────── */
+    /* Guarantee */
     #guarantee { background: var(--paper); }
-
-    .guarantee-box {
-      border: 2px solid var(--ember);
-      border-radius: 8px;
-      padding: var(--gap-l) var(--gap-xl);
-      max-width: 780px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
+    .guarantee-box { border: 2px solid var(--ember); border-radius: 8px; padding: var(--gap-l) var(--gap-xl); max-width: 780px; margin: 0 auto; text-align: center; }
     .guarantee-icon { font-size: 2.5rem; margin-bottom: var(--gap-s); display: block; }
     .guarantee-box h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); margin-bottom: var(--gap-m); }
     .guarantee-box p { max-width: none; font-size: 1.0625rem; color: var(--ink-soft); line-height: 1.65; }
+    .guarantee-condition { margin-top: var(--gap-m); padding: var(--gap-s) var(--gap-m); background: var(--paper); border-radius: 4px; font-size: 0.875rem; color: var(--ink-muted); font-style: italic; }
 
-    .guarantee-condition {
-      margin-top: var(--gap-m);
-      padding: var(--gap-s) var(--gap-m);
-      background: var(--paper);
-      border-radius: 4px;
-      font-size: 0.875rem;
-      color: var(--ink-muted);
-      font-style: italic;
-    }
-
-    /* ── Process ──────────────────────────────────────────────── */
-    .process-steps {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: var(--gap-m);
-      margin-top: var(--gap-l);
-      position: relative;
-    }
-
-    .process-steps::before {
-      content: '';
-      position: absolute;
-      top: 1.75rem;
-      left: 2.5rem;
-      right: 2.5rem;
-      height: 1px;
-      background: var(--rule);
-      z-index: 0;
-    }
-
-    .process-step {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: var(--gap-s);
-    }
-
-    .step-num {
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 50%;
-      background: var(--white);
-      border: 2px solid var(--rule);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      color: var(--ink);
-    }
-
-    .process-step.active .step-num {
-      background: var(--ember);
-      border-color: var(--ember);
-      color: var(--white);
-    }
-
+    /* Process */
+    .process-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--gap-m); margin-top: var(--gap-l); position: relative; }
+    .process-steps::before { content: ''; position: absolute; top: 1.75rem; left: 2.5rem; right: 2.5rem; height: 1px; background: var(--rule); z-index: 0; }
+    .process-step { position: relative; z-index: 1; display: flex; flex-direction: column; gap: var(--gap-s); }
+    .step-num { width: 3.5rem; height: 3.5rem; border-radius: 50%; background: var(--white); border: 2px solid var(--rule); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--ink); }
+    .process-step.active .step-num { background: var(--ember); border-color: var(--ember); color: var(--white); }
     .process-step h3 { font-size: 1rem; margin-top: 0.5rem; }
     .process-step p { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.5; }
 
-    /* ── After diagnostic ─────────────────────────────────────── */
+    /* After diagnostic */
     #after { background: var(--ink); color: var(--white); }
     #after h2 { color: var(--white); }
     #after .section-eyebrow { color: var(--ember); }
-
     .after-intro { max-width: 640px; margin-bottom: var(--gap-xl); }
     .after-intro p { color: rgba(255,255,255,0.6); font-size: 1.0625rem; line-height: 1.7; margin-top: var(--gap-m); max-width: none; }
-
-    .pathways-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-bottom: var(--gap-l);
-    }
-
-    .pathway-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      padding: var(--gap-m) var(--gap-m) var(--gap-l);
-      display: flex;
-      flex-direction: column;
-      gap: var(--gap-s);
-      transition: border-color 0.25s, background 0.25s;
-    }
-
+    .pathways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: var(--gap-l); }
+    .pathway-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: var(--gap-m) var(--gap-m) var(--gap-l); display: flex; flex-direction: column; gap: var(--gap-s); transition: border-color 0.25s, background 0.25s; }
     .pathway-card:hover { border-color: rgba(255,255,255,0.16); background: rgba(255,255,255,0.05); }
-
-    .pathway-letter {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ember);
-      margin-bottom: 0.25rem;
-    }
-
-    .pathway-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      line-height: 1.25;
-    }
-
+    .pathway-letter { font-family: var(--mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ember); margin-bottom: 0.25rem; }
+    .pathway-card h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; color: var(--white); line-height: 1.25; }
     .pathway-card p { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.6; max-width: none; }
-
-    .pathway-meta {
-      margin-top: auto;
-      padding-top: var(--gap-m);
-      border-top: 1px solid rgba(255,255,255,0.07);
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
+    .pathway-meta { margin-top: auto; padding-top: var(--gap-m); border-top: 1px solid rgba(255,255,255,0.07); display: flex; flex-direction: column; gap: 0.35rem; }
     .pathway-meta-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; }
     .pathway-meta-label { color: rgba(255,255,255,0.35); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; }
     .pathway-meta-value { color: rgba(255,255,255,0.7); font-weight: 500; font-size: 0.8rem; }
-
-    .pathway-when {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--ember);
-      margin-top: 0.25rem;
-    }
-
+    .pathway-when { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ember); margin-top: 0.25rem; }
     .pathway-when::before { content: '→'; font-size: 0.8rem; }
-
-    .after-note {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: var(--gap-m) var(--gap-l);
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.65;
-      font-style: italic;
-      text-align: center;
-    }
-
+    .after-note { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: var(--gap-m) var(--gap-l); font-size: 0.9rem; color: rgba(255,255,255,0.5); line-height: 1.65; font-style: italic; text-align: center; }
     .after-note strong { color: rgba(255,255,255,0.8); font-weight: 500; font-style: normal; }
 
-    /* ── About ────────────────────────────────────────────────── */
+    /* About */
     #about { background: var(--paper); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: var(--gap-xl);
-      align-items: start;
-    }
-
+    .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: var(--gap-xl); align-items: start; }
     .about-credentials { display: flex; flex-direction: column; gap: var(--gap-s); }
-
-    .credential-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      padding: 0.5rem 0.85rem;
-      font-size: 0.825rem;
-      color: var(--ink-soft);
-      font-weight: 500;
-    }
-
+    .credential-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--white); border: 1px solid var(--rule); border-radius: 4px; padding: 0.5rem 0.85rem; font-size: 0.825rem; color: var(--ink-soft); font-weight: 500; }
     .credential-tag::before { content: '✓'; color: var(--teal); font-weight: 700; }
-
     .about-text h2 { margin-bottom: var(--gap-m); }
     .about-text p { color: var(--ink-soft); }
 
-    /* ── Scarcity bar ─────────────────────────────────────────── */
+    /* Scarcity bar */
     .scarcity-bar { background: var(--ink); color: var(--white); padding: var(--gap-m); text-align: center; }
-
-    .scarcity-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--gap-l);
-      flex-wrap: wrap;
-    }
-
+    .scarcity-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: var(--gap-l); flex-wrap: wrap; }
     .scarcity-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: -0.01em; }
     .scarcity-text em { font-style: normal; color: var(--ember); }
-
     .slots { display: flex; gap: 0.35rem; align-items: center; }
     .slot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.2); }
     .slot.taken { background: var(--ember); }
 
-    /* ── CTA / Booking ────────────────────────────────────────── */
+    /* Booking CTA */
     #booking { background: var(--teal); color: var(--white); text-align: center; }
     #booking h2 { color: var(--white); margin-bottom: var(--gap-m); }
     #booking p { color: rgba(255,255,255,0.8); font-size: 1.0625rem; max-width: 55ch; margin: 0 auto var(--gap-l); }
-
     .booking-actions { display: flex; align-items: center; justify-content: center; gap: var(--gap-m); flex-wrap: wrap; }
-
-    .btn-white {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--white);
-      color: var(--teal);
-      padding: 0.85rem 1.75rem;
-      border-radius: 4px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      transition: background 0.2s, transform 0.15s;
-      text-decoration: none;
-    }
-
+    .btn-white { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--white); color: var(--teal); padding: 0.85rem 1.75rem; border-radius: 4px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; transition: background 0.2s, transform 0.15s; text-decoration: none; }
     .btn-white:hover { background: var(--paper); transform: translateY(-1px); text-decoration: none; }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.85); font-weight: 500; font-size: 0.95rem; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; text-decoration: none; transition: color 0.2s; }
+    .btn-ghost:hover { color: var(--white); text-decoration: none; }
 
-    .btn-ghost-light {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: rgba(255,255,255,0.85);
-      font-weight: 500;
-      font-size: 0.95rem;
-      border-bottom: 1px solid rgba(255,255,255,0.4);
-      padding-bottom: 2px;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .btn-ghost-light:hover { color: var(--white); text-decoration: none; }
-
-    /* ── Footer ───────────────────────────────────────────────── */
+    /* Footer */
     footer { background: var(--ink); color: rgba(255,255,255,0.45); padding: var(--gap-l) var(--gap-m); }
-
-    .footer-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--gap-l);
-      flex-wrap: wrap;
-    }
-
+    .footer-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--gap-l); flex-wrap: wrap; }
     .footer-brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--white); letter-spacing: -0.03em; margin-bottom: 0.5rem; }
-
     .footer-links { display: flex; flex-direction: column; gap: 0.35rem; }
     .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.45); text-decoration: none; }
     .footer-links a:hover { color: rgba(255,255,255,0.8); }
-
     .footer-disclaimer { font-size: 0.75rem; line-height: 1.6; max-width: 52ch; }
+    .footer-copy { width: 100%; padding-top: var(--gap-m); border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.75rem; display: flex; justify-content: space-between; gap: var(--gap-m); flex-wrap: wrap; }
 
-    .footer-copy {
-      width: 100%;
-      padding-top: var(--gap-m);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      font-size: 0.75rem;
-      display: flex;
-      justify-content: space-between;
-      gap: var(--gap-m);
-      flex-wrap: wrap;
-    }
-
-    /* ── Animations ───────────────────────────────────────────── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .fade-up { animation: fadeUp 0.6s ease both; }
-    .fade-up-1 { animation-delay: 0.1s; }
-    .fade-up-2 { animation-delay: 0.2s; }
-    .fade-up-3 { animation-delay: 0.35s; }
-    .fade-up-4 { animation-delay: 0.5s; }
+    .fade-up-1 { animation-delay: 0.1s; } .fade-up-2 { animation-delay: 0.2s; } .fade-up-3 { animation-delay: 0.35s; } .fade-up-4 { animation-delay: 0.5s; }
 
-    /* ── Responsive ───────────────────────────────────────────── */
     @media (max-width: 900px) {
       .hero-grid, .problem-grid, .offer-grid, .about-grid { grid-template-columns: 1fr; }
       .tiers-grid { grid-template-columns: 1fr; }
-      .pathways-grid { grid-template-columns: 1fr; }
       .process-steps { grid-template-columns: 1fr 1fr; }
       .process-steps::before { display: none; }
+      .pathways-grid { grid-template-columns: 1fr; }
       .retainer-strip { flex-direction: column; gap: var(--gap-m); }
       .footer-inner { flex-direction: column; }
     }
-
     @media (max-width: 600px) {
       section { padding: var(--gap-xl) 0; }
       .process-steps { grid-template-columns: 1fr; }
@@ -971,19 +241,18 @@
     }
   </style>
 </head>
-
 <body>
 
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-logo">BurnoutOS <span></span></a>
+      <a href="https://burnout-os.app" class="nav-logo">BurnoutOS <span></span></a>
       <ul class="nav-links">
         <li><a href="#offer">What's Included</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#after">After the Diagnostic</a></li>
         <li><a href="#process">How It Works</a></li>
         <li><a href="#guarantee">Guarantee</a></li>
-        <li><a href="/burnoutprogramme.html">For Individuals</a></li>
+        <li><a href="https://burnout-os.app/burnoutprogramme.html">For Individuals</a></li>
         <li><a href="#booking" class="nav-cta">Book a Discovery Call</a></li>
       </ul>
     </div>
@@ -991,14 +260,9 @@
 
   <div class="scarcity-bar">
     <div class="scarcity-inner">
-      <div class="scarcity-text">
-        Diagnostic Sprint (flagship) — <em>3 slots per month.</em> Currently booking July 2026.
-      </div>
-      <div class="slots" aria-label="2 of 4 slots taken">
-        <div class="slot taken"></div>
-        <div class="slot taken"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
+      <div class="scarcity-text">Diagnostic Sprint (flagship) — <em>3 slots per month.</em> Currently booking July 2026.</div>
+      <div class="slots">
+        <div class="slot taken"></div><div class="slot taken"></div><div class="slot"></div><div class="slot"></div>
       </div>
       <a href="#booking" class="nav-cta" style="font-size:0.825rem; padding:0.45rem 1rem;">Check Availability →</a>
     </div>
@@ -1009,20 +273,13 @@
       <div class="hero-grid">
         <div>
           <div class="hero-eyebrow fade-up fade-up-1">For Organisations</div>
-          <h1 class="hero-title fade-up fade-up-2">
-            What is workforce burnout <em>costing</em> your organisation?
-          </h1>
-          <p class="hero-sub fade-up fade-up-3">
-            Most leaders know burnout is a problem. Almost none can quantify it.
-            The BurnoutOS Diagnostic Sprint delivers a data-driven, dollar-quantified
-            burnout risk analysis — and a 90-day action plan — in 30 days.
-          </p>
+          <h1 class="hero-title fade-up fade-up-2">What is workforce burnout <em>costing</em> your organisation?</h1>
+          <p class="hero-sub fade-up fade-up-3">Most leaders know burnout is a problem. Almost none can quantify it. The BurnoutOS Diagnostic Sprint delivers a data-driven, dollar-quantified burnout risk analysis — and a 90-day action plan — in 30 days.</p>
           <div class="hero-actions fade-up fade-up-4">
-            <a href="#pricing" class="btn-primary">View Pricing &amp; Tiers →</a>
-            <a href="#offer" class="btn-secondary">See what's included</a>
+            <a href="#pricing" class="btn-primary">View Pricing & Tiers →</a>
+            <a href="#problem" class="btn-secondary">See the cost model</a>
           </div>
         </div>
-
         <div class="hero-panel fade-up fade-up-3">
           <div class="panel-label">// Illustrative cost model — 200 employees, AUD 85K avg salary</div>
           <div class="stat-row">
@@ -1068,22 +325,10 @@
         <div class="cost-box">
           <div class="panel-label" style="color:rgba(255,255,255,0.4); margin-bottom:1.25rem;">// Australian benchmark — 23% burnout prevalence (Gallup 2023)</div>
           <div class="cost-calc">
-            <div class="cost-line">
-              <span class="cost-label">Affected employees (23% of 200)</span>
-              <span class="cost-value">46</span>
-            </div>
-            <div class="cost-line">
-              <span class="cost-label">Absenteeism cost</span>
-              <span class="cost-value">AUD 177,727</span>
-            </div>
-            <div class="cost-line">
-              <span class="cost-label">Presenteeism cost</span>
-              <span class="cost-value">AUD 373,227</span>
-            </div>
-            <div class="cost-line">
-              <span class="cost-label">Turnover cost</span>
-              <span class="cost-value">AUD 446,250</span>
-            </div>
+            <div class="cost-line"><span class="cost-label">Affected employees (23% of 200)</span><span class="cost-value">46</span></div>
+            <div class="cost-line"><span class="cost-label">Absenteeism cost</span><span class="cost-value">AUD 177,727</span></div>
+            <div class="cost-line"><span class="cost-label">Presenteeism cost</span><span class="cost-value">AUD 373,227</span></div>
+            <div class="cost-line"><span class="cost-label">Turnover cost</span><span class="cost-value">AUD 446,250</span></div>
           </div>
           <div class="cost-total">
             <span class="cost-label">Total estimated annual cost</span>
@@ -1100,15 +345,13 @@
       <div class="offer-header">
         <div class="section-eyebrow">The Diagnostic Sprint</div>
         <h2>Everything your leadership team needs to act — in 30 days.</h2>
-        <p style="color:var(--ink-soft); font-size:1.0625rem; margin-top:var(--gap-m);">
-          The BurnoutOS Diagnostic Sprint is a structured 30-day engagement delivering a precise, finance-ready picture of burnout risk in your organisation — and a prioritised plan to address it.
-        </p>
+        <p style="color:var(--ink-soft); font-size:1.0625rem; margin-top:var(--gap-m);">The BurnoutOS Diagnostic Sprint is a structured 30-day engagement delivering a precise, finance-ready picture of burnout risk in your organisation — and a prioritised plan to address it.</p>
       </div>
       <div class="offer-grid">
         <div class="offer-card">
           <div class="offer-card-num">01</div>
           <h3>Workforce Burnout Risk Assessment</h3>
-          <p>Validated psychometric diagnostic deployed to your workforce via the BurnoutOS platform. Anonymous, aggregated reporting. Includes deployment support and employee communication templates. Benchmarked against Australian industry norms.</p>
+          <p>Validated psychometric diagnostic deployed to your workforce via the BurnoutOS platform. Anonymous, aggregated reporting — no individual data shared. Includes deployment support and employee communication templates. Benchmarked against Australian industry norms.</p>
           <div class="offer-card-value">Included value: <strong>AUD 2,500</strong></div>
         </div>
         <div class="offer-card">
@@ -1153,9 +396,7 @@
       <div class="pricing-header">
         <div class="section-eyebrow">Investment</div>
         <h2>Three tiers. One guarantee. Right-sized for your organisation.</h2>
-        <p style="color:var(--ink-soft); font-size:1rem; margin-top:var(--gap-s); max-width:58ch;">
-          Every tier includes a scaled ROI guarantee — if we don't find it, you don't pay.
-        </p>
+        <p style="color:var(--ink-soft); font-size:1rem; margin-top:var(--gap-s); max-width:58ch;">Every tier includes a scaled ROI guarantee — if we don't find it, you don't pay. Choose the tier that matches your organisation's size and scope.</p>
       </div>
       <div class="tiers-grid">
         <div class="tier-card">
@@ -1164,7 +405,7 @@
             <div class="tier-name">Diagnostic Essentials</div>
             <div class="tier-size">50–150 employees · Entry-level engagement</div>
             <div class="tier-price">AUD 5,500</div>
-            <div class="tier-rate">Fixed engagement fee</div>
+            <div class="tier-rate">Fixed engagement fee · ex-GST</div>
             <div class="tier-guarantee">ROI guarantee: AUD 50,000 threshold</div>
             <ul class="tier-includes">
               <li>Workforce Burnout Risk Assessment</li>
@@ -1177,10 +418,9 @@
               <li class="muted">Team-level Risk Heat Map — not included</li>
               <li class="muted">Implementation advisory — not included</li>
             </ul>
-            <a href="mailto:hello@burnout-os.app?subject=Essentials Tier Enquiry" class="tier-cta secondary">Enquire about Essentials →</a>
+            <a href="mailto:hello@katalis.health?subject=Diagnostic Essentials Enquiry" class="tier-cta secondary">Enquire about Essentials →</a>
           </div>
         </div>
-
         <div class="tier-card featured">
           <div class="tier-badge">★ Most Popular — Flagship</div>
           <div class="tier-body">
@@ -1188,7 +428,7 @@
             <div class="tier-name">Diagnostic Sprint</div>
             <div class="tier-size">150–500 employees · Full engagement</div>
             <div class="tier-price">AUD 9,500</div>
-            <div class="tier-rate">Fixed engagement fee</div>
+            <div class="tier-rate">Fixed engagement fee · ex-GST</div>
             <div class="tier-guarantee">ROI guarantee: AUD 100,000 threshold</div>
             <ul class="tier-includes">
               <li>Workforce Burnout Risk Assessment</li>
@@ -1201,17 +441,16 @@
               <li>Async advisory access (30 days post-debrief)</li>
               <li>Boardroom-ready PDF deliverables</li>
             </ul>
-            <a href="mailto:hello@burnout-os.app?subject=Diagnostic Sprint Enquiry" class="tier-cta primary">Book a Discovery Call →</a>
+            <a href="mailto:hello@katalis.health?subject=Diagnostic Sprint Enquiry" class="tier-cta primary">Book a Discovery Call →</a>
           </div>
         </div>
-
         <div class="tier-card">
           <div class="tier-body">
             <div class="tier-tag">// Tier 03</div>
             <div class="tier-name">Diagnostic Enterprise</div>
             <div class="tier-size">500–2,000 employees · Extended engagement</div>
             <div class="tier-price">AUD 16,500</div>
-            <div class="tier-rate">Scoped per engagement</div>
+            <div class="tier-rate">Scoped per engagement · ex-GST</div>
             <div class="tier-guarantee">ROI guarantee: AUD 200,000 threshold</div>
             <ul class="tier-includes">
               <li>Everything in Diagnostic Sprint</li>
@@ -1224,33 +463,24 @@
               <li>Dedicated advisory contact (90 days)</li>
               <li>ROI measurement at 90-day follow-up</li>
             </ul>
-            <a href="mailto:hello@burnout-os.app?subject=Enterprise Diagnostic Enquiry" class="tier-cta secondary">Enquire about Enterprise →</a>
+            <a href="mailto:hello@katalis.health?subject=Diagnostic Enterprise Enquiry" class="tier-cta secondary">Enquire about Enterprise →</a>
           </div>
         </div>
       </div>
-
       <div class="retainer-strip">
         <div class="retainer-left">
           <div class="retainer-tag">// Ongoing Partnership</div>
           <div class="retainer-title">Quarterly Diagnostic Retainer</div>
-          <div class="retainer-desc">
-            Quarterly burnout diagnostics plus a monthly advisory retainer — for organisations committed to burnout as an ongoing operational metric. Includes priority scheduling, longitudinal trend reporting, and direct access to Werner.
-          </div>
+          <div class="retainer-desc">Quarterly burnout diagnostics plus a monthly advisory retainer — for organisations committed to burnout as an ongoing operational metric, not a one-off project. Includes priority scheduling, longitudinal trend reporting, and direct access to Werner.</div>
         </div>
         <div>
-          <div class="retainer-price">
-            AUD 4,500
-            <span>/ month · min. 6-month term</span>
-          </div>
+          <div class="retainer-price">AUD 4,500<span>/ month · min. 6-month term</span></div>
         </div>
         <div style="flex-shrink:0;">
-          <a href="mailto:hello@burnout-os.app?subject=Retainer Enquiry" class="btn-primary" style="white-space:nowrap;">Discuss Retainer →</a>
+          <a href="mailto:hello@katalis.health?subject=Retainer Enquiry" class="btn-primary" style="white-space:nowrap;">Discuss Retainer →</a>
         </div>
       </div>
-
-      <p style="margin-top:var(--gap-m); font-size:0.8rem; color:var(--ink-muted); text-align:center;">
-        All prices ex-GST. South African organisations: ZAR pricing available on request. Tier investment credited toward ongoing platform subscription if you proceed beyond the diagnostic.
-      </p>
+      <p style="margin-top:var(--gap-m); font-size:0.8rem; color:var(--ink-muted); text-align:center;">All prices ex-GST. South African organisations: ZAR pricing available on request. Tier investment applied retrospectively to ongoing platform subscription if you proceed beyond the diagnostic.</p>
     </div>
   </section>
 
@@ -1260,17 +490,9 @@
         <span class="guarantee-icon">◎</span>
         <div class="section-eyebrow" style="justify-content:center;">Our commitment</div>
         <h2>If we don't find it, you don't pay.</h2>
-        <p>
-          Every tier carries a scaled ROI guarantee. If the diagnostic does not identify estimated productivity and retention costs above the threshold for your tier —
-          <strong>AUD 50,000</strong> (Essentials), <strong>AUD 100,000</strong> (Sprint),
-          or <strong>AUD 200,000</strong> (Enterprise) — the diagnostic is complimentary.
-        </p>
-        <p style="margin-top:1rem;">
-          We offer this because for any Australian organisation above 50 people, the number is almost always significantly above threshold. The guarantee exists to remove the risk from your decision — not because we expect to invoke it.
-        </p>
-        <div class="guarantee-condition">
-          Condition: minimum 60% workforce participation in the assessment across all tiers. Participation protocols, employee communication templates, and manager briefing notes are provided as part of every engagement.
-        </div>
+        <p>Every tier carries a scaled ROI guarantee. If the diagnostic does not identify estimated productivity and retention costs above the threshold for your tier — <strong>AUD 50,000</strong> (Essentials), <strong>AUD 100,000</strong> (Sprint), or <strong>AUD 200,000</strong> (Enterprise) — the diagnostic is complimentary.</p>
+        <p style="margin-top:1rem;">We offer this because for any Australian organisation above 50 people, the number is almost always significantly above threshold. The guarantee exists to remove the risk from your decision — not because we expect to invoke it.</p>
+        <div class="guarantee-condition">Condition: minimum 60% workforce participation in the assessment across all tiers. Participation protocols, employee communication templates, and manager briefing notes are provided as part of every engagement.</div>
       </div>
     </div>
   </section>
@@ -1292,18 +514,18 @@
         </div>
         <div class="process-step active">
           <div class="step-num">3</div>
-          <h3>Analysis &amp; Report</h3>
+          <h3>Analysis & Report</h3>
           <p>Burnout prevalence data combined with your workforce profile to produce the Cost Analysis Report and Risk Heat Map. Turnaround: 7 business days from close.</p>
         </div>
         <div class="process-step active">
           <div class="step-num">4</div>
           <h3>Executive Debrief</h3>
-          <p>90-minute live presentation of findings and the 90-Day Action Plan to your leadership team.</p>
+          <p>90-minute live presentation of findings and the 90-Day Action Plan to your leadership team. The natural point at which implementation pathways are discussed.</p>
         </div>
         <div class="process-step">
           <div class="step-num">5</div>
           <h3>Implementation</h3>
-          <p>Optional — and separate. Advisory retainer, corporate ACT group, or workforce platform access. You choose what fits.</p>
+          <p>Optional — and separate. Advisory retainer, corporate ACT group, or workforce platform access. You choose what fits. Many organisations act independently using the Action Plan alone.</p>
         </div>
       </div>
       <div style="margin-top:var(--gap-l); padding:var(--gap-m); background:var(--paper); border:1px solid var(--rule); border-radius:8px; font-size:0.875rem; color:var(--ink-muted); display:flex; align-items:flex-start; gap:0.75rem;">
@@ -1318,14 +540,9 @@
       <div class="after-intro">
         <div class="section-eyebrow">What happens next</div>
         <h2>The diagnostic is where we start — not where we finish.</h2>
-        <p>
-          The Diagnostic Sprint gives your leadership team the data they need to act. For organisations that want to go further — moving from insight to measurable change — three implementation pathways follow naturally from the debrief findings.
-        </p>
-        <p>
-          Every pathway is optional and priced separately. The diagnostic investment is credited toward your first implementation pathway if you proceed within 60 days. Many organisations act independently using the 90-Day Action Plan alone — and that is entirely valid.
-        </p>
+        <p>The Diagnostic Sprint gives your leadership team the data they need to act. For organisations that want to go further — moving from insight to measurable change — three implementation pathways follow naturally from the debrief findings.</p>
+        <p>Every pathway is optional and priced separately. The diagnostic investment is credited toward your first implementation pathway if you proceed within 60 days of the executive debrief. Many organisations act independently using the 90-Day Action Plan alone — and that is entirely valid.</p>
       </div>
-
       <div class="pathways-grid">
         <div class="pathway-card">
           <div class="pathway-letter">// Pathway A</div>
@@ -1339,12 +556,11 @@
             <div class="pathway-when">Available immediately post-debrief</div>
           </div>
         </div>
-
         <div class="pathway-card" style="border-color:rgba(232,75,42,0.2); background:rgba(232,75,42,0.03);">
           <div class="pathway-letter">// Pathway B — Recommended</div>
           <h3>ACT for Burnout — Closed Corporate Group</h3>
           <p>An 8-week ACT-based professional group programme delivered to the specific high-risk cohort identified in your diagnostic heat map. Maximum 8 participants. Weekly 90-minute facilitated sessions via Zoom. Clinically structured, professionally positioned.</p>
-          <p style="color:rgba(255,255,255,0.35); font-size:0.825rem;">Best for organisations where the diagnostic surfaces a specific team at critical risk.</p>
+          <p style="color:rgba(255,255,255,0.35); font-size:0.825rem;">Best for organisations where the diagnostic surfaces a specific team at critical risk and leadership wants a targeted, structured intervention.</p>
           <div class="pathway-meta">
             <div class="pathway-meta-row"><span class="pathway-meta-label">Who</span><span class="pathway-meta-value">Up to 8 high-risk employees</span></div>
             <div class="pathway-meta-row"><span class="pathway-meta-label">Duration</span><span class="pathway-meta-value">8 weeks · 90 min/week</span></div>
@@ -1352,22 +568,21 @@
             <div class="pathway-when">Typically begins 2–4 weeks post-debrief</div>
           </div>
         </div>
-
         <div class="pathway-card">
           <div class="pathway-letter">// Pathway C</div>
           <h3>BurnoutOS Workforce Platform</h3>
-          <p>Your full workforce gets access to the BurnoutOS self-directed recovery platform — 80+ evidence-based micro-practices, AI recovery coach, and weekly progress check-ins. Deployable within one week of the debrief.</p>
-          <p style="color:rgba(255,255,255,0.35); font-size:0.825rem;">Best for population-level burnout support alongside or instead of a targeted group intervention.</p>
+          <p>Your full workforce gets access to the BurnoutOS self-directed recovery platform — 80+ evidence-based micro-practices, AI recovery coach, and weekly progress check-ins. Deployed within one week of the debrief.</p>
+          <p style="color:rgba(255,255,255,0.35); font-size:0.825rem;">Best for organisations wanting population-level burnout support alongside or instead of a targeted group intervention.</p>
           <div class="pathway-meta">
             <div class="pathway-meta-row"><span class="pathway-meta-label">Who</span><span class="pathway-meta-value">Full workforce</span></div>
             <div class="pathway-meta-row"><span class="pathway-meta-label">Billing</span><span class="pathway-meta-value">Annual licence · PEPM rate</span></div>
             <div style="margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.07);">
               <div style="font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:0.5rem;">// Per employee · per month — billed annually</div>
               <div style="display:flex; flex-direction:column; gap:0.3rem;">
-                <div style="display:flex; justify-content:space-between; font-size:0.78rem;"><span style="color:rgba(255,255,255,0.4);">Up to 100 employees</span><span style="color:rgba(255,255,255,0.75); font-weight:500;">AUD 9.90/employee/month</span></div>
-                <div style="display:flex; justify-content:space-between; font-size:0.78rem;"><span style="color:rgba(255,255,255,0.4);">101–250 employees</span><span style="color:rgba(255,255,255,0.75); font-weight:500;">AUD 8.50/employee/month</span></div>
-                <div style="display:flex; justify-content:space-between; font-size:0.78rem;"><span style="color:rgba(255,255,255,0.4);">251–500 employees</span><span style="color:rgba(255,255,255,0.75); font-weight:500;">AUD 7.50/employee/month</span></div>
-                <div style="display:flex; justify-content:space-between; font-size:0.78rem;"><span style="color:rgba(255,255,255,0.4);">500+ employees</span><span style="color:rgba(255,255,255,0.75); font-weight:500;">AUD 6.50/employee/month</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:0.78rem;"><span style="color:rgba(255,255,255,0.4);">Up to 100</span><span style="color:rgba(255,255,255,0.75); font-weight:500;">AUD 9.90/emp/mo</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:0.78rem;"><span style="color:rgba(255,255,255,0.4);">101–250</span><span style="color:rgba(255,255,255,0.75); font-weight:500;">AUD 8.50/emp/mo</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:0.78rem;"><span style="color:rgba(255,255,255,0.4);">251–500</span><span style="color:rgba(255,255,255,0.75); font-weight:500;">AUD 7.50/emp/mo</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:0.78rem;"><span style="color:rgba(255,255,255,0.4);">500+</span><span style="color:rgba(255,255,255,0.75); font-weight:500;">AUD 6.50/emp/mo</span></div>
               </div>
               <div style="margin-top:0.75rem; padding:0.6rem 0.75rem; background:rgba(255,255,255,0.04); border-radius:6px; border:1px solid rgba(255,255,255,0.06);">
                 <div style="font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(232,75,42,0.7); margin-bottom:0.3rem;">// Headcount & true-up</div>
@@ -1378,9 +593,8 @@
           </div>
         </div>
       </div>
-
       <div class="after-note">
-        <strong>Pathways can be combined.</strong> The most common sequence is Pathway B (corporate ACT group for the high-risk cohort) plus Pathway C (platform access for the broader workforce). A follow-up re-diagnostic at 90 days measures what changed and generates your ROI data.
+        <strong>Pathways can be combined.</strong> The most common sequence is Pathway B (corporate ACT group for the high-risk cohort) plus Pathway C (platform access for the broader workforce) — targeted intervention where it's most needed, self-directed support at population level. A follow-up re-diagnostic at 90 days measures what changed and generates your ROI data.
       </div>
     </div>
   </section>
@@ -1414,16 +628,12 @@
     <div class="wrap">
       <div class="section-eyebrow" style="color:rgba(255,255,255,0.6); justify-content:center;">Ready to start</div>
       <h2>Not sure which tier is right?</h2>
-      <p>
-        Book a 30-minute no-obligation discovery call. Werner will review your organisation's size, current wellbeing approach, and goals — and recommend the tier that makes the most sense. There is no sales pressure. If the diagnostic isn't the right fit, he will tell you that too.
-      </p>
+      <p>Book a 30-minute no-obligation discovery call. Werner will review your organisation's size, current wellbeing approach, and goals — and recommend the tier that makes the most sense. There is no sales pressure. If the diagnostic isn't the right fit, he will tell you that too.</p>
       <div class="booking-actions">
-        <a href="mailto:hello@burnout-os.app?subject=Discovery Call Request" class="btn-white">Book a Discovery Call →</a>
-        <a href="#pricing" class="btn-ghost-light">Review the tiers first</a>
+        <a href="mailto:hello@katalis.health?subject=Burnout Diagnostic Discovery Call" class="btn-white">Book a Discovery Call →</a>
+        <a href="#pricing" class="btn-ghost">Review the tiers first</a>
       </div>
-      <p style="margin: var(--gap-l) auto 0; font-size:0.8rem; color:rgba(255,255,255,0.45); text-align:center;">
-        Or email <a href="mailto:hello@burnout-os.app" style="color:rgba(255,255,255,0.6);">hello@burnout-os.app</a> with your organisation size and we will recommend the right tier and respond within one business day.
-      </p>
+      <p style="margin: var(--gap-l) auto 0; font-size:0.8rem; color:rgba(255,255,255,0.45); text-align:center;">Or email <a href="mailto:hello@katalis.health" style="color:rgba(255,255,255,0.6);">hello@katalis.health</a> with your organisation size and we will recommend the right tier and respond within one business day.</p>
     </div>
   </section>
 
@@ -1431,20 +641,18 @@
     <div class="footer-inner">
       <div>
         <div class="footer-brand">BurnoutOS</div>
-        <p class="footer-disclaimer">
-          BurnoutOS is an organisational consulting and workforce diagnostics service. It is not a clinical mental health service and does not constitute a therapeutic relationship. Werner Teichert is registered with AHPRA (Psychology Board of Australia) and the HPCSA (South Africa). All cost estimates are modelled figures using published benchmarks and are for illustrative purposes only.
-        </p>
+        <p class="footer-disclaimer">BurnoutOS is an organisational consulting and workforce diagnostics service. It is not a clinical mental health service and does not constitute a therapeutic relationship. Werner Teichert is registered with AHPRA (Psychology Board of Australia) and the HPCSA (South Africa). All cost estimates are modelled figures using published benchmarks and are for illustrative purposes only.</p>
       </div>
       <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="/burnoutprogramme.html">For Individuals</a>
-        <a href="https://katalis.health">Katalis</a>
+        <a href="https://burnout-os.app">Home</a>
+        <a href="https://burnout-os.app/burnoutprogramme.html">Recovery Programme</a>
+        <a href="https://katalis.health">Katalis Health</a>
         <a href="https://learn.dbtcentral.com">DBT Central</a>
-        <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>
+        <a href="mailto:hello@katalis.health">hello@katalis.health</a>
       </div>
       <div class="footer-copy">
-        <span>© 2026 Katalis (Behavioural Health Pty Ltd). All rights reserved.</span>
-        <span>ABN pending · Sydney, Australia</span>
+        <span>© 2026 Katalis (Behavioural Health Pty Ltd) · ABN TBC · Australia</span>
+        <span>Werner Teichert MClinPsych MBA · AHPRA · HPCSA</span>
       </div>
     </div>
   </footer>
