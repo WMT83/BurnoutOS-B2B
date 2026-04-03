@@ -13,14 +13,23 @@ import Onboarding from './pages/Onboarding';
 
 import './index.css';
 
-function ProtectedRoute({ user, children }: { user: User | null; children: React.ReactNode }) {
+// undefined = loading, null = not authenticated, User = authenticated
+type AuthState = User | null | undefined;
+
+function ProtectedRoute({ user, children }: { user: AuthState; children: React.ReactNode }) {
   if (user === undefined) return <div className="loading-screen"><div className="spinner" /></div>;
   if (!user) return <Navigate to="/login" replace />;
   return <>{children}</>;
 }
 
+function GuestRoute({ user, children }: { user: AuthState; children: React.ReactNode }) {
+  if (user === undefined) return <div className="loading-screen"><div className="spinner" /></div>;
+  if (user) return <Navigate to="/dashboard" replace />;
+  return <>{children}</>;
+}
+
 export default function App() {
-  const [user, setUser] = useState<User | null | undefined>(undefined);
+  const [user, setUser] = useState<AuthState>(undefined);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null));
@@ -33,17 +42,19 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public */}
-        <Route path="/signup" element={user ? <Navigate to="/dashboard" replace /> : <Signup />} />
-        <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <Login />} />
+        {/* Public — no auth needed */}
         <Route path="/diagnostic/survey/:token" element={<Survey />} />
 
-        {/* Protected B2C */}
+        {/* Guest only — redirect to dashboard if already signed in */}
+        <Route path="/signup" element={<GuestRoute user={user}><Signup /></GuestRoute>} />
+        <Route path="/login" element={<GuestRoute user={user}><Login /></GuestRoute>} />
+
+        {/* Protected — redirect to login if not signed in */}
         <Route path="/onboarding" element={<ProtectedRoute user={user}><Onboarding /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute user={user}><Dashboard /></ProtectedRoute>} />
         <Route path="/programme/week/:weekNum" element={<ProtectedRoute user={user}><Programme /></ProtectedRoute>} />
 
-        {/* B2B Admin */}
+        {/* B2B Admin — no auth guard (Werner accesses directly) */}
         <Route path="/diagnostic/admin" element={<Admin />} />
 
         {/* Fallback */}
