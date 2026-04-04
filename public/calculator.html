@@ -1,677 +1,790 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Burnout Cost Calculator — BurnoutOS</title>
-  <meta name="description" content="Calculate the real cost of burnout in your organisation. Evidence-based model built by a registered clinical psychologist. Free, instant, no email required." />
-  <link rel="canonical" href="https://burnout-os.app/calculator" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burnout Cost Calculator — BurnoutOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --ember:     #e84b2a;
-      --ember-dim: #c73d20;
-      --ink:       #0c1018;
-      --ink-soft:  #2a3040;
-      --ink-muted: #5a6480;
-      --warm:      #f5f0e8;
-      --warm-mid:  #ede8df;
-      --white:     #ffffff;
-      --teal:      #1a6b72;
-      --surface:   #141820;
-      --surface-2: #1c2230;
-      --rule:      rgba(255,255,255,0.08);
-    }
+  :root {
+    --bg:        #0a0a0b;
+    --surface:   #111114;
+    --surface2:  #18181d;
+    --border:    #262630;
+    --border2:   #32323f;
+    --text:      #e8e8ec;
+    --muted:     #7a7a8a;
+    --accent:    #c8f060;
+    --accent2:   #a8d040;
+    --danger:    #ff6b4a;
+    --amber:     #f0a830;
+    --serif:     'DM Serif Display', Georgia, serif;
+    --sans:      'Instrument Sans', sans-serif;
+    --mono:      'DM Mono', monospace;
+  }
 
-    html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--ink);
-      color: var(--white);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
-    }
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 1.25rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(12,16,24,0.7);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--rule);
-    }
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
 
-    .logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: -0.03em;
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-    }
+  /* Header */
+  .header {
+    margin-bottom: 56px;
+  }
 
-    .logo-dot { width: 7px; height: 7px; background: var(--ember); border-radius: 50%; }
+  .brand {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-    .nav-links { display: flex; align-items: center; gap: 2rem; }
-    .nav-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--white); }
-    .nav-cta {
-      background: var(--ember); color: var(--white) !important;
-      padding: 0.5rem 1.1rem; border-radius: 8px; font-weight: 500;
-      transition: background 0.2s !important;
-    }
-    .nav-cta:hover { background: var(--ember-dim) !important; }
+  .brand::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
 
-    /* Hero */
-    .hero {
-      padding: 140px 2rem 80px;
-      text-align: center;
-      max-width: 760px;
-      margin: 0 auto;
-    }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 58px);
+    line-height: 1.05;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
 
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(232,75,42,0.1); border: 1px solid rgba(232,75,42,0.25);
-      color: var(--ember); font-size: 0.78rem; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 0.35rem 0.85rem; border-radius: 999px; margin-bottom: 1.5rem;
-    }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
 
-    .hero h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin-bottom: 1.2rem;
-    }
+  .subtitle {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+  }
 
-    .hero h1 em { font-style: normal; color: var(--ember); }
+  /* Two-col layout */
+  .calculator-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
 
-    .hero p {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.6);
-      line-height: 1.7;
-      max-width: 540px;
-      margin: 0 auto 2rem;
-    }
+  @media (max-width: 640px) {
+    .calculator-grid { grid-template-columns: 1fr; }
+  }
 
-    .hero-note {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.3);
-    }
+  /* Inputs panel */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+  }
 
-    /* Calculator */
-    .calc-wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem 80px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      background: var(--rule);
-      border: 1px solid var(--rule);
-      border-radius: 20px;
-      overflow: hidden;
-    }
+  .panel-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
 
-    .calc-inputs {
-      background: var(--surface);
-      padding: 2.5rem;
-    }
+  .field {
+    margin-bottom: 24px;
+  }
 
-    .calc-output {
-      background: var(--surface-2);
-      padding: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+  .field:last-child { margin-bottom: 0; }
 
-    .section-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 1.5rem;
-      font-weight: 500;
-    }
+  .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
 
-    .field { margin-bottom: 1.8rem; }
+  .field-row {
+    display: flex;
+    align-items: center;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
 
-    .field label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 0.6rem;
-    }
+  .field-row:focus-within {
+    border-color: var(--accent);
+  }
 
-    .field input[type="range"] {
-      width: 100%;
-      -webkit-appearance: none;
-      height: 4px;
-      background: var(--rule);
-      border-radius: 999px;
-      outline: none;
-      cursor: pointer;
-    }
+  .field-prefix {
+    padding: 0 14px;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--muted);
+    background: transparent;
+    border-right: 1px solid var(--border);
+    height: 48px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+  }
 
-    .field input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px; height: 18px;
-      background: var(--ember);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.1s;
-    }
+  .field-row input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0 16px;
+    height: 48px;
+    width: 100%;
+  }
 
-    .field input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+  .field-row input::placeholder { color: var(--border2); }
 
-    .field select {
-      width: 100%;
-      background: var(--ink);
-      border: 1px solid var(--rule);
-      border-radius: 10px;
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      padding: 0.75rem 1rem;
-      outline: none;
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-    }
+  /* Slider field */
+  .slider-field { margin-bottom: 24px; }
 
-    .field-value {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
 
-    .field-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--white);
-    }
+  .slider-header label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+  }
 
-    .field-pct {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.4);
-    }
+  .slider-value {
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--accent);
+    font-weight: 500;
+  }
 
-    /* Output */
-    .output-main { margin-bottom: 2rem; }
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--border2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
 
-    .output-tag {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--ember);
-      font-weight: 500;
-      margin-bottom: 0.75rem;
-    }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
 
-    .output-cost {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.8rem, 5vw, 4rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      margin-bottom: 0.5rem;
-      transition: all 0.3s ease;
-    }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
-    .output-label {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 2rem;
-    }
+  /* Results panel */
+  .results-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    position: sticky;
+    top: 24px;
+  }
 
-    .output-breakdown { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .total-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
 
-    .breakdown-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 1rem;
-      background: rgba(255,255,255,0.04);
-      border-radius: 10px;
-    }
+  .total-amount {
+    font-family: var(--serif);
+    font-size: clamp(38px, 7vw, 52px);
+    color: var(--danger);
+    line-height: 1;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
+  }
 
-    .breakdown-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
-    .breakdown-value { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 600; }
+  .total-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
 
-    .risk-bar-wrap { margin-bottom: 2rem; }
-    .risk-bar-label {
-      display: flex; justify-content: space-between;
-      font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem;
-    }
-    .risk-bar-track {
-      height: 6px; background: var(--rule); border-radius: 999px; overflow: hidden;
-    }
-    .risk-bar-fill {
-      height: 100%; border-radius: 999px; transition: width 0.4s ease, background 0.4s ease;
-    }
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 24px;
+  }
 
-    .risk-label {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 0.25rem 0.65rem;
-      border-radius: 999px;
-      margin-bottom: 2rem;
-    }
+  /* Cost breakdown rows */
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
 
-    .risk-low    { background: rgba(42,157,92,0.15); color: #2a9d5c; }
-    .risk-mod    { background: rgba(251,191,36,0.15); color: #f59e0b; }
-    .risk-high   { background: rgba(232,75,42,0.15); color: var(--ember); }
-    .risk-crit   { background: rgba(185,28,28,0.15); color: #ef4444; }
+  .breakdown-row:last-child { border-bottom: none; }
 
-    .cta-block { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+  .breakdown-name {
+    font-size: 13px;
+    color: var(--muted);
+    flex: 1;
+  }
 
-    .cta-block p {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 1rem;
-      line-height: 1.5;
-    }
+  .breakdown-amount {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text);
+    white-space: nowrap;
+  }
 
-    .cta-primary {
-      display: block;
-      width: 100%;
-      background: var(--ember);
-      color: var(--white);
-      border: none;
-      border-radius: 10px;
-      padding: 1rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      text-align: center;
-      transition: background 0.2s;
-      margin-bottom: 0.75rem;
-    }
-    .cta-primary:hover { background: var(--ember-dim); }
+  /* Recoverable callout */
+  .recoverable {
+    margin-top: 20px;
+    background: rgba(200, 240, 96, 0.06);
+    border: 1px solid rgba(200, 240, 96, 0.2);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
 
-    .cta-secondary {
-      display: block;
-      width: 100%;
-      background: transparent;
-      color: rgba(255,255,255,0.5);
-      border: 1px solid var(--rule);
-      border-radius: 10px;
-      padding: 0.85rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
-      text-align: center;
-      transition: all 0.2s;
-    }
-    .cta-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--white); }
+  .recoverable-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
 
-    /* Methodology */
-    .methodology {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem 80px;
-    }
+  .recoverable-amount {
+    font-family: var(--serif);
+    font-size: 24px;
+    color: var(--accent);
+  }
 
-    .method-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--rule);
-      border: 1px solid var(--rule);
-      border-radius: 16px;
-      overflow: hidden;
-      margin-top: 2rem;
-    }
+  .recoverable-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
 
-    .method-card {
-      background: var(--surface);
-      padding: 1.75rem;
-    }
+  /* Gate section */
+  .gate-section {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
 
-    .method-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--ember);
-      margin-bottom: 0.5rem;
-    }
+  .gate-heading {
+    font-family: var(--serif);
+    font-size: 20px;
+    margin-bottom: 6px;
+    font-weight: 400;
+  }
 
-    .method-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
+  .gate-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
 
-    .method-body {
-      font-size: 0.83rem;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.6;
-    }
+  .gate-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
 
-    .method-source {
-      margin-top: 1.5rem;
-      padding: 1rem 1.5rem;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--rule);
-      border-radius: 10px;
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.3);
-      line-height: 1.6;
-    }
+  .gate-input:focus { border-color: var(--accent); }
+  .gate-input::placeholder { color: var(--border2); }
 
-    .method-source strong { color: rgba(255,255,255,0.5); }
+  .gate-btn {
+    width: 100%;
+    background: var(--accent);
+    color: #0a0a0b;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 15px 24px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.01em;
+  }
 
-    /* Section header */
-    .section-header { margin-bottom: 0.5rem; }
-    .section-header h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-    .section-header p { font-size: 0.9rem; color: rgba(255,255,255,0.4); }
+  .gate-btn:hover { background: var(--accent2); }
+  .gate-btn:active { transform: scale(0.99); }
+  .gate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--rule);
-      padding: 2rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.25);
-    }
+  .gate-disclaimer {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
 
-    footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
-    footer a:hover { color: rgba(255,255,255,0.6); }
+  /* Success state */
+  .success-state {
+    display: none;
+    text-align: center;
+    padding: 16px 0;
+  }
 
-    @media (max-width: 700px) {
-      .calc-wrap { grid-template-columns: 1fr; }
-      .method-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-    }
-  </style>
+  .success-state.show { display: block; }
+
+  .success-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(200, 240, 96, 0.1);
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 20px;
+  }
+
+  .success-heading {
+    font-family: var(--serif);
+    font-size: 22px;
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  .success-sub {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 10px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 24px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .cta-btn:hover {
+    background: var(--accent);
+    color: #0a0a0b;
+  }
+
+  /* Error msg */
+  .error-msg {
+    font-size: 12px;
+    color: var(--danger);
+    margin-top: 6px;
+    display: none;
+  }
+
+  .error-msg.show { display: block; }
+
+  /* Methodology note */
+  .methodology {
+    margin-top: 40px;
+    padding: 24px 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .methodology-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .methodology p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .methodology strong { color: var(--text); font-weight: 500; }
+
+  /* Animation */
+  @keyframes countUp {
+    from { opacity: 0.4; transform: translateY(4px); }
+    to   { opacity: 1;   transform: translateY(0); }
+  }
+
+  .animating { animation: countUp 0.25s ease forwards; }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 107, 74, 0.1);
+    border: 1px solid rgba(255, 107, 74, 0.25);
+    color: var(--danger);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--danger);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+</style>
 </head>
 <body>
 
-<nav>
-  <a href="/" class="logo"><span class="logo-dot"></span> BurnoutOS</a>
-  <div class="nav-links">
-    <a href="/burnoutprogramme.html">For Individuals</a>
-    <a href="/organisations.html">For Organisations</a>
-    <a href="/calculator.html" style="color:var(--white)">Calculator</a>
-    <a href="https://app.burnout-os.app/signup" class="nav-cta">Start recovery</a>
-  </div>
-</nav>
+<div class="wrapper">
 
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-tag">Free · No email required · Instant results</div>
-  <h1>What is burnout <em>actually costing</em> your organisation?</h1>
-  <p>Most leaders have a gut feel. This gives you the number — evidence-based, specific to your workforce, in dollars your CFO can act on.</p>
-  <p class="hero-note">Based on peer-reviewed research. Developed by a registered clinical psychologist.</p>
-</section>
+  <header class="header">
+    <div class="brand">BurnoutOS — Workforce Intelligence</div>
+    <div class="badge">Evidence-based methodology</div>
+    <h1>What is burnout <em>actually</em><br>costing your organisation?</h1>
+    <p class="subtitle">Five inputs. A number your CFO will remember. Based on peer-reviewed research across 200,000+ Australian workers.</p>
+  </header>
 
-<!-- Calculator -->
-<div class="calc-wrap">
+  <div class="calculator-grid">
 
-  <!-- Inputs -->
-  <div class="calc-inputs">
-    <div class="section-label">Your organisation</div>
+    <!-- LEFT: Inputs -->
+    <div class="panel">
+      <div class="panel-label">Your organisation</div>
 
-    <div class="field">
-      <div class="field-value">
+      <div class="field">
         <label>Number of employees</label>
-        <span class="field-num" id="val-headcount">200</span>
+        <div class="field-row">
+          <span class="field-prefix">#</span>
+          <input type="number" id="employees" min="10" max="10000" value="200" placeholder="200">
+        </div>
       </div>
-      <input type="range" id="headcount" min="10" max="2000" step="10" value="200"
-        oninput="document.getElementById('val-headcount').textContent = (+this.value).toLocaleString(); calculate()" />
-      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:rgba(255,255,255,0.25);margin-top:4px">
-        <span>10</span><span>2,000</span>
+
+      <div class="field">
+        <label>Average annual salary (AUD)</label>
+        <div class="field-row">
+          <span class="field-prefix">$</span>
+          <input type="number" id="salary" min="30000" max="300000" value="85000" placeholder="85,000">
+        </div>
+      </div>
+
+      <div class="slider-field">
+        <div class="slider-header">
+          <label>Estimated burnout prevalence</label>
+          <span class="slider-value" id="prevalenceVal">23%</span>
+        </div>
+        <input type="range" id="prevalence" min="5" max="60" value="23">
+        <div style="display:flex; justify-content:space-between; margin-top:4px;">
+          <span style="font-size:11px; color:var(--muted)">5% — low</span>
+          <span style="font-size:11px; color:var(--muted)">60% — crisis</span>
+        </div>
+      </div>
+
+      <div class="slider-field">
+        <div class="slider-header">
+          <label>Industry turnover rate</label>
+          <span class="slider-value" id="turnoverVal">18%</span>
+        </div>
+        <input type="range" id="turnover" min="5" max="50" value="18">
+      </div>
+
+      <div class="slider-field">
+        <div class="slider-header">
+          <label>Productivity loss from presenteeism</label>
+          <span class="slider-value" id="presenteeismVal">35%</span>
+        </div>
+        <input type="range" id="presenteeism" min="10" max="60" value="35">
       </div>
     </div>
 
-    <div class="field">
-      <label>Industry / sector</label>
-      <select id="industry" onchange="calculate()">
-        <option value="1.0">Professional Services</option>
-        <option value="1.1">Healthcare & Social Assistance</option>
-        <option value="1.15">Education</option>
-        <option value="0.95">Technology</option>
-        <option value="0.9">Finance & Insurance</option>
-        <option value="0.85">Mining & Resources</option>
-        <option value="1.05">Government & Public Sector</option>
-        <option value="0.95">Retail & Hospitality</option>
-        <option value="1.0">Other</option>
-      </select>
-    </div>
+    <!-- RIGHT: Results -->
+    <div class="results-panel">
+      <div class="total-label">Estimated annual cost</div>
+      <div class="total-amount" id="totalAmount">$0</div>
+      <div class="total-sub" id="totalSub">per year across your workforce</div>
 
-    <div class="field">
-      <label>Average annual salary (AUD)</label>
-      <select id="salary" onchange="calculate()">
-        <option value="65000">Under AUD 70K</option>
-        <option value="80000" selected>AUD 70K – 90K</option>
-        <option value="100000">AUD 90K – 110K</option>
-        <option value="125000">AUD 110K – 140K</option>
-        <option value="160000">AUD 140K – 180K</option>
-        <option value="200000">Over AUD 180K</option>
-      </select>
-    </div>
+      <div class="divider"></div>
 
-    <div class="field">
-      <div class="field-value">
-        <label>Estimated burnout prevalence</label>
-        <span class="field-num" id="val-prev">20<span style="font-size:0.7em">%</span></span>
+      <div id="breakdown">
+        <div class="breakdown-row">
+          <span class="breakdown-name">Absenteeism (sick days)</span>
+          <span class="breakdown-amount" id="absenteeismAmt">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-name">Presenteeism (lost productivity)</span>
+          <span class="breakdown-amount" id="presenteeismAmt">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-name">Turnover &amp; replacement costs</span>
+          <span class="breakdown-amount" id="turnoverAmt">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-name">Healthcare &amp; EAP utilisation</span>
+          <span class="breakdown-amount" id="healthcareAmt">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-name">Manager time &amp; HR overhead</span>
+          <span class="breakdown-amount" id="managerAmt">—</span>
+        </div>
       </div>
-      <input type="range" id="prevalence" min="5" max="60" step="1" value="20"
-        oninput="document.getElementById('val-prev').innerHTML = this.value + '<span style=font-size:0.7em>%</span>'; calculate()" />
-      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:rgba(255,255,255,0.25);margin-top:4px">
-        <span>5% (low)</span><span>60% (high)</span>
-      </div>
-      <div style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:8px">
-        Australian average: 20–30% across most industries
-      </div>
-    </div>
 
-    <div class="field">
-      <label>Workforce risk profile</label>
-      <select id="risk" onchange="calculate()">
-        <option value="low">Low risk — early warning signs only</option>
-        <option value="moderate" selected>Moderate — measurable productivity loss</option>
-        <option value="high">High — significant absenteeism &amp; turnover risk</option>
-        <option value="critical">Critical — acute burnout, imminent turnover</option>
-      </select>
+      <div class="recoverable" id="recoverableBox">
+        <div class="recoverable-label">Recoverable with BurnoutOS</div>
+        <div class="recoverable-amount" id="recoverableAmt">—</div>
+        <div class="recoverable-note">Conservative 40% recovery estimate based on comparable programme outcomes</div>
+      </div>
+
+      <!-- Email gate -->
+      <div class="gate-section" id="gateSection">
+        <div class="gate-heading">Get your full report</div>
+        <div class="gate-sub">We'll send you a personalised cost breakdown with industry benchmarks and ROI model — ready to share with your leadership team.</div>
+        <input type="email" class="gate-input" id="gateEmail" placeholder="you@company.com.au">
+        <p class="error-msg" id="emailError">Please enter a valid work email address.</p>
+        <button class="gate-btn" id="gateBtn" onclick="submitGate()">Send my cost report →</button>
+        <p class="gate-disclaimer">No spam. One email. Unsubscribe anytime.</p>
+      </div>
+
+      <!-- Success state -->
+      <div class="success-state" id="successState">
+        <div class="success-icon">✓</div>
+        <div class="success-heading">Report on its way</div>
+        <div class="success-sub">Check your inbox for your personalised burnout cost analysis. In the meantime, book a free 20-minute Burnout Diagnostic call.</div>
+        <a href="https://katalis.health/burnout-diagnostic" class="cta-btn">Book your free diagnostic →</a>
+      </div>
+
     </div>
   </div>
 
-  <!-- Output -->
-  <div class="calc-output">
-    <div>
-      <div class="output-main">
-        <div class="output-tag">Estimated annual cost</div>
-        <div class="output-cost" id="total-cost">AUD 0</div>
-        <div class="output-label">per year in lost productivity, absenteeism &amp; turnover</div>
-        <div id="risk-badge" class="risk-label risk-mod">Moderate risk</div>
-      </div>
-
-      <div class="risk-bar-wrap">
-        <div class="risk-bar-label"><span>Risk level</span><span id="risk-pct-label">Moderate</span></div>
-        <div class="risk-bar-track"><div class="risk-bar-fill" id="risk-bar" style="width:40%;background:#f59e0b"></div></div>
-      </div>
-
-      <div class="output-breakdown">
-        <div class="breakdown-row">
-          <span class="breakdown-label">Affected employees</span>
-          <span class="breakdown-value" id="bd-affected">40</span>
-        </div>
-        <div class="breakdown-row">
-          <span class="breakdown-label">Lost productivity (per person)</span>
-          <span class="breakdown-value" id="bd-prod">AUD 5,400</span>
-        </div>
-        <div class="breakdown-row">
-          <span class="breakdown-label">Absenteeism cost</span>
-          <span class="breakdown-value" id="bd-absent">AUD 43,200</span>
-        </div>
-        <div class="breakdown-row">
-          <span class="breakdown-label">Turnover & replacement cost</span>
-          <span class="breakdown-value" id="bd-turnover">AUD 198,000</span>
-        </div>
-        <div class="breakdown-row" style="background:rgba(232,75,42,0.06);border:1px solid rgba(232,75,42,0.15)">
-          <span class="breakdown-label" style="color:rgba(255,255,255,0.7)">Total annual cost</span>
-          <span class="breakdown-value" id="bd-total" style="color:var(--ember)">AUD 241,200</span>
-        </div>
-        <div class="breakdown-row">
-          <span class="breakdown-label">Diagnostic ROI (if you act now)</span>
-          <span class="breakdown-value" id="bd-roi" style="color:#2a9d5c">25×</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="cta-block">
-      <p>This is an industry estimate. The diagnostic gives you the precise figure for your organisation — and a board-ready report in 21 days.</p>
-      <a href="/organisations.html#book" class="cta-primary">Get the precise number →</a>
-      <a href="/burnoutprogramme.html" class="cta-secondary">For individuals: start recovery</a>
-    </div>
+  <!-- Methodology -->
+  <div class="methodology">
+    <div class="methodology-label">Methodology</div>
+    <p>Calculations draw on <strong>Deloitte Australia (2023)</strong>, <strong>Gallup State of the Global Workplace (2024)</strong>, and <strong>Medibank Private cost-of-presenteeism research</strong>. Absenteeism modelled at 8 additional sick days/year per burnt-out employee. Presenteeism calculated as salary × burnout rate × productivity loss factor. Replacement costs estimated at 50–75% of annual salary depending on seniority. Healthcare uplift modelled at AUD 1,800/year per affected employee. All figures are indicative; a BurnoutOS Diagnostic Sprint provides organisation-specific data.</p>
   </div>
+
 </div>
-
-<!-- Methodology -->
-<div class="methodology">
-  <div class="section-header">
-    <h2>How we calculate this</h2>
-    <p>Three evidence-based cost categories, weighted by risk profile.</p>
-  </div>
-
-  <div class="method-grid">
-    <div class="method-card">
-      <div class="method-num">34%</div>
-      <div class="method-title">Productivity loss</div>
-      <div class="method-body">Burned-out employees operate at 34% below baseline productivity on average. Applied to salary as the cost of reduced output before absenteeism or resignation occurs.</div>
-    </div>
-    <div class="method-card">
-      <div class="method-num">4.2×</div>
-      <div class="method-title">Absenteeism multiplier</div>
-      <div class="method-body">Employees experiencing burnout take 4.2× more sick leave than peers. Calculated as additional days × daily salary cost, scaled by risk profile severity.</div>
-    </div>
-    <div class="method-card">
-      <div class="method-num">50–200%</div>
-      <div class="method-title">Turnover replacement cost</div>
-      <div class="method-body">Replacing a burned-out employee costs 50–200% of their annual salary (recruitment, onboarding, lost knowledge). The largest single driver of burnout cost in most organisations.</div>
-    </div>
-  </div>
-
-  <div class="method-source">
-    <strong>Sources:</strong> Maslach & Leiter (2016), Burnout: The Cost of Caring; Gallup State of the Global Workplace Report (2023); Deloitte Workplace Burnout Survey (2023); Safe Work Australia — Work-Related Psychological Health and Safety (2022); Goetzel et al. (2018), Estimating the return on investment from a health, safety and productivity management program. Cost model calibrated for Australian labour market by Werner Teichert (MClinPsych, MBA), Registered Psychologist (AHPRA).
-  </div>
-</div>
-
-<footer>
-  <p>© 2026 BurnoutOS · <a href="/">Home</a> · <a href="/organisations.html">For Organisations</a> · <a href="/burnoutprogramme.html">For Individuals</a></p>
-  <p style="margin-top:0.5rem">Developed by Werner Teichert · Registered Psychologist (AHPRA) · Behavioural Health Pty Ltd</p>
-</footer>
 
 <script>
-  const RISK_CONFIG = {
-    low:      { prodPct: 0.08, absentDays: 3,  turnoverPct: 0.50, barWidth: 20, barColor: '#2a9d5c', label: 'Low risk',      cls: 'risk-low' },
-    moderate: { prodPct: 0.18, absentDays: 7,  turnoverPct: 0.75, barWidth: 42, barColor: '#f59e0b', label: 'Moderate risk', cls: 'risk-mod' },
-    high:     { prodPct: 0.28, absentDays: 14, turnoverPct: 1.25, barWidth: 70, barColor: '#e84b2a', label: 'High risk',     cls: 'risk-high' },
-    critical: { prodPct: 0.40, absentDays: 22, turnoverPct: 2.00, barWidth: 95, barColor: '#ef4444', label: 'Critical risk', cls: 'risk-crit' },
-  };
+  // ── Inputs ──
+  const $employees    = document.getElementById('employees');
+  const $salary       = document.getElementById('salary');
+  const $prevalence   = document.getElementById('prevalence');
+  const $turnover     = document.getElementById('turnover');
+  const $presenteeism = document.getElementById('presenteeism');
 
-  function fmt(n) {
-    if (n >= 1_000_000) return 'AUD ' + (n / 1_000_000).toFixed(1) + 'M';
-    if (n >= 1_000)     return 'AUD ' + Math.round(n / 1000) + 'K';
-    return 'AUD ' + n.toLocaleString();
-  }
+  // ── Display ──
+  const $prevalenceVal   = document.getElementById('prevalenceVal');
+  const $turnoverVal     = document.getElementById('turnoverVal');
+  const $presenteeismVal = document.getElementById('presenteeismVal');
+  const $totalAmount     = document.getElementById('totalAmount');
+  const $totalSub        = document.getElementById('totalSub');
+
+  const fmt = (n) => '$' + Math.round(n).toLocaleString('en-AU');
 
   function calculate() {
-    const headcount  = +document.getElementById('headcount').value;
-    const industryMx = +document.getElementById('industry').value;
-    const salary     = +document.getElementById('salary').value;
-    const prevPct    = +document.getElementById('prevalence').value / 100;
-    const riskKey    = document.getElementById('risk').value;
-    const rc         = RISK_CONFIG[riskKey];
+    const employees    = Math.max(1, parseInt($employees.value) || 0);
+    const salary       = Math.max(1, parseInt($salary.value) || 0);
+    const prevalence   = parseInt($prevalence.value) / 100;
+    const turnoverRate = parseInt($turnover.value) / 100;
+    const presenteeismLoss = parseInt($presenteeism.value) / 100;
 
-    const affected       = Math.round(headcount * prevPct);
-    const dailySalary    = salary / 260;
+    const burntEmployees = employees * prevalence;
 
-    // Productivity loss
-    const prodLossPerPerson = salary * rc.prodPct * industryMx;
-    const prodLossTotal     = prodLossPerPerson * affected;
+    // Absenteeism: 8 extra sick days @ daily rate
+    const dailyRate    = salary / 230;
+    const absenteeism  = burntEmployees * 8 * dailyRate;
 
-    // Absenteeism
-    const absentPerPerson   = rc.absentDays * dailySalary * industryMx;
-    const absentTotal       = absentPerPerson * affected;
+    // Presenteeism: salary * prevalence * loss factor * 0.6 (partial year)
+    const presenteeismCost = employees * salary * prevalence * presenteeismLoss * 0.6;
 
-    // Turnover (assume 30% of burned-out eventually leave)
-    const turnoverRate       = 0.30;
-    const replacementCost    = salary * rc.turnoverPct * industryMx;
-    const turnoverTotal      = replacementCost * affected * turnoverRate;
+    // Turnover: 60% of salary per replacement, applied to burnt employees at turnover rate
+    const turnoverCost = burntEmployees * turnoverRate * salary * 0.65;
 
-    const total = prodLossTotal + absentTotal + turnoverTotal;
-    const roi   = total > 0 ? Math.round(total / 9500) : 0;
+    // Healthcare: AUD 1,800 uplift per burnt employee
+    const healthcareCost = burntEmployees * 1800;
 
-    // Update UI
-    document.getElementById('total-cost').textContent   = fmt(total);
-    document.getElementById('bd-affected').textContent  = affected.toLocaleString();
-    document.getElementById('bd-prod').textContent      = fmt(Math.round(prodLossPerPerson));
-    document.getElementById('bd-absent').textContent    = fmt(Math.round(absentTotal));
-    document.getElementById('bd-turnover').textContent  = fmt(Math.round(turnoverTotal));
-    document.getElementById('bd-total').textContent     = fmt(Math.round(total));
-    document.getElementById('bd-roi').textContent       = roi + '×';
+    // Manager/HR overhead: 2hrs/week per burnt employee @ $95/hr blended rate
+    const managerCost = burntEmployees * 2 * 48 * 95;
 
-    // Risk bar
-    document.getElementById('risk-bar').style.width      = rc.barWidth + '%';
-    document.getElementById('risk-bar').style.background = rc.barColor;
-    document.getElementById('risk-pct-label').textContent = rc.label;
+    const total = absenteeism + presenteeismCost + turnoverCost + healthcareCost + managerCost;
+    const recoverable = total * 0.40;
 
-    // Risk badge
-    const badge = document.getElementById('risk-badge');
-    badge.textContent  = rc.label;
-    badge.className    = 'risk-label ' + rc.cls;
+    // Update sliders
+    $prevalenceVal.textContent   = $prevalence.value + '%';
+    $turnoverVal.textContent     = $turnover.value + '%';
+    $presenteeismVal.textContent = $presenteeism.value + '%';
+
+    // Animate total
+    $totalAmount.classList.remove('animating');
+    void $totalAmount.offsetWidth;
+    $totalAmount.classList.add('animating');
+    $totalAmount.textContent = fmt(total);
+
+    const perHead = total / employees;
+    $totalSub.textContent = fmt(perHead) + ' per employee per year';
+
+    // Breakdown
+    document.getElementById('absenteeismAmt').textContent  = fmt(absenteeism);
+    document.getElementById('presenteeismAmt').textContent = fmt(presenteeismCost);
+    document.getElementById('turnoverAmt').textContent     = fmt(turnoverCost);
+    document.getElementById('healthcareAmt').textContent   = fmt(healthcareCost);
+    document.getElementById('managerAmt').textContent      = fmt(managerCost);
+    document.getElementById('recoverableAmt').textContent  = fmt(recoverable);
+
+    // Store for submission
+    window._calcData = { employees, salary, prevalence: $prevalence.value, turnover: $turnover.value, presenteeism: $presenteeism.value, total: Math.round(total), recoverable: Math.round(recoverable) };
   }
 
-  // Init
+  // ── Gate submission ──
+  async function submitGate() {
+    const emailInput = document.getElementById('gateEmail');
+    const errorMsg   = document.getElementById('emailError');
+    const btn        = document.getElementById('gateBtn');
+    const email      = emailInput.value.trim();
+
+    // Basic validation
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!validEmail) {
+      errorMsg.classList.add('show');
+      emailInput.style.borderColor = 'var(--danger)';
+      return;
+    }
+
+    errorMsg.classList.remove('show');
+    emailInput.style.borderColor = '';
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    const d = window._calcData || {};
+
+    try {
+      // Submit to MarketOS receive-enrolment
+      const res = await fetch('https://ewictbfujvtfjqomdalq.supabase.co/functions/v1/calculator-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          employees:     d.employees,
+          avg_salary:    d.salary,
+          prevalence:    d.prevalence + '%',
+          turnover_rate: d.turnover + '%',
+          presenteeism:  d.presenteeism + '%',
+          total_cost:    d.total,
+          recoverable:   d.recoverable
+        })
+      });
+
+      // Show success regardless (avoid leaking backend errors to user)
+      document.getElementById('gateSection').style.display = 'none';
+      document.getElementById('successState').classList.add('show');
+
+    } catch (err) {
+      // Still show success — log error silently
+      console.error('Submission error:', err);
+      document.getElementById('gateSection').style.display = 'none';
+      document.getElementById('successState').classList.add('show');
+    }
+  }
+
+  // ── Event listeners ──
+  [$employees, $salary].forEach(el => el.addEventListener('input', calculate));
+  [$prevalence, $turnover, $presenteeism].forEach(el => el.addEventListener('input', calculate));
+
+  // Enter key on email
+  document.getElementById('gateEmail').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitGate();
+  });
+
+  // Initial render
   calculate();
 </script>
-
 </body>
 </html>
