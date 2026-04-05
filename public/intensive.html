@@ -704,7 +704,7 @@
       </p>
 
       <div class="hero-btns">
-        <a href="#enrol" class="btn-primary" id="hero-enrol-btn">Enrol for AUD $997</a>
+        <a href="#enrol" class="btn-primary" id="hero-enrol-btn">Enrol for AUD $1,497</a>
         <a href="#programme" class="btn-ghost">See what's included</a>
       </div>
 
@@ -900,7 +900,7 @@
     <div class="inner-xs">
       <div class="fade-in">
         <p class="eyebrow">What you're actually getting</p>
-        <h2>Everything valued individually at $2,047.<br><span style="color:var(--violet-lt)">Yours for $997.</span></h2>
+        <h2>Everything valued individually at $2,047.<br><span style="color:var(--violet-lt)">Yours for $1,497.</span></h2>
       </div>
 
       <div style="margin-top:2.5rem" class="fade-in">
@@ -939,7 +939,7 @@
         </div>
         <div class="total-row price">
           <span class="total-label">Your investment</span>
-          <span class="total-amount">$997</span>
+          <span class="total-amount">$1,497</span>
         </div>
         <p class="stack-note">*90-day post-programme access included at no charge</p>
       </div>
@@ -956,11 +956,12 @@
       <div class="currency-toggle">
         <button class="curr-btn active" onclick="setCurrency('aud')">AUD</button>
         <button class="curr-btn" onclick="setCurrency('zar')">ZAR</button>
+        <button class="curr-btn" onclick="setCurrency('gbp')">GBP</button>
         <button class="curr-btn" onclick="setCurrency('instalment')">Instalment</button>
       </div>
 
       <div class="price-card">
-        <div class="price-display" id="price-display">AUD $997</div>
+        <div class="price-display" id="price-display">AUD $1,497</div>
         <div class="price-note" id="price-note">One-time payment · full access</div>
 
         <ul class="checklist">
@@ -994,7 +995,7 @@
           </li>
         </ul>
 
-        <a href="#" class="btn-enrol" id="enrol-btn">Enrol now — AUD $997</a>
+        <a href="#" class="btn-enrol" id="enrol-btn">Enrol now — AUD $1,497</a>
       </div>
 
       <div class="seats-live">
@@ -1054,7 +1055,7 @@
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <div class="faq-a">
-            <p>Absolutely. ZAR pricing is available (ZAR 8,997). Sessions run at a time that works across AEST and SAST. Currency and time zone are confirmed before you enrol.</p>
+            <p>Absolutely. ZAR pricing is available (ZAR 16,997). Sessions run at a time that works across AEST and SAST. Currency and time zone are confirmed before you enrol.</p>
           </div>
         </div>
         <div class="faq-item fade-in">
@@ -1063,7 +1064,7 @@
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <div class="faq-a">
-            <p>Two payments of AUD $549, charged 4 weeks apart. Total is $1,098 — a small premium for the flexibility. Both options give full access to everything.</p>
+            <p>Two payments of AUD $799, charged 4 weeks apart. Total is $1,598 — a small premium for the flexibility. Both options give full access to everything.</p>
           </div>
         </div>
         <div class="faq-item fade-in">
@@ -1094,7 +1095,7 @@
       <div class="inner-rel">
         <h2>The next cohort is forming now.</h2>
         <p>10 people maximum. <span id="cta-seats">7</span> seats left. If you're reading this and it resonates — don't wait for a better time. Burnout doesn't improve with delay.</p>
-        <a href="#" class="btn-primary" id="cta-enrol-btn" style="display:inline-block;padding:1rem 2.5rem">Reserve your seat — AUD $997</a>
+        <a href="#" class="btn-primary" id="cta-enrol-btn" style="display:inline-block;padding:1rem 2.5rem">Reserve your seat — AUD $1,497</a>
         <p style="margin-top:1.5rem;font-size:0.75rem;color:rgba(255,255,255,0.2)">BurnoutOS · by Katalis · © 2026 Katalis (Behavioural Health Pty Ltd)</p>
       </div>
     </div>
@@ -1114,15 +1115,17 @@
   <script>
     // ── Stripe links ──
     const STRIPE = {
-      aud:        'https://buy.stripe.com/cNi14mgZ043fcpWelt9Zm0e',
-      zar:        'https://buy.stripe.com/aFa3cu38agQ19dKdhp9Zm0f',
-      instalment: 'https://buy.stripe.com/28E6oG8su57jfC80uD9Zm0g',
+      aud:        'https://buy.stripe.com/cNi00i4cedDPfC8dhp9Zm0l',
+      zar:        'https://buy.stripe.com/4gMeVceQSarD4Xu2CL9Zm0m',
+      gbp:        'https://buy.stripe.com/9B6cN48sueHTahO3GP9Zm0n',
+      instalment: 'https://buy.stripe.com/4gM14m9wygQ19dKdhp9Zm0o',
     };
 
     const PRICES = {
-      aud:        { label: 'AUD $997',      note: 'One-time payment · full access',            btn: 'Enrol now — AUD $997' },
-      zar:        { label: 'ZAR 8,997',     note: 'One-time payment · full access',            btn: 'Enrol now — ZAR 8,997' },
-      instalment: { label: '2 × AUD $549',  note: 'Charged 4 weeks apart · total $1,098',     btn: 'Enrol now — 2 × AUD $549' },
+      aud:        { label: 'AUD $1,497',    note: 'One-time payment · full access',            btn: 'Enrol now — AUD $1,497' },
+      zar:        { label: 'ZAR 16,997',    note: 'One-time payment · full access',            btn: 'Enrol now — ZAR 16,997' },
+      gbp:        { label: 'GBP £847',       note: 'One-time payment · full access',            btn: 'Enrol now — GBP £847' },
+      instalment: { label: '2 × AUD $799',   note: 'Charged 4 weeks apart · total $1,598',     btn: 'Enrol now — 2 × AUD $799' },
     };
 
     let currentCurrency = 'aud';
