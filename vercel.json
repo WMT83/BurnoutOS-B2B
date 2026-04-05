@@ -1,6 +1,7 @@
 {
   "redirects": [
-    { "source": "/calculator", "destination": "/calculator.html", "permanent": false }
+    { "source": "/calculator", "destination": "/calculator.html", "permanent": false },
+    { "source": "/intensive", "destination": "/intensive.html", "permanent": false }
   ],
   "rewrites": [
     { "source": "/diagnostic/:path*", "destination": "/app.html" },
