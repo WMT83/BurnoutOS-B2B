@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Burnout Recovery Intensive — BurnoutOS</title>
+  <meta name="description" content="An 8-week live group programme using Acceptance and Commitment Therapy. Led by an AHPRA-registered psychologist. Maximum 10 participants. Recover from burnout — not just rest from it." />
+  <link rel="canonical" href="https://burnout-os.app/intensive" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #0d0d14;
+      --ink-soft:   #1a1a28;
+      --violet:     #7c3aed;
+      --violet-dim: #6d28d9;
+      --violet-lt:  #a78bfa;
+      --indigo:     #4f46e5;
+      --white:      #ffffff;
+      --rule:       rgba(255,255,255,0.07);
+      --muted:      rgba(255,255,255,0.45);
+      --faint:      rgba(255,255,255,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13,13,20,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--white); }
+    .nav-back svg { flex-shrink: 0; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .seats-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      background: rgba(124,58,237,0.15);
+      color: var(--violet-lt);
+      border: 1px solid rgba(124,58,237,0.3);
+    }
+
+    .nav-cta {
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Syne', sans-serif;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      background: var(--violet);
+      color: var(--white);
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--violet-dim); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2rem; }
+
+    .inner       { max-width: 900px; margin: 0 auto; }
+    .inner-sm    { max-width: 720px; margin: 0 auto; }
+    .inner-xs    { max-width: 560px; margin: 0 auto; }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--violet-lt);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .eyebrow.indigo { color: #818cf8; }
+    .eyebrow span.rule { display: inline-block; width: 20px; height: 1px; background: currentColor; }
+
+    /* ── HERO ── */
+    #hero {
+      padding-top: 9rem;
+      padding-bottom: 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: 80px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 300px;
+      background: radial-gradient(circle, rgba(79,70,229,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner { position: relative; max-width: 760px; margin: 0 auto; }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 .gradient {
+      background: linear-gradient(135deg, #a78bfa, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 58ch;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-btns {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    @media (min-width: 480px) {
+      .hero-btns { flex-direction: row; justify-content: center; }
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      background: var(--violet);
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 8px 32px rgba(124,58,237,0.35);
+    }
+    .btn-primary:hover { background: var(--violet-dim); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.65);
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.28); color: var(--white); }
+
+    .hero-meta {
+      margin-top: 1.5rem;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── PROOF STRIP ── */
+    #proof {
+      padding: 2rem;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      background: rgba(255,255,255,0.015);
+    }
+
+    .proof-grid {
+      max-width: 700px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      text-align: center;
+    }
+    @media (min-width: 520px) {
+      .proof-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .proof-stat {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--violet-lt);
+      margin-bottom: 0.25rem;
+    }
+    .proof-label {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* ── PROBLEM SECTION ── */
+    #problem {
+      background: linear-gradient(180deg, transparent, rgba(49,46,129,0.12));
+    }
+
+    #problem h2, #programme h2, #includes h2, #facilitator h2,
+    #value h2, #enrol h2, #faq h2, #cta h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .body-text {
+      color: var(--muted);
+      font-size: 1.0625rem;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+    .body-text + .body-text { margin-top: 1.25rem; }
+
+    /* ── WEEK GRID ── */
+    .week-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    @media (min-width: 640px) {
+      .week-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .week-card {
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.025);
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .week-card:hover {
+      border-color: rgba(124,58,237,0.35);
+      background: rgba(124,58,237,0.05);
+    }
+
+    .week-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(167,139,250,0.6);
+      margin-bottom: 0.6rem;
+    }
+    .week-card h3 {
+      font-weight: 600;
+      font-size: 0.975rem;
+      margin-bottom: 0.5rem;
+    }
+    .week-card p {
+      font-size: 0.845rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+    }
+
+    /* ── INCLUDES GRID ── */
+    #includes { background: rgba(49,46,129,0.12); }
+
+    .includes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 3.5rem;
+    }
+    @media (min-width: 560px) {
+      .includes-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .include-card {
+      display: flex;
+      gap: 1rem;
+      padding: 1.25rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+    }
+    .include-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .include-card h3 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .include-card p { font-size: 0.8rem; color: rgba(255,255,255,0.4); line-height: 1.55; }
+
+    /* ── FACILITATOR ── */
+    .facilitator-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    @media (min-width: 560px) {
+      .facilitator-inner { flex-direction: row; align-items: flex-start; }
+    }
+
+    .facilitator-avatar {
+      flex-shrink: 0;
+      width: 80px; height: 80px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--violet), var(--indigo));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    .cred-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .cred-tag {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── VALUE STACK ── */
+    #value { background: linear-gradient(180deg, rgba(109,40,217,0.15), transparent); }
+
+    .stack-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.025);
+      margin-bottom: 0.5rem;
+    }
+    .stack-left { display: flex; align-items: center; gap: 0.75rem; }
+    .stack-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--violet-lt); flex-shrink: 0; }
+    .stack-label { font-size: 0.875rem; color: rgba(255,255,255,0.65); }
+    .stack-value { font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.45); flex-shrink: 0; margin-left: 1rem; }
+
+    .total-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1rem;
+      border-radius: 10px;
+      margin-top: 0.25rem;
+    }
+    .total-row.strikethrough {
+      border: 1px solid rgba(124,58,237,0.2);
+      background: rgba(124,58,237,0.06);
+      opacity: 0.5;
+    }
+    .total-row.price {
+      border: 1px solid rgba(167,139,250,0.4);
+      background: rgba(124,58,237,0.15);
+      margin-top: 0.5rem;
+    }
+    .total-label { font-weight: 600; font-size: 1rem; }
+    .total-amount { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; }
+    .total-row.price .total-amount { color: var(--violet-lt); }
+    .stack-note { font-size: 0.72rem; color: rgba(255,255,255,0.25); text-align: center; margin-top: 0.75rem; }
+
+    /* ── PRICING / ENROL ── */
+    #enrol { text-align: center; }
+
+    .currency-toggle {
+      display: inline-flex;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      border-radius: 10px;
+      padding: 4px;
+      gap: 2px;
+      margin-bottom: 2rem;
+    }
+
+    .curr-btn {
+      padding: 0.5rem 1.1rem;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .curr-btn.active {
+      background: var(--violet);
+      color: var(--white);
+      box-shadow: 0 2px 8px rgba(124,58,237,0.4);
+    }
+    .curr-btn:hover:not(.active) { color: rgba(255,255,255,0.7); }
+
+    .price-card {
+      border-radius: 20px;
+      border: 1px solid rgba(167,139,250,0.2);
+      background: linear-gradient(180deg, rgba(109,40,217,0.25), rgba(49,46,129,0.2));
+      padding: 2.5rem 2rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .price-display {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+    }
+    .price-note {
+      font-size: 0.825rem;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 2rem;
+    }
+
+    .checklist {
+      list-style: none;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .checklist li svg { flex-shrink: 0; color: var(--violet-lt); }
+
+    .btn-enrol {
+      display: block;
+      width: 100%;
+      padding: 1.1rem;
+      border-radius: 12px;
+      background: var(--violet);
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 8px 24px rgba(124,58,237,0.4);
+    }
+    .btn-enrol:hover { background: var(--violet-dim); transform: translateY(-2px); }
+
+    .seats-live {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 1.25rem;
+    }
+    .pulse-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #fbbf24;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .guarantee-box {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      padding: 1.25rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+      margin-top: 2rem;
+      text-align: left;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .guarantee-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 2px; }
+    .guarantee-box h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .guarantee-box p { font-size: 0.8rem; color: rgba(255,255,255,0.38); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    #faq { background: rgba(49,46,129,0.1); }
+
+    .faq-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .faq-item {
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+      overflow: hidden;
+    }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.925rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      gap: 1rem;
+    }
+
+    .faq-q svg {
+      flex-shrink: 0;
+      color: rgba(255,255,255,0.3);
+      transition: transform 0.3s ease;
+    }
+    .faq-item.open .faq-q svg { transform: rotate(180deg); }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .faq-item.open .faq-a {
+      max-height: 400px;
+      opacity: 1;
+    }
+    .faq-a p {
+      padding: 0 1.5rem 1.25rem;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.42);
+      line-height: 1.7;
+    }
+
+    /* ── FINAL CTA ── */
+    #cta {
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .cta-card {
+      position: relative;
+      max-width: 660px;
+      margin: 0 auto;
+      border-radius: 20px;
+      border: 1px solid rgba(124,58,237,0.22);
+      background: linear-gradient(180deg, rgba(109,40,217,0.35), rgba(49,46,129,0.2));
+      padding: 4rem 2.5rem;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 200px;
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-card .inner-rel { position: relative; }
+
+    .cta-card p {
+      font-size: 1.0625rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 48ch;
+      margin: 1rem auto 2.5rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 1.75rem 2rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .footer-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.3);
+    }
+    footer p { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+
+    /* ── FADE-IN ANIMATION ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0.9rem 1.25rem; }
+      .seats-badge { display: none; }
+      section { padding: 4rem 1.25rem; }
+      #hero { padding-top: 7rem; padding-bottom: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      BurnoutOS
+    </a>
+    <div class="nav-right">
+      <span class="seats-badge" id="nav-seats">7 seats remaining</span>
+      <a href="#enrol" class="nav-cta">Enrol now</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner fade-in">
+      <div class="eyebrow" style="justify-content:center">
+        <span class="rule"></span>
+        Burnout Recovery Intensive
+        <span class="rule"></span>
+      </div>
+
+      <h1>
+        Recover from burnout.<br>
+        <span class="gradient">Not just rest from it.</span>
+      </h1>
+
+      <p class="hero-sub">
+        An 8-week live group programme using Acceptance and Commitment Therapy — the evidence-based framework that treats the root cause of burnout, not the symptoms. Led by an AHPRA-registered psychologist. Maximum 10 participants.
+      </p>
+
+      <div class="hero-btns">
+        <a href="#enrol" class="btn-primary" id="hero-enrol-btn">Enrol for AUD $997</a>
+        <a href="#programme" class="btn-ghost">See what's included</a>
+      </div>
+
+      <p class="hero-meta">Next cohort · 8 weeks · 90 min/week · Zoom · <span id="hero-seats">7</span> of 10 seats available</p>
+    </div>
+  </section>
+
+  <!-- PROOF STRIP -->
+  <section id="proof">
+    <div class="proof-grid fade-in">
+      <div>
+        <div class="proof-stat">ACT</div>
+        <div class="proof-label">Evidence-based framework</div>
+      </div>
+      <div>
+        <div class="proof-stat">10</div>
+        <div class="proof-label">Maximum participants</div>
+      </div>
+      <div>
+        <div class="proof-stat">8 wks</div>
+        <div class="proof-label">Structured programme</div>
+      </div>
+      <div>
+        <div class="proof-stat">AHPRA</div>
+        <div class="proof-label">Registered psychologist</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section id="problem">
+    <div class="inner-sm">
+      <div class="fade-in">
+        <p class="eyebrow">The problem with "just rest"</p>
+        <h2>Rest recovers your energy. ACT recovers your relationship with work.</h2>
+      </div>
+      <div class="fade-in">
+        <p class="body-text">You've already tried taking a break. Maybe a weekend, maybe two weeks. You come back and within days you're right back to where you started — overwhelmed, exhausted, running on empty.</p>
+        <p class="body-text" style="margin-top:1.25rem">That's because burnout isn't caused by a deficit of rest. It's caused by a misalignment between your values and how you're actually spending your life. Rest treats the symptom. ACT treats the cause.</p>
+        <p class="body-text" style="margin-top:1.25rem">Acceptance and Commitment Therapy is the most extensively validated psychological framework for occupational burnout. It doesn't teach you to think more positively or manage your time better. It changes your relationship with difficult thoughts, emotions, and situations at a fundamental level.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMME -->
+  <section id="programme">
+    <div class="inner">
+      <div class="fade-in">
+        <p class="eyebrow">The programme</p>
+        <h2>8 weeks. 6 ACT pillars. One cohort.</h2>
+        <p class="body-text">Each session builds on the last. By week 8 you have a complete ACT toolkit and a personalised maintenance plan.</p>
+      </div>
+
+      <div class="week-grid">
+        <div class="week-card fade-in">
+          <div class="week-label">Week 1</div>
+          <h3>Recognising burnout</h3>
+          <p>Understand what burnout actually is — biologically, psychologically, and contextually. Burnout severity assessment debrief. Set your recovery intention.</p>
+        </div>
+        <div class="week-card fade-in">
+          <div class="week-label">Week 2</div>
+          <h3>Values clarification</h3>
+          <p>ACT pillar 1. Identify what matters most and how far you've drifted. Values become your compass for every decision ahead.</p>
+        </div>
+        <div class="week-card fade-in">
+          <div class="week-label">Week 3</div>
+          <h3>Defusion from thoughts</h3>
+          <p>ACT pillar 2. Learn to unhook from the relentless inner critic, perfectionism, and catastrophising that accelerate burnout.</p>
+        </div>
+        <div class="week-card fade-in">
+          <div class="week-label">Week 4</div>
+          <h3>Acceptance of difficult states</h3>
+          <p>ACT pillar 3. Stop fighting exhaustion, anxiety, and overwhelm. Radical acceptance as a recovery strategy — not resignation.</p>
+        </div>
+        <div class="week-card fade-in">
+          <div class="week-label">Week 5</div>
+          <h3>Present-moment contact</h3>
+          <p>ACT pillar 4. Mindfulness practices calibrated for burnout — not generic meditation, but targeted nervous system regulation.</p>
+        </div>
+        <div class="week-card fade-in">
+          <div class="week-label">Week 6</div>
+          <h3>Self as context</h3>
+          <p>ACT pillar 5. Rebuild a stable sense of self that isn't defined by your job title, productivity, or output.</p>
+        </div>
+        <div class="week-card fade-in">
+          <div class="week-label">Week 7</div>
+          <h3>Committed action</h3>
+          <p>ACT pillar 6. Design a sustainable work-life architecture. Boundaries, energy management, and re-engagement on your terms.</p>
+        </div>
+        <div class="week-card fade-in">
+          <div class="week-label">Week 8</div>
+          <h3>Integration and continuation</h3>
+          <p>Consolidate your ACT skills. Build your personalised maintenance plan. Cohort celebration and next-chapter commitments.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED -->
+  <section id="includes">
+    <div class="inner-sm">
+      <div class="fade-in">
+        <p class="eyebrow indigo">Everything included</p>
+        <h2>Not a course. A complete recovery system.</h2>
+      </div>
+
+      <div class="includes-grid">
+        <div class="include-card fade-in">
+          <div class="include-icon">🎙</div>
+          <div>
+            <h3>8 × live group sessions</h3>
+            <p>90 minutes each. Small cohort of max 10 — you'll know everyone by name within two weeks.</p>
+          </div>
+        </div>
+        <div class="include-card fade-in">
+          <div class="include-icon">📞</div>
+          <div>
+            <h3>45-min onboarding call</h3>
+            <p>A personal call with Werner before Week 1. We map your specific burnout profile and set your recovery intention.</p>
+          </div>
+        </div>
+        <div class="include-card fade-in">
+          <div class="include-icon">🧠</div>
+          <div>
+            <h3>Full platform access</h3>
+            <p>80+ ACT and mindfulness practices, sleep protocol, energy tracking, and the complete BurnoutOS framework.</p>
+          </div>
+        </div>
+        <div class="include-card fade-in">
+          <div class="include-icon">🤖</div>
+          <div>
+            <h3>AI Coach — always on</h3>
+            <p>Trained on burnout recovery science. Ask it anything between sessions. Available 24/7.</p>
+          </div>
+        </div>
+        <div class="include-card fade-in">
+          <div class="include-icon">📋</div>
+          <div>
+            <h3>Severity assessment + report</h3>
+            <p>A validated burnout assessment with a personalised written report — not just a score, but a clinical picture.</p>
+          </div>
+        </div>
+        <div class="include-card fade-in">
+          <div class="include-icon">💬</div>
+          <div>
+            <h3>Async between-session support</h3>
+            <p>Voice or text Werner and the group between sessions. You're not alone for 6 days between Zooms.</p>
+          </div>
+        </div>
+        <div class="include-card fade-in">
+          <div class="include-icon">🔓</div>
+          <div>
+            <h3>90-day post-programme access</h3>
+            <p>Platform access continues for 90 days after completion. Build the habit before you decide on ongoing support.</p>
+          </div>
+        </div>
+        <div class="include-card fade-in">
+          <div class="include-icon">📹</div>
+          <div>
+            <h3>Session recordings</h3>
+            <p>Every session recorded. Miss one without losing continuity. Review any session at any time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACILITATOR -->
+  <section id="facilitator">
+    <div class="inner-sm fade-in">
+      <div class="facilitator-inner">
+        <div class="facilitator-avatar">W</div>
+        <div>
+          <p class="eyebrow">Your facilitator</p>
+          <h2 style="margin-bottom:1rem">Werner Teichert</h2>
+          <p class="body-text">AHPRA-registered psychologist with dual registration in Australia and South Africa. Specialises in Acceptance and Commitment Therapy applied to occupational burnout, high-performance contexts, and identity transitions. Creator of BurnoutOS and the Katalis Behavioural Health framework.</p>
+          <div class="cred-tags">
+            <span class="cred-tag">MClinPsych</span>
+            <span class="cred-tag">MBA</span>
+            <span class="cred-tag">MLeadership</span>
+            <span class="cred-tag">AHPRA Registered</span>
+            <span class="cred-tag">HPCSA Registered</span>
+            <span class="cred-tag">ACT Trained</span>
+            <span class="cred-tag">PhD Candidate — UNISA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE STACK -->
+  <section id="value">
+    <div class="inner-xs">
+      <div class="fade-in">
+        <p class="eyebrow">What you're actually getting</p>
+        <h2>Everything valued individually at $2,047.<br><span style="color:var(--violet-lt)">Yours for $997.</span></h2>
+      </div>
+
+      <div style="margin-top:2.5rem" class="fade-in">
+        <div class="stack-row">
+          <div class="stack-left"><div class="stack-dot"></div><span class="stack-label">8 × 90-min live ACT group sessions</span></div>
+          <span class="stack-value">$960</span>
+        </div>
+        <div class="stack-row">
+          <div class="stack-left"><div class="stack-dot"></div><span class="stack-label">1 × 45-min personal onboarding call</span></div>
+          <span class="stack-value">$180</span>
+        </div>
+        <div class="stack-row">
+          <div class="stack-left"><div class="stack-dot"></div><span class="stack-label">Full BurnoutOS platform — 8 weeks</span></div>
+          <span class="stack-value">$297</span>
+        </div>
+        <div class="stack-row">
+          <div class="stack-left"><div class="stack-dot"></div><span class="stack-label">AI Coach — personalised, async, always on</span></div>
+          <span class="stack-value">$197</span>
+        </div>
+        <div class="stack-row">
+          <div class="stack-left"><div class="stack-dot"></div><span class="stack-label">Burnout severity assessment + written report</span></div>
+          <span class="stack-value">$220</span>
+        </div>
+        <div class="stack-row">
+          <div class="stack-left"><div class="stack-dot"></div><span class="stack-label">Async between-session voice/text support</span></div>
+          <span class="stack-value">$193</span>
+        </div>
+        <div class="stack-row">
+          <div class="stack-left"><div class="stack-dot"></div><span class="stack-label">90-day post-programme platform access</span></div>
+          <span class="stack-value">$0*</span>
+        </div>
+
+        <div class="total-row strikethrough">
+          <span class="total-label">Total value</span>
+          <span class="total-amount">$2,047</span>
+        </div>
+        <div class="total-row price">
+          <span class="total-label">Your investment</span>
+          <span class="total-amount">$997</span>
+        </div>
+        <p class="stack-note">*90-day post-programme access included at no charge</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENROL / PRICING -->
+  <section id="enrol">
+    <div class="inner-xs fade-in">
+      <p class="eyebrow" style="justify-content:center">Enrolment</p>
+      <h2>Choose your currency</h2>
+      <p style="color:rgba(255,255,255,0.35);font-size:0.875rem;margin-bottom:2rem">Same programme. Same access. Same Werner.</p>
+
+      <div class="currency-toggle">
+        <button class="curr-btn active" onclick="setCurrency('aud')">AUD</button>
+        <button class="curr-btn" onclick="setCurrency('zar')">ZAR</button>
+        <button class="curr-btn" onclick="setCurrency('instalment')">Instalment</button>
+      </div>
+
+      <div class="price-card">
+        <div class="price-display" id="price-display">AUD $997</div>
+        <div class="price-note" id="price-note">One-time payment · full access</div>
+
+        <ul class="checklist">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            8 × 90-min live sessions
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Personal 45-min onboarding call
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Full BurnoutOS platform access
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            AI Coach — unlimited
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Burnout assessment + written report
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Session recordings
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            90-day post-programme access
+          </li>
+        </ul>
+
+        <a href="#" class="btn-enrol" id="enrol-btn">Enrol now — AUD $997</a>
+      </div>
+
+      <div class="seats-live">
+        <div class="pulse-dot"></div>
+        <span id="enrol-seats">7</span> of 10 seats remaining in this cohort
+      </div>
+
+      <div class="guarantee-box">
+        <div class="guarantee-icon">🛡</div>
+        <div>
+          <h4>Completion guarantee</h4>
+          <p>Complete all 8 sessions and weekly practices. If you don't experience meaningful change, contact us within 7 days of completion for a full refund.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="inner-sm">
+      <div class="fade-in">
+        <p class="eyebrow indigo">Questions</p>
+        <h2>The things people ask before enrolling</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item fade-in">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>How is this different from therapy?</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>This is a structured psychoeducational programme, not individual therapy. Werner is an AHPRA-registered psychologist facilitating a skills-based group — you're learning evidence-based ACT tools in a peer context. If you need individual clinical support, we can discuss that separately.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>What if I can't make a live session?</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Sessions are recorded. We recommend attending live for the group dynamic, but life happens. Recordings are available within 24 hours.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Will there be other people in the cohort?</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Yes — maximum 10 participants. The small group size is intentional. You'll hear others articulate exactly what you're feeling, which is itself therapeutic. Cohort composition is curated for professional context compatibility.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>I'm in South Africa — can I join?</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Absolutely. ZAR pricing is available (ZAR 8,997). Sessions run at a time that works across AEST and SAST. Currency and time zone are confirmed before you enrol.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>What's the instalment option?</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Two payments of AUD $549, charged 4 weeks apart. Total is $1,098 — a small premium for the flexibility. Both options give full access to everything.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>What happens after the 8 weeks?</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>You retain platform access for 90 days. We'll offer alumni community access and a $47/month maintenance membership as it becomes available. The ACT tools are yours to keep forever.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>Is there a guarantee?</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>If you complete all 8 sessions and the weekly practices and feel the programme didn't deliver meaningful change, contact us within 7 days of completion for a full refund. We stand behind the work.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="cta">
+    <div class="cta-card fade-in">
+      <div class="inner-rel">
+        <h2>The next cohort is forming now.</h2>
+        <p>10 people maximum. <span id="cta-seats">7</span> seats left. If you're reading this and it resonates — don't wait for a better time. Burnout doesn't improve with delay.</p>
+        <a href="#" class="btn-primary" id="cta-enrol-btn" style="display:inline-block;padding:1rem 2.5rem">Reserve your seat — AUD $997</a>
+        <p style="margin-top:1.5rem;font-size:0.75rem;color:rgba(255,255,255,0.2)">BurnoutOS · by Katalis · © 2026 Katalis (Behavioural Health Pty Ltd)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">BurnoutOS · by Katalis</div>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+      <a href="/burnoutprogramme.html" style="font-size:0.8rem;color:rgba(255,255,255,0.25);text-decoration:none">Recovery Programme</a>
+      <a href="/organisations.html" style="font-size:0.8rem;color:rgba(255,255,255,0.25);text-decoration:none">For Organisations</a>
+      <a href="mailto:hello@burnout-os.app" style="font-size:0.8rem;color:rgba(255,255,255,0.25);text-decoration:none">hello@burnout-os.app</a>
+    </div>
+    <p>© 2026 Katalis (Behavioural Health Pty Ltd)</p>
+  </footer>
+
+  <script>
+    // ── Stripe links ──
+    const STRIPE = {
+      aud:        'https://buy.stripe.com/cNi14mgZ043fcpWelt9Zm0e',
+      zar:        'https://buy.stripe.com/aFa3cu38agQ19dKdhp9Zm0f',
+      instalment: 'https://buy.stripe.com/28E6oG8su57jfC80uD9Zm0g',
+    };
+
+    const PRICES = {
+      aud:        { label: 'AUD $997',      note: 'One-time payment · full access',            btn: 'Enrol now — AUD $997' },
+      zar:        { label: 'ZAR 8,997',     note: 'One-time payment · full access',            btn: 'Enrol now — ZAR 8,997' },
+      instalment: { label: '2 × AUD $549',  note: 'Charged 4 weeks apart · total $1,098',     btn: 'Enrol now — 2 × AUD $549' },
+    };
+
+    let currentCurrency = 'aud';
+
+    function setCurrency(c) {
+      currentCurrency = c;
+      document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const p = PRICES[c];
+      document.getElementById('price-display').textContent = p.label;
+      document.getElementById('price-note').textContent = p.note;
+
+      const enrolBtn = document.getElementById('enrol-btn');
+      enrolBtn.textContent = p.btn;
+      enrolBtn.href = STRIPE[c];
+
+      document.getElementById('hero-enrol-btn').textContent = 'Enrol for ' + p.label;
+
+      const ctaBtn = document.getElementById('cta-enrol-btn');
+      ctaBtn.textContent = 'Reserve your seat — ' + p.label;
+      ctaBtn.href = STRIPE[c];
+    }
+
+    // ── Set initial Stripe links ──
+    document.getElementById('enrol-btn').href = STRIPE.aud;
+    document.getElementById('cta-enrol-btn').href = STRIPE.aud;
+    document.getElementById('hero-enrol-btn').href = STRIPE.aud;
+
+    // ── FAQ accordion ──
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // ── Scroll fade-in ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ── Live seat count from Supabase ──
+    const SUPABASE_URL = 'https://kvsirypfqtnymooxicti.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c2lyeXBmcXRueW1vb3hpY3RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMDQzODUsImV4cCI6MjA4OTY4MDM4NX0.Zf5VEO2VsWG_NeM0QvSFnCO5b0nIuFD04UGNPMfJepQ';
+
+    fetch(`${SUPABASE_URL}/rest/v1/intensive_cohorts?cohort_key=eq.default&status=eq.open&select=seats_total,seats_filled`, {
+      headers: {
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + SUPABASE_ANON,
+      }
+    })
+    .then(r => r.json())
+    .then(rows => {
+      if (rows && rows[0]) {
+        const seats = rows[0].seats_total - rows[0].seats_filled;
+        ['nav-seats', 'hero-seats', 'enrol-seats', 'cta-seats'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = id === 'nav-seats' ? seats + ' seats remaining' : seats;
+        });
+      }
+    })
+    .catch(() => {}); // Fail silently — defaults to 7
+  </script>
+
+</body>
+</html>
