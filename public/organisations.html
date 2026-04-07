@@ -657,5 +657,24 @@
     </div>
   </footer>
 
+  <script>
+    // Auto-detect locale — show ZAR note for South African visitors
+    (function() {
+      try {
+        var lang = navigator.language || (navigator.languages && navigator.languages[0]) || 'en-AU';
+        var region = new Intl.Locale(lang).region || 'AU';
+        if (region === 'ZA') {
+          // Find the ZAR note and make it visible/prominent
+          var zarNotes = document.querySelectorAll('p, small');
+          zarNotes.forEach(function(el) {
+            if (el.textContent.indexOf('ZAR') !== -1 || el.textContent.indexOf('South African') !== -1) {
+              el.style.color = '#a78bfa';
+              el.style.fontWeight = '500';
+            }
+          });
+        }
+      } catch(e) {}
+    })();
+  </script>
 </body>
 </html>
