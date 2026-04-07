@@ -1267,10 +1267,35 @@
       ctaBtn.href = STRIPE[c];
     }
 
+    // Auto-detect currency from browser locale
+    var detectedCurrency = (function() {
+      try {
+        var lang = navigator.language || (navigator.languages && navigator.languages[0]) || 'en-AU';
+        var region = new Intl.Locale(lang).region || 'AU';
+        var map = { 'AU': 'aud', 'ZA': 'zar', 'GB': 'gbp', 'IE': 'gbp', 'NZ': 'aud' };
+        return map[region] || 'aud';
+      } catch(e) { return 'aud'; }
+    })();
+
     // Set initial links
-    document.getElementById('enrol-btn').href = STRIPE.aud;
-    document.getElementById('cta-enrol-btn').href = STRIPE.aud;
-    document.getElementById('hero-enrol-btn').href = STRIPE.aud;
+    document.getElementById('enrol-btn').href = STRIPE[detectedCurrency];
+    document.getElementById('cta-enrol-btn').href = STRIPE[detectedCurrency];
+    document.getElementById('hero-enrol-btn').href = STRIPE[detectedCurrency];
+
+    // Apply detected currency to display
+    if (detectedCurrency !== 'aud') {
+      var p = PRICES[detectedCurrency];
+      document.getElementById('price-display').textContent = p.label;
+      document.getElementById('price-note').textContent = p.note;
+      document.getElementById('enrol-btn').textContent = p.btn;
+      document.getElementById('hero-enrol-btn').textContent = 'Enrol for ' + p.label;
+      document.getElementById('cta-enrol-btn').textContent = 'Reserve your seat — ' + p.label;
+      // Activate correct toggle button
+      document.querySelectorAll('.curr-btn').forEach(function(b) { b.classList.remove('active'); });
+      var btns = document.querySelectorAll('.curr-btn');
+      var idx = { 'aud': 0, 'zar': 1, 'gbp': 2, 'instalment': 3 };
+      if (btns[idx[detectedCurrency]]) btns[idx[detectedCurrency]].classList.add('active');
+    }
 
     // FAQ accordion
     function toggleFaq(btn) {
