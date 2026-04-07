@@ -933,5 +933,30 @@
     </div>
   </footer>
 
+  <script>
+    // Auto-detect currency and highlight relevant pricing
+    (function() {
+      try {
+        var lang = navigator.language || (navigator.languages && navigator.languages[0]) || 'en-AU';
+        var region = new Intl.Locale(lang).region || 'AU';
+        // For ZAR visitors — highlight ZAR link
+        if (region === 'ZA') {
+          var zarLink = document.querySelector('a[href*="14A28r5"]');
+          if (zarLink) {
+            zarLink.style.fontWeight = '700';
+            zarLink.style.fontSize = '1rem';
+          }
+        }
+        // For GBP visitors — highlight GBP link
+        if (region === 'GB' || region === 'IE') {
+          var gbpLink = document.querySelector('a[href*="28EeVdd"]');
+          if (gbpLink) {
+            gbpLink.style.fontWeight = '700';
+            gbpLink.style.fontSize = '1rem';
+          }
+        }
+      } catch(e) {}
+    })();
+  </script>
 </body>
 </html>
