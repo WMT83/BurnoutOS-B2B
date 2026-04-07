@@ -553,5 +553,32 @@
     <div class="footer-copy">© 2026 Katalis (Behavioural Health Pty Ltd)</div>
   </footer>
 
+  <script>
+    // Auto-detect locale and update path card price labels
+    (function() {
+      try {
+        var lang = navigator.language || (navigator.languages && navigator.languages[0]) || 'en-AU';
+        var region = new Intl.Locale(lang).region || 'AU';
+        var priceMap = {
+          'ZA': { selfGuided: 'R7,997', intensive: 'R16,997' },
+          'GB': { selfGuided: '£397',  intensive: '£847'  },
+          'IE': { selfGuided: '£397',  intensive: '£847'  },
+        };
+        var prices = priceMap[region];
+        if (prices) {
+          // Update Self-Guided path tag
+          var tags = document.querySelectorAll('.path-tag');
+          tags.forEach(function(tag) {
+            if (tag.textContent.indexOf('Self-guided') !== -1) {
+              tag.textContent = 'Self-guided — ' + prices.selfGuided;
+            }
+            if (tag.textContent.indexOf('Intensive cohort') !== -1) {
+              tag.textContent = 'Intensive cohort — ' + prices.intensive;
+            }
+          });
+        }
+      } catch(e) {}
+    })();
+  </script>
 </body>
 </html>
