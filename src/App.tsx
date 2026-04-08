@@ -4,6 +4,9 @@ import { supabase } from './lib/supabase';
 import type { User } from '@supabase/supabase-js';
 
 import Survey from './pages/Survey';
+import BurnoutQuiz from './pages/BurnoutQuiz';
+import BurnoutReport from './pages/BurnoutReport';
+import Diagnostic from './pages/Diagnostic';
 import Admin from './pages/Admin';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -56,6 +59,11 @@ export default function App() {
 
         {/* B2B Admin — no auth guard (Werner accesses directly) */}
         <Route path="/diagnostic/admin" element={<Admin />} />
+
+        {/* HVCO public routes */}
+        <Route path="/burnout-quiz" element={<BurnoutQuiz />} />
+        <Route path="/burnout-report" element={<BurnoutReport />} />
+        <Route path="/diagnostic" element={<Diagnostic />} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/login" replace />} />
