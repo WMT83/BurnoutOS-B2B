@@ -52,7 +52,6 @@ export default function BurnoutQuiz() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const answered = Object.keys(answers).length;
   const totalScore = Object.entries(answers).reduce((sum, [id, val]) => {
     const q = QUESTIONS.find(q => q.id === Number(id));
     return sum + (q?.reversed ? (4 - val) : val);
