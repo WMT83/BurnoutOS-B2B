@@ -9,17 +9,24 @@
       "source": "/intensive",
       "destination": "/intensive.html",
       "permanent": false
-    }
-  ],
-  "rewrites": [
+    },
     {
       "source": "/burnout-quiz",
-      "destination": "/app.html"
+      "destination": "/burnout-quiz.html",
+      "permanent": false
     },
     {
       "source": "/burnout-report",
-      "destination": "/app.html"
+      "destination": "/burnout-report.html",
+      "permanent": false
     },
+    {
+      "source": "/diagnostic",
+      "destination": "/diagnostic.html",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
     {
       "source": "/diagnostic/:path*",
       "destination": "/app.html"
@@ -42,10 +49,6 @@
     },
     {
       "source": "/onboarding",
-      "destination": "/app.html"
-    },
-    {
-      "source": "/diagnostic",
       "destination": "/app.html"
     }
   ]
