@@ -5,7 +5,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Free Burnout Diagnostic Call — BurnoutOS</title>
-  <meta name="description" content="A free 20-minute conversation with Werner, registered psychologist, to understand where you are and what recovery actually looks like for you." />
+  <meta name="description" content="Join the waitlist for a free 20-minute Burnout Diagnostic Call with Werner. Spots open monthly — we'll reach out when one is available." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
@@ -24,6 +24,7 @@
     .nav-link:hover { color:var(--white); }
 
     .page { max-width:720px; margin:0 auto; padding:7rem 1.5rem 5rem; }
+
     .eyebrow { display:inline-block; font-family:'Syne',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--ember); background:rgba(232,75,42,0.12); border:1px solid rgba(232,75,42,0.25); border-radius:3px; padding:0.3rem 0.8rem; margin-bottom:1.5rem; }
     h1 { font-family:'Syne',sans-serif; font-size:clamp(2.2rem,5vw,3.25rem); font-weight:800; letter-spacing:-0.04em; line-height:1.05; margin-bottom:1.25rem; }
     .hero-text { font-size:1.05rem; color:rgba(255,255,255,0.55); line-height:1.75; max-width:560px; margin-bottom:3.5rem; }
@@ -36,7 +37,6 @@
 
     .feature { display:flex; gap:0.875rem; margin-bottom:1.25rem; }
     .feature:last-child { margin-bottom:0; }
-    .feature-icon { flex-shrink:0; margin-top:0.15rem; }
     .feature-title { font-size:0.9rem; font-weight:600; color:var(--white); margin-bottom:0.3rem; }
     .feature-desc { font-size:0.825rem; color:rgba(255,255,255,0.5); line-height:1.6; }
 
@@ -51,16 +51,40 @@
     .werner-role { font-size:0.75rem; color:var(--ember); font-weight:600; margin-bottom:0.6rem; }
     .werner-bio { font-size:0.825rem; color:rgba(255,255,255,0.5); line-height:1.65; }
 
-    /* CTA box */
-    .cta-box { background:rgba(232,75,42,0.06); border:1px solid rgba(232,75,42,0.2); border-radius:4px; padding:2.25rem 2rem; text-align:center; }
-    .cta-box h2 { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.75rem; }
-    .cta-box p { font-size:0.875rem; color:rgba(255,255,255,0.55); line-height:1.65; margin-bottom:2rem; max-width:440px; margin-left:auto; margin-right:auto; }
-    .btn-primary { display:inline-flex; align-items:center; gap:0.6rem; font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; background:var(--ember); color:var(--white); padding:0.9rem 2.25rem; border-radius:3px; text-decoration:none; transition:background 0.2s; letter-spacing:-0.01em; }
+    /* Waitlist CTA box */
+    .cta-box { background:rgba(232,75,42,0.06); border:1px solid rgba(232,75,42,0.2); border-radius:4px; padding:2.25rem 2rem; }
+    .cta-box h2 { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.5rem; }
+    .cta-sub { font-size:0.875rem; color:rgba(255,255,255,0.5); line-height:1.65; margin-bottom:0.75rem; }
+
+    /* Scarcity signal */
+    .scarcity { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(232,75,42,0.1); border:1px solid rgba(232,75,42,0.2); border-radius:3px; padding:0.35rem 0.75rem; font-size:0.75rem; font-weight:600; color:rgba(255,255,255,0.7); margin-bottom:1.75rem; font-family:'DM Sans',sans-serif; }
+    .scarcity-dot { width:6px; height:6px; border-radius:50%; background:var(--ember); animation:pulse 2s ease-in-out infinite; }
+
+    /* Form */
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem; }
+    @media(max-width:480px){ .form-grid { grid-template-columns:1fr; } }
+    .form-full { margin-bottom:0.75rem; }
+
+    label { display:block; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(255,255,255,0.4); margin-bottom:0.35rem; font-family:'DM Sans',sans-serif; }
+    .field { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:3px; padding:0.75rem 0.9rem; color:var(--white); font-size:0.9rem; font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.2s; }
+    .field:focus { border-color:var(--ember); }
+    .field::placeholder { color:rgba(255,255,255,0.2); }
+    textarea.field { min-height:80px; resize:vertical; line-height:1.55; }
+
+    .err { font-size:0.8rem; color:var(--ember); margin-bottom:0.75rem; display:none; }
+
+    .btn-primary { width:100%; font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; background:var(--ember); color:var(--white); padding:0.9rem 2rem; border-radius:3px; border:none; cursor:pointer; text-align:center; transition:background 0.2s; letter-spacing:-0.01em; margin-top:0.25rem; }
     .btn-primary:hover { background:var(--ember-dim); }
-    .cta-note { font-size:0.75rem; color:rgba(255,255,255,0.3); margin-top:1rem; }
+    .btn-primary:disabled { opacity:0.5; cursor:not-allowed; }
+    .fine-print { font-size:0.72rem; color:rgba(255,255,255,0.25); margin-top:0.875rem; text-align:center; line-height:1.5; }
+
+    /* Done state */
+    .done { text-align:center; padding:1.5rem 0; }
+    .done-check { margin-bottom:1.25rem; }
+    .done h3 { font-family:'Syne',sans-serif; font-size:1.35rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.5rem; }
+    .done p { font-size:0.875rem; color:rgba(255,255,255,0.55); line-height:1.7; }
 
     .disclaimer { font-size:0.75rem; color:rgba(255,255,255,0.25); line-height:1.6; text-align:center; max-width:520px; margin:2.5rem auto 0; }
-    .rule { height:1px; background:var(--rule); margin:1.25rem 0; }
   </style>
 </head>
 <body>
@@ -78,42 +102,29 @@
 
   <div class="two-col">
 
-    <!-- What happens -->
     <div class="card">
       <div class="card-label">What happens on the call</div>
-
       <div class="feature">
-        <div class="feature-icon">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <circle cx="9" cy="9" r="9" fill="rgba(232,75,42,0.15)"/>
-            <path d="M5.5 9l2 2 5-5" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <div style="flex-shrink:0;margin-top:2px;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="rgba(232,75,42,0.15)"/><path d="M5.5 9l2 2 5-5" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div>
           <div class="feature-title">Understand your burnout profile</div>
           <div class="feature-desc">We map where you sit across exhaustion, cynicism, and efficacy — the three clinical dimensions.</div>
         </div>
       </div>
-
       <div class="feature">
-        <div class="feature-icon">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <circle cx="9" cy="9" r="9" fill="rgba(232,75,42,0.15)"/>
-            <path d="M5.5 9l2 2 5-5" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <div style="flex-shrink:0;margin-top:2px;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="rgba(232,75,42,0.15)"/><path d="M5.5 9l2 2 5-5" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div>
           <div class="feature-title">Identify your key drivers</div>
           <div class="feature-desc">Not all burnout has the same cause. We identify what is sustaining yours specifically.</div>
         </div>
       </div>
-
       <div class="feature">
-        <div class="feature-icon">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <circle cx="9" cy="9" r="9" fill="rgba(232,75,42,0.15)"/>
-            <path d="M5.5 9l2 2 5-5" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <div style="flex-shrink:0;margin-top:2px;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="rgba(232,75,42,0.15)"/><path d="M5.5 9l2 2 5-5" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div>
           <div class="feature-title">Get a clear first step</div>
@@ -122,7 +133,6 @@
       </div>
     </div>
 
-    <!-- Right for you if -->
     <div class="card">
       <div class="card-label">This call is right for you if</div>
       <ul class="check-list">
@@ -166,22 +176,117 @@
     </div>
   </div>
 
-  <!-- CTA -->
+  <!-- Waitlist CTA -->
   <div class="cta-box">
-    <h2>Book your free call</h2>
-    <p>20 minutes. No sales pitch. If BurnoutOS is right for you, Werner will tell you. If it is not, he will tell you that too.</p>
-    <a href="https://calendly.com/werner-katalis" target="_blank" rel="noopener noreferrer" class="btn-primary">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect x="1" y="2.5" width="14" height="12" rx="2.5" stroke="white" stroke-width="1.3" fill="none"/>
-        <path d="M1 6h14M5.5 1v3M10.5 1v3" stroke="white" stroke-width="1.3" stroke-linecap="round"/>
-      </svg>
-      Choose a time
-    </a>
-    <p class="cta-note">Zoom · AEST timezone · Limited spots available</p>
+
+    <h2>Join the waitlist</h2>
+    <p class="cta-sub">Diagnostic call spots open monthly based on availability. Join the list and Werner will reach out personally when a slot opens.</p>
+
+    <div class="scarcity">
+      <span class="scarcity-dot"></span>
+      Spots are limited — we prioritise by waitlist order
+    </div>
+
+    <!-- Form -->
+    <div id="form-wrap">
+      <div class="form-grid">
+        <div>
+          <label for="f-name">Your name</label>
+          <input class="field" type="text" id="f-name" placeholder="Sarah Chen" autocomplete="name" />
+        </div>
+        <div>
+          <label for="f-email">Email address</label>
+          <input class="field" type="email" id="f-email" placeholder="sarah@company.com" autocomplete="email" />
+        </div>
+      </div>
+      <div class="form-grid">
+        <div>
+          <label for="f-role">Your role</label>
+          <input class="field" type="text" id="f-role" placeholder="e.g. Head of Marketing" />
+        </div>
+        <div>
+          <label for="f-org">Organisation <span style="opacity:0.4;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input class="field" type="text" id="f-org" placeholder="e.g. Westpac" />
+        </div>
+      </div>
+      <div class="form-full">
+        <label for="f-reason">What brings you here? <span style="opacity:0.4;font-weight:400;text-transform:none;letter-spacing:0">(optional — helps Werner prepare)</span></label>
+        <textarea class="field" id="f-reason" placeholder="A few sentences about what's been happening for you lately..."></textarea>
+      </div>
+      <div class="err" id="form-err">Please enter your name and a valid email address.</div>
+      <button class="btn-primary" id="submit-btn" onclick="submitWaitlist()">Join the waitlist</button>
+      <p class="fine-print">No spam. Werner reads every submission personally before reaching out.</p>
+    </div>
+
+    <!-- Done state -->
+    <div class="done" id="done-wrap" style="display:none;">
+      <div class="done-check">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <circle cx="26" cy="26" r="26" fill="rgba(42,157,92,0.12)"/>
+          <path d="M16 26l7 7 13-13" stroke="#2a9d5c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <h3>You're on the list</h3>
+      <p>Werner will reach out personally when a spot opens — usually within 2–4 weeks. In the meantime, the reading content for all 8 weeks of the programme is available on the platform.</p>
+    </div>
+
   </div>
 
   <p class="disclaimer">BurnoutOS is an evidence-informed psychoeducational programme. This call is an initial consultation, not ongoing psychological treatment. Werner Teichert is registered with AHPRA (Psychology Board of Australia) and HPCSA.</p>
 
 </div>
+
+<script>
+const SUPABASE_URL = 'https://kvsirypfqtnymooxicti.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c2lyeXBmcXRueW1vb3hpY3RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyMDM4NzcsImV4cCI6MjA1ODc3OTg3N30.RBjvKB-A-j9e_c5XxFkqT7EKNyFUVpVzlcRvQQT5Dos';
+
+async function submitWaitlist() {
+  const name  = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const role  = document.getElementById('f-role').value.trim();
+  const org   = document.getElementById('f-org').value.trim();
+  const why   = document.getElementById('f-reason').value.trim();
+  const errEl = document.getElementById('form-err');
+
+  if (!name || !email.includes('@')) {
+    errEl.style.display = 'block';
+    return;
+  }
+  errEl.style.display = 'none';
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Joining...';
+
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/diagnostic_waitlist`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        role:           role || null,
+        organisation:   org  || null,
+        what_brings_you: why  || null,
+        source: 'diagnostic_page'
+      })
+    });
+  } catch(_) {
+    // Non-blocking — show success regardless to avoid frustration
+  }
+
+  document.getElementById('form-wrap').style.display = 'none';
+  document.getElementById('done-wrap').style.display  = 'block';
+}
+
+// Allow Enter key in single-line fields to advance
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.tagName === 'INPUT') submitWaitlist();
+});
+</script>
 </body>
 </html>
