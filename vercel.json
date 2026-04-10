@@ -1,6 +1,21 @@
 {
   "redirects": [
     {
+      "source": "/dashboard",
+      "destination": "https://app.burnout-os.app/dashboard",
+      "permanent": true
+    },
+    {
+      "source": "/programme/:path*",
+      "destination": "https://app.burnout-os.app/programme/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/complete-payment",
+      "destination": "https://app.burnout-os.app/auth",
+      "permanent": false
+    },
+    {
       "source": "/calculator",
       "destination": "/calculator.html",
       "permanent": false
@@ -37,18 +52,6 @@
     },
     {
       "source": "/login",
-      "destination": "/app.html"
-    },
-    {
-      "source": "/dashboard",
-      "destination": "/app.html"
-    },
-    {
-      "source": "/programme/:path*",
-      "destination": "/app.html"
-    },
-    {
-      "source": "/onboarding",
       "destination": "/app.html"
     }
   ]
