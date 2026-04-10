@@ -49,25 +49,35 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function load() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      try {
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        if (authError || !user) {
+          // Stale/invalid session — clear it and redirect to login
+          await supabase.auth.signOut();
+          window.location.href = '/login';
+          return;
+        }
 
-      const [{ data: p }, { data: completions }, { data: practiceData }] = await Promise.all([
-        supabase.from('user_profiles')
-          .select('full_name, current_week, tier, access_expires_at')
-          .eq('id', user.id).single(),
-        supabase.from('module_completions')
-          .select('module_id, modules(week)').eq('user_id', user.id),
-        supabase.from('micro_practices')
-          .select('id, name, duration_minutes, category')
-          .in('trigger_category', ['morning', 'high_stress', 'pre_sleep'])
-          .limit(3),
-      ]);
+        const [{ data: p }, { data: completions }, { data: practiceData }] = await Promise.all([
+          supabase.from('user_profiles')
+            .select('full_name, current_week, tier, access_expires_at')
+            .eq('id', user.id).maybeSingle(),
+          supabase.from('module_completions')
+            .select('module_id, modules(week)').eq('user_id', user.id),
+          supabase.from('micro_practices')
+            .select('id, name, duration_minutes, category')
+            .in('trigger_category', ['morning', 'high_stress', 'pre_sleep'])
+            .limit(3),
+        ]);
 
-      setProfile(p);
-      setCompleted((completions || []).map((c: any) => c.modules?.week).filter(Boolean));
-      setPractices(practiceData || []);
-      setLoading(false);
+        setProfile(p);
+        setCompleted((completions || []).map((c: any) => c.modules?.week).filter(Boolean));
+        setPractices(practiceData || []);
+      } catch (err) {
+        console.error('Dashboard load error:', err);
+      } finally {
+        setLoading(false);
+      }
     }
     load();
   }, []);
