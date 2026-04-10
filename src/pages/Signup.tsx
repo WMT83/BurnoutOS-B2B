@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 const REGION_OPTIONS = [
-  { value: 'au', label: 'Australia (AUD 297)' },
-  { value: 'za', label: 'South Africa (ZAR 2,100)' },
-  { value: 'gb', label: 'Other (AUD 297)' },
+  { value: 'au', label: 'Australia (AUD 697)' },
+  { value: 'za', label: 'South Africa (ZAR 7,997)' },
+  { value: 'gb', label: 'United Kingdom (GBP £397)' },
 ];
 
 export default function Signup() {
@@ -94,9 +94,9 @@ export default function Signup() {
         </form>
         <div style={{ margin: '20px 0', background: 'var(--surface-2)', borderRadius: '10px', padding: '16px' }}>
           <div style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-            ✓ First week accessible before full payment<br />
             ✓ 30-day satisfaction commitment<br />
-            ✓ Secure payment via Stripe
+            ✓ Secure payment via Stripe<br />
+            ✓ Immediate access upon payment
           </div>
         </div>
         <div className="auth-link">Already have an account? <a href="/login">Sign in</a></div>
