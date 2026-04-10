@@ -538,7 +538,10 @@
       border-top: 1px solid var(--rule);
     }
 
-    .pricing-inner { max-width: 780px; margin: 0 auto; }
+    .pricing-inner { max-width: 1060px; margin: 0 auto; }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .price-card-wrap { position: relative; }
+    .price-badge { position: absolute; top: -1px; left: -1px; right: -1px; background: var(--ember); color: #fff; font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; padding: 0.4rem 1rem; border-radius: 8px 8px 0 0; }
 
     .price-card {
       background: var(--bg-card);
@@ -694,6 +697,7 @@
       .features-grid { grid-template-columns: 1fr 1fr; }
       .weeks-grid { grid-template-columns: 1fr 1fr; }
       .price-card { grid-template-columns: 1fr; gap: 1.5rem; }
+      .pricing-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 600px) {
@@ -876,40 +880,77 @@
       <div class="pricing-inner">
         <div class="section-header">
           <div class="section-eyebrow">Investment</div>
-          <h2>One programme. Full access.</h2>
+          <h2>Two ways in. One direction.</h2>
         </div>
 
-        <div class="price-card">
-          <div>
-            <div class="price-amount">AUD 697</div>
-            <div class="price-period">One-time · 12 months platform access</div>
-            <ul class="price-includes">
-              <li>8-week structured recovery programme</li>
-              <li>Full BurnoutOS platform — all tools unlocked</li>
-              <li>AI recovery coach — 5 messages/day</li>
-              <li>Daily AM/PM check-ins + progress tracking</li>
-              <li>Micro-practice library (80+ practices)</li>
-              <li>Workplace communication templates</li>
-              <li>Sleep restoration protocol</li>
-              <li>Weekly review + AI insights</li>
-            </ul>
+        <div class="pricing-grid">
+
+          <!-- Self-Guided -->
+          <div class="price-card-wrap">
+            <div class="price-card">
+              <div>
+                <div style="font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);margin-bottom:0.75rem;">Self-Guided</div>
+                <div class="price-amount">AUD 697</div>
+                <div class="price-period">One-time · 12 months platform access</div>
+                <ul class="price-includes">
+                  <li>8-week structured recovery programme</li>
+                  <li>Full BurnoutOS platform — all tools unlocked</li>
+                  <li>AI recovery coach — 5 messages/day</li>
+                  <li>Daily AM/PM check-ins + progress tracking</li>
+                  <li>Micro-practice library (80+ practices)</li>
+                  <li>Workplace communication templates</li>
+                  <li>Sleep restoration protocol</li>
+                  <li>Weekly review + AI insights</li>
+                </ul>
+              </div>
+              <div class="price-right">
+                <a href="https://buy.stripe.com/28EaEXh1dcw2b4y9zMdnW02" class="btn-ember">Start your recovery →</a>
+                <div class="price-note">
+                  <strong style="color:rgba(255,255,255,0.7); font-weight:500;">Prefer to pay in instalments?</strong><br/>
+                  Two payments of AUD $379, charged one month apart. <a href="https://buy.stripe.com/7sYaEXeT52Vs2y213gdnW05" style="color:var(--ember)">Pay in 2 instalments →</a>
+                </div>
+                <div class="price-note">
+                  <strong style="color:rgba(255,255,255,0.7); font-weight:500;">South Africa or UK?</strong><br/>
+                  ZAR pricing: <a href="https://buy.stripe.com/14A28r5iv8fMfkOeU6dnW03" style="color:var(--ember)">R7,997</a> &nbsp;·&nbsp;
+                  GBP pricing: <a href="https://buy.stripe.com/28EeVddP1brYa0ufYadnW04" style="color:var(--ember)">£397</a>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="price-right">
-            <a href="https://buy.stripe.com/28EaEXh1dcw2b4y9zMdnW02" class="btn-ember">Start your recovery →</a>
-            <div class="price-note">
-              <strong style="color:rgba(255,255,255,0.7); font-weight:500;">Prefer to pay in instalments?</strong><br/>
-              Two payments of AUD $379, charged one month apart. <a href="https://buy.stripe.com/7sYaEXeT52Vs2y213gdnW05" style="color:var(--ember)">Pay in 2 instalments →</a>
-            </div>
-            <div class="price-note">
-              <strong style="color:rgba(255,255,255,0.7); font-weight:500;">South Africa or UK?</strong><br/>
-              ZAR pricing: <a href="https://buy.stripe.com/14A28r5iv8fMfkOeU6dnW03" style="color:var(--ember)">R7,997</a> &nbsp;·&nbsp;
-              GBP pricing: <a href="https://buy.stripe.com/28EeVddP1brYa0ufYadnW04" style="color:var(--ember)">£397</a>
-            </div>
-            <div class="price-note">
-              <strong style="color:rgba(255,255,255,0.7); font-weight:500;">Want live sessions with Werner?</strong><br/>
-              The <a href="/intensive" style="color:var(--ember)">Burnout Recovery Intensive</a> adds 8 live cohort sessions at AUD $1,497.
+
+          <!-- Burnout Recovery Intensive -->
+          <div class="price-card-wrap">
+            <div class="price-badge">★ &nbsp; Next cohort — 15 June 2026 &nbsp; · &nbsp; 7 seats remaining</div>
+            <div class="price-card" style="border-color:var(--ember);margin-top:0;padding-top:3rem;">
+              <div>
+                <div style="font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);margin-bottom:0.75rem;">Burnout Recovery Intensive</div>
+                <div class="price-amount" style="color:var(--ember);">AUD 1,497</div>
+                <div class="price-period">One-time · 8 live sessions + full platform</div>
+                <ul class="price-includes">
+                  <li>Everything in Self-Guided</li>
+                  <li>8 × live group sessions with Werner (90 min each)</li>
+                  <li>AI recovery coach — unlimited messages</li>
+                  <li>Personal 15-min onboarding call with Werner</li>
+                  <li>Burnout assessment + written clinical report</li>
+                  <li>Session recordings — available within 24 hrs</li>
+                  <li>Max 10 participants — cohort of peers</li>
+                  <li>90-day post-programme platform access</li>
+                </ul>
+              </div>
+              <div class="price-right">
+                <a href="/intensive" class="btn-ember" style="background:var(--ember);">See full details + enrol →</a>
+                <div class="price-note">
+                  <strong style="color:rgba(255,255,255,0.7); font-weight:500;">Live every Monday at 7:30pm AEST</strong><br/>
+                  15 June – 3 August 2026. Sessions are recorded — miss one without losing continuity.
+                </div>
+                <div class="price-note">
+                  <strong style="color:rgba(255,255,255,0.7); font-weight:500;">Who is this for?</strong><br/>
+                  Leaders and clinicians who want live expert guidance and a peer cohort alongside the structured programme.
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
 
         <div class="guarantee-strip">
