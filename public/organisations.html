@@ -375,6 +375,69 @@
       .scarcity-inner { flex-direction: column; gap: var(--gap-s); }
       .nav-links { display: none; }
     }
+  
+    /* ── Enquiry form modal ───────────────────────────────────────── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--paper); border-radius: 6px; width: 100%;
+      max-width: 540px; padding: 2.25rem 2rem; position: relative;
+      max-height: 92vh; overflow-y: auto;
+    }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem; background: none;
+      border: none; cursor: pointer; color: var(--ink-muted); font-size: 1.25rem;
+      line-height: 1; padding: 0.25rem;
+    }
+    .modal-close:hover { color: var(--ink); }
+    .modal-eyebrow {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--ember); margin-bottom: 0.5rem;
+    }
+    .modal h3 {
+      font-family: 'Syne', sans-serif; font-size: 1.35rem; font-weight: 800;
+      letter-spacing: -0.03em; color: var(--ink); margin-bottom: 0.4rem;
+    }
+    .modal-sub {
+      font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .form-col { display: flex; flex-direction: column; gap: 0.3rem; }
+    .form-col.full { grid-column: 1 / -1; }
+    .form-col label {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--ink-muted);
+    }
+    .form-col .opt { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.68rem; }
+    .f-input {
+      width: 100%; background: var(--off); border: 1px solid var(--rule);
+      border-radius: 3px; padding: 0.65rem 0.8rem; font-size: 0.875rem;
+      font-family: 'DM Sans', sans-serif; color: var(--ink); outline: none;
+      transition: border-color 0.2s;
+    }
+    .f-input:focus { border-color: var(--ember); }
+    .f-input::placeholder { color: #aab0be; }
+    textarea.f-input { min-height: 80px; resize: vertical; line-height: 1.55; }
+    .f-err { font-size: 0.8rem; color: var(--ember); margin-bottom: 0.6rem; display: none; }
+    .modal-submit {
+      width: 100%; background: var(--ember); color: var(--white);
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+      padding: 0.85rem; border: none; border-radius: 3px; cursor: pointer;
+      transition: background 0.2s; letter-spacing: -0.01em; margin-top: 0.25rem;
+    }
+    .modal-submit:hover { background: var(--ember-dim); }
+    .modal-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .modal-fine { font-size: 0.72rem; color: var(--ink-muted); text-align: center; margin-top: 0.75rem; }
+    .modal-done { text-align: center; padding: 1.5rem 0; }
+    .modal-done h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 0.5rem; }
+    .modal-done p { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.65; }
+    @media(max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
   </style>
 </head>
 <body>
@@ -393,7 +456,7 @@
 
       <div class="nav-actions">
         <a href="https://burnout-os.app/burnoutprogramme.html" class="nav-link-secondary">For Individuals</a>
-        <a href="#booking" class="nav-cta">Book a Discovery Call</a>
+        <button class="nav-cta" style="cursor:pointer;background:none;border:none;font:inherit;" onclick="openEnquiry('Diagnostic Sprint')">Book a Discovery Call</button>
       </div>
 
       <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
@@ -409,7 +472,7 @@
       <a href="#process" onclick="closeMobileNav()">How It Works</a>
       <a href="#guarantee" onclick="closeMobileNav()">Guarantee</a>
       <a href="https://burnout-os.app/burnoutprogramme.html">For Individuals</a>
-      <a href="#booking" class="nav-cta" onclick="closeMobileNav()">Book a Discovery Call</a>
+      <button class="nav-cta" style="cursor:pointer;background:none;border:none;font:inherit;" onclick="closeMobileNav();openEnquiry('Diagnostic Sprint')">Book a Discovery Call</button>
     </div>
   </nav>
 
@@ -419,7 +482,7 @@
       <div class="slots">
         <div class="slot taken"></div><div class="slot taken"></div><div class="slot"></div><div class="slot"></div>
       </div>
-      <a href="#booking" class="nav-cta" style="font-size:0.825rem; padding:0.45rem 1rem;">Check Availability →</a>
+      <button class="nav-cta" style="font-size:0.825rem;padding:0.45rem 1rem;cursor:pointer;background:none;border:none;font:inherit;" onclick="openEnquiry('Diagnostic Sprint')">Check Availability →</button>
     </div>
   </div>
 
@@ -573,7 +636,7 @@
               <li class="muted">Team-level Risk Heat Map — not included</li>
               <li class="muted">Implementation advisory — not included</li>
             </ul>
-            <a href="mailto:hello@katalis.health?subject=Diagnostic Essentials Enquiry" class="tier-cta secondary">Enquire about Essentials →</a>
+            <button class="tier-cta secondary" onclick="openEnquiry('Diagnostic Essentials')">Enquire about Essentials →</button>
           </div>
         </div>
         <div class="tier-card featured">
@@ -596,7 +659,7 @@
               <li>Async advisory access (30 days post-debrief)</li>
               <li>Boardroom-ready PDF deliverables</li>
             </ul>
-            <a href="mailto:hello@katalis.health?subject=Diagnostic Sprint Enquiry" class="tier-cta primary">Book a Discovery Call →</a>
+            <button class="tier-cta primary" onclick="openEnquiry('Diagnostic Sprint')">Book a Discovery Call →</button>
           </div>
         </div>
         <div class="tier-card">
@@ -618,7 +681,7 @@
               <li>Dedicated advisory contact (90 days)</li>
               <li>ROI measurement at 90-day follow-up</li>
             </ul>
-            <a href="mailto:hello@katalis.health?subject=Diagnostic Enterprise Enquiry" class="tier-cta secondary">Enquire about Enterprise →</a>
+            <button class="tier-cta secondary" onclick="openEnquiry('Diagnostic Enterprise')">Enquire about Enterprise →</button>
           </div>
         </div>
       </div>
@@ -632,7 +695,7 @@
           <div class="retainer-price">AUD 4,500<span>/ month · min. 6-month term</span></div>
         </div>
         <div style="flex-shrink:0;">
-          <a href="mailto:hello@katalis.health?subject=Retainer Enquiry" class="btn-primary" style="white-space:nowrap;">Discuss Retainer →</a>
+          <button class="btn-primary" style="white-space:nowrap;" onclick="openEnquiry('Retainer')">Discuss Retainer →</button>
         </div>
       </div>
       <p style="margin-top:var(--gap-m); font-size:0.8rem; color:var(--ink-muted); text-align:center;">All prices ex-GST. South African organisations: ZAR pricing available on request. Tier investment applied retrospectively to ongoing platform subscription if you proceed beyond the diagnostic.</p>
@@ -785,10 +848,10 @@
       <h2>Not sure which tier is right?</h2>
       <p>Book a 30-minute no-obligation discovery call. Werner will review your organisation's size, current wellbeing approach, and goals — and recommend the tier that makes the most sense. There is no sales pressure. If the diagnostic isn't the right fit, he will tell you that too.</p>
       <div class="booking-actions">
-        <a href="mailto:hello@katalis.health?subject=Burnout Diagnostic Discovery Call" class="btn-white">Book a Discovery Call →</a>
+        <button class="btn-white" onclick="openEnquiry('Not sure yet')">Get a tier recommendation →</button>
         <a href="#pricing" class="btn-ghost">Review the tiers first</a>
       </div>
-      <p style="margin: var(--gap-l) auto 0; font-size:0.8rem; color:rgba(255,255,255,0.45); text-align:center;">Or email <a href="mailto:hello@katalis.health" style="color:rgba(255,255,255,0.6);">hello@katalis.health</a> with your organisation size and we will recommend the right tier and respond within one business day.</p>
+      <p style="margin: var(--gap-l) auto 0; font-size:0.8rem; color:rgba(255,255,255,0.45); text-align:center;">Werner reviews every submission personally and responds within one business day.</p>
     </div>
   </section>
 
@@ -845,5 +908,171 @@
       } catch(e) {}
     })();
   </script>
+
+  <!-- B2B Enquiry Modal -->
+  <div class="modal-overlay" id="enquiry-modal" onclick="handleOverlayClick(event)">
+    <div class="modal" id="enquiry-modal-inner">
+      <button class="modal-close" onclick="closeEnquiry()" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+
+      <div id="modal-form-wrap">
+        <div class="modal-eyebrow" id="modal-eyebrow">Enquiry</div>
+        <h3 id="modal-title">Get in touch</h3>
+        <p class="modal-sub">Werner reviews every submission personally and responds within one business day. No sales pressure — if the diagnostic is not the right fit, he will tell you that too.</p>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label for="eq-name">Your name</label>
+            <input class="f-input" type="text" id="eq-name" placeholder="Sarah Chen" autocomplete="name"/>
+          </div>
+          <div class="form-col">
+            <label for="eq-email">Email address</label>
+            <input class="f-input" type="email" id="eq-email" placeholder="sarah@company.com" autocomplete="email"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-col">
+            <label for="eq-role">Your role</label>
+            <input class="f-input" type="text" id="eq-role" placeholder="Head of People & Culture"/>
+          </div>
+          <div class="form-col">
+            <label for="eq-org">Organisation</label>
+            <input class="f-input" type="text" id="eq-org" placeholder="e.g. Westpac"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-col">
+            <label for="eq-size">Company size</label>
+            <select class="f-input" id="eq-size">
+              <option value="">Select…</option>
+              <option value="50–150">50–150 employees</option>
+              <option value="150–500">150–500 employees</option>
+              <option value="500–2000">500–2,000 employees</option>
+              <option value="2000+">2,000+ employees</option>
+            </select>
+          </div>
+          <div class="form-col">
+            <label for="eq-tier">Tier of interest</label>
+            <select class="f-input" id="eq-tier">
+              <option value="Not sure yet">Not sure yet</option>
+              <option value="Diagnostic Essentials">Diagnostic Essentials ($5,500)</option>
+              <option value="Diagnostic Sprint">Diagnostic Sprint ($9,500)</option>
+              <option value="Diagnostic Enterprise">Diagnostic Enterprise ($16,500)</option>
+              <option value="Retainer">Ongoing Retainer</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-col full">
+            <label for="eq-why">What is driving this conversation? <span class="opt">(optional)</span></label>
+            <textarea class="f-input" id="eq-why" placeholder="e.g. We have seen increased sick leave and reduced engagement since last quarter…"></textarea>
+          </div>
+        </div>
+
+        <div class="f-err" id="eq-err">Please enter your name and a valid email address.</div>
+        <button class="modal-submit" id="eq-submit" onclick="submitEnquiry()">Send enquiry</button>
+        <p class="modal-fine">Werner reads every submission personally before responding.</p>
+      </div>
+
+      <div class="modal-done" id="modal-done-wrap" style="display:none;">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="margin-bottom:1.25rem;">
+          <circle cx="26" cy="26" r="26" fill="rgba(26,107,114,0.12)"/>
+          <path d="M16 26l7 7 13-13" stroke="#1a6b72" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <h3>Enquiry received</h3>
+        <p>Werner will review your submission and be in touch within one business day. In the meantime, you can explore the <a href="/burnoutprogramme.html" style="color:var(--teal);">individual recovery programme</a> or the <a href="#offer" onclick="closeEnquiry()" style="color:var(--teal);">full diagnostic scope</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  const SUPABASE_URL = 'https://kvsirypfqtnymooxicti.supabase.co';
+  const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c2lyeXBmcXRueW1vb3hpY3RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyMDM4NzcsImV4cCI6MjA1ODc3OTg3N30.RBjvKB-A-j9e_c5XxFkqT7EKNyFUVpVzlcRvQQT5Dos';
+
+  const TIER_LABELS = {
+    'Diagnostic Essentials': 'Diagnostic Essentials',
+    'Diagnostic Sprint':     'Diagnostic Sprint — Flagship',
+    'Diagnostic Enterprise': 'Diagnostic Enterprise',
+    'Retainer':              'Ongoing Retainer',
+    'Not sure yet':          'Get a tier recommendation',
+  };
+
+  function openEnquiry(tier) {
+    const tierEl = document.getElementById('eq-tier');
+    if (tierEl && tier) tierEl.value = tier;
+    const label = TIER_LABELS[tier] || tier;
+    document.getElementById('modal-eyebrow').textContent = label;
+    document.getElementById('modal-title').textContent =
+      tier === 'Not sure yet' ? 'Not sure which tier is right?' : 'Enquire about ' + tier;
+    document.getElementById('modal-form-wrap').style.display = 'block';
+    document.getElementById('modal-done-wrap').style.display = 'none';
+    document.getElementById('eq-err').style.display = 'none';
+    document.getElementById('eq-submit').disabled = false;
+    document.getElementById('eq-submit').textContent = 'Send enquiry';
+    document.getElementById('enquiry-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('eq-name').focus(), 100);
+  }
+
+  function closeEnquiry() {
+    document.getElementById('enquiry-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('enquiry-modal')) closeEnquiry();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeEnquiry();
+  });
+
+  async function submitEnquiry() {
+    const name  = document.getElementById('eq-name').value.trim();
+    const email = document.getElementById('eq-email').value.trim();
+    const role  = document.getElementById('eq-role').value.trim();
+    const org   = document.getElementById('eq-org').value.trim();
+    const size  = document.getElementById('eq-size').value;
+    const tier  = document.getElementById('eq-tier').value;
+    const why   = document.getElementById('eq-why').value.trim();
+    const errEl = document.getElementById('eq-err');
+
+    if (!name || !email.includes('@')) {
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    const btn = document.getElementById('eq-submit');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      await fetch(SUPABASE_URL + '/rest/v1/b2b_enquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          role:            role || null,
+          organisation:    org  || null,
+          company_size:    size || null,
+          tier_interest:   tier || null,
+          what_drives_this: why || null,
+          source: 'organisations_page'
+        })
+      });
+    } catch(_) { /* non-blocking */ }
+
+    document.getElementById('modal-form-wrap').style.display = 'none';
+    document.getElementById('modal-done-wrap').style.display = 'block';
+  }
+  </script>
+
 </body>
 </html>
