@@ -74,7 +74,6 @@ export default function Dashboard() {
 
   if (loading) return <div className="loading-screen"><div className="spinner" /></div>;
 
-  const hasPaid     = profile?.tier && profile.tier !== 'free';
   const isIntensive = profile?.tier === 'intensive';
   const currentWeek = profile?.current_week || 1;
   const progressPct = Math.round((completedWeeks.length / 8) * 100);
@@ -134,15 +133,18 @@ export default function Dashboard() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
-              {[['Days', days], ['Hrs', hrs], ['Min', mins]].map(([l, v]) => (
-                <div key={String(l)} style={{
+              {(['Days', 'Hrs', 'Min'] as const).map((label, idx) => {
+                const val = [days, hrs, mins][idx];
+                return (
+                <div key={label} style={{
                   background: 'var(--surface-2)', border: '1px solid var(--border)',
                   borderRadius: 8, padding: '8px 14px', textAlign: 'center', minWidth: 52,
                 }}>
-                  <div style={{ fontFamily: 'var(--font-head)', fontSize: 22, fontWeight: 800, color: 'var(--ember)', lineHeight: 1 }}>{v}</div>
-                  <div style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 3 }}>{l}</div>
+                  <div style={{ fontFamily: 'var(--font-head)', fontSize: 22, fontWeight: 800, color: 'var(--ember)', lineHeight: 1 }}>{val}</div>
+                  <div style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 3 }}>{label}</div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
