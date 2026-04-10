@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 const WEEKS = [
-  { week: 1, title: 'Understanding Burnout', focus: 'ACT Foundations & Awareness', free: true },
-  { week: 2, title: 'Defusion & Distance', focus: 'Cognitive Defusion Techniques' },
-  { week: 3, title: 'Present Moment', focus: 'Mindfulness & Grounding' },
-  { week: 4, title: 'The Observing Self', focus: 'Self-as-Context' },
-  { week: 5, title: 'Values Clarity', focus: 'Identifying What Matters' },
-  { week: 6, title: 'Committed Action', focus: 'Behavioural Activation' },
-  { week: 7, title: 'Boundaries & Restoration', focus: 'Sleep & Recovery Protocols' },
-  { week: 8, title: 'Sustainable Recovery', focus: 'Integration & Long-term Plan' },
+  { week: 1, title: 'The Neuroscience of Burnout', focus: 'Why your brain got here — and what it takes to heal', free: true },
+  { week: 2, title: 'Trying Harder Is Making It Worse', focus: 'The exhaustion trap keeping high performers stuck' },
+  { week: 3, title: 'How to Stop the 3am Spiral', focus: 'Breaking the rumination loop that steals your rest' },
+  { week: 4, title: 'How to Reset Your Sleep', focus: 'The science of nervous system recovery after burnout' },
+  { week: 5, title: 'Pivoting Towards Meaning in Work', focus: 'Values-based recovery when everything feels pointless' },
+  { week: 6, title: 'Effectively Managing Boundaries in Relationships', focus: 'Setting and maintaining boundaries without guilt' },
+  { week: 7, title: 'Sustainable Performance in the Long Run', focus: 'Building lasting energy and performance after depletion' },
+  { week: 8, title: 'Your Personalised Relapse Prevention Plan', focus: 'Your evidence-based long-term protection plan' },
 ];
 
 interface Profile {
