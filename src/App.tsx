@@ -11,6 +11,7 @@ import Admin from './pages/Admin';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import AdminGuard from './components/AdminGuard';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 import './index.css';
 
@@ -39,23 +40,31 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Public — no auth needed */}
-        <Route path="/diagnostic/survey/:token" element={<Survey />} />
-        <Route path="/burnout-quiz" element={<BurnoutQuiz />} />
-        <Route path="/burnout-report" element={<BurnoutReport />} />
-        <Route path="/diagnostic" element={<Diagnostic />} />
+      <ErrorBoundary context="App">
+        <Routes>
+          {/* Public — no auth needed */}
+          <Route path="/diagnostic/survey/:token" element={<Survey />} />
+          <Route path="/burnout-quiz" element={<BurnoutQuiz />} />
+          <Route path="/burnout-report" element={<BurnoutReport />} />
+          <Route path="/diagnostic" element={<Diagnostic />} />
 
-        {/* Guest only — redirect to app if already signed in */}
-        <Route path="/signup" element={<GuestRoute user={user}><Signup /></GuestRoute>} />
-        <Route path="/login" element={<GuestRoute user={user}><Login /></GuestRoute>} />
+          {/* Guest only — redirect to app if already signed in */}
+          <Route path="/signup" element={<GuestRoute user={user}><Signup /></GuestRoute>} />
+          <Route path="/login" element={<GuestRoute user={user}><Login /></GuestRoute>} />
 
-        {/* B2B Admin — protected */}
-        <Route path="/diagnostic/admin" element={<AdminGuard><Admin /></AdminGuard>} />
+          {/* B2B Admin — protected */}
+          <Route path="/diagnostic/admin" element={
+            <AdminGuard>
+              <ErrorBoundary context="Admin">
+                <Admin />
+              </ErrorBoundary>
+            </AdminGuard>
+          } />
 
-        {/* Fallback → login */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
+          {/* Fallback → login */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }
