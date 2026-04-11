@@ -10,6 +10,7 @@ import Diagnostic from './pages/Diagnostic';
 import Admin from './pages/Admin';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import AdminGuard from './components/AdminGuard';
 
 import './index.css';
 
@@ -49,8 +50,8 @@ export default function App() {
         <Route path="/signup" element={<GuestRoute user={user}><Signup /></GuestRoute>} />
         <Route path="/login" element={<GuestRoute user={user}><Login /></GuestRoute>} />
 
-        {/* B2B Admin */}
-        <Route path="/diagnostic/admin" element={<Admin />} />
+        {/* B2B Admin — protected */}
+        <Route path="/diagnostic/admin" element={<AdminGuard><Admin /></AdminGuard>} />
 
         {/* Fallback → login */}
         <Route path="*" element={<Navigate to="/login" replace />} />
