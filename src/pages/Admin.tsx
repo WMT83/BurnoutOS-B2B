@@ -51,6 +51,7 @@ export default function Admin() {
   const [showNewAssessment, setShowNewAssessment] = useState(false);
   const [loading, setLoading] = useState(true);
   const [copiedToken, setCopiedToken] = useState('');
+  const [scoreError, setScoreError] = useState('');
 
   // New org form
   const [orgForm, setOrgForm] = useState({ name: '', industry: '', employee_count: '', primary_contact_name: '', primary_contact_email: '', primary_contact_role: '', source: 'diagnostic' });
@@ -74,7 +75,8 @@ export default function Admin() {
       if (!res.ok) throw new Error(data.error || 'Scoring failed');
       load();
     } catch (err: any) {
-      alert(`Scoring error: ${err.message}`);
+      setScoreError(`Scoring failed: ${err.message}`);
+      setTimeout(() => setScoreError(''), 5000);
     } finally {
       setScoringId('');
     }
@@ -256,6 +258,11 @@ export default function Admin() {
                 {a.risk_level && <span className={`badge badge-${a.risk_level}`}>{a.risk_level} risk</span>}
                 {a.total_score != null && <span style={{ fontSize: 13, color: 'var(--muted)' }}>Score: <strong>{a.total_score}</strong></span>}
                 {a.burnout_cost_aud != null && <span style={{ fontSize: 13, color: 'var(--muted)' }}>Est. cost: <strong>{fmtCurrency(a.burnout_cost_aud)}</strong></span>}
+                {scoreError && scoringId === '' && (
+                  <span style={{ fontSize: 12, color: '#dc2626', padding: '4px 8px', background: '#fef2f2', borderRadius: 6 }}>
+                    {scoreError}
+                  </span>
+                )}
                 <div style={{ display: 'flex', gap: 8, marginLeft: 'auto' }}>
                   {(a.status === 'responses_received' || a.status === 'survey_sent') && (
                     <button
