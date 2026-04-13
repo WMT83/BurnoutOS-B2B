@@ -57,14 +57,24 @@ export default function Signup() {
       if (authError) throw authError;
       if (!authData.user) throw new Error('Signup failed — please try again.');
 
-      // 2. Build payment link with user_id as client_reference_id
-      //    Stripe passes this back to the webhook as session.client_reference_id
+      // Get the session tokens to pass to the app domain.
+      // We're on www.burnout-os.app but the app is on app.burnout-os.app —
+      // different subdomains don't share cookies, so we hand off the session
+      // via URL params to app.burnout-os.app which will establish it there,
+      // then redirect the user to Stripe checkout.
+      const session = authData.session;
+      if (!session) throw new Error('Session not established — please try again.');
+
       const paymentLink = PAYMENT_LINKS[tier]?.[region] || PAYMENT_LINKS['on_demand']['au'];
       const checkoutUrl = `${paymentLink}?prefilled_email=${encodeURIComponent(email)}&client_reference_id=${authData.user.id}`;
 
+      // Redirect to app domain with session + checkout URL encoded
+      // App domain picks up the session, sets cookies, then forwards to Stripe
+      const handoffUrl = `https://app.burnout-os.app/auth?access_token=${session.access_token}&refresh_token=${session.refresh_token}&type=signup&next=${encodeURIComponent(checkoutUrl)}`;
+
       setStep('processing');
       setTimeout(() => {
-        window.location.href = checkoutUrl;
+        window.location.href = handoffUrl;
       }, 400);
 
     } catch (err: unknown) {
