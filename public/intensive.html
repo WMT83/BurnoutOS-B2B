@@ -1248,11 +1248,14 @@
   </footer>
 
   <script>
-    const STRIPE = {
-      aud:        'https://buy.stripe.com/dRm3cvaCP1Ro7Sm9zMdnW08',
-      zar:        'https://buy.stripe.com/fZudR97qDfIedcG7rEdnW09',
-      gbp:        'https://buy.stripe.com/bJe4gz8uHanUgoSeU6dnW0a',
-      instalment: 'https://buy.stripe.com/6oUdR9fX92Vs3C6cLYdnW0b',
+    // All CTAs redirect to the signup page with tier=intensive pre-selected.
+    // Users create an account first so their user_id can be passed to Stripe
+    // as client_reference_id, allowing the webhook to provision access correctly.
+    const SIGNUP = {
+      aud:        'https://www.burnout-os.app/signup?tier=intensive&region=au',
+      zar:        'https://www.burnout-os.app/signup?tier=intensive&region=za',
+      gbp:        'https://www.burnout-os.app/signup?tier=intensive&region=gb',
+      instalment: 'https://www.burnout-os.app/signup?tier=intensive&region=au&instalment=1',
     };
 
     const PRICES = {
@@ -1270,11 +1273,11 @@
       document.getElementById('price-note').textContent = p.note;
       const enrolBtn = document.getElementById('enrol-btn');
       enrolBtn.textContent = p.btn;
-      enrolBtn.href = STRIPE[c];
+      enrolBtn.href = SIGNUP[c];
       document.getElementById('hero-enrol-btn').textContent = 'Enrol for ' + p.label;
       const ctaBtn = document.getElementById('cta-enrol-btn');
       ctaBtn.textContent = 'Reserve your seat — ' + p.label;
-      ctaBtn.href = STRIPE[c];
+      ctaBtn.href = SIGNUP[c];
     }
 
     // Auto-detect currency from browser locale
@@ -1288,9 +1291,9 @@
     })();
 
     // Set initial links
-    document.getElementById('enrol-btn').href = STRIPE[detectedCurrency];
-    document.getElementById('cta-enrol-btn').href = STRIPE[detectedCurrency];
-    document.getElementById('hero-enrol-btn').href = STRIPE[detectedCurrency];
+    document.getElementById('enrol-btn').href = SIGNUP[detectedCurrency];
+    document.getElementById('cta-enrol-btn').href = SIGNUP[detectedCurrency];
+    document.getElementById('hero-enrol-btn').href = SIGNUP[detectedCurrency];
 
     // Apply detected currency to display
     if (detectedCurrency !== 'aud') {
