@@ -109,7 +109,7 @@ export default function Signup() {
 
         {error && <div className="auth-error">{error}</div>}
 
-        <form onSubmit={handleSignup}>
+        <form onSubmit={handleSignup} autoComplete="on">
           <div className="auth-field">
             <label>FULL NAME</label>
             <input
@@ -117,6 +117,7 @@ export default function Signup() {
               value={fullName}
               onChange={e => setFullName(e.target.value)}
               placeholder="Your name"
+              autoComplete="name"
               required
             />
           </div>
@@ -127,6 +128,7 @@ export default function Signup() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="you@example.com"
+              autoComplete="email"
               required
             />
           </div>
@@ -137,6 +139,7 @@ export default function Signup() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="At least 8 characters"
+              autoComplete="new-password"
               minLength={8}
               required
             />
