@@ -101,23 +101,19 @@ export default function Diagnostic() {
             20 minutes. No sales pitch. If BurnoutOS is right for you, Werner will tell you. If it is not, he will tell you that too.
           </p>
 
-          {/* Calendly placeholder — replace href with real Calendly link */}
           <a
-            href="https://calendly.com/werner-katalis"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:hello@burnout-os.app?subject=Burnout%20Diagnostic%20Call%20Request&body=Hi%20Werner%2C%0A%0AI%27d%20like%20to%20book%20a%20free%2020-minute%20Burnout%20Diagnostic%20Call.%0A%0AA%20bit%20about%20me%3A%0A-%20Name%3A%20%0A-%20Role%20%2F%20context%3A%20%0A-%20What%27s%20prompting%20the%20call%3A%20%0A%0APreferred%20times%20(AEST)%3A%0A-%20%0A-%20%0A-%20%0A%0AThanks%2C%0A"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', background: 'var(--ember)', color: '#fff', textDecoration: 'none', borderRadius: '10px', padding: '16px 36px', fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-body)', marginBottom: '16px' }}
           >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <rect x="1" y="3" width="16" height="14" rx="3" stroke="#fff" strokeWidth="1.5" fill="none" />
-              <path d="M1 7h16M6 1v4M12 1v4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M2 4h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="#fff" strokeWidth="1.5" fill="none" />
+              <path d="M1 5l8 5 8-5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
             </svg>
-            Choose a time
+            Email to book your call
           </a>
 
           <p style={{ fontSize: '12px', color: 'var(--text-muted)', opacity: 0.6 }}>
-            Zoom · AEST timezone · Limited spots available
-          </p>
+            Werner replies within 1 business day · Zoom · AEST timezone</p>
         </div>
 
         {/* AHPRA disclaimer */}
