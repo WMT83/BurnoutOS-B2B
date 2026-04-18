@@ -1,20 +1,15 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 
-// Stripe payment links — success URL must be set to:
-// https://app.burnout-os.app/dashboard?upgrade=success  (set in Stripe dashboard per link)
-const PAYMENT_LINKS: Record<string, Record<string, string>> = {
-  on_demand: {
-    au: 'https://buy.stripe.com/28EaEXh1dcw2b4y9zMdnW02',  // AUD $697
-    za: 'https://buy.stripe.com/14A28r5iv8fMfkOeU6dnW03',  // ZAR R7,997
-    gb: 'https://buy.stripe.com/28EeVddP1brYa0ufYadnW04',  // GBP £397
-  },
-  intensive: {
-    au: 'https://buy.stripe.com/dRm3cvaCP1Ro7Sm9zMdnW08',  // AUD $1,497
-    za: 'https://buy.stripe.com/fZudR97qDfIedcG7rEdnW09',  // ZAR R16,997
-    gb: 'https://buy.stripe.com/bJe4gz8uHanUgoSeU6dnW0a',  // GBP £847
-  },
-};
+// Signup handoff architecture:
+// 1. Create Supabase user on www.burnout-os.app
+// 2. Hand off session to app.burnout-os.app via /auth?access_token=...&next=...
+// 3. Platform establishes session, then forwards to /pricing?auto_checkout=<tier>
+// 4. Platform's Pricing page auto-invokes create-payment-intent which sets full
+//    product metadata for the webhook, which notifies MarketOS.
+//
+// This replaces the previous Payment Link flow (deprecated April 2026) which
+// could not carry product metadata and therefore misrouted MarketOS leads.
 
 const REGION_OPTIONS = [
   { value: 'au', label: 'Australia' },
@@ -57,20 +52,20 @@ export default function Signup() {
       if (authError) throw authError;
       if (!authData.user) throw new Error('Signup failed — please try again.');
 
-      // Get the session tokens to pass to the app domain.
-      // We're on www.burnout-os.app but the app is on app.burnout-os.app —
-      // different subdomains don't share cookies, so we hand off the session
-      // via URL params to app.burnout-os.app which will establish it there,
-      // then redirect the user to Stripe checkout.
+      // Session handoff: www.burnout-os.app → app.burnout-os.app
+      // Subdomains don't share cookies. We establish session on the app domain
+      // via /auth?access_token=... then forward to the platform's Pricing page,
+      // which auto-invokes checkout using create-payment-intent (sets full
+      // product metadata for the webhook and MarketOS integration).
       const session = authData.session;
       if (!session) throw new Error('Session not established — please try again.');
 
-      const paymentLink = PAYMENT_LINKS[tier]?.[region] || PAYMENT_LINKS['on_demand']['au'];
-      const checkoutUrl = `${paymentLink}?prefilled_email=${encodeURIComponent(email)}&client_reference_id=${authData.user.id}`;
-
-      // Redirect to app domain with session + checkout URL encoded
-      // App domain picks up the session, sets cookies, then forwards to Stripe
-      const handoffUrl = `https://app.burnout-os.app/auth?access_token=${session.access_token}&refresh_token=${session.refresh_token}&type=signup&next=${encodeURIComponent(checkoutUrl)}`;
+      // Map region code to Stripe-config region key.
+      // Signup uses 'au' / 'za' / 'gb'; Stripe config uses 'aud' / 'zar' / 'gbp'.
+      const regionToCurrency: Record<string, string> = { au: 'aud', za: 'zar', gb: 'gbp' };
+      const currencyRegion = regionToCurrency[region] ?? 'aud';
+      const pricingPath = `/pricing?auto_checkout=${tier}&region=${currencyRegion}`;
+      const handoffUrl = `https://app.burnout-os.app/auth?access_token=${session.access_token}&refresh_token=${session.refresh_token}&type=signup&next=${encodeURIComponent(pricingPath)}`;
 
       setStep('processing');
       setTimeout(() => {
