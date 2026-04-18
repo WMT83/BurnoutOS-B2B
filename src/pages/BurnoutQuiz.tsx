@@ -48,6 +48,7 @@ export default function BurnoutQuiz() {
   const [step, setStep] = useState<'intro' | 'quiz' | 'email' | 'result'>('intro');
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [current, setCurrent] = useState(0);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -69,20 +70,37 @@ export default function BurnoutQuiz() {
 
   async function submitEmail(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.includes('@')) { setError('Please enter a valid email address.'); return; }
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    if (!trimmedName) { setError('Please enter your name.'); return; }
+    if (!trimmedEmail.includes('@')) { setError('Please enter a valid email address.'); return; }
     setSubmitting(true);
     setError('');
+
+    // Compute risk level locally for submission (must match getResult thresholds)
+    const riskLevel = totalScore <= 12 ? 'Low Risk' : totalScore <= 24 ? 'Moderate Risk' : 'High Risk';
+
     try {
-      await fetch('https://kvsirypfqtnymooxicti.supabase.co/rest/v1/waitlist_signups', {
+      const resp = await fetch('https://ewictbfujvtfjqomdalq.supabase.co/functions/v1/receive-quiz-lead', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c2lyeXBmcXRueW1vb3hpY3RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyMDM4NzcsImV4cCI6MjA1ODc3OTg3N30.RBjvKB-A-j9e_c5XxFkqT7EKNyFUVpVzlcRvQQT5Dos',
-          'Prefer': 'return=minimal',
-        },
-        body: JSON.stringify({ email, source: 'burnout_quiz' }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: trimmedName,
+          email: trimmedEmail,
+          score: totalScore,
+          risk_level: riskLevel,
+          answers,
+          source_url: typeof window !== 'undefined' ? window.location.href : null,
+          quiz_name: 'burnout-blindspot',
+        }),
       });
-    } catch (_) { /* non-blocking */ }
+      // Non-blocking: even if the API fails, we still show the user their result.
+      if (!resp.ok) {
+        console.warn('Quiz submission non-200:', resp.status);
+      }
+    } catch (err) {
+      console.warn('Quiz submission error (non-blocking):', err);
+    }
     setSubmitting(false);
     setStep('result');
   }
@@ -209,15 +227,25 @@ export default function BurnoutQuiz() {
                 Your results are ready
               </h2>
               <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '28px', lineHeight: 1.6 }}>
-                Enter your email to see your personalised burnout risk score and what it means for your recovery.
+                Enter your details to see your personalised burnout risk score and what it means for your recovery.
               </p>
               <form onSubmit={submitEmail}>
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  required
+                  autoComplete="name"
+                  style={{ width: '100%', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: '10px', padding: '13px 16px', color: 'var(--text)', fontSize: '15px', marginBottom: '12px', fontFamily: 'var(--font-body)' }}
+                />
                 <input
                   type="email"
                   placeholder="your@email.com"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required
+                  autoComplete="email"
                   style={{ width: '100%', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: '10px', padding: '13px 16px', color: 'var(--text)', fontSize: '15px', marginBottom: '12px', fontFamily: 'var(--font-body)' }}
                 />
                 {error && <p style={{ color: 'var(--ember)', fontSize: '13px', marginBottom: '12px' }}>{error}</p>}
