@@ -59,6 +59,11 @@
       "source": "/coaching",
       "destination": "/coaching.html",
       "permanent": false
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html",
+      "permanent": false
     }
   ],
   "rewrites": [
