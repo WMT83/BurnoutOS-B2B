@@ -39,6 +39,21 @@
       "source": "/diagnostic",
       "destination": "/diagnostic.html",
       "permanent": false
+    },
+    {
+      "source": "/werner",
+      "destination": "/werner.html",
+      "permanent": false
+    },
+    {
+      "source": "/burnoutprogramme",
+      "destination": "/burnoutprogramme.html",
+      "permanent": false
+    },
+    {
+      "source": "/organisations",
+      "destination": "/organisations.html",
+      "permanent": false
     }
   ],
   "rewrites": [
