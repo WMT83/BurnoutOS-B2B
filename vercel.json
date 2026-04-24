@@ -36,9 +36,19 @@
       "permanent": false
     },
     {
-      "source": "/diagnostic",
-      "destination": "/diagnostic.html",
+      "source": "/snapshot",
+      "destination": "/snapshot.html",
       "permanent": false
+    },
+    {
+      "source": "/diagnostic",
+      "destination": "/snapshot.html",
+      "permanent": true
+    },
+    {
+      "source": "/diagnostic.html",
+      "destination": "/snapshot.html",
+      "permanent": true
     },
     {
       "source": "/werner",

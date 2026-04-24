@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Burnout Diagnostic Call — BurnoutOS</title>
-  <meta name="description" content="Join the waitlist for a free 20-minute Burnout Diagnostic Call with Werner. Spots open monthly — we'll reach out when one is available." />
+  <title>Free Burnout Snapshot Call — BurnoutOS</title>
+  <meta name="description" content="Join the waitlist for a free 20-minute Burnout Snapshot Call with Werner. A short conversation to understand where you are and what recovery could look like. Spots open monthly." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
@@ -97,8 +97,8 @@
 <div class="page">
 
   <span class="eyebrow">Free · 20 minutes · No obligation</span>
-  <h1>Free Burnout<br>Diagnostic Call</h1>
-  <p class="hero-text">A 20-minute conversation with Werner — a registered psychologist with a decade of experience in burnout recovery — to understand where you are and what recovery actually looks like for you.</p>
+  <h1>Free Burnout<br>Snapshot Call</h1>
+  <p class="hero-text">A 20-minute conversation with Werner — a registered clinical psychologist with a decade of experience in burnout recovery — to understand where you currently are and what recovery could look like for you.</p>
 
   <div class="two-col">
 
@@ -110,7 +110,7 @@
         </div>
         <div>
           <div class="feature-title">Understand your burnout profile</div>
-          <div class="feature-desc">We map where you sit across exhaustion, cynicism, and efficacy — the three clinical dimensions.</div>
+          <div class="feature-desc">We'll talk through where you sit across exhaustion, cynicism, and efficacy — the three areas most associated with burnout.</div>
         </div>
       </div>
       <div class="feature">
@@ -171,8 +171,8 @@
     </div>
     <div>
       <div class="werner-name">Werner Teichert</div>
-      <div class="werner-role">Registered Psychologist · AHPRA · HPCSA</div>
-      <div class="werner-bio">Psychologist and founder of Katalis. Specialises in evidence-based burnout recovery using ACT, CBT-I, and occupational health frameworks. Built BurnoutOS because the programmes he wanted to refer clients to did not exist.</div>
+      <div class="werner-role">Registered Clinical Psychologist · Founder, BurnoutOS</div>
+      <div class="werner-bio">Clinical psychologist and founder of Katalis. Specialises in evidence-based burnout recovery using ACT, CBT-I, and occupational health frameworks. Built BurnoutOS because the programmes he wanted to refer clients to did not exist.</div>
     </div>
   </div>
 
@@ -180,7 +180,7 @@
   <div class="cta-box">
 
     <h2>Join the waitlist</h2>
-    <p class="cta-sub">Diagnostic call spots open monthly based on availability. Join the list and Werner will reach out personally when a slot opens.</p>
+    <p class="cta-sub">Snapshot call spots open monthly based on availability. Join the list and Werner will reach out personally when a slot opens.</p>
 
     <div class="scarcity">
       <span class="scarcity-dot"></span>
@@ -232,13 +232,16 @@
 
   </div>
 
-  <p class="disclaimer">BurnoutOS is an evidence-informed psychoeducational programme. This call is an initial consultation, not ongoing psychological treatment. Werner Teichert is registered with AHPRA (Psychology Board of Australia) and HPCSA.</p>
+  <p class="disclaimer">BurnoutOS is an evidence-informed psychoeducational programme. This call is a short introductory conversation — not a clinical assessment or ongoing psychological treatment. Werner Teichert is a registered clinical psychologist.</p>
 
 </div>
 
 <script>
-const SUPABASE_URL = 'https://kvsirypfqtnymooxicti.supabase.co';
-const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c2lyeXBmcXRueW1vb3hpY3RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyMDM4NzcsImV4cCI6MjA1ODc3OTg3N30.RBjvKB-A-j9e_c5XxFkqT7EKNyFUVpVzlcRvQQT5Dos';
+// Submits the waitlist form to MarketOS receive-waitlist-signup, which inserts
+// a lead (source='snapshot_waitlist') and fires the Snapshot Waitlist Drip
+// sequence via process-triggers. The old diagnostic_waitlist table on the
+// platform DB was orphaned — nothing read from it, no sequences fired.
+const MARKETOS_URL = 'https://ewictbfujvtfjqomdalq.supabase.co';
 
 async function submitWaitlist() {
   const name  = document.getElementById('f-name').value.trim();
@@ -248,7 +251,8 @@ async function submitWaitlist() {
   const why   = document.getElementById('f-reason').value.trim();
   const errEl = document.getElementById('form-err');
 
-  if (!name || !email.includes('@')) {
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!name || !validEmail) {
     errEl.style.display = 'block';
     return;
   }
@@ -259,20 +263,20 @@ async function submitWaitlist() {
   btn.textContent = 'Joining...';
 
   try {
-    await fetch(`${SUPABASE_URL}/rest/v1/diagnostic_waitlist`, {
+    await fetch(`${MARKETOS_URL}/functions/v1/receive-waitlist-signup`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': ANON_KEY,
-        'Prefer': 'return=minimal'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name,
         email,
-        role:           role || null,
-        organisation:   org  || null,
-        what_brings_you: why  || null,
-        source: 'diagnostic_page'
+        source: 'snapshot_waitlist',
+        source_url: window.location.href,
+        metadata: {
+          role:            role || null,
+          organisation:    org  || null,
+          what_brings_you: why  || null,
+          page:            'burnout-snapshot-call'
+        }
       })
     });
   } catch(_) {
@@ -283,7 +287,7 @@ async function submitWaitlist() {
   document.getElementById('done-wrap').style.display  = 'block';
 }
 
-// Allow Enter key in single-line fields to advance
+// Enter key on single-line inputs advances to submit
 document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && e.target.tagName === 'INPUT') submitWaitlist();
 });
