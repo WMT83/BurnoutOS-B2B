@@ -107,9 +107,10 @@
         font-family="Syne,sans-serif" id="score-text">0/9</text>
     </svg>
     <h2>Your full analysis is ready</h2>
-    <p>Enter your email and we will send your personalised Burnout Blindspot report, along with the evidence-based first steps for your risk level.</p>
-    <input class="field" type="email" id="email-input" placeholder="your@email.com" />
-    <div class="err" id="email-err">Please enter a valid email address.</div>
+    <p>Enter your details and we will send your personalised Burnout Blindspot report, along with the evidence-based first steps for your risk level.</p>
+    <input class="field" type="text" id="name-input" placeholder="Your name" autocomplete="name" />
+    <input class="field" type="email" id="email-input" placeholder="your@email.com" autocomplete="email" />
+    <div class="err" id="email-err">Please enter a valid name and email.</div>
     <button class="btn-primary" onclick="submitEmail()">Send my report</button>
     <p class="fine-print">No spam. Unsubscribe anytime.</p>
   </div>
@@ -217,15 +218,25 @@ function proceed() {
 }
 
 async function submitEmail() {
+  const name = document.getElementById('name-input').value.trim();
   const email = document.getElementById('email-input').value.trim();
   const errEl = document.getElementById('email-err');
-  if (!email.includes('@')) { errEl.style.display = 'block'; return; }
+  if (!name || !email.includes('@')) { errEl.style.display = 'block'; return; }
   errEl.style.display = 'none';
+  // Capture the ticked signs as an array of indices (0-8) so the backend
+  // can compute risk level, store the specific signs in metadata, and
+  // route to the right risk-tiered nurture sequence.
+  const tickedSigns = Array.from(checked).sort((a, b) => a - b);
   try {
-    await fetch('https://kvsirypfqtnymooxicti.supabase.co/rest/v1/waitlist_signups', {
+    await fetch('https://ewictbfujvtfjqomdalq.supabase.co/functions/v1/receive-report-signup', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c2lyeXBmcXRueW1vb3hpY3RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyMDM4NzcsImV4cCI6MjA1ODc3OTg3N30.RBjvKB-A-j9e_c5XxFkqT7EKNyFUVpVzlcRvQQT5Dos', 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ email, source: 'burnout_report' })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        ticked_signs: tickedSigns,
+        source_url: window.location.href,
+      })
     });
   } catch(_) {}
   document.getElementById('screen-gate').classList.add('hidden');
