@@ -150,9 +150,10 @@
           </svg>
         </div>
         <h2>Your results are ready</h2>
-        <p>Enter your email to see your personalised burnout risk score and what it means for your recovery.</p>
-        <input class="field" type="email" id="email-input" placeholder="your@email.com" />
-        <div class="err hidden" id="email-err">Please enter a valid email address.</div>
+        <p>Enter your name and email to see your personalised burnout risk score and what it means for your recovery.</p>
+        <input class="field" type="text" id="name-input" placeholder="Your name" autocomplete="name" />
+        <input class="field" type="email" id="email-input" placeholder="your@email.com" autocomplete="email" />
+        <div class="err hidden" id="email-err">Please enter your name and a valid email address.</div>
         <button class="btn-primary btn-full" onclick="submitEmail()">See my results</button>
         <p class="fine-print">No spam. Unsubscribe anytime.</p>
       </div>
@@ -250,21 +251,42 @@ function finishQuiz() {
 }
 
 async function submitEmail() {
-  const email = document.getElementById('email-input').value.trim();
+  const nameInput = document.getElementById('name-input');
+  const emailInput = document.getElementById('email-input');
   const errEl = document.getElementById('email-err');
-  if (!email.includes('@')) { errEl.classList.remove('hidden'); return; }
+  const name = (nameInput.value || '').trim();
+  const email = (emailInput.value || '').trim();
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!name || !validEmail) {
+    errEl.classList.remove('hidden');
+    return;
+  }
   errEl.classList.add('hidden');
+
+  // Derive risk label from current totalScore. Same bands as showResult() uses.
+  const riskLabel = totalScore <= 12 ? 'Low Risk' : totalScore <= 24 ? 'Moderate Risk' : 'High Risk';
+
+  // Build an answers map keyed by question index for downstream analysis.
+  const answersMap = {};
+  answers.forEach((a, i) => { answersMap['q' + (i + 1)] = a.score; });
+
+  // Fire-and-forget — never block the result screen on a network error.
   try {
-    await fetch('https://kvsirypfqtnymooxicti.supabase.co/rest/v1/waitlist_signups', {
+    await fetch('https://ewictbfujvtfjqomdalq.supabase.co/functions/v1/receive-quiz-lead', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c2lyeXBmcXRueW1vb3hpY3RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyMDM4NzcsImV4cCI6MjA1ODc3OTg3N30.RBjvKB-A-j9e_c5XxFkqT7EKNyFUVpVzlcRvQQT5Dos',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({ email, source: 'burnout_quiz' })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        score: totalScore,
+        risk_level: riskLabel,
+        answers: answersMap,
+        source_url: window.location.href,
+        quiz_name: 'burnout-selfcheck-b2c'
+      })
     });
-  } catch(_) {}
+  } catch (_) { /* ignore — user still sees results */ }
+
   showResult();
 }
 
