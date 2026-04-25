@@ -5,7 +5,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Executive Coaching with Werner Teichert — BurnoutOS</title>
-  <meta name="description" content="One-to-one executive coaching with Werner Teichert, AHPRA and HPCSA registered psychologist. Ten sessions over five months. Fit-call-gated. Capped at six concurrent clients. Next availability: 20 May 2026." />
+  <meta name="description" content="One-to-one executive coaching with Werner Teichert, AHPRA and HPCSA registered psychologist. Ten sessions over five months. By application. Capped at six concurrent clients. Next availability: 20 May 2026." />
   <link rel="canonical" href="https://burnout-os.app/coaching" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -461,41 +461,195 @@
     }
     #governance a:hover { border-color: var(--ember); }
 
-    /* Final CTA */
-    #cta {
+    /* Apply for coaching */
+    #apply {
       padding: 5rem 2rem 6rem;
       border-top: 1px solid var(--rule);
       background: rgba(232,75,42,0.04);
-      text-align: center;
     }
-    .cta-wrap {
-      max-width: 640px;
+    .apply-wrap {
+      max-width: 720px;
       margin: 0 auto;
     }
-    #cta h2 {
+    #apply h2 {
       font-family: 'Syne', sans-serif;
       font-size: clamp(1.75rem, 3vw, 2.4rem);
       font-weight: 700;
       letter-spacing: -0.03em;
       line-height: 1.15;
       margin-bottom: 1rem;
+      text-align: center;
     }
-    #cta p {
+    #apply > .apply-wrap > p.apply-intro {
       font-size: 1.05rem;
       color: rgba(255,255,255,0.55);
       line-height: 1.6;
       font-weight: 300;
-      margin-bottom: 2.25rem;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+      max-width: 560px;
     }
-    #cta .btn-primary {
-      font-size: 1rem;
-      padding: 1rem 2rem;
+
+    /* Form */
+    .form-wrap {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 2.5rem 2.25rem;
     }
-    .cta-sub {
+    .field-group {
+      margin-bottom: 1.5rem;
+    }
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 0.5rem;
+    }
+    label .req {
+      color: var(--ember);
+      margin-left: 0.2em;
+    }
+    label .optional {
+      color: rgba(255,255,255,0.35);
+      font-weight: 400;
+      font-size: 0.75rem;
+      margin-left: 0.4em;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.75rem 0.95rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--ember);
+      background: rgba(255,255,255,0.07);
+    }
+    input::placeholder, textarea::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23ffffff66' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      background-size: 12px;
+      padding-right: 2.5rem;
+    }
+    select option {
+      background: var(--ink-soft);
+      color: var(--white);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.55;
+    }
+
+    /* Acknowledgement groups */
+    .ack-block {
+      margin-top: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .ack-block > .ack-heading {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 0.85rem;
+    }
+    .ack-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      cursor: pointer;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.7);
+    }
+    .ack-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+      accent-color: var(--ember);
+      cursor: pointer;
+    }
+    .ack-item:hover { color: rgba(255,255,255,0.9); }
+
+    /* Submit + status */
+    .submit-row {
+      margin-top: 0.5rem;
+    }
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.75rem;
+      background: var(--ember);
+      color: var(--white);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--ember-dim); transform: translateY(-1px); }
+    .btn-submit:disabled { background: var(--ink-soft); cursor: not-allowed; }
+    .form-msg {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      padding: 0.85rem 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+    .form-msg.ok {
+      display: block;
+      background: rgba(77, 184, 192, 0.1);
+      border: 1px solid rgba(77, 184, 192, 0.3);
+      color: var(--teal-soft);
+    }
+    .form-msg.err {
+      display: block;
+      background: rgba(232, 75, 42, 0.08);
+      border: 1px solid rgba(232, 75, 42, 0.3);
+      color: var(--ember);
+    }
+    .apply-footnote {
       margin-top: 1.75rem;
       font-size: 0.85rem;
       color: rgba(255,255,255,0.4);
       font-weight: 300;
+      text-align: center;
+      line-height: 1.6;
     }
 
     /* Footer */
@@ -547,6 +701,9 @@
       .nav-right { gap: 0.75rem; }
       #hero { padding-top: 6rem; }
       .hero-cta-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .field-row { grid-template-columns: 1fr; gap: 0; margin-bottom: 0; }
+      .field-row .field-group { margin-bottom: 1.5rem; }
+      .form-wrap { padding: 1.75rem 1.5rem; }
     }
   </style>
 </head>
@@ -570,11 +727,11 @@
       <p class="hero-sub">
         For senior professionals working on performance, resilience, and
         sustainable leadership. Ten sessions over five months. Fortnightly
-        cadence. Fit-call-gated enrolment.
+        cadence. By application.
       </p>
       <div class="hero-cta-row">
-        <a href="https://calendly.com/wernerteichert/coaching-fit-call" class="btn-primary" target="_blank" rel="noopener">
-          Book a fit call →
+        <a href="#apply" class="btn-primary">
+          Apply for coaching →
         </a>
         <div class="hero-scarcity">
           Capped at <strong>six concurrent clients</strong>. Next availability: <strong>20 May 2026</strong>.
@@ -605,7 +762,7 @@
     <div class="fit-wrap">
       <div class="fit-col for">
         <div class="fit-eyebrow">Who this is for</div>
-        <h3>If this describes your situation, the fit call will likely confirm a match.</h3>
+        <h3>If this describes your situation, your application is likely to be a match.</h3>
         <ul class="fit-list">
           <li>Graduates of the Burnout Recovery Intensive who want continued individual work</li>
           <li>Senior professionals with specific leadership or performance challenges</li>
@@ -622,8 +779,8 @@
           <li>People seeking Medicare-rebatable therapy</li>
         </ul>
         <p class="fit-note">
-          If coaching isn't right for you, Werner will tell you directly on
-          the fit call — and suggest what would be.
+          If coaching isn't right for you, Werner will tell you directly when
+          reviewing your application — and suggest what would be.
         </p>
       </div>
     </div>
@@ -643,13 +800,17 @@
       <div class="phase">
         <div class="phase-marker">Before session 1</div>
         <div class="phase-body">
-          <h3>The fit call</h3>
+          <h3>Application &amp; enrolment</h3>
           <p>
-            A 20-minute conversation — free, structured, and honest. Werner
-            assesses whether coaching is the right frame for what you're working
-            on. Not everyone is offered a place. If coaching-appropriate,
-            enrolment begins with a baseline pattern assessment using validated
-            instruments from the clinical literature.
+            A short structured application — what you're looking for, what you
+            understand the engagement to be, and any context Werner should know.
+            Werner reviews every application personally and responds within
+            two business days. If coaching is the right frame for what you're
+            navigating, you'll receive offer details and a link to book your
+            first session. If it isn't, Werner will say so directly and point
+            you toward what would help more. Enrolment begins with a baseline
+            pattern assessment using validated instruments from the clinical
+            literature.
           </p>
         </div>
       </div>
@@ -725,14 +886,14 @@
       <p class="payment-note">
         <strong>Payment options:</strong> single payment at enrolment, or two
         instalments at signing and session five. Payment details sent directly
-        after the fit call if coaching is confirmed as the right fit.
+        after your application is reviewed and confirmed as the right fit.
       </p>
     </div>
   </section>
 
   <section id="governance">
     <div class="governance-wrap">
-      <h2>Before you book — one clinical note.</h2>
+      <h2>Before you apply — one clinical note.</h2>
       <p>
         Engagement requires an ongoing relationship with a general practitioner,
         with a consultation in the past six months. This is part of the clinical
@@ -743,19 +904,124 @@
     </div>
   </section>
 
-  <section id="cta">
-    <div class="cta-wrap">
-      <h2>Book the fit call.</h2>
-      <p>
-        A 20-minute conversation with Werner. No sales pitch. If coaching isn't
-        the right fit, we'll say so directly.
+  <section id="apply">
+    <div class="apply-wrap">
+      <h2>Apply for Executive Coaching.</h2>
+      <p class="apply-intro">
+        Coaching with me runs ten sessions over five months. It's not for everyone.
+        Read what it is and what it isn't, tick what fits, and submit.
       </p>
-      <a href="https://calendly.com/wernerteichert/coaching-fit-call" class="btn-primary" target="_blank" rel="noopener">
-        Book a fit call →
-      </a>
-      <div class="cta-sub">
-        Next availability: 20 May 2026 · Capped at six concurrent clients
+
+      <div class="form-wrap">
+        <form id="coaching-form" onsubmit="return submitCoachingForm(event)" novalidate>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="first_name">First name<span class="req">*</span></label>
+              <input type="text" id="first_name" name="first_name" autocomplete="given-name" required />
+            </div>
+            <div class="field-group">
+              <label for="last_name">Last name<span class="req">*</span></label>
+              <input type="text" id="last_name" name="last_name" autocomplete="family-name" required />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="email">Email<span class="req">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+            <div class="field-group">
+              <label for="phone">Phone (mobile preferred)<span class="req">*</span></label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" required />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="role">Role / title<span class="req">*</span></label>
+              <input type="text" id="role" name="role" required />
+            </div>
+            <div class="field-group">
+              <label for="organisation">Organisation<span class="optional">optional</span></label>
+              <input type="text" id="organisation" name="organisation" autocomplete="organization" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="region">Region<span class="req">*</span></label>
+            <select id="region" name="region" required>
+              <option value="" disabled selected>Select region…</option>
+              <option value="au">Australia</option>
+              <option value="za">South Africa</option>
+              <option value="nz">New Zealand</option>
+              <option value="gb">United Kingdom</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="ack-block">
+            <div class="ack-heading">What this engagement is — tick the boxes that describe what you're looking for.</div>
+            <label class="ack-item">
+              <input type="checkbox" name="ack_is" value="structured" required />
+              <span>I want a structured engagement, not ad-hoc sessions</span>
+            </label>
+            <label class="ack-item">
+              <input type="checkbox" name="ack_is" value="cadence" required />
+              <span>I'm comfortable working fortnightly across five months</span>
+            </label>
+            <label class="ack-item">
+              <input type="checkbox" name="ack_is" value="system" required />
+              <span>I want to work on the system underneath my work, not just immediate problems</span>
+            </label>
+            <label class="ack-item">
+              <input type="checkbox" name="ack_is" value="platform" required />
+              <span>I'm willing to use a digital platform between sessions for reflection and tracking</span>
+            </label>
+            <label class="ack-item">
+              <input type="checkbox" name="ack_is" value="capacity" required />
+              <span>I have ten sessions of capacity in my schedule across the next five months</span>
+            </label>
+          </div>
+
+          <div class="ack-block">
+            <div class="ack-heading">What this engagement isn't — tick to confirm you understand.</div>
+            <label class="ack-item">
+              <input type="checkbox" name="ack_isnt" value="not_therapy" required />
+              <span>This isn't therapy. If I'm in active mental health crisis or need clinical mental health support, I'll seek that separately.</span>
+            </label>
+            <label class="ack-item">
+              <input type="checkbox" name="ack_isnt" value="not_quick" required />
+              <span>This isn't a quick fix. Behaviour change at the level we're working at takes months, not weeks.</span>
+            </label>
+            <label class="ack-item">
+              <input type="checkbox" name="ack_isnt" value="not_free" required />
+              <span>This isn't free. The investment is AUD $5,450 for the full ten-session engagement, payable upfront or in two instalments.</span>
+            </label>
+            <label class="ack-item">
+              <input type="checkbox" name="ack_isnt" value="not_open_ended" required />
+              <span>This isn't open-ended. The container is ten sessions over five months. Extensions are by separate agreement.</span>
+            </label>
+          </div>
+
+          <div class="field-group">
+            <label for="message">Anything else?<span class="optional">optional</span></label>
+            <textarea id="message" name="message" rows="3" maxlength="2000" placeholder="Anything I should know before reviewing your application? Leave blank if not."></textarea>
+          </div>
+
+          <div class="submit-row">
+            <button type="submit" id="submit-btn" class="btn-submit">
+              Submit application →
+            </button>
+          </div>
+
+          <div class="form-msg" id="form-msg"></div>
+        </form>
       </div>
+
+      <p class="apply-footnote">
+        I review every application personally and respond within two business days. If we're a fit, I'll send the offer details and a link to book your first session. If I don't think coaching is the right instrument for what you're navigating, I'll tell you that directly and point you toward what I think would help more.
+      </p>
     </div>
   </section>
 
@@ -775,6 +1041,121 @@
     </div>
     <div class="footer-copy">© 2026 BurnoutOS. A product of Katalis Behavioural Health Pty Ltd. Werner Teichert is a registered clinical psychologist.</div>
   </footer>
+
+  <script>
+    async function submitCoachingForm(e) {
+      e.preventDefault();
+
+      var firstName = document.getElementById('first_name').value.trim();
+      var lastName  = document.getElementById('last_name').value.trim();
+      var email     = document.getElementById('email').value.trim();
+      var phone     = document.getElementById('phone').value.trim();
+      var role      = document.getElementById('role').value.trim();
+      var organisation = document.getElementById('organisation').value.trim();
+      var region    = document.getElementById('region').value;
+      var message   = document.getElementById('message').value.trim();
+
+      var btn = document.getElementById('submit-btn');
+      var msg = document.getElementById('form-msg');
+
+      msg.className = 'form-msg';
+      msg.textContent = '';
+
+      // Client-side validation
+      if (!firstName || !lastName) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please enter your first and last name.';
+        return false;
+      }
+      if (!email || email.indexOf('@') === -1) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please enter a valid email address.';
+        return false;
+      }
+      if (!phone) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please enter a phone number.';
+        return false;
+      }
+      if (!role) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please enter your role or title.';
+        return false;
+      }
+      if (!region) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please select your region.';
+        return false;
+      }
+
+      // Check all 9 acknowledgements (5 "is" + 4 "isn't")
+      var ackIs   = document.querySelectorAll('input[name="ack_is"]:checked');
+      var ackIsnt = document.querySelectorAll('input[name="ack_isnt"]:checked');
+      if (ackIs.length < 5 || ackIsnt.length < 4) {
+        msg.className = 'form-msg err';
+        msg.textContent = 'Please tick all the acknowledgements above to confirm fit.';
+        return false;
+      }
+
+      var acknowledgements = []
+        .concat(Array.prototype.map.call(ackIs,   function(c){ return 'is:' + c.value; }))
+        .concat(Array.prototype.map.call(ackIsnt, function(c){ return 'isnt:' + c.value; }));
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+
+      try {
+        var res = await fetch('https://ewictbfujvtfjqomdalq.supabase.co/functions/v1/receive-contact-form', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: firstName + ' ' + lastName,
+            email: email,
+            region: region,
+            enquiry_type: 'coaching',
+            message: message || 'No additional notes.',
+            source_url: window.location.href,
+            utm: extractUtm(),
+            metadata: {
+              phone: phone,
+              role: role,
+              organisation: organisation || null,
+              acknowledgements: acknowledgements,
+              form: 'coaching_intake_v1'
+            }
+          })
+        });
+        var data = await res.json();
+
+        if (res.ok && data.ok) {
+          msg.className = 'form-msg ok';
+          msg.textContent = "Thanks — your application is in. We've sent a confirmation to " + email + ". Werner will review and reply within two business days.";
+          document.getElementById('coaching-form').reset();
+          btn.textContent = 'Submitted';
+        } else {
+          throw new Error((data && data.error) || 'Submission failed');
+        }
+      } catch (err) {
+        msg.className = 'form-msg err';
+        msg.textContent = "Something went wrong submitting your application. Please email hello@burnout-os.app directly and we'll pick it up from there.";
+        btn.disabled = false;
+        btn.textContent = 'Submit application →';
+      }
+      return false;
+    }
+
+    function extractUtm() {
+      var utm = {};
+      try {
+        var params = new URLSearchParams(window.location.search);
+        ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){
+          var v = params.get(k);
+          if (v) utm[k] = v;
+        });
+      } catch(_) {}
+      return utm;
+    }
+  </script>
 
 </body>
 </html>
