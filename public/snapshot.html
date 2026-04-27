@@ -4,293 +4,535 @@
   <meta charset="UTF-8" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Burnout Snapshot Call — BurnoutOS</title>
-  <meta name="description" content="Join the waitlist for a free 20-minute Burnout Snapshot Call with Werner. A short conversation to understand where you are and what recovery could look like. Spots open monthly." />
+  <title>The Burnout Snapshot — 7 days, $47 | BurnoutOS</title>
+  <meta name="description" content="A 7-day self-serve burnout pattern map. Daily micro-modules, AI coaching companion, personalised Day 7 report. Designed by an AHPRA-registered clinical psychologist. $47 credit toward Self-Guided or Intensive." />
+  <meta property="og:title" content="The Burnout Snapshot — 7 days, $47" />
+  <meta property="og:description" content="See where your burnout actually lives. 7 days of clinical-grade pattern mapping for $47, with credit toward going deeper." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --ember:#e84b2a; --ember-dim:#c73d20; --ink:#0c1018; --white:#ffffff; --rule:rgba(255,255,255,0.1); --surface:rgba(255,255,255,0.04); --teal:#1a6b72; }
-    html { scroll-behavior: smooth; }
-    body { font-family:'DM Sans',sans-serif; background:var(--ink); color:var(--white); -webkit-font-smoothing:antialiased; min-height:100vh; }
-    body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:0.4; }
 
-    nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1.25rem 2rem; display:flex; align-items:center; justify-content:space-between; background:rgba(12,16,24,0.7); backdrop-filter:blur(16px); border-bottom:1px solid var(--rule); }
+    :root {
+      --ink:        #141218;
+      --ink-soft:   #1c1920;
+      --ember:      #e84b2a;
+      --ember-dim:  #c73d20;
+      --ember-glow: rgba(232,75,42,0.15);
+      --white:      #ffffff;
+      --rule:       rgba(255,255,255,0.07);
+      --muted:      rgba(255,255,255,0.45);
+      --faint:      rgba(255,255,255,0.25);
+      --gold:       #c9a96e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(13,13,20,0.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--rule);
+    }
     .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; letter-spacing:-0.03em; color:var(--white); display:flex; align-items:center; gap:0.5rem; text-decoration:none; }
     .logo-dot { width:7px; height:7px; background:var(--ember); border-radius:50%; animation:pulse 2.5s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.85)} }
-    .nav-link { font-size:0.875rem; color:rgba(255,255,255,0.55); text-decoration:none; transition:color 0.2s; }
-    .nav-link:hover { color:var(--white); }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-link { font-size: 0.875rem; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-cta {
+      font-size: 0.875rem; font-weight: 600; font-family: 'Syne', sans-serif;
+      padding: 0.5rem 1.1rem; border-radius: 8px;
+      background: var(--ember); color: var(--white); text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--ember-dim); }
+    @media(max-width:720px){
+      .nav-right .nav-link:not(:last-of-type){ display:none; }
+    }
 
-    .page { max-width:720px; margin:0 auto; padding:7rem 1.5rem 5rem; }
+    /* ── LAYOUT ── */
+    section { padding: 5rem 2rem; }
+    .inner    { max-width: 900px; margin: 0 auto; }
+    .inner-sm { max-width: 720px; margin: 0 auto; }
+    .inner-xs { max-width: 560px; margin: 0 auto; }
 
-    .eyebrow { display:inline-block; font-family:'Syne',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--ember); background:rgba(232,75,42,0.12); border:1px solid rgba(232,75,42,0.25); border-radius:3px; padding:0.3rem 0.8rem; margin-bottom:1.5rem; }
-    h1 { font-family:'Syne',sans-serif; font-size:clamp(2.2rem,5vw,3.25rem); font-weight:800; letter-spacing:-0.04em; line-height:1.05; margin-bottom:1.25rem; }
-    .hero-text { font-size:1.05rem; color:rgba(255,255,255,0.55); line-height:1.75; max-width:560px; margin-bottom:3.5rem; }
+    /* ── EYEBROW ── */
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:0.5rem;
+      font-family:'Syne',sans-serif; font-size:0.7rem; font-weight:700;
+      letter-spacing:0.12em; text-transform:uppercase; color:var(--ember);
+      background:rgba(232,75,42,0.1); border:1px solid rgba(232,75,42,0.25);
+      border-radius:3px; padding:0.35rem 0.85rem; margin-bottom:1.5rem;
+    }
+    .eyebrow-dot { width:6px; height:6px; border-radius:50%; background:var(--ember); animation:pulse 2s ease-in-out infinite; }
 
-    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.25rem; }
-    @media(max-width:580px){ .two-col { grid-template-columns:1fr; } }
+    /* ── HERO ── */
+    .hero { padding-top: 9rem; padding-bottom: 4rem; }
+    h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      letter-spacing: -0.04em; line-height: 1.04; margin-bottom: 1.5rem;
+    }
+    h1 .ember-word { color: var(--ember); }
+    .hero-lead {
+      font-size: 1.15rem; color: rgba(255,255,255,0.7); line-height: 1.7;
+      max-width: 580px; margin-bottom: 2.5rem;
+    }
+    .hero-meta {
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      padding: 1.5rem 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+      margin-bottom: 2.5rem;
+    }
+    .hero-meta-item { font-size: 0.875rem; }
+    .hero-meta-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.3rem; }
+    .hero-meta-value { color: var(--white); font-weight: 500; }
+    .hero-meta-value strong { color: var(--ember); font-weight: 700; }
 
-    .card { background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:1.75rem; }
-    .card-label { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.35); margin-bottom:1.25rem; }
+    .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .btn-primary {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+      background: var(--ember); color: var(--white);
+      padding: 1rem 1.75rem; border-radius: 8px; border: none; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: background 0.2s, transform 0.1s; letter-spacing: -0.01em;
+    }
+    .btn-primary:hover { background: var(--ember-dim); transform: translateY(-1px); }
+    .btn-primary .arrow { transition: transform 0.2s; }
+    .btn-primary:hover .arrow { transform: translateX(3px); }
+    .btn-secondary {
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.9rem;
+      color: rgba(255,255,255,0.75); padding: 1rem 0;
+      text-decoration: none; transition: color 0.2s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .btn-secondary:hover { color: var(--white); }
 
-    .feature { display:flex; gap:0.875rem; margin-bottom:1.25rem; }
-    .feature:last-child { margin-bottom:0; }
-    .feature-title { font-size:0.9rem; font-weight:600; color:var(--white); margin-bottom:0.3rem; }
-    .feature-desc { font-size:0.825rem; color:rgba(255,255,255,0.5); line-height:1.6; }
+    .price-microcopy { font-size: 0.825rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
 
-    .check-list { list-style:none; }
-    .check-list li { display:flex; align-items:flex-start; gap:0.75rem; font-size:0.875rem; color:rgba(255,255,255,0.6); line-height:1.55; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.05); }
-    .check-list li:last-child { border-bottom:none; }
+    /* ── SECTION HEADERS ── */
+    h2 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+      letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1rem;
+    }
+    h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1.05rem; letter-spacing: -0.02em; margin-bottom: 0.6rem;
+    }
+    .section-lead { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 3rem; max-width: 620px; }
 
-    /* Werner */
-    .werner { background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:1.5rem; margin-bottom:1.25rem; display:flex; gap:1.25rem; align-items:flex-start; }
-    .werner-avatar { width:48px; height:48px; border-radius:50%; background:rgba(232,75,42,0.12); border:1px solid rgba(232,75,42,0.25); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
-    .werner-name { font-size:0.95rem; font-weight:600; color:var(--white); margin-bottom:0.2rem; }
-    .werner-role { font-size:0.75rem; color:var(--ember); font-weight:600; margin-bottom:0.6rem; }
-    .werner-bio { font-size:0.825rem; color:rgba(255,255,255,0.5); line-height:1.65; }
+    /* ── ANGLE: WHAT IT IS ── */
+    .what-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+      margin-top: 2rem;
+    }
+    @media(max-width: 720px){ .what-grid { grid-template-columns: 1fr; } }
+    .what-card {
+      background: var(--ink-soft); border: 1px solid var(--rule);
+      border-radius: 4px; padding: 1.75rem;
+    }
+    .what-card-num {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 0.7rem; color: var(--ember); letter-spacing: 0.1em;
+      margin-bottom: 0.75rem; text-transform: uppercase;
+    }
+    .what-card p {
+      font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.65;
+    }
 
-    /* Waitlist CTA box */
-    .cta-box { background:rgba(232,75,42,0.06); border:1px solid rgba(232,75,42,0.2); border-radius:4px; padding:2.25rem 2rem; }
-    .cta-box h2 { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.5rem; }
-    .cta-sub { font-size:0.875rem; color:rgba(255,255,255,0.5); line-height:1.65; margin-bottom:0.75rem; }
+    /* ── 7-DAY ARC ── */
+    .arc-section { background: var(--ink-soft); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .arc-list {
+      list-style: none; counter-reset: day-counter;
+      display: grid; gap: 0.5rem;
+    }
+    .arc-day {
+      display: grid; grid-template-columns: 80px 1fr; gap: 1.5rem;
+      padding: 1.25rem 0; border-bottom: 1px solid var(--rule);
+    }
+    .arc-day:last-child { border-bottom: none; }
+    .arc-day-label {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ember); padding-top: 0.2rem;
+    }
+    .arc-day-content h3 { margin-bottom: 0.4rem; font-size: 1rem; }
+    .arc-day-content p { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
 
-    /* Scarcity signal */
-    .scarcity { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(232,75,42,0.1); border:1px solid rgba(232,75,42,0.2); border-radius:3px; padding:0.35rem 0.75rem; font-size:0.75rem; font-weight:600; color:rgba(255,255,255,0.7); margin-bottom:1.75rem; font-family:'DM Sans',sans-serif; }
-    .scarcity-dot { width:6px; height:6px; border-radius:50%; background:var(--ember); animation:pulse 2s ease-in-out infinite; }
+    /* ── INSTRUMENT BAR ── */
+    .instrument-bar {
+      background: var(--ink-soft); border: 1px solid var(--rule);
+      border-radius: 4px; padding: 1.5rem 1.75rem;
+      display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;
+      margin-top: 2rem;
+    }
+    .instrument-bar-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--faint);
+    }
+    .instrument-bar-value { font-size: 0.875rem; color: rgba(255,255,255,0.7); }
+    .instrument-bar-value strong { color: var(--white); font-weight: 600; }
 
-    /* Form */
-    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem; }
-    @media(max-width:480px){ .form-grid { grid-template-columns:1fr; } }
-    .form-full { margin-bottom:0.75rem; }
+    /* ── PRICING ── */
+    .price-card {
+      background: linear-gradient(180deg, var(--ink-soft) 0%, var(--ink) 100%);
+      border: 1px solid var(--rule); border-radius: 8px;
+      padding: 3rem 2.5rem; text-align: center; position: relative;
+    }
+    .price-card-eyebrow {
+      font-family:'Syne',sans-serif; font-weight:700; font-size:0.7rem;
+      letter-spacing:0.12em; text-transform:uppercase; color:var(--ember);
+      margin-bottom: 1.25rem;
+    }
+    .price-amount {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3rem, 6vw, 4.5rem); line-height: 1;
+      color: var(--white); margin-bottom: 0.5rem;
+    }
+    .price-amount-currency { font-size: 1.5rem; vertical-align: super; opacity: 0.7; margin-right: 0.2rem; }
+    .price-amount-period { font-size: 1rem; color: var(--muted); font-weight: 400; margin-left: 0.5rem; }
+    .price-amount-period::before { content: '·'; margin-right: 0.5rem; }
+    .price-includes {
+      list-style: none; text-align: left; max-width: 360px; margin: 2rem auto;
+    }
+    .price-includes li {
+      display: flex; gap: 0.75rem; padding: 0.6rem 0;
+      font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.55;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .price-includes li:last-child { border-bottom: none; }
+    .check {
+      flex-shrink: 0; width: 16px; height: 16px;
+      border-radius: 50%; background: var(--ember-glow);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 3px;
+    }
+    .check::before { content: ''; width: 6px; height: 3px; border-left: 1.5px solid var(--ember); border-bottom: 1.5px solid var(--ember); transform: rotate(-45deg) translate(1px, -1px); }
 
-    label { display:block; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(255,255,255,0.4); margin-bottom:0.35rem; font-family:'DM Sans',sans-serif; }
-    .field { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:3px; padding:0.75rem 0.9rem; color:var(--white); font-size:0.9rem; font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.2s; }
-    .field:focus { border-color:var(--ember); }
-    .field::placeholder { color:rgba(255,255,255,0.2); }
-    textarea.field { min-height:80px; resize:vertical; line-height:1.55; }
+    .credit-callout {
+      margin-top: 1.5rem; padding: 1rem 1.25rem;
+      background: rgba(201, 169, 110, 0.06);
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      border-radius: 4px;
+      font-size: 0.85rem; color: var(--gold); line-height: 1.6;
+    }
+    .credit-callout strong { color: var(--white); }
 
-    .err { font-size:0.8rem; color:var(--ember); margin-bottom:0.75rem; display:none; }
+    /* ── CLINICAL VOICE ── */
+    .clinical-card {
+      background: var(--ink-soft); border-left: 3px solid var(--ember);
+      padding: 2rem 2.25rem; border-radius: 0 4px 4px 0;
+    }
+    .clinical-card p { font-size: 1rem; color: rgba(255,255,255,0.75); line-height: 1.75; margin-bottom: 1rem; }
+    .clinical-card p:last-child { margin-bottom: 0; }
+    .clinical-card-attribution { font-size: 0.8rem; color: var(--muted); margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
 
-    .btn-primary { width:100%; font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; background:var(--ember); color:var(--white); padding:0.9rem 2rem; border-radius:3px; border:none; cursor:pointer; text-align:center; transition:background 0.2s; letter-spacing:-0.01em; margin-top:0.25rem; }
-    .btn-primary:hover { background:var(--ember-dim); }
-    .btn-primary:disabled { opacity:0.5; cursor:not-allowed; }
-    .fine-print { font-size:0.72rem; color:rgba(255,255,255,0.25); margin-top:0.875rem; text-align:center; line-height:1.5; }
+    /* ── FAQ ── */
+    .faq-item {
+      border-bottom: 1px solid var(--rule); padding: 1.5rem 0;
+    }
+    .faq-q {
+      font-family: 'Syne', sans-serif; font-weight: 600;
+      font-size: 1.05rem; color: var(--white); margin-bottom: 0.6rem;
+    }
+    .faq-a { font-size: 0.925rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
 
-    /* Done state */
-    .done { text-align:center; padding:1.5rem 0; }
-    .done-check { margin-bottom:1.25rem; }
-    .done h3 { font-family:'Syne',sans-serif; font-size:1.35rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.5rem; }
-    .done p { font-size:0.875rem; color:rgba(255,255,255,0.55); line-height:1.7; }
+    /* ── FINAL CTA ── */
+    .final-cta {
+      background: linear-gradient(180deg, transparent 0%, var(--ember-glow) 100%);
+      padding: 5rem 2rem; text-align: center;
+    }
+    .final-cta h2 { margin-bottom: 1rem; }
+    .final-cta-sub { font-size: 1rem; color: rgba(255,255,255,0.6); margin-bottom: 2rem; max-width: 520px; margin-inline: auto; }
 
-    .disclaimer { font-size:0.75rem; color:rgba(255,255,255,0.25); line-height:1.6; text-align:center; max-width:520px; margin:2.5rem auto 0; }
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 2rem 2.5rem; border-top: 1px solid var(--rule);
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+      letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .footer-links {
+      display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 1.5rem; font-size: 0.85rem;
+    }
+    .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { font-size: 0.75rem; color: var(--faint); line-height: 1.6; max-width: 580px; margin: 0 auto; }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="/" class="logo"><span class="logo-dot"></span>BurnoutOS</a>
-  <a href="/burnout-quiz" class="nav-link">Take the free quiz →</a>
+  <a href="/" class="logo">BurnoutOS <span class="logo-dot"></span></a>
+  <div class="nav-right">
+    <a href="/burnout-quiz" class="nav-link">Take the quiz</a>
+    <a href="/burnoutprogramme.html" class="nav-link">Programme</a>
+    <a href="/organisations.html" class="nav-link">For Organisations</a>
+    <a href="https://app.burnout-os.app/auth" class="nav-link" style="opacity:0.75;">Sign in</a>
+    <a href="https://buy.stripe.com/00weVef14g4D21Y4o68so0d" class="nav-cta">Start your Snapshot</a>
+  </div>
 </nav>
 
-<div class="page">
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="inner">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> 7 days &middot; AUD $47 &middot; Self-serve</span>
+    <h1>See where your <span class="ember-word">burnout actually lives</span>.</h1>
+    <p class="hero-lead">A 7-day pattern map across the four dimensions that drive burnout — energy, demands, support, and meaning. Daily micro-modules, an AI coaching companion, and a personalised report on Day&nbsp;7. Designed by an AHPRA-registered clinical psychologist.</p>
 
-  <span class="eyebrow">Free · 20 minutes · No obligation</span>
-  <h1>Free Burnout<br>Snapshot Call</h1>
-  <p class="hero-text">A 20-minute conversation with Werner — a registered clinical psychologist with a decade of experience in burnout recovery — to understand where you currently are and what recovery could look like for you.</p>
-
-  <div class="two-col">
-
-    <div class="card">
-      <div class="card-label">What happens on the call</div>
-      <div class="feature">
-        <div style="flex-shrink:0;margin-top:2px;">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="rgba(232,75,42,0.15)"/><path d="M5.5 9l2 2 5-5" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div>
-          <div class="feature-title">Understand your burnout profile</div>
-          <div class="feature-desc">We'll talk through where you sit across exhaustion, cynicism, and efficacy — the three areas most associated with burnout.</div>
-        </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-label">Duration</div>
+        <div class="hero-meta-value"><strong>7 days</strong> &middot; ~10 min/day</div>
       </div>
-      <div class="feature">
-        <div style="flex-shrink:0;margin-top:2px;">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="rgba(232,75,42,0.15)"/><path d="M5.5 9l2 2 5-5" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div>
-          <div class="feature-title">Identify your key drivers</div>
-          <div class="feature-desc">Not all burnout has the same cause. We identify what is sustaining yours specifically.</div>
-        </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-label">Investment</div>
+        <div class="hero-meta-value"><strong>AUD $47</strong> &middot; one-time</div>
       </div>
-      <div class="feature">
-        <div style="flex-shrink:0;margin-top:2px;">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="rgba(232,75,42,0.15)"/><path d="M5.5 9l2 2 5-5" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div>
-          <div class="feature-title">Get a clear first step</div>
-          <div class="feature-desc">You leave with one concrete, evidence-based action — regardless of whether you proceed with the programme.</div>
-        </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-label">If you go further</div>
+        <div class="hero-meta-value"><strong>$47 credit</strong> on Self-Guided or Intensive</div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-label">This call is right for you if</div>
-      <ul class="check-list">
-        <li>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:2px"><circle cx="7" cy="7" r="7" fill="rgba(26,107,114,0.2)"/><path d="M4 7l2 2 4-4" stroke="#1a6b72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          You are experiencing persistent exhaustion that rest does not fix
-        </li>
-        <li>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:2px"><circle cx="7" cy="7" r="7" fill="rgba(26,107,114,0.2)"/><path d="M4 7l2 2 4-4" stroke="#1a6b72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          You have lost motivation or meaning in work that once mattered
-        </li>
-        <li>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:2px"><circle cx="7" cy="7" r="7" fill="rgba(26,107,114,0.2)"/><path d="M4 7l2 2 4-4" stroke="#1a6b72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          You are functioning but feel like you are running on empty
-        </li>
-        <li>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:2px"><circle cx="7" cy="7" r="7" fill="rgba(26,107,114,0.2)"/><path d="M4 7l2 2 4-4" stroke="#1a6b72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          You want a professional perspective before committing to a programme
-        </li>
-        <li>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:2px"><circle cx="7" cy="7" r="7" fill="rgba(26,107,114,0.2)"/><path d="M4 7l2 2 4-4" stroke="#1a6b72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          You are wondering whether what you are experiencing is burnout or something else
-        </li>
+    <div class="cta-row">
+      <a href="https://buy.stripe.com/00weVef14g4D21Y4o68so0d" class="btn-primary">
+        Start your Snapshot <span class="arrow">→</span>
+      </a>
+      <a href="#what-it-is" class="btn-secondary">Learn what's inside ↓</a>
+    </div>
+    <p class="price-microcopy">Secure checkout via Stripe. Account is created automatically when you pay — sign in with the email you used at checkout.</p>
+  </div>
+</section>
+
+<!-- ═══ WHAT IT IS ═══ -->
+<section id="what-it-is">
+  <div class="inner">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> What you get</span>
+    <h2>A pattern map, not a diagnosis.</h2>
+    <p class="section-lead">Most burnout content treats it as a single feeling. The Snapshot treats it as a pattern across four specific dimensions, and shows you which ones are loudest in your life right now.</p>
+
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-num">01 &middot; Energy</div>
+        <h3>Where your tank actually empties</h3>
+        <p>The exhaustion side of burnout — physical, cognitive, and emotional. Where you spend it, where you can't recover it, and what's specifically depleting in your week.</p>
+      </div>
+      <div class="what-card">
+        <div class="what-card-num">02 &middot; Demands</div>
+        <h3>What's actually being asked of you</h3>
+        <p>Workload, role clarity, emotional load, decision density. Mapped against the JD-R model used in occupational psychology — not against a vague "are you stressed" framing.</p>
+      </div>
+      <div class="what-card">
+        <div class="what-card-num">03 &middot; Support</div>
+        <h3>What's holding you up — or isn't</h3>
+        <p>Resources, autonomy, relationships, recognition. The protective side of the equation. Burnout doesn't only come from too much demand — it often comes from too little support.</p>
+      </div>
+      <div class="what-card">
+        <div class="what-card-num">04 &middot; Meaning</div>
+        <h3>Why the work still matters — or doesn't</h3>
+        <p>Purpose, alignment, the gap between what you say is important and what you actually do. The dimension most commonly missed by quick "burnout tests" — and often the most important.</p>
+      </div>
+    </div>
+
+    <div class="instrument-bar">
+      <div>
+        <div class="instrument-bar-label">Validated instruments behind the scenes</div>
+        <div class="instrument-bar-value"><strong>OLBI</strong> (baseline) &middot; <strong>JD-R framework</strong> &middot; daily check-ins &middot; pattern reflection on Day 5</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 7-DAY ARC ═══ -->
+<section class="arc-section">
+  <div class="inner-sm">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> Your 7 days</span>
+    <h2>One short module a day. Then a real report.</h2>
+    <p class="section-lead">Each day takes about 10 minutes — a short read or video, a brief check-in, and the AI coaching companion if you want to think out loud. By Day 7, the data tells a real story.</p>
+
+    <ol class="arc-list">
+      <li class="arc-day">
+        <div class="arc-day-label">Day 1</div>
+        <div class="arc-day-content">
+          <h3>Baseline + Energy</h3>
+          <p>A short OLBI baseline so we have a real reference point, then the first dimension — where your energy actually goes during a week, and where it doesn't come back.</p>
+        </div>
+      </li>
+      <li class="arc-day">
+        <div class="arc-day-label">Day 2</div>
+        <div class="arc-day-content">
+          <h3>Demands</h3>
+          <p>What's actually being asked of you — quantitatively, emotionally, cognitively. Most people overestimate one and underestimate two others; the check-in surfaces that.</p>
+        </div>
+      </li>
+      <li class="arc-day">
+        <div class="arc-day-label">Day 3</div>
+        <div class="arc-day-content">
+          <h3>Support</h3>
+          <p>The protective side — autonomy, social support, recognition, resources. What's working and what's been quietly missing.</p>
+        </div>
+      </li>
+      <li class="arc-day">
+        <div class="arc-day-label">Day 4</div>
+        <div class="arc-day-content">
+          <h3>Meaning</h3>
+          <p>Whether the work still aligns with what you actually care about. The dimension that quietly drives the other three when it's out of alignment.</p>
+        </div>
+      </li>
+      <li class="arc-day">
+        <div class="arc-day-label">Day 5</div>
+        <div class="arc-day-content">
+          <h3>Pattern feedback</h3>
+          <p>Halfway through. What's emerging across the four dimensions? A short reflection from you that feeds into the Day 7 report.</p>
+        </div>
+      </li>
+      <li class="arc-day">
+        <div class="arc-day-label">Day 6</div>
+        <div class="arc-day-content">
+          <h3>Integration</h3>
+          <p>One small practice tested in your own life. Not a "habit stack" — one specific, testable thing that the data suggests would matter.</p>
+        </div>
+      </li>
+      <li class="arc-day">
+        <div class="arc-day-label">Day 7</div>
+        <div class="arc-day-content">
+          <h3>Your Snapshot Report</h3>
+          <p>A personalised report mapping where your burnout lives across the four dimensions, what the data suggests, and three specific next steps. Yours to keep.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══ CLINICAL VOICE ═══ -->
+<section>
+  <div class="inner-sm">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> Why this exists</span>
+    <h2>Most burnout content is a vibe. This is a method.</h2>
+
+    <div class="clinical-card">
+      <p>Most online burnout content lives somewhere between marketing-quiz and self-help-blog. That's fine for awareness, but it doesn't tell you what's actually driving yours, and it doesn't give you a useful next step.</p>
+      <p>The Snapshot is built around the JD-R model — the same framework used in occupational psychology research and corporate psychosocial risk assessment — and uses the OLBI as a baseline. It won't diagnose you. It will give you a clinically-grounded read on where the patterns sit, and what to do about it.</p>
+      <p>If you go further afterwards into Self-Guided or the Intensive cohort, your $47 comes off the price. If you don't, you still walk away with a report worth keeping.</p>
+      <p class="clinical-card-attribution">Built by Werner Teichert &middot; AHPRA-registered clinical psychologist &middot; Founder, BurnoutOS</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section>
+  <div class="inner-sm">
+    <div class="price-card">
+      <div class="price-card-eyebrow">The Burnout Snapshot</div>
+      <div class="price-amount">
+        <span class="price-amount-currency">A$</span>47<span class="price-amount-period">one-time</span>
+      </div>
+
+      <ul class="price-includes">
+        <li><span class="check"></span><span>7 days of structured pattern mapping across 4 dimensions</span></li>
+        <li><span class="check"></span><span>OLBI baseline + daily check-ins</span></li>
+        <li><span class="check"></span><span>AI coaching companion access for the week</span></li>
+        <li><span class="check"></span><span>Personalised Day 7 Snapshot Report (yours to keep)</span></li>
+        <li><span class="check"></span><span>Three specific next-step options on Day 7</span></li>
       </ul>
-    </div>
 
-  </div>
+      <a href="https://buy.stripe.com/00weVef14g4D21Y4o68so0d" class="btn-primary">
+        Start your Snapshot <span class="arrow">→</span>
+      </a>
 
-  <!-- Werner -->
-  <div class="werner">
-    <div class="werner-avatar">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="9" r="4" fill="#e84b2a" opacity="0.7"/>
-        <path d="M4 22c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="#e84b2a" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
-      </svg>
-    </div>
-    <div>
-      <div class="werner-name">Werner Teichert</div>
-      <div class="werner-role">Registered Clinical Psychologist · Founder, BurnoutOS</div>
-      <div class="werner-bio">Clinical psychologist and founder of Katalis. Specialises in evidence-based burnout recovery using ACT, CBT-I, and occupational health frameworks. Built BurnoutOS because the programmes he wanted to refer clients to did not exist.</div>
+      <div class="credit-callout">
+        <strong>$47 credit</strong> applies if you join Self-Guided ($697) or the Intensive cohort ($1,497) within 14 days. No pressure on Day 7 — three options, no recommendation.
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- Waitlist CTA -->
-  <div class="cta-box">
+<!-- ═══ FAQ ═══ -->
+<section>
+  <div class="inner-sm">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> Common questions</span>
+    <h2>Things people ask before they pay $47.</h2>
 
-    <h2>Join the waitlist</h2>
-    <p class="cta-sub">Snapshot call spots open monthly based on availability. Join the list and Werner will reach out personally when a slot opens.</p>
-
-    <div class="scarcity">
-      <span class="scarcity-dot"></span>
-      Spots are limited — we prioritise by waitlist order
+    <div style="margin-top: 2rem;">
+      <div class="faq-item">
+        <div class="faq-q">Is this a clinical assessment?</div>
+        <div class="faq-a">No. The Snapshot is a self-serve learning experience designed to map your burnout pattern. It is not a diagnostic tool, a treatment, or a substitute for clinical care. If you're in significant distress, please speak to your GP, an EAP, or call Lifeline (13 11 14 in Australia).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What's the daily time commitment?</div>
+        <div class="faq-a">About 10 minutes a day. A short module, a brief check-in, and the AI coach if you want to use it. The Day 7 report takes longer to read — ~15 minutes — and is the only piece you'll want to set aside time for.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What happens after Day 7?</div>
+        <div class="faq-a">Your Snapshot account stays active for 14 days from purchase, so you have time to read the report and decide. After Day 14 the Snapshot account closes. If you upgrade to Self-Guided or Intensive within those 14 days, your $47 comes off the price.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What's on Day 7 exactly? Are you going to upsell me?</div>
+        <div class="faq-a">Day 7 surfaces three options — 1:1 coaching, Self-Guided ($697), or the Intensive cohort ($1,497). No recommendation. The data informs your decision; the choice is yours. Plenty of people graduate at Day 7 with the report and don't go further. That's a valid outcome.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Refund policy?</div>
+        <div class="faq-a">If you start the Snapshot and it isn't right for you, email <a href="mailto:hello@burnout-os.app" style="color:var(--ember);">hello@burnout-os.app</a> within 7 days and we'll refund. No friction, no questionnaire.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is my data private?</div>
+        <div class="faq-a">Yes. Your check-ins, AI coach conversations, and report are visible only to you. Aggregate, de-identified data may inform clinical research and product improvement. We never sell or share individual data.</div>
+      </div>
     </div>
-
-    <!-- Form -->
-    <div id="form-wrap">
-      <div class="form-grid">
-        <div>
-          <label for="f-name">Your name</label>
-          <input class="field" type="text" id="f-name" placeholder="Sarah Chen" autocomplete="name" />
-        </div>
-        <div>
-          <label for="f-email">Email address</label>
-          <input class="field" type="email" id="f-email" placeholder="sarah@company.com" autocomplete="email" />
-        </div>
-      </div>
-      <div class="form-grid">
-        <div>
-          <label for="f-role">Your role</label>
-          <input class="field" type="text" id="f-role" placeholder="e.g. Head of Marketing" />
-        </div>
-        <div>
-          <label for="f-org">Organisation <span style="opacity:0.4;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
-          <input class="field" type="text" id="f-org" placeholder="e.g. Westpac" />
-        </div>
-      </div>
-      <div class="form-full">
-        <label for="f-reason">What brings you here? <span style="opacity:0.4;font-weight:400;text-transform:none;letter-spacing:0">(optional — helps Werner prepare)</span></label>
-        <textarea class="field" id="f-reason" placeholder="A few sentences about what's been happening for you lately..."></textarea>
-      </div>
-      <div class="err" id="form-err">Please enter your name and a valid email address.</div>
-      <button class="btn-primary" id="submit-btn" onclick="submitWaitlist()">Join the waitlist</button>
-      <p class="fine-print">No spam. Werner reads every submission personally before reaching out.</p>
-    </div>
-
-    <!-- Done state -->
-    <div class="done" id="done-wrap" style="display:none;">
-      <div class="done-check">
-        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-          <circle cx="26" cy="26" r="26" fill="rgba(42,157,92,0.12)"/>
-          <path d="M16 26l7 7 13-13" stroke="#2a9d5c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-      </div>
-      <h3>You're on the list</h3>
-      <p>Werner will reach out personally when a spot opens — usually within 2–4 weeks. In the meantime, the reading content for all 8 weeks of the programme is available on the platform.</p>
-    </div>
-
   </div>
+</section>
 
-  <p class="disclaimer">BurnoutOS is an evidence-informed psychoeducational programme. This call is a short introductory conversation — not a clinical assessment or ongoing psychological treatment. Werner Teichert is a registered clinical psychologist.</p>
+<!-- ═══ FINAL CTA ═══ -->
+<section class="final-cta">
+  <div class="inner-xs">
+    <h2>Seven days. One report. $47.</h2>
+    <p class="final-cta-sub">If the report isn't worth keeping, we'll refund. If it is, you'll have the clearest picture of your burnout you've had in a while — and a $47 head start if you decide to go further.</p>
+    <a href="https://buy.stripe.com/00weVef14g4D21Y4o68so0d" class="btn-primary">
+      Start your Snapshot <span class="arrow">→</span>
+    </a>
+  </div>
+</section>
 
-</div>
+<footer>
+  <div class="footer-logo">BurnoutOS</div>
+  <div class="footer-links">
+    <a href="/burnout-quiz">Take the quiz</a>
+    <a href="/burnoutprogramme.html">Self-Guided</a>
+    <a href="/intensive">Intensive</a>
+    <a href="/coaching">Coaching</a>
+    <a href="/organisations.html">For Organisations</a>
+    <a href="/calculator">Cost calculator</a>
+    <a href="/werner">About Werner</a>
+    <a href="/contact">Contact</a>
+    <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>
+  </div>
+  <div class="footer-copy">© 2026 BurnoutOS. A product of Katalis Behavioural Health Pty Ltd. Werner Teichert is a registered clinical psychologist.</div>
+</footer>
 
-<script>
-// Submits the waitlist form to MarketOS receive-waitlist-signup, which inserts
-// a lead (source='snapshot_waitlist') and fires the Snapshot Waitlist Drip
-// sequence via process-triggers. The old diagnostic_waitlist table on the
-// platform DB was orphaned — nothing read from it, no sequences fired.
-const MARKETOS_URL = 'https://ewictbfujvtfjqomdalq.supabase.co';
-
-async function submitWaitlist() {
-  const name  = document.getElementById('f-name').value.trim();
-  const email = document.getElementById('f-email').value.trim();
-  const role  = document.getElementById('f-role').value.trim();
-  const org   = document.getElementById('f-org').value.trim();
-  const why   = document.getElementById('f-reason').value.trim();
-  const errEl = document.getElementById('form-err');
-
-  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  if (!name || !validEmail) {
-    errEl.style.display = 'block';
-    return;
-  }
-  errEl.style.display = 'none';
-
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = true;
-  btn.textContent = 'Joining...';
-
-  try {
-    await fetch(`${MARKETOS_URL}/functions/v1/receive-waitlist-signup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name,
-        email,
-        source: 'snapshot_waitlist',
-        source_url: window.location.href,
-        metadata: {
-          role:            role || null,
-          organisation:    org  || null,
-          what_brings_you: why  || null,
-          page:            'burnout-snapshot-call'
-        }
-      })
-    });
-  } catch(_) {
-    // Non-blocking — show success regardless to avoid frustration
-  }
-
-  document.getElementById('form-wrap').style.display = 'none';
-  document.getElementById('done-wrap').style.display  = 'block';
-}
-
-// Enter key on single-line inputs advances to submit
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && e.target.tagName === 'INPUT') submitWaitlist();
-});
-</script>
 </body>
 </html>
