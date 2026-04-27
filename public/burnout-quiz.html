@@ -186,8 +186,8 @@
         </div>
       </div>
       <div class="cta-stack">
-        <a href="https://app.burnout-os.app/pricing" class="btn-primary" id="result-cta" style="text-align:center;text-decoration:none;display:block;padding:0.9rem">Start your recovery →</a>
-        <a href="/snapshot" class="btn-secondary">Book a free Burnout Snapshot call instead</a>
+        <a href="/snapshot.html" class="btn-primary" id="result-cta" style="text-align:center;text-decoration:none;display:block;padding:0.9rem">Map your pattern · $47 Snapshot →</a>
+        <a href="/burnoutprogramme.html" class="btn-secondary" id="result-cta-secondary" style="text-align:center;text-decoration:none;display:block">Or skip ahead to the 8-week programme</a>
       </div>
     </div>
 
@@ -292,9 +292,9 @@ async function submitEmail() {
 
 function showResult() {
   const LEVELS = [
-    { max: 12, label: 'Low Risk', colour: '#2a9d5c', bg: 'rgba(42,157,92,0.1)', border: 'rgba(42,157,92,0.2)', headline: 'You are managing well — stay vigilant.', body: 'Your responses suggest your current stress load is within a manageable range. The practices and frameworks in this programme will help you build proactive resilience before depletion sets in.', cta: 'Start building resilience' },
-    { max: 24, label: 'Moderate Risk', colour: '#e8b86d', bg: 'rgba(232,184,109,0.1)', border: 'rgba(232,184,109,0.2)', headline: 'Early warning signs are present.', body: 'Your score suggests meaningful levels of exhaustion or disengagement that deserve attention now. Left unaddressed, moderate burnout typically escalates. This programme is designed precisely for this stage.', cta: 'Begin your recovery' },
-    { max: 36, label: 'High Risk', colour: '#e84b2a', bg: 'rgba(232,75,42,0.1)', border: 'rgba(232,75,42,0.2)', headline: 'You are showing significant burnout indicators.', body: 'Your responses indicate substantial depletion across multiple dimensions. This is the point where most people need structured, evidence-based support — not willpower. The BurnoutOS 8-week programme was built for exactly this.', cta: 'Get structured support' }
+    { max: 12, label: 'Low Risk', colour: '#2a9d5c', bg: 'rgba(42,157,92,0.1)', border: 'rgba(42,157,92,0.2)', headline: 'You are managing well — stay vigilant.', body: 'Your responses suggest your current stress load is within a manageable range. A 7-day Snapshot can map your protective factors clearly so you know which to defend.', cta: 'Map your pattern · $47 Snapshot' },
+    { max: 24, label: 'Moderate Risk', colour: '#e8b86d', bg: 'rgba(232,184,109,0.1)', border: 'rgba(232,184,109,0.2)', headline: 'Early warning signs are present.', body: 'Your score suggests meaningful levels of exhaustion or disengagement that deserve attention now. The 7-day Snapshot maps where your burnout actually lives across four dimensions before deciding how to move on it.', cta: 'See where it lives · $47 Snapshot' },
+    { max: 36, label: 'High Risk', colour: '#e84b2a', bg: 'rgba(232,75,42,0.1)', border: 'rgba(232,75,42,0.2)', headline: 'You are showing significant burnout indicators.', body: 'Your responses indicate substantial depletion across multiple dimensions. We recommend starting with a 7-day Snapshot to map the specific drivers, then deciding between Self-Guided ($697) or the Intensive cohort ($1,497) with the data in hand.', cta: 'Start with a Snapshot · $47' }
   ];
   const level = LEVELS.find(l => totalScore <= l.max) || LEVELS[2];
 
