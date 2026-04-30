@@ -37,7 +37,7 @@ export default function BurnoutReport() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2c2lyeXBmcXRueW1vb3hpY3RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyMDM4NzcsImV4cCI6MjA1ODc3OTg3N30.RBjvKB-A-j9e_c5XxFkqT7EKNyFUVpVzlcRvQQT5Dos',
+          'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string,
           'Prefer': 'return=minimal',
         },
         body: JSON.stringify({ email, source: 'burnout_report' }),
