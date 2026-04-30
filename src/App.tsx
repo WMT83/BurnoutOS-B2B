@@ -17,9 +17,14 @@ import './index.css';
 
 type AuthState = User | null | undefined;
 
-function GuestRoute({ user, children }: { user: AuthState; children: React.ReactNode }) {
+// Login page only — sends already-signed-in users to the platform.
+// Signup is intentionally NOT guarded: a returning customer purchasing a new
+// programme tier (e.g. upgrading Self-Guided -> Intensive, or buying a gift)
+// must be able to reach the signup form even if they have a session, otherwise
+// they get bounced into a /dashboard -> /auth loop on the platform domain
+// (cookie scope is per-subdomain, so the session does not carry across).
+function LoginGuard({ user, children }: { user: AuthState; children: React.ReactNode }) {
   if (user === undefined) return <div className="loading-screen"><div className="spinner" /></div>;
-  // If already logged in, send to the platform dashboard
   if (user) {
     window.location.href = 'https://app.burnout-os.app/dashboard';
     return null;
@@ -48,9 +53,14 @@ export default function App() {
           <Route path="/burnout-report" element={<BurnoutReport />} />
           <Route path="/diagnostic" element={<Diagnostic />} />
 
-          {/* Guest only — redirect to app if already signed in */}
-          <Route path="/signup" element={<GuestRoute user={user}><Signup /></GuestRoute>} />
-          <Route path="/login" element={<GuestRoute user={user}><Login /></GuestRoute>} />
+          {/* Signup is open: returning customers must be able to purchase
+              additional tiers without being bounced into a dashboard loop.
+              Signup.tsx already handles the "email already exists" case
+              with a clear message pointing to /auth for sign-in. */}
+          <Route path="/signup" element={<Signup />} />
+
+          {/* Login bounces signed-in users to the platform dashboard */}
+          <Route path="/login" element={<LoginGuard user={user}><Login /></LoginGuard>} />
 
           {/* B2B Admin — protected */}
           <Route path="/diagnostic/admin" element={
