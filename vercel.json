@@ -74,6 +74,26 @@
       "source": "/contact",
       "destination": "/contact.html",
       "permanent": false
+    },
+    {
+      "source": "/tour",
+      "destination": "/tour.html",
+      "permanent": false
+    },
+    {
+      "source": "/tour/individual",
+      "destination": "/tour-individual.html",
+      "permanent": false
+    },
+    {
+      "source": "/tour/corporate",
+      "destination": "/tour-corporate.html",
+      "permanent": false
+    },
+    {
+      "source": "/tour/registration-success",
+      "destination": "/tour-registration-success.html",
+      "permanent": false
     }
   ],
   "rewrites": [
