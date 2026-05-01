@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're confirmed — BurnoutOS Programme</title>
+<meta name="description" content="Your place in the BurnoutOS Programme is confirmed. Here's what happens next.">
+
+<!-- Don't index this page in search engines -->
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #0c1018;
+    --ink-2: #161b26;
+    --ink-3: #1f2533;
+    --ember: #e84b2a;
+    --ember-dim: #d63a1f;
+    --ember-soft: rgba(232, 75, 42, 0.12);
+    --paper: #f0ede8;
+    --muted: rgba(240, 237, 232, 0.65);
+    --muted-2: rgba(240, 237, 232, 0.45);
+    --line: rgba(255, 255, 255, 0.08);
+    --line-2: rgba(255, 255, 255, 0.04);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { min-height: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Noise grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  /* Radial gradient blooms */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(232, 75, 42, 0.08), transparent 50%),
+      radial-gradient(circle at 80% 90%, rgba(232, 75, 42, 0.06), transparent 50%);
+  }
+
+  /* HEADER NAV */
+  .nav {
+    position: relative;
+    z-index: 10;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .wordmark {
+    font-family: 'Syne', serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-decoration: none;
+  }
+  .wordmark .ember-dot { color: var(--ember); }
+
+  .nav-back {
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .nav-back:hover { color: var(--paper); }
+
+  /* MAIN CONTAINER */
+  main {
+    position: relative;
+    z-index: 5;
+    max-width: 640px;
+    margin: 2rem auto 4rem;
+    padding: 0 1.5rem;
+  }
+
+  /* CONFIRMATION HERO */
+  .hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+  }
+
+  .check-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--ember-soft);
+    border: 2px solid var(--ember);
+    margin-bottom: 1.5rem;
+    animation: scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .check-mark svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--ember);
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: draw-check 0.5s ease-out 0.3s forwards;
+  }
+
+  @keyframes scale-in {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes draw-check {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-family: 'Syne', serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: #fff;
+    margin: 0 0 1rem;
+  }
+
+  .hero-sub {
+    font-size: 1.0625rem;
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* WHAT NEXT */
+  .next-card {
+    background: linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2.5rem 0;
+  }
+
+  .next-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .next-title {
+    font-family: 'Syne', serif;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .step-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: step-counter;
+  }
+
+  .step-list li {
+    counter-increment: step-counter;
+    position: relative;
+    padding: 0 0 1.25rem 3rem;
+    line-height: 1.55;
+  }
+
+  .step-list li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 2rem;
+    bottom: 0.25rem;
+    width: 1px;
+    background: var(--line);
+  }
+
+  .step-list li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--ember-soft);
+    border: 1px solid rgba(232, 75, 42, 0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--ember);
+  }
+
+  .step-list strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .step-list .step-meta {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--muted-2);
+    margin-top: 0.25rem;
+  }
+
+  /* RECEIPT INFO */
+  .receipt {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    font-size: 0.875rem;
+  }
+
+  .receipt-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+  }
+  .receipt-row:not(:last-child) {
+    border-bottom: 1px solid var(--line-2);
+  }
+  .receipt-label { color: var(--muted); }
+  .receipt-value {
+    color: var(--paper);
+    font-weight: 500;
+    font-family: 'Inconsolata', 'Menlo', 'Monaco', monospace;
+    font-size: 0.8125rem;
+  }
+
+  /* SUPPORT CONTACT */
+  .support {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .support-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .support p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .support a {
+    color: var(--ember);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .support a:hover { text-decoration: underline; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem 3rem;
+    color: var(--muted-2);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    position: relative;
+    z-index: 5;
+  }
+
+  footer .credentials {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--muted-2);
+    font-size: 0.75rem;
+  }
+
+  /* DEFENSIVE STATE: page loaded without expected query params */
+  .generic-message {
+    display: none;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    color: rgb(252, 211, 77);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  body.no-session .generic-message { display: block; }
+
+  /* CANCELLATION STATE */
+  .cancel-state {
+    display: none;
+  }
+  body.cancelled .cancel-state { display: block; }
+  body.cancelled .check-mark {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgb(245, 158, 11);
+  }
+  body.cancelled .check-mark svg { stroke: rgb(245, 158, 11); }
+  body.cancelled .eyebrow { color: rgb(245, 158, 11); }
+  body.cancelled .normal-state { display: none; }
+  body.cancelled .next-card { display: none; }
+  body.cancelled .receipt { display: none; }
+
+  @media (max-width: 540px) {
+    main { padding: 0 1.25rem; margin-top: 1rem; }
+    .hero { padding: 2rem 0 1.5rem; }
+    .next-card { padding: 1.5rem 1.25rem; }
+    .step-list li { padding-left: 2.5rem; padding-bottom: 1rem; }
+    .step-list li::before { width: 1.75rem; height: 1.75rem; font-size: 0.8125rem; }
+    .step-list li:not(:last-child)::after { left: 0.875rem; }
+  }
+</style>
+</head>
+<body>
+  <header class="nav">
+    <a href="/" class="wordmark">BurnoutOS<span class="ember-dot">.</span></a>
+    <a href="/tour" class="nav-back">← Tour overview</a>
+  </header>
+
+  <main>
+
+    <!-- CANCELLED STATE (hidden unless ?cancelled=1) -->
+    <div class="cancel-state">
+      <div class="hero">
+        <div class="check-mark">
+          <svg viewBox="0 0 24 24"><path d="M6 6L18 18M6 18L18 6"/></svg>
+        </div>
+        <div class="eyebrow">Payment cancelled</div>
+        <h1>Your registration was not completed</h1>
+        <p class="hero-sub">No charge was made. If you'd like to try again or have questions about the programme, we're here to help.</p>
+      </div>
+      <div class="support">
+        <div class="support-eyebrow">Need help?</div>
+        <p>
+          Email <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a> with any questions, or <a href="/tour/individual">return to the tour page</a> to try again.
+        </p>
+      </div>
+    </div>
+
+    <!-- NORMAL SUCCESS STATE -->
+    <div class="normal-state">
+      <div class="hero">
+        <div class="check-mark">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="eyebrow">Registration confirmed</div>
+        <h1>You're in.</h1>
+        <p class="hero-sub">Your payment has been received and your place is reserved. A confirmation email is on its way to your inbox in the next few minutes.</p>
+      </div>
+
+      <!-- Defensive notice if landed without params -->
+      <div class="generic-message">
+        It looks like you reached this page without completing checkout. If you've just paid through Stripe, your registration is confirmed — check your email. If you haven't started registration yet, head back to the <a href="/tour" style="color:inherit;text-decoration:underline">tour overview</a>.
+      </div>
+
+      <div class="next-card">
+        <div class="next-eyebrow">What happens next</div>
+        <div class="next-title">Three things in the coming days</div>
+        <ol class="step-list">
+          <li>
+            <strong>Confirmation email arrives</strong>
+            <span class="step-meta">Within the next few minutes from <a href="mailto:hello@burnout-os.app" style="color:var(--ember);text-decoration:none">hello@burnout-os.app</a>. Includes your weekend dates, what to bring, and the venue announcement timeline.</span>
+          </li>
+          <li>
+            <strong>Onboarding call invitation (within 48 hours)</strong>
+            <span class="step-meta">A separate email with a link to book your 20-minute onboarding call with Werner. The call covers your context, your goals, and how to get the most from the programme.</span>
+          </li>
+          <li>
+            <strong>OLBI baseline assessment + pre-weekend reading (1-2 weeks before the cohort)</strong>
+            <span class="step-meta">Sent ~14 days before your cohort weekend. The OLBI takes 5 minutes; the reading is 30-40 pages of clinical-grade context that primes the work we'll do together in person.</span>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Receipt info, populated from URL params if present -->
+      <div class="receipt" id="receipt" style="display:none">
+        <div class="receipt-row">
+          <span class="receipt-label">Reference</span>
+          <span class="receipt-value" id="reg-id"></span>
+        </div>
+        <div class="receipt-row" id="session-row">
+          <span class="receipt-label">Stripe session</span>
+          <span class="receipt-value" id="session-id"></span>
+        </div>
+      </div>
+
+      <div class="support">
+        <div class="support-eyebrow">Anything not right?</div>
+        <p>
+          Email <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a> and Werner will respond personally within one business day. Quote your reference number (above) to make it faster.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    BurnoutOS · by Katalis (Behavioural Health Pty Ltd)
+    <span class="credentials">HPCSA PS 0123684 · AHPRA PSY0002192885</span>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get('session_id');
+      const regId = params.get('reg_id');
+      const cancelled = params.get('cancelled');
+
+      // Cancelled flow takes precedence
+      if (cancelled === '1') {
+        document.body.classList.add('cancelled');
+        return;
+      }
+
+      // No session_id and no reg_id → show defensive notice
+      if (!sessionId && !regId) {
+        document.body.classList.add('no-session');
+        return;
+      }
+
+      // Populate the receipt block with what we have
+      const receipt = document.getElementById('receipt');
+      const regIdEl = document.getElementById('reg-id');
+      const sessionIdEl = document.getElementById('session-id');
+      const sessionRow = document.getElementById('session-row');
+
+      if (regId) {
+        regIdEl.textContent = regId.slice(0, 8) + '…' + regId.slice(-4);
+        regIdEl.title = regId;
+        receipt.style.display = '';
+      }
+      if (sessionId) {
+        // Stripe session IDs are long; truncate visually but full on hover
+        sessionIdEl.textContent = sessionId.slice(0, 12) + '…' + sessionId.slice(-6);
+        sessionIdEl.title = sessionId;
+        receipt.style.display = '';
+      } else {
+        sessionRow.style.display = 'none';
+      }
+    })();
+  </script>
+</body>
+</html>

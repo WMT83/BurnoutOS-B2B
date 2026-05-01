@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BurnoutOS Corporate Programme — South Africa · October 2026</title>
+  <meta name="description" content="A 10-week burnout recovery programme for senior staff and high performers. 2-day in-person intensive plus 8-week structured integration. Invoiced, PO-ready, tiered team rates." />
+  <link rel="canonical" href="https://burnout-os.app/tour/corporate" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ember:      #e84b2a;
+      --ember-dim:  #c73d20;
+      --ember-glow: rgba(232,75,42,0.15);
+      --violet:     #7c3aed;
+      --violet-soft:#a78bfa;
+      --teal:       #1a6b72;
+      --teal-soft:  #4db8c0;
+      --indigo:     #312e81;
+      --ink:        #0c1018;
+      --ink-soft:   #1c1920;
+      --ink-muted:  #5a6480;
+      --warm:       #f5f0e8;
+      --white:      #ffffff;
+      --rule:       rgba(255,255,255,0.1);
+      --rule-soft:  rgba(255,255,255,0.07);
+      --muted:      rgba(255,255,255,0.55);
+      --faint:      rgba(255,255,255,0.3);
+      --gold:       #c9a96e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13,13,20,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--white); }
+    .nav-back .arrow { font-family: 'Syne', sans-serif; }
+    .nav-right { display: flex; align-items: center; gap: 1.25rem; }
+    .nav-switch {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-switch:hover { color: var(--ember); }
+    .seats-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      background: var(--ember-glow);
+      color: var(--ember);
+      border: 1px solid rgba(232,75,42,0.3);
+    }
+    .nav-cta {
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Syne', sans-serif;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      background: var(--ember);
+      color: var(--white);
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--ember-dim); }
+    @media (max-width: 720px) {
+      .nav-switch { display: none; }
+    }
+
+    /* ── LAYOUT ── */
+    section { padding: 6rem 2rem; position: relative; }
+    .inner    { max-width: 1100px; margin: 0 auto; }
+    .inner-md { max-width: 900px; margin: 0 auto; }
+    .inner-sm { max-width: 720px; margin: 0 auto; }
+    .inner-xs { max-width: 560px; margin: 0 auto; }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .eyebrow.center { justify-content: center; }
+    .eyebrow.muted { color: var(--muted); }
+    .eyebrow .rule { display: inline-block; width: 20px; height: 1px; background: currentColor; }
+
+    h1, h2, h3, h4 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .section-h {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+    .body-text {
+      color: var(--muted);
+      font-size: 1.0625rem;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+    .body-text + .body-text { margin-top: 1.25rem; }
+    .body-text strong { color: var(--white); font-weight: 500; }
+
+    /* ── HERO ── */
+    #hero {
+      padding-top: 9rem;
+      padding-bottom: 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(232,75,42,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    #hero .inner-md { position: relative; z-index: 1; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--rule);
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1.75rem;
+    }
+    .hero-badge .pulse {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--ember);
+      box-shadow: 0 0 0 0 rgba(232,75,42,0.6);
+      animation: pulse 2.2s infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(232,75,42,0.55); }
+      70%  { box-shadow: 0 0 0 10px rgba(232,75,42,0); }
+      100% { box-shadow: 0 0 0 0 rgba(232,75,42,0); }
+    }
+
+    #hero h1 {
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.5rem;
+      max-width: 22ch;
+      margin-inline: auto;
+    }
+    #hero h1 em {
+      font-style: normal;
+      color: var(--ember);
+    }
+    .hero-lede {
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      max-width: 60ch;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      background: var(--ember);
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary:hover { background: var(--ember-dim); transform: translateY(-2px); }
+    .btn-primary .arrow { transition: transform 0.2s; }
+    .btn-primary:hover .arrow { transform: translateX(3px); }
+    .btn-ghost {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.65);
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.28); color: var(--white); }
+
+    /* ── STAT STRIP ── */
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      max-width: 780px;
+      margin: 0 auto;
+      padding-top: 2.25rem;
+      border-top: 1px solid var(--rule);
+    }
+    @media (min-width: 720px) {
+      .stat-strip { grid-template-columns: repeat(4, 1fr); }
+    }
+    .stat {
+      text-align: center;
+      padding: 0.5rem 1rem;
+      border-right: 1px solid var(--rule-soft);
+    }
+    .stat:last-child, .stat:nth-child(2):last-child { border-right: none; }
+    @media (max-width: 719px) {
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3), .stat:nth-child(4) {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--rule-soft);
+      }
+    }
+    @media (min-width: 720px) {
+      .stat:nth-child(4) { border-right: none; }
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-num .unit {
+      color: var(--ember);
+      font-size: 0.65em;
+      margin-left: 0.1em;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ── FORMAT BANNER ── */
+    .format-banner {
+      padding: 1.25rem 2rem;
+      background: rgba(124,58,237,0.08);
+      border-top: 1px solid rgba(124,58,237,0.2);
+      border-bottom: 1px solid rgba(124,58,237,0.2);
+    }
+    .format-banner .inner {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+    }
+    .format-banner .txt { color: rgba(255,255,255,0.7); }
+    .format-banner .txt strong { color: var(--white); font-weight: 600; }
+    .format-banner a {
+      color: var(--violet-soft);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(167,139,250,0.3);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .format-banner a:hover { color: var(--white); border-bottom-color: var(--white); }
+
+    /* ── RECOGNITION ── */
+    #recognition {
+      background: linear-gradient(180deg, transparent, rgba(49,46,129,0.08));
+    }
+    .recognition-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+    @media (min-width: 880px) {
+      .recognition-split { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    }
+
+    /* ── OUTCOMES ── */
+    #outcomes {
+      background: var(--ink-soft);
+      position: relative;
+      overflow: hidden;
+    }
+    #outcomes::before {
+      content: '';
+      position: absolute;
+      top: 10%; left: -10%;
+      width: 50%; height: 60%;
+      background: radial-gradient(ellipse at center, rgba(232,75,42,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #outcomes::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: -10%;
+      width: 50%; height: 60%;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #outcomes .inner { position: relative; z-index: 1; }
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    @media (min-width: 880px) { .outcome-grid { grid-template-columns: repeat(3, 1fr); } }
+    .outcome-card {
+      padding: 1.75rem;
+      border-radius: 12px;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.025);
+    }
+    .outcome-tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .outcome-card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+      letter-spacing: -0.01em;
+    }
+    .outcome-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* ── CURRICULUM (the weekend) ── */
+    #curriculum { background: var(--ink); }
+    .day-block { margin-top: 3.5rem; }
+    .day-block:first-of-type { margin-top: 3rem; }
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--rule);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .day-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+    .day-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .session-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 700px) { .session-grid { grid-template-columns: 1fr 1fr; } }
+    .session {
+      padding: 1.5rem 1.5rem 1.4rem;
+      border-radius: 12px;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.02);
+      transition: border-color 0.25s, transform 0.25s, background 0.25s;
+    }
+    .session:hover {
+      border-color: rgba(232,75,42,0.4);
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.035);
+    }
+    .session-num {
+      display: inline-block;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 0.65rem;
+    }
+    .session h3 {
+      font-size: 1.08rem;
+      font-weight: 600;
+      margin-bottom: 0.55rem;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .session p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── INTEGRATION PHASE ── */
+    #integration {
+      background: var(--ink-soft);
+      position: relative;
+    }
+    #integration::before {
+      content: '';
+      position: absolute;
+      top: 10%; right: -5%;
+      width: 35%; height: 45%;
+      background: radial-gradient(ellipse at center, rgba(232,75,42,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #integration .inner { position: relative; z-index: 1; }
+    .integration-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    @media (min-width: 700px) { .integration-grid { grid-template-columns: 1fr 1fr; } }
+
+    .week-card {
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.025);
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+    }
+    .week-card:hover { border-color: rgba(232,75,42,0.35); transform: translateY(-2px); }
+    .week-card.has-call {
+      border-color: rgba(232,75,42,0.4);
+      background: linear-gradient(135deg, rgba(232,75,42,0.06) 0%, rgba(255,255,255,0.025) 60%);
+    }
+    .week-num {
+      display: inline-block;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 0.55rem;
+    }
+    .week-call-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--ember);
+      color: var(--white);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 100px;
+      margin-left: 0.5rem;
+      vertical-align: 1px;
+    }
+    .week-call-tag::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--white);
+    }
+    .week-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.55rem;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .week-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .week-card p strong { color: var(--white); font-weight: 500; }
+
+    .phase-callout {
+      margin-top: 2.25rem;
+      padding: 1.75rem 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(232,75,42,0.25);
+      background: linear-gradient(135deg, rgba(232,75,42,0.08) 0%, rgba(124,58,237,0.06) 100%);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 720px) { .phase-callout { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+    .phase-callout .label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ember);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .phase-callout h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+      letter-spacing: -0.01em;
+    }
+    .phase-callout p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── FORMAT (how the 10 weeks fit together) ── */
+    #format { background: var(--ink); }
+    .format-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    @media (min-width: 880px) { .format-grid { grid-template-columns: repeat(3, 1fr); } }
+    .format-card {
+      padding: 1.75rem;
+      border-radius: 12px;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.025);
+    }
+    .format-step {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--ember);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .format-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+    .format-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── VALUE STACK ── */
+    #stack {
+      background: var(--ink-soft);
+      position: relative;
+    }
+    #stack::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,75,42,0.4), transparent);
+    }
+    .stack-rows {
+      max-width: 880px;
+      margin: 2.5rem auto 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .stack-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    @media (min-width: 720px) {
+      .stack-row { grid-template-columns: 1fr auto; gap: 2rem; align-items: start; }
+    }
+    .stack-row:last-child { border-bottom: none; }
+    .stack-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ember);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .stack-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 0.4rem;
+    }
+    .stack-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+      max-width: 56ch;
+    }
+    .stack-value {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--white);
+      letter-spacing: -0.015em;
+      white-space: nowrap;
+    }
+    .stack-value .unit {
+      display: block;
+      margin-top: 0.25rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--faint);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .stack-summary {
+      max-width: 880px;
+      margin: 2.5rem auto 0;
+      padding: 1.75rem 2rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(232,75,42,0.12) 0%, rgba(124,58,237,0.08) 100%);
+      border: 1px solid rgba(232,75,42,0.25);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      align-items: center;
+    }
+    @media (min-width: 680px) {
+      .stack-summary { grid-template-columns: 1fr auto; gap: 2rem; }
+    }
+    .stack-summary .label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ember);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .stack-summary .line {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .stack-summary .line strong { color: var(--white); font-weight: 600; }
+    .stack-price {
+      text-align: left;
+    }
+    @media (min-width: 680px) { .stack-price { text-align: right; } }
+    .stack-price .this {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.9rem;
+      color: var(--ember);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .stack-price .this-label {
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .stack-fine {
+      max-width: 880px;
+      margin: 2rem auto 0;
+      font-size: 0.8rem;
+      color: var(--faint);
+      line-height: 1.6;
+      text-align: center;
+      font-weight: 300;
+    }
+
+    /* ── DATES ── */
+    #dates { background: var(--ink); }
+    .city-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    @media (min-width: 760px) { .city-grid { grid-template-columns: 1fr 1fr; } }
+    .city-card {
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.025);
+    }
+    .city-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.7rem, 2.6vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .city-sub {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+    }
+    .city-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+    }
+    .meta-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+    }
+    .meta-val {
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+    .seat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      background: var(--ember-glow);
+      color: var(--ember);
+      padding: 0.35rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1px solid rgba(232,75,42,0.3);
+    }
+    .seat-chip .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--ember);
+    }
+
+    /* ── PRICING ── */
+    #pricing {
+      background: var(--ink-soft);
+      position: relative;
+    }
+    .price-card {
+      max-width: 640px;
+      margin: 2.5rem auto 0;
+      padding: 2.5rem;
+      border-radius: 16px;
+      background: var(--ink);
+      border: 1px solid var(--rule);
+      position: relative;
+      overflow: hidden;
+    }
+    .price-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--ember);
+    }
+    .price-card::after {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(232,75,42,0.18), transparent 70%);
+      pointer-events: none;
+    }
+    .price-tag-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .price-audience {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .badge-early {
+      background: var(--ember);
+      color: var(--white);
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 100px;
+    }
+    .price-amt {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+      letter-spacing: -0.025em;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+      color: var(--white);
+      position: relative;
+      z-index: 1;
+    }
+    .price-strike {
+      text-decoration: line-through;
+      color: var(--faint);
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-left: 0.6rem;
+    }
+    .price-note-line {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+      position: relative;
+      z-index: 1;
+    }
+    .price-deadline {
+      background: rgba(232,75,42,0.08);
+      border: 1px solid rgba(232,75,42,0.2);
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+    .price-deadline strong { color: var(--ember); font-weight: 600; }
+
+    .price-includes {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .price-includes li {
+      padding: 0.7rem 0 0.7rem 1.5rem;
+      position: relative;
+      border-top: 1px solid var(--rule-soft);
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+    .price-includes li:first-child { border-top: none; padding-top: 0; }
+    .price-includes li:last-child { padding-bottom: 0; }
+    .price-includes li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1.05rem;
+      width: 10px; height: 1px;
+      background: var(--ember);
+    }
+    .price-includes li:first-child::before { top: 0.5rem; }
+
+    .price-card .btn-primary {
+      width: 100%;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cross-link {
+      max-width: 640px;
+      margin: 2rem auto 0;
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      background: rgba(124,58,237,0.06);
+      border: 1px solid rgba(124,58,237,0.18);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    @media (min-width: 600px) { .cross-link { grid-template-columns: 1fr auto; gap: 1.25rem; } }
+    .cross-link p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    .cross-link strong { color: var(--white); font-weight: 500; }
+    .cross-link a {
+      color: var(--violet-soft);
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(167,139,250,0.4);
+      padding-bottom: 2px;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .cross-link a:hover { color: var(--white); border-bottom-color: var(--white); }
+
+    .price-fine {
+      max-width: 640px;
+      margin: 2rem auto 0;
+      font-size: 0.8rem;
+      color: var(--faint);
+      line-height: 1.6;
+      text-align: center;
+      font-weight: 300;
+    }
+
+    /* ── FOUNDER ── */
+    #founder {
+      background: var(--ink);
+      position: relative;
+    }
+    #founder::before {
+      content: '';
+      position: absolute;
+      top: 30%; left: -10%;
+      width: 40%; height: 50%;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #founder .inner-sm { position: relative; z-index: 1; }
+    #founder blockquote {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      color: var(--white);
+      margin: 0 0 2rem;
+    }
+    #founder blockquote::before {
+      content: '';
+      display: block;
+      width: 40px; height: 2px;
+      background: var(--ember);
+      margin-bottom: 1.75rem;
+    }
+    .founder-body p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 1.1em;
+    }
+    .founder-body p strong { color: var(--white); font-weight: 500; }
+    .founder-sign {
+      margin-top: 2rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--rule);
+    }
+    .founder-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 0.3rem;
+    }
+    .founder-cred {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    /* ── FAQ ── */
+    #faq {
+      background: var(--ink-soft);
+    }
+    .faq-list {
+      margin-top: 3rem;
+      border-top: 1px solid var(--rule);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--rule);
+    }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 1.02rem;
+      color: var(--white);
+      cursor: pointer;
+      text-align: left;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+    .faq-q:hover { color: var(--ember); }
+    .faq-toggle {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--ember);
+      line-height: 1;
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .faq-a-inner {
+      padding: 0 0 1.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      font-weight: 300;
+      max-width: 68ch;
+    }
+    .faq-item.open .faq-a { max-height: 500px; }
+
+    /* ── FINAL CTA ── */
+    #final {
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    #final::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse at center, rgba(232,75,42,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    #final .inner-sm { position: relative; z-index: 1; }
+    #final h2 {
+      font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+      max-width: 22ch;
+      margin: 0 auto 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    #final .lede {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 55ch;
+      margin: 0 auto 2.25rem;
+      line-height: 1.65;
+      font-weight: 300;
+    }
+    #final .fine {
+      margin-top: 2rem;
+      font-size: 0.88rem;
+      color: var(--faint);
+    }
+    #final .fine a {
+      color: var(--ember);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(232,75,42,0.4);
+      padding-bottom: 2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid var(--rule);
+      padding: 3rem 2rem 2rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    footer .inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    @media (min-width: 720px) {
+      footer .inner { grid-template-columns: 2fr 1fr 1fr; }
+    }
+    footer h5 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 0.85rem;
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      display: block;
+      padding: 0.25rem 0;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--ember); }
+    .foot-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: var(--faint);
+    }
+    .footer-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.85rem;
+    }
+    .footer-brand .dot { color: var(--ember); }
+    .footer-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-left: 0.75rem;
+      padding-left: 0.75rem;
+      border-left: 1px solid var(--rule);
+      font-weight: 500;
+    }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.seen { opacity: 1; transform: translateY(0); }
+    <script src="/tour-modal.js" defer></script>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-back">
+    <span class="arrow">←</span>
+    <span>BurnoutOS</span>
+  </a>
+  <div class="nav-right">
+    <a href="/tour/individual" class="nav-switch">Registering yourself? →</a>
+    <span class="seats-badge">SA · Oct 2026</span>
+    <a href="#pricing" class="nav-cta" data-tour-modal="corporate">Reserve places</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="inner-md">
+    <div class="hero-badge reveal">
+      <span class="pulse"></span>
+      <span>Joburg 10–11 Oct · Cape Town 17–18 Oct · Invoiced places open</span>
+    </div>
+    <h1 class="reveal">A clinical-grade <em>recovery programme</em> for your senior staff and high performers.</h1>
+    <p class="hero-lede reveal">A 10-week structured recovery arc for the people you most need to retain, recover, and protect. Two days in-person with the clinical lead and a small peer cohort, then 8 weeks of platform-supported integration with two facilitated cohort calls. Built and led by a dual-registered (HPCSA and AHPRA) clinical psychologist.</p>
+    <div class="hero-cta reveal">
+      <a href="#pricing" class="btn-primary">See team pricing <span class="arrow">→</span></a>
+      <a href="#sessions" class="btn-ghost">What's covered</a>
+    </div>
+
+    <div class="stat-strip reveal">
+      <div class="stat">
+        <div class="stat-num">10<span class="unit">weeks</span></div>
+        <div class="stat-label">Recovery arc</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">15<span class="unit">%</span></div>
+        <div class="stat-label">Team rate at 6+ places</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">ZAR</div>
+        <div class="stat-label">Invoiced, PO-ready</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">HPCSA</div>
+        <div class="stat-label">Clinically led</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAT BANNER -->
+<div class="format-banner">
+  <div class="inner">
+    <div class="txt"><strong>One programme, two formats.</strong> The AU online cohort runs the same 10 weeks as 8 weekly Zoom sessions. The SA format compresses the live content into a weekend.</div>
+    <a href="https://app.burnout-os.app" target="_blank" rel="noopener">See the online cohort format →</a>
+  </div>
+</div>
+
+<!-- RECOGNITION -->
+<section id="recognition">
+  <div class="inner-md">
+    <div class="eyebrow reveal"><span class="rule"></span>Why this matters commercially</div>
+    <h2 class="section-h reveal">The senior people most likely to leave are the ones least likely to ask for help.</h2>
+    <p class="body-text reveal">Burnout among senior staff and high performers is a retention risk before it's a wellbeing risk. By the time it shows up on an engagement survey, the resignation has already been emotionally written. The intervention that changes outcomes is the one that arrives early enough, structured enough, and credible enough that the person actually engages with it.</p>
+
+    <div class="recognition-split">
+      <div class="reveal">
+        <p class="body-text"><strong>Most corporate wellbeing offerings underperform with senior staff.</strong> EAP referrals carry stigma. Generic resilience workshops insult the audience. Coaching engagements are slow to set up and inconsistent in clinical depth. The people you most want to support are the people for whom the existing options don't fit.</p>
+        <p class="body-text">This programme is different in three specific ways. It's clinically led by a dual-registered psychologist, which gives it the credibility senior people require. It's contained — a defined 10-week arc, not an open-ended commitment. And it sits outside the EAP pathway entirely, which removes the stigma barrier that suppresses uptake.</p>
+      </div>
+      <div class="reveal">
+        <p class="body-text"><strong>The structure makes it stick.</strong> A 2-day in-person intensive is the kickoff that gets attention and creates real change. The 8-week integration phase that follows is what makes sure the change embeds rather than fading after the initial momentum.</p>
+        <p class="body-text">Two facilitated cohort calls during the integration phase keep accountability live. AI-supported daily check-ins keep the work warm. The relapse prevention plan that emerges in Week 8 gets reviewed by the clinical lead and becomes something your person genuinely uses, not a document that disappears after the workshop.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section id="outcomes">
+  <div class="inner">
+    <div class="eyebrow reveal"><span class="rule"></span>What your people take through the 10 weeks</div>
+    <h2 class="section-h reveal">A complete recovery arc your team member can actually use, not just attend.</h2>
+    <p class="body-text reveal">The programme is structured to produce three concrete outcomes for the people you send. Not vague wellbeing improvement — specific, measurable shifts in understanding, practice, and the documented plan they leave with.</p>
+
+    <div class="outcome-grid">
+      <div class="outcome-card reveal">
+        <div class="outcome-tag">Understanding</div>
+        <h3>Clinical-grade understanding of their own pattern</h3>
+        <p>The neuroscience of burnout, the exhaustion trap, and the rumination loops driving it. By Sunday afternoon they understand what's actually happening, which is what makes the rest of the work move.</p>
+      </div>
+      <div class="outcome-card reveal">
+        <div class="outcome-tag">Practice</div>
+        <h3>Tools embedded through 8 weeks of structured practice</h3>
+        <p>Sleep reset protocols, defusion techniques, values work, boundary blueprints, capacity planning. Each session from the weekend gets a dedicated week of structured platform-supported application. AI-supported daily check-ins keep the work alive.</p>
+      </div>
+      <div class="outcome-card reveal">
+        <div class="outcome-tag">Plan</div>
+        <h3>A documented relapse prevention plan, clinically reviewed</h3>
+        <p>Built in Week 8 from the lived data of the previous 7 weeks. Reviewed by Werner with written async feedback. Specific to your team member's role, context, and recovery trajectory. Something they keep and refer back to as the working year continues.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE WEEKEND CURRICULUM -->
+<section id="curriculum">
+  <a id="sessions"></a>
+  <div class="inner">
+    <div class="eyebrow muted reveal"><span class="rule"></span>The weekend · Days 1 and 2</div>
+    <h2 class="section-h reveal">Eight sessions delivered across two in-person days.</h2>
+    <p class="body-text reveal">The full curriculum content lives here — every framework, every tool, every technique. By Sunday evening you have the toolkit. The 8 weeks that follow are where it gets embedded.</p>
+
+    <div class="day-block">
+      <div class="day-header reveal">
+        <div class="day-title">Day 1 · Foundations</div>
+        <div class="day-meta">Sessions 1 to 4 · Saturday</div>
+      </div>
+      <div class="session-grid">
+        <div class="session reveal">
+          <div class="session-num">Session 01</div>
+          <h3>The Neuroscience of Burnout</h3>
+          <p>Why your brain got here, and what it takes to heal. Understand the biology driving your exhaustion. Map your recovery starting point against the OLBI baseline you completed before arriving.</p>
+        </div>
+        <div class="session reveal">
+          <div class="session-num">Session 02</div>
+          <h3>Trying Harder Is Making It Worse</h3>
+          <p>The exhaustion trap that keeps high performers stuck. Why the strategies that got you here can't get you out, and what genuinely shifts the pattern.</p>
+        </div>
+        <div class="session reveal">
+          <div class="session-num">Session 03</div>
+          <h3>How to Stop the 3am Spiral</h3>
+          <p>Breaking the rumination loop that steals your rest. Practical defusion and present-moment techniques for the moments when your mind won't let go.</p>
+        </div>
+        <div class="session reveal">
+          <div class="session-num">Session 04</div>
+          <h3>How to Reset Your Sleep</h3>
+          <p>The science of nervous system recovery after burnout. Sleep window calibration, stimulus control, and wind-down protocols that actually work when you're depleted.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-header reveal">
+        <div class="day-title">Day 2 · Integration</div>
+        <div class="day-meta">Sessions 5 to 8 · Sunday</div>
+      </div>
+      <div class="session-grid">
+        <div class="session reveal">
+          <div class="session-num">Session 05</div>
+          <h3>Pivoting Towards Meaning in Work</h3>
+          <p>Values-based recovery when everything feels pointless. Reconnecting with what actually matters, and using that as the compass for the boundary and energy work that follows.</p>
+        </div>
+        <div class="session reveal">
+          <div class="session-num">Session 06</div>
+          <h3>Effectively Managing Boundaries in Relationships</h3>
+          <p>Setting and maintaining boundaries without guilt. The blueprint for people who hate letting others down — at work, with family, with the colleagues you've been carrying.</p>
+        </div>
+        <div class="session reveal">
+          <div class="session-num">Session 07</div>
+          <h3>Sustainable Performance in the Long Run</h3>
+          <p>Building lasting energy and performance after depletion. Capacity planning, recovery rhythms, and the practical architecture of work that doesn't keep breaking you.</p>
+        </div>
+        <div class="session reveal">
+          <div class="session-num">Session 08</div>
+          <h3>Your Personalised Relapse Prevention Plan</h3>
+          <p>Your evidence-based long-term protection plan, built during this final session. Specific to your context, your values, your recovery trajectory. The thing you take home and actually use.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATION PHASE -->
+<section id="integration">
+  <div class="inner">
+    <div class="eyebrow reveal"><span class="rule"></span>The integration phase · 8 weeks following the weekend</div>
+    <h2 class="section-h reveal">Eight weeks of structured application, mapped to the eight sessions you've just lived.</h2>
+    <p class="body-text reveal">Each session from the weekend gets a dedicated week of platform-supported integration. Daily check-ins, AI coach prompts, targeted email sequences, and reflection exercises take the live content out of the room and into your actual working life. Two facilitated cohort calls along the way keep the work moving.</p>
+
+    <div class="integration-grid">
+      <div class="week-card reveal">
+        <div class="week-num">Week 01</div>
+        <h3>Noticing the neuroscience in your own week</h3>
+        <p>Daily check-ins through the platform tracking your energy, sleep, and rumination patterns against your baseline. AI coach prompts that help you notice the neuroscience of your week as it unfolds. First evidence of the patterns you came in with.</p>
+      </div>
+      <div class="week-card reveal">
+        <div class="week-num">Week 02</div>
+        <h3>Catching the over-effort patterns</h3>
+        <p>Worksheets that surface the specific over-effort patterns showing up in your week. AI-assisted reflection on where you're still defaulting to the strategies that aren't working. Targeted email prompts at the moments you're most likely to over-extend.</p>
+      </div>
+      <div class="week-card has-call reveal">
+        <div class="week-num">Week 03 <span class="week-call-tag">Live call</span></div>
+        <h3>Defusion practice and the first cohort call</h3>
+        <p>Defusion techniques woven into the daily check-ins. AI coach available for in-the-moment 3am support. <strong>Werner-facilitated 75-minute cohort call</strong> mid-week, surfacing the patterns the cohort is encountering and addressing the predictable resistance points.</p>
+      </div>
+      <div class="week-card reveal">
+        <div class="week-num">Week 04</div>
+        <h3>Sleep window calibration</h3>
+        <p>Sleep window calibration based on your actual data from the platform's nightly tracking. Targeted protocols if your baseline shows specific sleep issues. AI coach prompts for wind-down adherence and morning anchor practices.</p>
+      </div>
+      <div class="week-card reveal">
+        <div class="week-num">Week 05</div>
+        <h3>Values mapping in real working time</h3>
+        <p>Values mapping exercises extended across the working week. AI coach helps you notice values-aligned and values-misaligned moments as they happen, not in retrospect. Reflection prompts at the end of each working day.</p>
+      </div>
+      <div class="week-card has-call reveal">
+        <div class="week-num">Week 06 <span class="week-call-tag">Live call</span></div>
+        <h3>Boundary scripts and the second cohort call</h3>
+        <p>Boundary scripts practised in real conversations during the week, with AI coach debriefing what worked and what didn't. <strong>Werner-facilitated 75-minute cohort call</strong> focused on the boundary work that's hardest in real life: the conversations you've been avoiding.</p>
+      </div>
+      <div class="week-card reveal">
+        <div class="week-num">Week 07</div>
+        <h3>Capacity planning from your own data</h3>
+        <p>Capacity planning worksheet built around your actual week's data from the previous 6 weeks of platform tracking. Designing the work-life architecture you'll carry forward, drawing on what you've already noticed about energy, sleep, and values alignment.</p>
+      </div>
+      <div class="week-card reveal">
+        <div class="week-num">Week 08</div>
+        <h3>Your relapse prevention plan, reviewed by Werner</h3>
+        <p>The plan you build in this week is the one that holds up. Constructed from the lived data of the previous 7 integration weeks plus the weekend's content. Submitted to Werner for written async feedback. Yours to keep, and the foundation of whatever comes next.</p>
+      </div>
+    </div>
+
+    <div class="phase-callout reveal">
+      <div>
+        <div class="label">Two facilitated cohort calls</div>
+        <h4>Werner live, twice during the integration phase</h4>
+        <p>End of Week 3 and end of Week 6. 75 minutes each. Mid-week timing. The call where common patterns get named and the cohort moves through the predictable resistance points together.</p>
+      </div>
+      <div>
+        <div class="label">Continuous platform support</div>
+        <h4>AI coach, daily check-ins, targeted email sequences</h4>
+        <p>The platform engages you actively across the 8 weeks, not as a content library you have to remember to open. Targeted prompts at the moments they matter, daily structure that keeps the work warm.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAT (HOW THE 10 WEEKS FIT) -->
+<section id="format">
+  <div class="inner">
+    <div class="eyebrow muted reveal"><span class="rule"></span>How the 10 weeks fit together</div>
+    <h2 class="section-h reveal">A structured arc, not a weekend with extras.</h2>
+    <p class="body-text reveal">The same curriculum runs as an 8-week weekly online cohort. The SA format compresses the live delivery into one in-person weekend and runs the integration phase as an 8-week structured follow-through. It's how two days does the work of two months.</p>
+
+    <div class="format-grid">
+      <div class="format-card reveal">
+        <div class="format-step">01</div>
+        <h3>Before · Onboarding call</h3>
+        <p>A 20-minute 1-to-1 call with Werner in the weeks before the intensive. You complete the OLBI assessment, share your context, and arrive on Saturday morning already oriented to the work.</p>
+      </div>
+      <div class="format-card reveal">
+        <div class="format-step">02</div>
+        <h3>Weekend · Live intensive</h3>
+        <p>Eight 90-minute sessions across Saturday and Sunday. Small peer cohort of up to 25. Structured breaks, lunch, and reflection time built into the day so the work lands rather than stacks.</p>
+      </div>
+      <div class="format-card reveal">
+        <div class="format-step">03</div>
+        <h3>Integration · 8 structured weeks</h3>
+        <p>Each session from the weekend gets a week of platform-supported application. Daily check-ins, AI coach prompts, email sequences, and two facilitated Werner-led cohort calls. Your relapse prevention plan emerges from the lived data of those 8 weeks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE STACK -->
+<section id="stack">
+  <div class="inner">
+    <div class="eyebrow reveal"><span class="rule"></span>What you're actually buying</div>
+    <h2 class="section-h reveal">The same 10-week recovery arc as the AU online cohort, with the live content delivered in person.</h2>
+    <p class="body-text reveal">One programme, two formats. The SA version is priced for the regional market and reflects the in-person delivery model — same curriculum, same clinical lead, same 10-week arc.</p>
+
+    <div class="stack-rows reveal">
+      <div class="stack-row">
+        <div>
+          <div class="stack-label">Days 1 and 2 · Live in-person</div>
+          <div class="stack-name">The full 8-session intensive weekend</div>
+          <p class="stack-desc">Eight 90-minute sessions delivered in-person across two contained days. Same curriculum as the online cohort. Small peer group of up to 25. Materials, catering, and the felt experience of working through the curriculum face-to-face with a clinical lead.</p>
+        </div>
+        <div class="stack-value">$1,497 AUD<span class="unit">Online cohort equivalent</span></div>
+      </div>
+
+      <div class="stack-row">
+        <div>
+          <div class="stack-label">Pre-intensive · 1-to-1</div>
+          <div class="stack-name">20-minute onboarding call with Werner</div>
+          <p class="stack-desc">A pre-intensive 1-to-1 conversation with the clinical lead. OLBI assessment review, context setting, and clarification of what you want from the weekend. You arrive Saturday morning already oriented.</p>
+        </div>
+        <div class="stack-value">R1,800<span class="unit">Equivalent session rate</span></div>
+      </div>
+
+      <div class="stack-row">
+        <div>
+          <div class="stack-label">Integration · 8 weeks</div>
+          <div class="stack-name">Two facilitated cohort calls with Werner</div>
+          <p class="stack-desc">Two 75-minute live group calls during the integration phase, end of Week 3 and end of Week 6. Werner facilitates each one. The calls where common patterns get surfaced and the cohort moves through the predictable resistance points together.</p>
+        </div>
+        <div class="stack-value">R3,600<span class="unit">Group facilitation equivalent</span></div>
+      </div>
+
+      <div class="stack-row">
+        <div>
+          <div class="stack-label">Integration · async</div>
+          <div class="stack-name">Platform access, AI coach, structured weekly content</div>
+          <p class="stack-desc">8 weeks of active platform engagement: daily check-ins, AI coach prompts, targeted email sequences, weekly worksheets and exercises tied to the corresponding session. Continues for 90 days from intensive completion.</p>
+        </div>
+        <div class="stack-value">R2,100<span class="unit">3-month subscription equivalent</span></div>
+      </div>
+
+      <div class="stack-row">
+        <div>
+          <div class="stack-label">Week 8 · async clinical review</div>
+          <div class="stack-name">Werner-reviewed relapse prevention plan</div>
+          <p class="stack-desc">Your Week 8 relapse prevention plan submitted for Werner's written async review. Specific feedback, refinements, and a final clinical sign-off on the plan you'll carry forward. The plan is the deliverable; the review is what makes it clinically defensible.</p>
+        </div>
+        <div class="stack-value">R1,200<span class="unit">Equivalent review fee</span></div>
+      </div>
+
+      <div class="stack-row">
+        <div>
+          <div class="stack-label">Professional recognition</div>
+          <div class="stack-name">24 HPCSA CPD points, including 3 ethics</div>
+          <p class="stack-desc">For attending clinicians, the intensive is accredited with HPCSA for 24 CPD points. Certificate with accreditation number issued on completion. Not the primary purpose of the programme, but a material benefit for registered practitioners.</p>
+        </div>
+        <div class="stack-value">Included<span class="unit">For eligible attendees</span></div>
+      </div>
+    </div>
+
+    <div class="stack-summary reveal">
+      <div>
+        <div class="label">Equivalent value delivered separately</div>
+        <p class="line"><strong>R26,000+</strong> across the online cohort equivalent, onboarding time, group facilitation, platform engagement, and async clinical review. Delivered as a single 10-week corporate programme at R12,950 per place, with tiered discounts from 3 places.</p>
+      </div>
+      <div class="stack-price">
+        <div class="this">R12,950</div>
+        <div class="this-label">Per place, tiered from 3+</div>
+      </div>
+    </div>
+
+    <p class="stack-fine reveal">Reference prices based on the published AUD rate for the online BurnoutOS Intensive at $1,497 (converted at typical ZAR/AUD rate), standard 1-to-1 clinical session and group facilitation rates in South Africa, the equivalent 3-month BurnoutOS Maintenance subscription, and standard async clinical review fees. The SA programme price reflects regional market pricing and the in-person delivery format.</p>
+  </div>
+</section>
+
+<!-- DATES -->
+<section id="dates">
+  <div class="inner">
+    <div class="eyebrow muted reveal"><span class="rule"></span>Tour dates · October 2026</div>
+    <h2 class="section-h reveal">Two cities. Forty-five places across the cohort.</h2>
+
+    <div class="city-grid">
+      <div class="city-card reveal">
+        <div class="city-name">Johannesburg</div>
+        <div class="city-sub">Saturday 10 and Sunday 11 October 2026</div>
+        <div class="city-meta">
+          <div>
+            <div class="meta-label">Format</div>
+            <div class="meta-val">2-day in-person intensive</div>
+          </div>
+          <div>
+            <div class="meta-label">Hours</div>
+            <div class="meta-val">08:30 to 17:00 both days</div>
+          </div>
+          <div>
+            <div class="meta-label">Venue</div>
+            <div class="meta-val">Northern suburbs, announced Sep 2026</div>
+          </div>
+          <div>
+            <div class="meta-label">Capacity</div>
+            <div class="meta-val">20 places</div>
+          </div>
+        </div>
+        <div class="seat-chip"><span class="dot"></span> Early-bird places limited</div>
+      </div>
+
+      <div class="city-card reveal">
+        <div class="city-name">Cape Town</div>
+        <div class="city-sub">Saturday 17 and Sunday 18 October 2026</div>
+        <div class="city-meta">
+          <div>
+            <div class="meta-label">Format</div>
+            <div class="meta-val">2-day in-person intensive</div>
+          </div>
+          <div>
+            <div class="meta-label">Hours</div>
+            <div class="meta-val">08:30 to 17:00 both days</div>
+          </div>
+          <div>
+            <div class="meta-label">Venue</div>
+            <div class="meta-val">Central Cape Town, announced Sep 2026</div>
+          </div>
+          <div>
+            <div class="meta-label">Capacity</div>
+            <div class="meta-val">25 places</div>
+          </div>
+        </div>
+        <div class="seat-chip"><span class="dot"></span> Early-bird places limited</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="inner">
+    <div class="eyebrow reveal"><span class="rule"></span>Team pricing</div>
+    <h2 class="section-h reveal">Transparent per-place pricing. Automatic team discounts. Invoiced in ZAR.</h2>
+    <p class="body-text reveal">Priced for organisations sending senior staff or high-performing team members. Tiered discounts apply at registration. No promo codes, no quote round, no back-and-forth.</p>
+
+    <div class="price-card reveal">
+      <div class="price-tag-top">
+        <div class="price-audience">Corporate · Per Place</div>
+        <span class="badge-early">Invoiced · PO-ready</span>
+      </div>
+      <div class="price-amt">R12,950</div>
+      <div class="price-note-line">Per place. ZAR excl. VAT. Tiered team discounts applied automatically.</div>
+
+      <div class="price-deadline"><strong>Team rates kick in at 3 places.</strong> 10% off at 3–5, 15% off at 6 or more.</div>
+
+      <ul class="price-includes">
+        <li>2-day in-person intensive — all 8 sessions delivered live</li>
+        <li>20-minute 1-to-1 onboarding call with Werner per place</li>
+        <li>OLBI baseline assessment with written clinical report</li>
+        <li>8-week structured integration phase on the BurnoutOS platform</li>
+        <li>Two facilitated 75-minute cohort calls with Werner during integration</li>
+        <li>Daily AI coach prompts, check-ins, and targeted email sequences</li>
+        <li>Werner-reviewed relapse prevention plan with written async feedback</li>
+        <li>30-minute post-programme debrief call with Werner per corporate registration</li>
+        <li>Branded Burnout Early-Warning one-pager for internal team distribution</li>
+        <li>Curated peer cohort of up to 25, kept across the 10 weeks</li>
+        <li>Invoiced registration: VAT invoice, PO numbers, B-BBEE documentation on request</li>
+      </ul>
+
+      <a href="#register" class="btn-primary" data-tour-modal="corporate">Reserve corporate places <span class="arrow">→</span></a>
+    </div>
+
+    <div class="cross-link reveal">
+      <p><strong>Registering yourself, not on a company card?</strong> Individual self-registration runs from R8,950 early-bird with 2-instalment payment.</p>
+      <a href="/tour/individual">Switch to individual registration →</a>
+    </div>
+
+    <p class="price-fine reveal">All session content, materials, catering, onboarding calls, and post-programme platform access are included. Travel and accommodation are not. Corporate places are non-refundable once allocated, but transferable to another colleague up to 14 days before the weekend at no cost. Places are held for 14 days from PO issue to allow for internal approval cycles. If the cohort is cancelled for any reason within our control, a full refund is issued.</p>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section id="founder">
+  <div class="inner-sm">
+    <div class="eyebrow reveal"><span class="rule"></span>A note from the clinical lead</div>
+    <blockquote class="reveal">Most senior people I see in clinical practice are not the people who walked into wellbeing programmes early. They are the people who got referred too late, after the resignation conversation had already happened internally. The shape of this programme is built specifically to be acceptable to the people most at risk and least likely to engage with the standard offerings.</blockquote>
+    <div class="founder-body reveal">
+      <p>The BurnoutOS programme runs in two formats. Online in Australia, it's 8 weekly Zoom sessions across 8 weeks, with platform support woven through. In South Africa, it's a 2-day in-person intensive followed by an 8-week structured integration phase. Same content, same clinical lead, same 10-week arc.</p>
+      <p>For the people you most want to retain, the SA format does specific work. Two contained days creates the in-person intensity that signals seriousness. The integration phase that follows, with two cohort calls and structured platform engagement, makes sure the work doesn't fade after the weekend. The clinical credentials behind it remove the credibility objection senior people raise about most wellbeing programmes. And it sits outside your EAP pathway, which is the single most common reason senior staff don't engage.</p>
+      <p>If you're sending people you want to keep, this is the shape it should take.</p>
+    </div>
+    <div class="founder-sign reveal">
+      <div class="founder-name">Werner Teichert</div>
+      <div class="founder-cred">BurnoutOS Founder · Clinical psychologist · Burnout recovery specialist<br>HPCSA PS 0123684 · AHPRA PSY0002192885</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="inner-sm">
+    <div class="eyebrow reveal"><span class="rule"></span>Frequently asked</div>
+    <h2 class="section-h reveal">Questions from HR Directors, procurement, and finance.</h2>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q">How is invoicing handled? Do you accept POs? <span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. On registration, you receive a proforma invoice in your company's name for finance to raise a PO against. The formal VAT invoice is then issued against the PO number. Payment is accepted via EFT or card. 30-day payment terms are available on request. Places are held for 14 days from PO issue to allow for internal approval cycles.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is this the same programme as the BurnoutOS online cohort? <span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. The 10-week curriculum, clinical lead, frameworks, assessment, and deliverables are identical. The difference is delivery shape. Online runs 8 weekly Zoom sessions over 8 weeks, with platform support woven through. The SA programme front-loads the live content into a 2-day in-person intensive, then runs an 8-week structured integration phase. Same arc, two delivery shapes.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What does the 10-week structure actually involve? <span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">A 2-day in-person weekend covering all 8 sessions of the curriculum, followed by 8 weeks of structured platform-supported integration. Each integration week corresponds to one session from the weekend, with daily AI coach prompts, targeted email sequences, and weekly reflection exercises. Two of those 8 weeks include a 75-minute live cohort call with Werner. Week 8 culminates in a relapse prevention plan that Werner reviews with written feedback.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can this be claimed against our Skills Development Levy? <span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">In most sectors, yes. The programme's clinical and professional-development content qualifies under most SETA guidelines. We supply the documentation letter your SDL coordinator needs, including the breakdown of content areas and engagement hours. We recommend confirming eligibility with your internal SDL coordinator for your specific SETA.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do you supply B-BBEE documentation? <span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. The B-BBEE affidavit for BurnoutOS is available on request with your invoice documentation. Please request it at registration or by emailing accounts@burnout-os.app and we'll include it within 48 hours.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can we send 10 or more people and get a bespoke arrangement? <span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">For bookings of 10 or more places, or if you'd prefer a bespoke private cohort run for your organisation, we offer custom arrangements. A private cohort runs the same 10-week programme but with the in-person intensive delivered to your team only, on dates that suit your organisation. Email enterprise@burnout-os.app with team size and preferred format and we'll respond within one business day.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What if our team member can't attend after registration? <span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">You can transfer the place to another colleague up to 14 days before the weekend at no cost. Alternatively, the place can be held for the next annual cohort. Places are non-refundable once allocated, but the transfer and roll-over options mean this is rarely an issue in practice.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is there a clinical briefing document we can share with procurement? <span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. On request, we provide a 2-page briefing document outlining the programme's evidence base, clinical lead credentials, and 10-week structure. Written specifically for procurement and internal compliance approval. Email hello@burnout-os.app to request.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Does this connect to the broader BurnoutOS platform offering? <span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes, optionally. Organisations sending 5 or more people are eligible for a complimentary Diagnostic Sprint scoping conversation, a 60-minute call to explore whether the full BurnoutOS organisational diagnostic is a fit for your business. No obligation. The programme stands on its own.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="final">
+  <div class="inner-sm">
+    <div class="eyebrow center reveal"><span class="rule"></span>Reserve your team's places<span class="rule"></span></div>
+    <h2 class="reveal">October 2026. Limited corporate places per city. Invoiced registration is open.</h2>
+    <p class="lede reveal">If you need to loop in procurement first, we're happy to jump on a 20-minute call to walk through the programme structure, answer your team's questions, and help you make the internal case.</p>
+    <a href="#register" class="btn-primary" data-tour-modal="corporate">Reserve corporate places <span class="arrow">→</span></a>
+    <p class="fine">Corporate queries: <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>. Response within one business day.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="inner">
+    <div>
+      <div class="footer-brand">BurnoutOS<span class="dot">.</span><span class="footer-tag">South Africa</span></div>
+      <p style="max-width: 42ch; line-height: 1.55; font-weight: 300;">Evidence-based burnout recovery for professionals and the organisations they work with. Online cohorts and in-person intensives.</p>
+    </div>
+    <div>
+      <h5>The cohort</h5>
+      <a href="/tour">Tour overview</a>
+      <a href="/tour/individual">Individual registration</a>
+      <a href="/tour/corporate">Corporate registration</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div>
+      <h5>Company</h5>
+      <a href="/werner">About Werner</a>
+      <a href="https://app.burnout-os.app" target="_blank" rel="noopener">Online cohort</a>
+      <a href="mailto:hello@burnout-os.app">Contact</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>© 2026 Behavioural Health Pty Ltd t/a BurnoutOS. All rights reserved.</div>
+    <div>HPCSA PS 0123684 · AHPRA PSY0002192885</div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
+  });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const el = document.querySelector(id);
+        if (el) { e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
