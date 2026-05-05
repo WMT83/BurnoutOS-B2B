@@ -26,7 +26,7 @@ export default function Diagnostic() {
             Free Burnout<br />Diagnostic Call
           </h1>
           <p style={{ fontSize: '17px', color: 'var(--text-muted)', lineHeight: 1.75, maxWidth: '560px' }}>
-            A 20-minute conversation with Werner — a registered psychologist with a decade of experience in burnout recovery — to understand where you are and what recovery actually looks like for you.
+            A 20-minute conversation with Werner — a registered Clinical Psychologist with a decade of experience in burnout recovery — to understand where you are and what recovery actually looks like for you.
           </p>
         </div>
 
@@ -85,9 +85,9 @@ export default function Diagnostic() {
           </div>
           <div style={{ flex: 1, minWidth: '200px' }}>
             <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', marginBottom: '4px' }}>Werner Teichert</div>
-            <div style={{ fontSize: '12px', color: 'var(--ember)', marginBottom: '10px', fontWeight: 500 }}>Registered Psychologist · AHPRA · HPCSA</div>
+            <div style={{ fontSize: '12px', color: 'var(--ember)', marginBottom: '10px', fontWeight: 500 }}>Clinical Psychologist · AHPRA · HPCSA</div>
             <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.65 }}>
-              Psychologist and founder of Katalis. Specialises in evidence-based burnout recovery using ACT, CBT-I, and occupational health frameworks. Built BurnoutOS because the programmes he wanted to refer clients to did not exist.
+              Clinical Psychologist and founder of Katalis. Specialises in evidence-based burnout recovery using ACT, CBT-I, and occupational health frameworks. Built BurnoutOS because the programmes he wanted to refer clients to did not exist.
             </p>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function Diagnostic() {
 
         {/* AHPRA disclaimer */}
         <p style={{ fontSize: '11px', color: 'var(--text-muted)', opacity: 0.4, textAlign: 'center', marginTop: '32px', lineHeight: 1.6, maxWidth: '520px', margin: '32px auto 0' }}>
-          BurnoutOS is an evidence-informed psychoeducational programme. This call is an initial consultation, not ongoing psychological treatment. Werner Teichert is registered with AHPRA (Psychology Board of Australia) and HPCSA.
+          BurnoutOS is an evidence-informed psychoeducational programme. This call is an initial consultation, not ongoing psychological treatment. Werner Teichert is registered with AHPRA (Psychology Board of Australia) and HPCSA as a Clinical Psychologist.
         </p>
 
       </div>
