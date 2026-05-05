@@ -325,7 +325,7 @@ export default function Landing() {
               </button>
             </a>
             <p style={{ textAlign: 'center', fontSize: 12, color: 'rgba(232,237,245,0.3)', marginTop: 10 }}>
-              Includes full workforce survey, scored report, and 90-min debrief with a registered psychologist.
+              Includes full workforce survey, scored report, and 90-min debrief with a registered Clinical Psychologist.
             </p>
           </div>
         </div>
