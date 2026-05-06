@@ -18,14 +18,14 @@ const REGION_OPTIONS = [
 ];
 
 const TIER_OPTIONS = [
-  { value: 'on_demand', label: 'Self-Guided — AUD $697 / ZAR R7,997 / GBP £397' },
-  { value: 'intensive', label: 'Burnout Recovery Intensive — AUD $1,497 / ZAR R16,997 / GBP £847' },
+  { value: 'self_guided', label: 'Self-Guided — AUD $697 / ZAR R7,997 / GBP £397' },
+  { value: 'intensive', label: 'Burnout Recovery Intensive — AUD 2,997 / ZAR R24,950 / GBP £847' },
 ];
 
 export default function Signup() {
   // Read pre-selected tier/region from URL params (e.g. from intensive.html)
   const params = new URLSearchParams(window.location.search);
-  const defaultTier = params.get('tier') === 'intensive' ? 'intensive' : 'on_demand';
+  const defaultTier = params.get('tier') === 'intensive' ? 'intensive' : 'self_guided';
   const defaultRegion = ['au', 'za', 'gb'].includes(params.get('region') ?? '') ? params.get('region')! : 'au';
 
   const [step, setStep]         = useState<'details' | 'processing'>('details');
