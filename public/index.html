@@ -773,9 +773,9 @@
 
       <div class="tiers">
 
-        <!-- Tier 1: Snapshot (waitlist) -->
-        <div class="tier waitlist">
-          <span class="tier-badge muted">Coming July 2026 · Waitlist</span>
+        <!-- Tier 1: Snapshot (live) -->
+        <a href="/snapshot.html" class="tier">
+          <span class="tier-badge muted">7 days · clinician-developed</span>
           <h3>Burnout Snapshot</h3>
           <div class="tier-price">AUD $47</div>
           <p class="tier-desc">
@@ -783,12 +783,8 @@
             what's driving your burnout — and where to take your first steps.
             Clinician-developed. Coaching-framed. Fully automated.
           </p>
-          <form class="waitlist-form" id="waitlist-form" onsubmit="return submitWaitlist(event)">
-            <input type="email" id="waitlist-email" placeholder="your@email.com" required autocomplete="email" />
-            <button type="submit" id="waitlist-submit">Join waitlist</button>
-          </form>
-          <div class="waitlist-msg" id="waitlist-msg"></div>
-        </div>
+          <div class="tier-cta">Start your Snapshot →</div>
+        </a>
 
         <!-- Tier 2: Self-Guided -->
         <a href="/burnoutprogramme.html" class="tier">
@@ -901,7 +897,13 @@
   </footer>
 
   <script>
-    // Waitlist capture
+    // ── Deprecated 2026-05-08 ──
+    // The Snapshot waitlist UI was removed when Snapshot launched. This
+    // submitWaitlist function and its associated .waitlist-form / .waitlist-msg
+    // CSS classes are now orphaned (no DOM elements trigger them) and can be
+    // swept in a future cleanup pass alongside the receive-waitlist-signup
+    // edge function on MarketOS. Left intact for now to avoid touching CSS
+    // shared by other patterns.
     async function submitWaitlist(e) {
       e.preventDefault();
       var email = document.getElementById('waitlist-email').value.trim();
