@@ -16,6 +16,11 @@
       "permanent": false
     },
     {
+      "source": "/masterclass",
+      "destination": "/masterclass.html",
+      "permanent": false
+    },
+    {
       "source": "/calculator",
       "destination": "/calculator.html",
       "permanent": false
