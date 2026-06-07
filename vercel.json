@@ -27,8 +27,13 @@
     },
     {
       "source": "/intensive",
-      "destination": "/intensive.html",
-      "permanent": false
+      "destination": "/stabilise",
+      "permanent": true
+    },
+    {
+      "source": "/intensive.html",
+      "destination": "/stabilise",
+      "permanent": true
     },
     {
       "source": "/stabilise",
@@ -77,8 +82,13 @@
     },
     {
       "source": "/burnoutprogramme",
-      "destination": "/burnoutprogramme.html",
-      "permanent": false
+      "destination": "/stabilise",
+      "permanent": true
+    },
+    {
+      "source": "/burnoutprogramme.html",
+      "destination": "/stabilise",
+      "permanent": true
     },
     {
       "source": "/organisations",
