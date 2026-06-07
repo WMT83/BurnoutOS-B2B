@@ -41,6 +41,11 @@
       "permanent": false
     },
     {
+      "source": "/sustain",
+      "destination": "/sustain.html",
+      "permanent": false
+    },
+    {
       "source": "/burnout-quiz",
       "destination": "/burnout-quiz.html",
       "permanent": false
