@@ -131,28 +131,33 @@
     .how-step p { font-size: 0.875rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
 
     /* ── PRICING ── */
-    #pricing { background: var(--ink-soft); }
-    .price-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 2.5rem; }
-    @media (min-width: 620px) { .price-grid { grid-template-columns: 1fr 1fr; } }
-    .price-card { padding: 2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); display: flex; flex-direction: column; }
-    .price-card.featured { border-color: var(--ember); background: rgba(232,75,42,0.05); }
+    #pricing { background: var(--ink-soft); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .price-anchor { text-align: center; color: var(--muted); font-size: 1.0625rem; line-height: 1.7; font-weight: 300; max-width: 54ch; margin: 0 auto 0.5rem; }
+    .price-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 3rem; }
+    @media (min-width: 620px) { .price-grid { grid-template-columns: 1fr 1fr; align-items: stretch; } }
+    .price-card { padding: 2.25rem 2rem; border-radius: 18px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); display: flex; flex-direction: column; position: relative; }
+    .price-card.featured { border: 2px solid var(--ember); background: rgba(232,75,42,0.06); box-shadow: 0 12px 48px rgba(232,75,42,0.12); }
+    .price-flag { position: absolute; top: -12px; left: 2rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--ember); color: var(--white); padding: 0.3rem 0.85rem; border-radius: 100px; }
     .price-tag-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.5rem; }
-    .price-name { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; }
-    .price-amount { font-family: 'Syne', sans-serif; font-size: 2.25rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; }
-    .price-note { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; }
-    .price-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; flex: 1; }
-    .price-list li { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.5; display: flex; gap: 0.5rem; align-items: flex-start; }
-    .price-list li::before { content: '→'; color: var(--ember); flex-shrink: 0; }
-    .price-cta { display: block; text-align: center; padding: 0.85rem; border-radius: 10px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
-    .price-cta.solid { background: var(--ember); color: var(--white); }
-    .price-cta.solid:hover { background: var(--ember-dim); }
-    .price-cta.outline { border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
-    .price-cta.outline:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
+    .price-name { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+    .price-amount { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1; }
+    .price-amount .cur { font-size: 1.25rem; font-weight: 700; color: var(--muted); vertical-align: super; margin-right: 0.15rem; }
+    .price-note { font-size: 0.875rem; color: var(--muted); margin: 0.6rem 0 1.5rem; }
+    .price-divider { height: 1px; background: rgba(255,255,255,0.08); margin-bottom: 1.5rem; }
+    .price-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; flex: 1; }
+    .price-list li { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.5; display: flex; gap: 0.6rem; align-items: flex-start; }
+    .price-list li::before { content: '→'; color: var(--ember); flex-shrink: 0; font-weight: 600; }
+    .price-cta { display: block; text-align: center; padding: 1rem; border-radius: 12px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: all 0.2s; }
+    .price-cta.solid { background: var(--ember); color: var(--white); box-shadow: 0 8px 28px rgba(232,75,42,0.3); }
+    .price-cta.solid:hover { background: var(--ember-dim); transform: translateY(-2px); }
+    .price-cta.outline { border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.75); }
+    .price-cta.outline:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
+    .price-reassure { text-align: center; font-size: 0.8rem; color: var(--faint); margin-top: 2rem; }
 
     /* ── WERNER ── */
     #werner { text-align: center; }
-    .werner-avatar { width: 96px; height: 96px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: rgba(255,255,255,0.3); overflow: hidden; }
-    .werner-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .werner-avatar { width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: rgba(255,255,255,0.3); overflow: hidden; }
+    .werner-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 
     /* ── FINAL CTA ── */
     #final { text-align: center; background: linear-gradient(180deg, transparent, rgba(232,75,42,0.08)); }
@@ -327,12 +332,15 @@
     <div class="inner">
       <div class="eyebrow center" style="justify-content:center;">Investment</div>
       <h2 class="section-h" style="text-align:center;">Two ways to join Cohort 1.</h2>
+      <p class="price-anchor">Founding-cohort pricing for the first group. Eight weeks of live coaching with a clinical psychologist, a complete recovery toolkit, and three tangible outputs you keep.</p>
       <div class="price-grid">
         <div class="price-card featured">
+          <span class="price-flag">Most chosen</span>
           <div class="price-tag-label">Self-funded</div>
           <div class="price-name">Standard</div>
-          <div class="price-amount">AUD $2,495</div>
-          <div class="price-note">once-off · or 3 × $900</div>
+          <div class="price-amount"><span class="cur">AUD</span>$2,495</div>
+          <div class="price-note">once-off · or 3 monthly payments of $900</div>
+          <div class="price-divider"></div>
           <ul class="price-list">
             <li>Eight weekly live group coaching sessions</li>
             <li>Full recovery toolkit and cognitive load skills</li>
@@ -345,17 +353,19 @@
         <div class="price-card">
           <div class="price-tag-label">Employer or L&amp;D funded</div>
           <div class="price-name">Employer / Professional</div>
-          <div class="price-amount">AUD $3,995</div>
+          <div class="price-amount"><span class="cur">AUD</span>$3,995</div>
           <div class="price-note">per participant · minimum 2 seats</div>
+          <div class="price-divider"></div>
           <ul class="price-list">
             <li>Everything in the Standard programme</li>
             <li>Two 1:1 sessions — intake and close-out</li>
-            <li>Optional non-clinical progress summary you may share with your employer</li>
+            <li>Optional non-clinical progress summary to share with your employer</li>
             <li>Higher accountability and tailored goal-setting</li>
           </ul>
           <a href="mailto:hello@burnout-os.app?subject=Employer%20Funding%20Enquiry%20%E2%80%94%20Performance%20Reset" class="price-cta outline">Enquire about employer funding</a>
         </div>
       </div>
+      <p class="price-reassure">Every application is reviewed personally by Werner. If Phase 1 is not the right fit for where you are, he will tell you.</p>
     </div>
   </section>
 
