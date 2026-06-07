@@ -17,12 +17,10 @@
       --ember:     #e84b2a;
       --ember-dim: #c73d20;
       --ink:       #0c1018;
-      --ink-soft:  #1a2030;
+      --ink-soft:  #141a26;
+      --warm:      #f5f0e8;
       --white:     #ffffff;
       --rule:      rgba(255,255,255,0.08);
-      --rule-light:rgba(0,0,0,0.08);
-      --text-muted:rgba(255,255,255,0.45);
-      --text-dim:  rgba(255,255,255,0.25);
     }
 
     html { scroll-behavior: smooth; }
@@ -59,7 +57,6 @@
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--rule);
     }
-
     .logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
@@ -81,12 +78,7 @@
       0%,100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.6; transform: scale(0.85); }
     }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
+    .nav-right { display: flex; align-items: center; gap: 1.25rem; }
     .nav-link {
       font-size: 0.875rem;
       color: rgba(255,255,255,0.55);
@@ -94,11 +86,7 @@
       transition: color 0.2s;
     }
     .nav-link:hover { color: var(--white); }
-    .nav-divider {
-      width: 1px;
-      height: 16px;
-      background: rgba(255,255,255,0.12);
-    }
+    .nav-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.12); }
     .nav-btn {
       font-size: 0.825rem;
       font-weight: 600;
@@ -112,10 +100,16 @@
       white-space: nowrap;
     }
     .nav-btn:hover { background: var(--ember-dim); }
+    .nav-toggle { display: none; }
+
+    @media (max-width: 860px) {
+      .nav-right { gap: 0.75rem; }
+      .nav-link, .nav-divider { display: none; }
+    }
 
     /* ── Hero ── */
     #hero {
-      min-height: 90vh;
+      min-height: 88vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -127,13 +121,12 @@
     #hero::before {
       content: '';
       position: absolute;
-      top: 30%; left: 50%;
+      top: 32%; left: 50%;
       transform: translate(-50%, -50%);
       width: 600px; height: 600px;
       background: radial-gradient(circle, rgba(232,75,42,0.1) 0%, transparent 70%);
       pointer-events: none;
     }
-
     .hero-eyebrow {
       display: flex;
       align-items: center;
@@ -144,29 +137,20 @@
       text-transform: uppercase;
       color: rgba(255,255,255,0.3);
       margin-bottom: 1.75rem;
+      flex-wrap: wrap;
     }
-    .eyebrow-dot {
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--ember);
-      display: inline-block;
-    }
+    .eyebrow-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ember); display: inline-block; }
     .eyebrow-highlight { color: rgba(255,255,255,0.55); }
-
     h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.6rem, 6vw, 4.5rem);
+      font-size: clamp(2.4rem, 5.5vw, 4.25rem);
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1.05;
-      max-width: 16ch;
+      max-width: 18ch;
       margin: 0 auto 1.5rem;
     }
-    h1 em {
-      font-style: normal;
-      color: var(--ember);
-    }
-
+    h1 em { font-style: normal; color: var(--ember); }
     .hero-sub {
       font-size: clamp(1rem, 1.8vw, 1.1rem);
       font-weight: 300;
@@ -175,18 +159,9 @@
       margin: 0 auto 2.5rem;
       line-height: 1.7;
     }
-
-    .hero-cta-group {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 2.5rem;
-    }
+    .hero-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2.5rem; }
     .hero-cta-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
       padding: 0.85rem 1.75rem;
       background: var(--ember);
       color: var(--white);
@@ -199,9 +174,7 @@
     }
     .hero-cta-primary:hover { background: var(--ember-dim); transform: translateY(-1px); }
     .hero-cta-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
       padding: 0.85rem 1.5rem;
       background: transparent;
       color: rgba(255,255,255,0.7);
@@ -212,7 +185,6 @@
       transition: border-color 0.2s, color 0.2s;
     }
     .hero-cta-secondary:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
-
     .hero-note {
       font-size: 0.75rem;
       color: rgba(255,255,255,0.22);
@@ -233,11 +205,11 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 2rem;
+      gap: 1.25rem 2rem;
     }
     .trust-item {
       font-size: 0.75rem;
-      color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.32);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -253,17 +225,8 @@
     }
 
     /* ── Sections ── */
-    section {
-      padding: 5rem 2rem;
-    }
-    section:nth-child(odd) { background: var(--ink); }
-    section:nth-child(even) { background: var(--ink-soft); }
-
-    .section-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
+    section { padding: 5rem 2rem; }
+    .section-wrap { max-width: 1140px; margin: 0 auto; }
     .section-eyebrow {
       font-size: 0.7rem;
       text-transform: uppercase;
@@ -271,33 +234,30 @@
       color: rgba(255,255,255,0.3);
       margin-bottom: 0.75rem;
     }
-
     h2 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
       font-weight: 700;
       letter-spacing: -0.03em;
       line-height: 1.15;
       color: var(--white);
       margin-bottom: 0.75rem;
     }
-
     .section-intro {
       font-size: 1rem;
       color: rgba(255,255,255,0.5);
-      max-width: 56ch;
+      max-width: 58ch;
       line-height: 1.7;
       margin-bottom: 3rem;
     }
 
-    /* ── Audience ── */
-    .audience-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    @media (max-width: 640px) { .audience-grid { grid-template-columns: 1fr; } }
+    /* Section backgrounds — deliberate rhythm */
+    .sec-ink  { background: var(--ink); }
+    .sec-soft { background: var(--ink-soft); }
 
+    /* ── Audience ── */
+    .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 640px) { .audience-grid { grid-template-columns: 1fr; } }
     .audience-card {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
@@ -320,437 +280,145 @@
       margin-bottom: 0.6rem;
       letter-spacing: -0.02em;
     }
-    .audience-card p {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.65;
-    }
+    .audience-card p { font-size: 0.9rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
 
-    /* ── Progression track ── */
-    .prog-track {
+    /* ── Tiers ── */
+    .tier-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-    @media (max-width: 700px) { .prog-track { grid-template-columns: 1fr 1fr; } }
-
-    .prog-node {
-      padding: 1.1rem 1.25rem;
-      border-right: 1px solid rgba(255,255,255,0.08);
-      position: relative;
-    }
-    .prog-node:last-child { border-right: none; }
-    .prog-node.active { background: rgba(232,75,42,0.08); }
-    .prog-node.addon { background: rgba(255,255,255,0.02); }
-
-    .prog-phase {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 0.3rem;
-    }
-    .prog-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 0.2rem;
-      letter-spacing: -0.02em;
-    }
-    .prog-node.addon .prog-name { color: rgba(255,255,255,0.6); }
-    .prog-desc {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.35);
-      line-height: 1.5;
-      margin-bottom: 0.6rem;
-    }
-    .prog-tag {
-      display: inline-block;
-      font-size: 0.65rem;
-      padding: 2px 8px;
-      border-radius: 100px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-    .prog-tag.launch { background: var(--ember); color: var(--white); }
-    .prog-tag.gate { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
-    .prog-tag.addon-tag { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.35); border: 1px solid rgba(255,255,255,0.08); }
-
-    .prog-note {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.25);
-      margin-bottom: 2.5rem;
-    }
-    .prog-note a { color: var(--ember); text-decoration: none; }
-
-    /* ── Tier cards ── */
-    .tier-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      grid-template-columns: 1fr 24px 1fr 24px 1fr;
+      align-items: stretch;
       margin-bottom: 1.25rem;
     }
-    @media (max-width: 800px) { .tier-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 800px) {
+      .tier-row { grid-template-columns: 1fr; gap: 0; }
+    }
+    .connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ember);
+    }
+    .connector svg { width: 18px; height: 18px; stroke: var(--ember); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .connector .arrow-down { display: none; }
+    @media (max-width: 800px) {
+      .connector { padding: 0.6rem 0; }
+      .connector .arrow-right { display: none; }
+      .connector .arrow-down { display: block; }
+    }
 
-    .tier-card {
+    .tcard {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
-    .tier-card.featured {
-      border-color: var(--ember);
-      background: rgba(232,75,42,0.04);
-    }
+    .tcard.featured { border-color: var(--ember); background: rgba(232,75,42,0.05); }
 
-    .tier-header {
-      padding: 1.1rem 1.25rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+    .tcard-head { padding: 1.1rem 1.2rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .phase-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+    .phase-num { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.35); font-weight: 500; }
+    .phase-dot {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700; font-family: 'Syne', sans-serif;
     }
-    .tier-phase {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 0.25rem;
-    }
-    .tier-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: -0.02em;
-      margin-bottom: 0.3rem;
-    }
-    .tier-format {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 0.5rem;
-      line-height: 1.5;
-    }
-    .tier-badge {
-      display: inline-block;
-      font-size: 0.65rem;
-      padding: 2px 8px;
-      border-radius: 100px;
-      font-weight: 600;
-    }
-    .tier-badge.launch { background: var(--ember); color: var(--white); }
-    .tier-badge.gate { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
+    .phase-dot.active { background: var(--ember); color: var(--white); }
+    .phase-dot.idle { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.12); }
 
-    .tier-body {
-      padding: 1.1rem 1.25rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+    .tcard-name { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--white); letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+    .tcard-format { font-size: 0.75rem; color: rgba(255,255,255,0.4); line-height: 1.5; margin-bottom: 0.6rem; }
+    .tcard-badge { display: inline-block; font-size: 0.65rem; padding: 3px 9px; border-radius: 100px; font-weight: 600; }
+    .tcard-badge.launch { background: var(--ember); color: var(--white); }
+    .tcard-badge.gate { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
 
-    .tier-section-label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 0.4rem;
-    }
+    .tcard-body { padding: 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; gap: 1rem; }
+    .tlabel { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.3); margin-bottom: 0.4rem; }
+    .ttags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .ttag { font-size: 0.72rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; padding: 3px 8px; color: rgba(255,255,255,0.5); }
+    .tlist { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .tlist li { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.5; display: flex; gap: 7px; align-items: flex-start; }
+    .tlist li::before { content: '→'; color: var(--ember); flex-shrink: 0; font-size: 0.7rem; margin-top: 2px; }
+    .toutputs { display: flex; flex-direction: column; gap: 4px; }
+    .topill { font-size: 0.72rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09); border-radius: 5px; padding: 4px 9px; color: rgba(255,255,255,0.6); }
 
-    .for-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-    .for-tag {
-      font-size: 0.72rem;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 4px;
-      padding: 3px 8px;
-      color: rgba(255,255,255,0.5);
-    }
+    .tcard-foot { padding: 0.8rem 1.2rem; border-top: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); }
+    .tfoot-link { font-size: 0.85rem; color: var(--ember); font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 5px; font-family: 'Syne', sans-serif; }
 
-    .tier-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .tier-list li {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.5;
-      display: flex;
-      align-items: flex-start;
-      gap: 7px;
-    }
-    .tier-list li::before {
-      content: '→';
-      color: var(--ember);
-      flex-shrink: 0;
-      font-size: 0.7rem;
-      margin-top: 2px;
-    }
-
-    .output-pills {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .output-pill {
-      font-size: 0.72rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 4px;
-      padding: 4px 9px;
-      color: rgba(255,255,255,0.6);
-    }
-
-    .employer-note {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.35);
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding-top: 0.75rem;
-      line-height: 1.6;
-    }
-    .employer-note strong { color: rgba(255,255,255,0.55); font-weight: 500; }
-
-    .tier-footer {
-      padding: 0.75rem 1.25rem;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.02);
-    }
-    .tier-cta-link {
-      font-size: 0.85rem;
-      color: var(--ember);
-      font-weight: 600;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-family: 'Syne', sans-serif;
-    }
-
-    /* ── Addon row ── */
-    .addon-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
+    /* ── Add-ons ── */
+    .addon-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     @media (max-width: 640px) { .addon-row { grid-template-columns: 1fr; } }
-
-    .addon-card {
+    .addon {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: 1.1rem 1.25rem;
+      border-radius: 10px;
+      padding: 1.1rem 1.2rem;
     }
-    .addon-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.02em;
-    }
-    .addon-desc {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.6;
-    }
+    .addon-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+    .addon-desc { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
     .addon-desc a { color: var(--ember); text-decoration: none; font-weight: 500; }
 
-    /* ── Organisations ── */
-    .orgs-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
+    /* ── Organisations (light section for rhythm) ── */
+    #organisations { background: var(--warm); color: var(--ink); }
+    #organisations .section-eyebrow { color: rgba(12,16,24,0.45); }
+    #organisations h2 { color: var(--ink); }
+    #organisations .section-intro { color: rgba(12,16,24,0.6); }
+    .orgs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
     @media (max-width: 700px) { .orgs-grid { grid-template-columns: 1fr; } }
-
     .org-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--white);
+      border: 1px solid rgba(12,16,24,0.08);
       border-radius: 8px;
       padding: 1.25rem;
     }
-    .org-card-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 0.25rem;
-      letter-spacing: -0.02em;
-    }
-    .org-card-size {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.6rem;
-    }
-    .org-card-desc {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.6;
-    }
-
-    .orgs-cta {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.45);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: color 0.2s;
-    }
-    .orgs-cta:hover { color: var(--white); }
+    .org-card-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+    .org-card-size { font-size: 0.7rem; color: rgba(12,16,24,0.4); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.6rem; }
+    .org-card-desc { font-size: 0.82rem; color: rgba(12,16,24,0.6); line-height: 1.6; }
+    .orgs-cta { font-size: 0.875rem; color: var(--ember); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-weight: 600; font-family: 'Syne', sans-serif; }
 
     /* ── Werner ── */
     .werner-wrap {
-      max-width: 1100px;
+      max-width: 1140px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: 160px 1fr;
       gap: 3rem;
       align-items: start;
     }
-    @media (max-width: 640px) { .werner-wrap { grid-template-columns: 1fr; } }
-
+    @media (max-width: 640px) { .werner-wrap { grid-template-columns: 1fr; gap: 1.5rem; } }
     .werner-avatar {
-      width: 160px;
-      height: 200px;
+      width: 160px; height: 200px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-family: 'Syne', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
+      font-size: 2rem; font-weight: 800;
       color: rgba(255,255,255,0.2);
       flex-shrink: 0;
       overflow: hidden;
     }
-    .werner-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .werner-content .section-eyebrow { margin-bottom: 0.6rem; }
-    .werner-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.03em;
-      margin-bottom: 0.25rem;
-    }
-    .werner-role {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 1rem;
-    }
-    .werner-body {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.75;
-      max-width: 58ch;
-      margin-bottom: 1.25rem;
-    }
-    .cred-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 1.25rem;
-    }
-    .cred-tag {
-      font-size: 0.72rem;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 4px;
-      padding: 4px 10px;
-      color: rgba(255,255,255,0.45);
-    }
-    .werner-cta {
-      font-size: 0.875rem;
-      color: var(--ember);
-      text-decoration: none;
-      font-weight: 600;
-      font-family: 'Syne', sans-serif;
-    }
+    .werner-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .werner-name { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--white); letter-spacing: -0.03em; margin-bottom: 0.25rem; }
+    .werner-role { font-size: 0.875rem; color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+    .werner-body { font-size: 0.95rem; color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 58ch; margin-bottom: 1.25rem; }
+    .cred-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+    .cred-tag { font-size: 0.72rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 4px 10px; color: rgba(255,255,255,0.45); }
+    .werner-cta { font-size: 0.875rem; color: var(--ember); text-decoration: none; font-weight: 600; font-family: 'Syne', sans-serif; }
 
     /* ── Footer ── */
-    footer {
-      background: var(--ink);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 2.5rem 2rem;
-      max-width: 100%;
-    }
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .footer-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .footer-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.03em;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .footer-logo-dot {
-      width: 6px; height: 6px;
-      background: var(--ember);
-      border-radius: 50%;
-    }
-    .footer-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1.5rem;
-    }
-    .footer-nav a {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.35);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 2rem; }
+    .footer-inner { max-width: 1140px; margin: 0 auto; }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--white); letter-spacing: -0.03em; display: flex; align-items: center; gap: 0.35rem; }
+    .footer-logo-dot { width: 6px; height: 6px; background: var(--ember); border-radius: 50%; }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+    .footer-nav a { font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
     .footer-nav a:hover { color: rgba(255,255,255,0.65); }
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.05);
-      padding-top: 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .footer-legal {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.2);
-    }
-    .footer-email {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.25);
-      text-decoration: none;
-    }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer-legal { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
+    .footer-email { font-size: 0.72rem; color: rgba(255,255,255,0.25); text-decoration: none; }
   </style>
 </head>
 <body>
@@ -811,7 +479,7 @@
   </div>
 
   <!-- Audience -->
-  <section id="audience">
+  <section id="audience" class="sec-ink">
     <div class="section-wrap">
       <div class="section-eyebrow">Built for two audiences</div>
       <div class="audience-grid">
@@ -830,170 +498,153 @@
   </section>
 
   <!-- Programme / Tiers -->
-  <section id="programme">
+  <section id="programme" class="sec-soft">
     <div class="section-wrap">
       <div class="section-eyebrow">A structured recovery system</div>
       <h2>You enter where you are. You move forward from there.</h2>
-      <p class="section-intro">Most burnout advice targets one moment — the crisis. BurnoutOS is a structured progression. Each phase has a defined outcome and leads naturally to the next.</p>
+      <p class="section-intro">Most burnout advice targets one moment — the crisis. BurnoutOS is a structured progression of three phases. Each has a defined outcome and leads into the next. The free masterclass is the starting point.</p>
 
-      <!-- Progression track -->
-      <div class="prog-track">
-        <div class="prog-node active">
-          <div class="prog-phase">Phase 1 · 8 weeks</div>
-          <div class="prog-name">Performance Reset</div>
-          <div class="prog-desc">Stabilise capacity and build reliable recovery habits</div>
-          <span class="prog-tag launch">Cohort 1 · 29 July</span>
-        </div>
-        <div class="prog-node">
-          <div class="prog-phase">Phase 2 · 8 weeks</div>
-          <div class="prog-name">OS Redesign</div>
-          <div class="prog-desc">Redesign the operating conditions driving overload</div>
-          <span class="prog-tag gate">Opens week 4 of Phase 1</span>
-        </div>
-        <div class="prog-node">
-          <div class="prog-phase">Phase 3 · Ongoing</div>
-          <div class="prog-name">Sustain Lab</div>
-          <div class="prog-desc">Maintain gains and catch drift before it compounds</div>
-          <span class="prog-tag gate">After Phase 1 or 2</span>
-        </div>
-        <div class="prog-node addon">
-          <div class="prog-phase">Add-on · Selective</div>
-          <div class="prog-name">Executive Coaching</div>
-          <div class="prog-desc">1:1 with Werner at executive scale</div>
-          <span class="prog-tag addon-tag">Invitation only · 6 clients</span>
-        </div>
-      </div>
-      <p class="prog-note">The masterclass is the starting point — free, monthly, live online. <a href="/masterclass">Reserve your place →</a></p>
-
-      <!-- Tier cards -->
-      <div class="tier-grid">
+      <div class="tier-row">
 
         <!-- Phase 1 -->
-        <div class="tier-card featured">
-          <div class="tier-header">
-            <div class="tier-phase">Phase 1 · 8 weeks</div>
-            <div class="tier-name">Performance Reset</div>
-            <div class="tier-format">Weekly 60-min live group coaching · Max 12 per cohort</div>
-            <span class="tier-badge launch">Cohort 1 begins 29 July 2026</span>
+        <div class="tcard featured">
+          <div class="tcard-head">
+            <div class="phase-row">
+              <span class="phase-num">Phase 1 · 8 weeks</span>
+              <span class="phase-dot active">1</span>
+            </div>
+            <div class="tcard-name">Performance Reset</div>
+            <div class="tcard-format">Weekly 60-min live group coaching · Max 12 per cohort</div>
+            <span class="tcard-badge launch">Cohort 1 · 29 July 2026</span>
           </div>
-          <div class="tier-body">
+          <div class="tcard-body">
             <div>
-              <div class="tier-section-label">Best for</div>
-              <div class="for-tags">
-                <span class="for-tag">Fast traction needed</span>
-                <span class="for-tag">Repeatable rhythm</span>
-                <span class="for-tag">Still functioning</span>
-                <span class="for-tag">Running on empty</span>
+              <div class="tlabel">Best for</div>
+              <div class="ttags">
+                <span class="ttag">Fast traction</span>
+                <span class="ttag">Repeatable rhythm</span>
+                <span class="ttag">Running on empty</span>
               </div>
             </div>
             <div>
-              <div class="tier-section-label">What is included</div>
-              <ul class="tier-list">
-                <li>Recovery protocol toolkit — sleep anchors, micro-recovery, downshift routine</li>
-                <li>CBT/ACT-informed cognitive load skills for rumination and perfectionism</li>
+              <div class="tlabel">What is included</div>
+              <ul class="tlist">
+                <li>Recovery protocol toolkit — sleep anchors, micro-recovery, downshift</li>
+                <li>CBT/ACT-informed cognitive load skills</li>
                 <li>Boundary and priority conversation scripts</li>
-                <li>Shutdown ritual and deep work protection system</li>
-                <li>Weekly self-tracking dashboard — sleep, energy, workload, boundaries</li>
+                <li>Shutdown ritual and deep work protection</li>
+                <li>Weekly self-tracking dashboard</li>
               </ul>
             </div>
             <div>
-              <div class="tier-section-label">Key outputs</div>
-              <div class="output-pills">
-                <span class="output-pill">Overload Map</span>
-                <span class="output-pill">Personal Recovery Protocol</span>
-                <span class="output-pill">Boundary Starter Pack</span>
+              <div class="tlabel">Key outputs</div>
+              <div class="toutputs">
+                <span class="topill">Overload Map</span>
+                <span class="topill">Personal Recovery Protocol</span>
+                <span class="topill">Boundary Starter Pack</span>
               </div>
             </div>
-            <div class="employer-note">
-              <strong>Employer/Professional track</strong> available — includes 2 × 1:1 sessions and an optional non-clinical progress summary. Minimum 2 seats.
-            </div>
           </div>
-          <div class="tier-footer">
-            <a href="/stabilise" class="tier-cta-link">See Performance Reset →</a>
+          <div class="tcard-foot">
+            <a href="/stabilise" class="tfoot-link">See Performance Reset →</a>
           </div>
+        </div>
+
+        <div class="connector">
+          <svg class="arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          <svg class="arrow-down" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="5 12 12 19 19 12"/></svg>
         </div>
 
         <!-- Phase 2 -->
-        <div class="tier-card">
-          <div class="tier-header">
-            <div class="tier-phase">Phase 2 · 8 weeks</div>
-            <div class="tier-name">Operating System Redesign</div>
-            <div class="tier-format">Weekly modules + community + 2 structured check-ins</div>
-            <span class="tier-badge gate">Opens week 4 of Phase 1</span>
+        <div class="tcard">
+          <div class="tcard-head">
+            <div class="phase-row">
+              <span class="phase-num">Phase 2 · 8 weeks</span>
+              <span class="phase-dot idle">2</span>
+            </div>
+            <div class="tcard-name">OS Redesign</div>
+            <div class="tcard-format">Weekly modules + community + 2 check-ins</div>
+            <span class="tcard-badge gate">Opens week 4 of Phase 1</span>
           </div>
-          <div class="tier-body">
+          <div class="tcard-body">
             <div>
-              <div class="tier-section-label">Best for</div>
-              <div class="for-tags">
-                <span class="for-tag">Structural change needed</span>
-                <span class="for-tag">Meeting overload</span>
-                <span class="for-tag">Delegation gaps</span>
-                <span class="for-tag">Sustainable performance</span>
+              <div class="tlabel">Best for</div>
+              <div class="ttags">
+                <span class="ttag">Structural change</span>
+                <span class="ttag">Meeting overload</span>
+                <span class="ttag">Delegation gaps</span>
               </div>
             </div>
             <div>
-              <div class="tier-section-label">What is included</div>
-              <ul class="tier-list">
+              <div class="tlabel">What is included</div>
+              <ul class="tlist">
                 <li>Role clarity and decision hygiene framework</li>
-                <li>Meeting architecture system — durations, agenda rules, cancellation criteria</li>
-                <li>Delegation ladder and capability build plan</li>
-                <li>Stakeholder alignment scripts and priority trade-off language</li>
-                <li>Peer community accountability and optional buddy system</li>
+                <li>Meeting architecture system</li>
+                <li>Delegation ladder and capability plan</li>
+                <li>Stakeholder alignment scripts</li>
+                <li>Peer community accountability</li>
               </ul>
             </div>
             <div>
-              <div class="tier-section-label">Key outputs</div>
-              <div class="output-pills">
-                <span class="output-pill">Leadership Operating System Plan</span>
-                <span class="output-pill">Delegation Ladder</span>
-                <span class="output-pill">Meeting Rules + calendar guardrails</span>
-                <span class="output-pill">Stakeholder Script Pack</span>
+              <div class="tlabel">Key outputs</div>
+              <div class="toutputs">
+                <span class="topill">Leadership Operating System Plan</span>
+                <span class="topill">Delegation Ladder</span>
+                <span class="topill">Meeting Rules + guardrails</span>
+                <span class="topill">Stakeholder Script Pack</span>
               </div>
             </div>
           </div>
-          <div class="tier-footer">
-            <a href="/redesign" class="tier-cta-link">See OS Redesign →</a>
+          <div class="tcard-foot">
+            <a href="/redesign" class="tfoot-link">See OS Redesign →</a>
           </div>
         </div>
 
+        <div class="connector">
+          <svg class="arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          <svg class="arrow-down" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="5 12 12 19 19 12"/></svg>
+        </div>
+
         <!-- Phase 3 -->
-        <div class="tier-card">
-          <div class="tier-header">
-            <div class="tier-phase">Phase 3 · Ongoing membership</div>
-            <div class="tier-name">Sustain Lab</div>
-            <div class="tier-format">Monthly live sessions + community + tools</div>
-            <span class="tier-badge gate">Available after Phase 1 or 2 completion</span>
+        <div class="tcard">
+          <div class="tcard-head">
+            <div class="phase-row">
+              <span class="phase-num">Phase 3 · Ongoing</span>
+              <span class="phase-dot idle">3</span>
+            </div>
+            <div class="tcard-name">Sustain Lab</div>
+            <div class="tcard-format">Monthly live sessions + community + tools</div>
+            <span class="tcard-badge gate">After Phase 1 or 2</span>
           </div>
-          <div class="tier-body">
+          <div class="tcard-body">
             <div>
-              <div class="tier-section-label">Best for</div>
-              <div class="for-tags">
-                <span class="for-tag">Long-term maintenance</span>
-                <span class="for-tag">Ongoing accountability</span>
-                <span class="for-tag">Catching drift early</span>
-                <span class="for-tag">Peer community</span>
+              <div class="tlabel">Best for</div>
+              <div class="ttags">
+                <span class="ttag">Long-term maintenance</span>
+                <span class="ttag">Accountability</span>
+                <span class="ttag">Peer community</span>
               </div>
             </div>
             <div>
-              <div class="tier-section-label">What is included</div>
-              <ul class="tier-list">
-                <li>Monthly live Q&amp;A, hot seats, and stress-test scenarios with Werner</li>
+              <div class="tlabel">What is included</div>
+              <ul class="tlist">
+                <li>Monthly live Q&amp;A, hot seats, scenario work with Werner</li>
                 <li>Quarterly reset — review, recalibrate, recommit</li>
-                <li>Monthly template or tool drop for ongoing practice</li>
-                <li>Peer community and optional accountability pods</li>
+                <li>Monthly template or tool drop</li>
+                <li>Peer community and accountability pods</li>
               </ul>
             </div>
             <div>
-              <div class="tier-section-label">Key outputs</div>
-              <div class="output-pills">
-                <span class="output-pill">Early Warning Dashboard</span>
-                <span class="output-pill">If-Then Plans for peak periods</span>
-                <span class="output-pill">12-month operating cadence</span>
+              <div class="tlabel">Key outputs</div>
+              <div class="toutputs">
+                <span class="topill">Early Warning Dashboard</span>
+                <span class="topill">If-Then Plans for peak periods</span>
+                <span class="topill">12-month operating cadence</span>
               </div>
             </div>
           </div>
-          <div class="tier-footer">
-            <a href="/sustain" class="tier-cta-link">Join the Sustain Lab →</a>
+          <div class="tcard-foot">
+            <a href="/sustain" class="tfoot-link">Join the Sustain Lab →</a>
           </div>
         </div>
 
@@ -1001,20 +652,20 @@
 
       <!-- Add-ons -->
       <div class="addon-row">
-        <div class="addon-card">
+        <div class="addon">
           <div class="addon-title">Employer and L&amp;D funding</div>
-          <div class="addon-desc">Employer-funded places are available for Phase 1 and Phase 2. Includes two 1:1 sessions and an optional non-clinical progress summary. Minimum 2 seats per organisation. <a href="mailto:hello@burnout-os.app?subject=Employer%20Funding%20Enquiry">Enquire about employer funding →</a></div>
+          <div class="addon-desc">Employer-funded places for Phase 1 and Phase 2. Includes two 1:1 sessions and an optional non-clinical progress summary. Minimum 2 seats per organisation. <a href="mailto:hello@burnout-os.app?subject=Employer%20Funding%20Enquiry">Enquire about employer funding →</a></div>
         </div>
-        <div class="addon-card">
+        <div class="addon">
           <div class="addon-title">Executive Coaching — 1:1 with Werner</div>
-          <div class="addon-desc">One-to-one coaching for leaders working at executive scale. Invitation-only and capped at six concurrent clients. Can run alongside or after the group programme. <a href="/coaching">Executive Coaching →</a></div>
+          <div class="addon-desc">One-to-one coaching for leaders working at executive scale. Invitation-only, capped at six concurrent clients. Runs alongside or after the group programme. <a href="/coaching">Executive Coaching →</a></div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- Organisations -->
+  <!-- Organisations (light section) -->
   <section id="organisations">
     <div class="section-wrap">
       <div class="section-eyebrow">For organisations</div>
@@ -1042,7 +693,7 @@
   </section>
 
   <!-- Werner -->
-  <section id="werner-anchor">
+  <section id="werner-anchor" class="sec-ink">
     <div class="werner-wrap">
       <div class="werner-avatar">
         <img src="/brand/werner-hero.jpg" alt="Werner Teichert, Clinical Psychologist and founder of BurnoutOS" onerror="this.style.display='none'; this.parentNode.innerHTML='WT';" />
