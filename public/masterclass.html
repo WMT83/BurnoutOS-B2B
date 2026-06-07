@@ -336,6 +336,30 @@
           <label for="em">Email</label>
           <input id="em" name="email" type="email" autocomplete="email" required>
         </div>
+        <div class="field">
+          <label for="role">Current role</label>
+          <input type="text" id="role" name="role" placeholder="e.g. Head of Operations" />
+        </div>
+        <div class="field">
+          <label for="meeting_load">Meetings per week</label>
+          <select id="meeting_load" name="meeting_load">
+            <option value="">Select range</option>
+            <option value="fewer_than_10">Fewer than 10</option>
+            <option value="10_to_20">10 to 20</option>
+            <option value="20_to_30">20 to 30</option>
+            <option value="more_than_30">More than 30</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Biggest constraint (select all that apply)</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="biggest_constraint" value="sleep_and_recovery" /> Sleep and recovery</label>
+            <label><input type="checkbox" name="biggest_constraint" value="meeting_load" /> Meeting load</label>
+            <label><input type="checkbox" name="biggest_constraint" value="delegation" /> Delegation</label>
+            <label><input type="checkbox" name="biggest_constraint" value="boundaries" /> Boundaries</label>
+            <label><input type="checkbox" name="biggest_constraint" value="stakeholder_pressure" /> Stakeholder pressure</label>
+          </div>
+        </div>
         <input type="hidden" name="utm_source" id="utm_source">
         <input type="hidden" name="utm_medium" id="utm_medium">
         <input type="hidden" name="utm_campaign" id="utm_campaign">
@@ -408,9 +432,15 @@
     if(btn){ btn.disabled = true; btn.style.opacity = '.65'; btn.innerHTML = 'Saving your seat&hellip;'; }
 
     var val = function(id){ var el = document.getElementById(id); return el ? el.value : ''; };
+    var biggestConstraint = Array.prototype.slice
+      .call(form.querySelectorAll('input[name="biggest_constraint"]:checked'))
+      .map(function(el){ return el.value; });
     var payload = {
       name: fn,
       email: em,
+      role: val('role').trim(),
+      meeting_load: val('meeting_load'),
+      biggest_constraint: biggestConstraint,
       source: 'masterclass-page',
       source_url: window.location.href,
       session_date: SESSION_DATE,
