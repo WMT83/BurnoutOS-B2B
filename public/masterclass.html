@@ -102,15 +102,42 @@
   .recognition p{font-size:19px;max-width:660px}
   .beat{color:var(--paper)!important;font-weight:400}
 
-  .stack{display:grid;gap:0;margin-top:8px}
-  .item{display:grid;grid-template-columns:64px 1fr;gap:28px;padding:34px 0;border-top:1px solid var(--line)}
-  .item:last-child{border-bottom:1px solid var(--line)}
-  .num{font-family:var(--display);font-weight:800;font-size:40px;color:var(--ember);line-height:1}
-  .item h3{font-size:25px;margin-bottom:12px;font-weight:700}
-  .item p{font-size:17px;max-width:60ch}
+  /* ── UNIFIED VALUE LIST ── */
+  .vlist{display:grid;gap:0;margin-top:0}
+  .vrow{display:grid;grid-template-columns:140px 1fr 120px;align-items:baseline;
+    gap:0 32px;padding:38px 0;border-top:1px solid var(--line);position:relative}
+  .vrow:last-child{border-bottom:1px solid var(--line)}
+  .vrow-meta{display:flex;flex-direction:column;gap:5px;padding-top:3px}
+  .vrow-idx{font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--paper-faint)}
+  .vrow-cat{font-family:var(--body);font-weight:500;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--paper-faint);opacity:.7}
+  .vrow-body{padding:0}
+  .vrow-body h3{font-family:var(--display);font-weight:800;
+    font-size:clamp(22px,2.8vw,30px);color:var(--paper);letter-spacing:-.02em;
+    line-height:1.1;margin-bottom:10px}
+  .vrow-body p{font-size:16px;color:var(--paper-dim);max-width:58ch;line-height:1.65}
+  .vrow-tag{text-align:right;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--paper-faint);padding-top:3px;white-space:nowrap}
+  /* phase rows */
+  .vrow.is-phase .vrow-idx{color:var(--ember);opacity:.9}
+  .vrow.is-phase-1 .vrow-idx{color:var(--ember)}
+  .vrow.is-phase-2 .vrow-idx{color:#a07ed4}
+  .vrow.is-phase-3 .vrow-idx{color:#4eb89a}
+  .vrow.is-phase .vrow-body h3{font-size:clamp(20px,2.4vw,26px)}
+  /* divider between deliverables + pathway */
+  .vlist-divider{display:flex;align-items:center;gap:16px;padding:28px 0 0;
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-faint)}
+  .vlist-divider::before,.vlist-divider::after{content:"";flex:1;height:1px;background:var(--line-strong)}
+  /* note below list */
+  .vlist-note{margin-top:28px;padding:18px 22px;border-radius:3px;
+    background:rgba(234,88,12,.06);border-left:2px solid rgba(234,88,12,.3);
+    font-size:15px;color:var(--paper-faint)}
+  .vlist-note b{color:var(--paper-dim);font-weight:500}
 
   .ctaband{text-align:center;padding:64px 0}
   .ctaband p{font-size:20px;color:var(--paper);max-width:30ch;margin:0 auto 26px}
+  /* pathway section CSS removed — merged into vlist */
 
   .panel{background:rgba(22,19,26,.72);backdrop-filter:blur(2px);border:1px solid var(--line-strong);border-radius:6px;padding:44px 46px;margin-top:8px}
   .panel h2{font-size:clamp(26px,3.6vw,36px);margin-bottom:24px}
@@ -153,38 +180,7 @@
   .tz-replay::before{content:"";display:block;width:6px;height:6px;border-radius:50%;
     background:var(--paper-faint);flex-shrink:0}
 
-  /* ── THREE-PHASE PATHWAY ── */
-  .pathway-section{padding:84px 0;border-bottom:1px solid var(--line)}
-  .pathway-intro{margin-bottom:48px}
-  .pathway-intro h2{font-size:clamp(30px,4.6vw,46px);max-width:18ch}
-  .pathway-intro p{margin-top:14px;font-size:16px;color:var(--paper-faint);max-width:54ch}
-  .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:4px}
-  .phase{padding:36px 32px 40px;border-radius:4px;position:relative;overflow:hidden}
-  .phase::before{content:"";position:absolute;inset:0;opacity:.04;pointer-events:none}
-  .phase:nth-child(1){background:rgba(234,88,12,.10);border:1px solid rgba(234,88,12,.28)}
-  .phase:nth-child(2){background:rgba(120,90,160,.10);border:1px solid rgba(120,90,160,.28)}
-  .phase:nth-child(3){background:rgba(80,160,130,.10);border:1px solid rgba(80,160,130,.28)}
-  .phase-num{font-family:var(--display);font-weight:800;font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-  .phase:nth-child(1) .phase-num{color:var(--ember)}
-  .phase:nth-child(2) .phase-num{color:#a07ed4}
-  .phase:nth-child(3) .phase-num{color:#4eb89a}
-  .phase-num::before{content:"";display:block;width:24px;height:1px;opacity:.6}
-  .phase:nth-child(1) .phase-num::before{background:var(--ember)}
-  .phase:nth-child(2) .phase-num::before{background:#a07ed4}
-  .phase:nth-child(3) .phase-num::before{background:#4eb89a}
-  .phase h3{font-family:var(--display);font-weight:800;font-size:22px;color:var(--paper);
-    letter-spacing:-.01em;line-height:1.1;margin-bottom:8px}
-  .phase-tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--paper-faint);margin-bottom:16px;display:block}
-  .phase p{font-size:15px;color:var(--paper-dim);line-height:1.65}
-  .phase-connector{display:flex;align-items:center;justify-content:center;
-    color:var(--paper-faint);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    padding:0 6px;align-self:center;padding-top:60px}
-  .phase-cta-note{margin-top:36px;padding:20px 24px;border-radius:4px;
-    background:rgba(234,88,12,.07);border:1px solid rgba(234,88,12,.16);
-    font-size:15px;color:var(--paper-faint)}
-  .phase-cta-note b{color:var(--paper-dim);font-weight:500}
+
 
   .details{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;
     background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:8px}
@@ -233,18 +229,17 @@
 
   @media(max-width:860px){
     .tz-cards{grid-template-columns:repeat(2,1fr)}
-    .phases{grid-template-columns:1fr}
-    .phase{padding:30px 28px}
+    .vrow{grid-template-columns:100px 1fr 80px;gap:0 20px}
   }
   @media(max-width:640px){
     body{font-size:17px}.wrap,nav{padding-left:22px;padding-right:22px}
-    .item{grid-template-columns:1fr;gap:10px}.num{font-size:32px}
+    .vrow{grid-template-columns:1fr;gap:8px 0}.vrow-tag{text-align:left}.vrow-meta{flex-direction:row;gap:8px}
     .panel{padding:32px 26px}.reg{padding:28px 24px}section{padding:60px 0}
     .nav-meta{display:none}.outcome{font-size:21px}
     header{padding:40px 0 60px}.countdown{gap:10px}.cd{min-width:56px;padding:10px 12px}
     .tz-cards{grid-template-columns:1fr}
     .tz-section{padding:60px 0}
-    .pathway-section{padding:60px 0}
+
   }
 </style>
 </head>
@@ -318,68 +313,100 @@
     <p class="beat">This masterclass is for the senior leader or clinician who's reached that point.</p>
   </section>
 
-  <!-- THREE DELIVERABLES -->
+  <!-- UNIFIED VALUE LIST: DELIVERABLES + PATHWAY -->
   <section>
-    <div class="sec-head"><h2>What you'll leave with</h2></div>
-    <div class="stack">
-      <div class="item">
-        <div class="num">1</div>
-        <div>
+    <div class="sec-head" style="margin-bottom:32px">
+      <p class="eyebrow">In this free masterclass</p>
+      <h2>What you'll leave with</h2>
+      <p>Three session outcomes, then the three-phase pathway they point toward. 90 minutes covers all of it.</p>
+    </div>
+
+    <div class="vlist">
+
+      <!-- Session deliverables -->
+      <div class="vrow">
+        <div class="vrow-meta">
+          <span class="vrow-idx">01 &nbsp;/</span>
+          <span class="vrow-cat">Assessment</span>
+        </div>
+        <div class="vrow-body">
           <h3>Your personal Burnout Baseline</h3>
-          <p>A structured self-assessment of where your burnout sits. Not a quiz, but a baseline you complete beforehand. In the session we walk through how to read your result, so you leave knowing what it points to.</p>
+          <p>A structured self-assessment you complete beforehand. In session we walk through how to read your result, so you leave knowing what it points to.</p>
         </div>
+        <div class="vrow-tag">30 min</div>
       </div>
-      <div class="item">
-        <div class="num">2</div>
-        <div>
+
+      <div class="vrow">
+        <div class="vrow-meta">
+          <span class="vrow-idx">02 &nbsp;/</span>
+          <span class="vrow-cat">Clinical</span>
+        </div>
+        <div class="vrow-body">
           <h3>A clinical view of why you're stuck</h3>
-          <p>Burnout isn't a motivation problem or a productivity problem. There's a specific psychological and physiological mechanism behind why slowing down feels impossible exactly when you need it most. We'll cover what that mechanism is &mdash; the part most advice misses &mdash; and your next move is based on what's actually happening.</p>
+          <p>The psychological and physiological mechanism behind why slowing down feels impossible when you need it most. The part most advice misses.</p>
         </div>
+        <div class="vrow-tag">30 min</div>
       </div>
-      <div class="item">
-        <div class="num">3</div>
-        <div>
+
+      <div class="vrow">
+        <div class="vrow-meta">
+          <span class="vrow-idx">03 &nbsp;/</span>
+          <span class="vrow-cat">Pathway</span>
+        </div>
+        <div class="vrow-body">
           <h3>The structure of a recovery pathway</h3>
-          <p>What burnout recovery involves, and what it doesn't. We'll cover the levels of intervention that exist, what each is for, and how to tell which one your situation calls for. You'll leave knowing what your next step looks like.</p>
+          <p>What recovery involves, and what it doesn't. The levels of intervention that exist, what each is for, and how to read which one your situation calls for.</p>
         </div>
+        <div class="vrow-tag">30 min + Q&amp;A</div>
       </div>
-    </div>
-  </section>
 
-  <!-- MID-PAGE CTA -->
-  <div class="ctaband">
-    <p>Three things, in 90 minutes. Free, live, online.</p>
-    <a href="#register" class="cta" onclick="fbq('track','InitiateCheckout')">Save my seat <span class="arr">&rarr;</span></a>
-  </div>
+      <!-- Divider -->
+      <div class="vlist-divider">The BurnoutOS pathway</div>
 
-  <!-- THREE-PHASE PATHWAY -->
-  <section class="pathway-section">
-    <div class="pathway-intro">
-      <p class="eyebrow">The BurnoutOS pathway</p>
-      <h2>Reset. Redesign. Sustain.</h2>
-      <p>The masterclass introduces the three-phase operating system. Each phase is a distinct programme with its own scope and outcome.</p>
+      <!-- Phase rows -->
+      <div class="vrow is-phase is-phase-1">
+        <div class="vrow-meta">
+          <span class="vrow-idx">Phase 01 &nbsp;/</span>
+          <span class="vrow-cat">Tier 1</span>
+        </div>
+        <div class="vrow-body">
+          <h3>Performance Reset</h3>
+          <p>Rebuild recovery rhythms, reduce cognitive load, and install boundaries that hold. The clinical reset for leaders whose burnout has moved beyond what advice can reach.</p>
+        </div>
+        <div class="vrow-tag">8 weeks</div>
+      </div>
+
+      <div class="vrow is-phase is-phase-2">
+        <div class="vrow-meta">
+          <span class="vrow-idx">Phase 02 &nbsp;/</span>
+          <span class="vrow-cat">Tier 2</span>
+        </div>
+        <div class="vrow-body">
+          <h3>OS Redesign</h3>
+          <p>Redesign the structural drivers: meetings, delegation, decision rights, workload architecture. The implementation layer once the reset holds.</p>
+        </div>
+        <div class="vrow-tag">8 weeks</div>
+      </div>
+
+      <div class="vrow is-phase is-phase-3">
+        <div class="vrow-meta">
+          <span class="vrow-idx">Phase 03 &nbsp;/</span>
+          <span class="vrow-cat">Tier 3</span>
+        </div>
+        <div class="vrow-body">
+          <h3>Sustain Lab</h3>
+          <p>Maintenance, accountability, and quarterly reset cadence. Prevents drift when peak periods hit. Membership access with ongoing clinical support.</p>
+        </div>
+        <div class="vrow-tag">Ongoing</div>
+      </div>
+
     </div>
-    <div class="phases">
-      <div class="phase">
-        <div class="phase-num">Phase 01</div>
-        <h3>Performance Reset</h3>
-        <span class="phase-tag">8 weeks &middot; Tier 1</span>
-        <p>Rebuild the recovery rhythms, reduce cognitive load, and install boundaries that hold. For leaders whose burnout has shifted from advice-solvable to structurally entrenched. The clinical reset before any redesign makes sense.</p>
-      </div>
-      <div class="phase">
-        <div class="phase-num">Phase 02</div>
-        <h3>OS Redesign</h3>
-        <span class="phase-tag">8 weeks &middot; Tier 2</span>
-        <p>Redesign the structural drivers. Meetings, delegation, decision rights, workload architecture. For leaders whose overload is systemic, not just symptomatic. The implementation layer after the reset holds.</p>
-      </div>
-      <div class="phase">
-        <div class="phase-num">Phase 03</div>
-        <h3>Sustain Lab</h3>
-        <span class="phase-tag">Ongoing &middot; Tier 3</span>
-        <p>Maintenance, accountability, and quarterly reset cadence. Designed to prevent drift when peak periods hit. Membership access with ongoing clinical support so the gains from Phase 1 and 2 compound.</p>
-      </div>
+
+    <p class="vlist-note">The masterclass helps you identify where your situation sits across this pathway. <b>No obligation to proceed.</b> The session is complete in itself.</p>
+
+    <div style="text-align:center;margin-top:48px">
+      <a href="#register" class="cta" onclick="fbq('track','InitiateCheckout')">Save my seat <span class="arr">&rarr;</span></a>
     </div>
-    <p class="phase-cta-note">The masterclass covers the logic behind this pathway and helps you identify where your situation sits. <b>No obligation to proceed.</b> The session is complete in itself.</p>
   </section>
 
   <!-- CLINICAL NOTE -->
