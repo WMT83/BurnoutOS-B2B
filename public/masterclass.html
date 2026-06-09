@@ -452,6 +452,17 @@
           <input type="text" id="role" name="role" placeholder="e.g. Head of Operations" />
         </div>
         <div class="field">
+          <label for="country">Country</label>
+          <select id="country" name="country">
+            <option value="">Select country</option>
+            <option value="AU">Australia</option>
+            <option value="ZA">South Africa</option>
+            <option value="NZ">New Zealand</option>
+            <option value="GB">United Kingdom</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
           <label for="meeting_load">Meetings per week</label>
           <select id="meeting_load" name="meeting_load">
             <option value="">Select range</option>
@@ -552,6 +563,7 @@
       role: val('role').trim(),
       meeting_load: val('meeting_load'),
       biggest_constraint: biggestConstraint,
+      country: val('country'),
       source: 'masterclass-page',
       source_url: window.location.href,
       session_date: SESSION_DATE,
