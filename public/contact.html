@@ -103,6 +103,20 @@
       transition: background 0.2s;
     }
     .nav-btn:hover { background: var(--ember-dim); }
+    .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 4px; width: 34px; height: 34px; background: none; border: none; cursor: pointer; padding: 0; }
+    .nav-toggle span { display: block; height: 2px; width: 20px; margin: 0 auto; background: var(--white); border-radius: 2px; transition: transform .25s, opacity .25s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .nav-mobile { display: none; position: fixed; top: 56px; left: 0; right: 0; z-index: 99; flex-direction: column; background: rgba(12,16,24,0.97); backdrop-filter: blur(16px); border-bottom: 1px solid var(--rule); padding: 0.5rem 1rem 1rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-size: 1rem; color: rgba(255,255,255,0.75); text-decoration: none; padding: 0.85rem 0.5rem; border-bottom: 1px solid var(--rule); }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--white); }
+    @media (max-width: 860px) {
+      .nav-link, .nav-divider { display: none; }
+      .nav-toggle { display: flex; }
+    }
 
     /* Hero */
     #hero {
@@ -382,9 +396,16 @@
       <a href="/burnoutprogramme.html" class="nav-link">Programme</a>
       <a href="/organisations.html" class="nav-link">For Organisations</a>
       <a href="https://app.burnout-os.app/auth" class="nav-link" style="opacity:0.75;">Sign in</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
       <a href="/intensive" class="nav-btn">Join Cohort</a>
     </div>
   </nav>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="/burnout-quiz">Take the quiz</a>
+    <a href="/burnoutprogramme.html">Programme</a>
+    <a href="/organisations.html">For Organisations</a>
+    <a href="https://app.burnout-os.app/auth">Sign in</a>
+  </div>
 
   <section id="hero">
     <div class="hero-inner">
@@ -585,6 +606,10 @@
       } catch(_) {}
       return utm;
     }
+  </script>
+
+  <script>
+  (function(){var t=document.getElementById('nav-toggle'),m=document.getElementById('nav-mobile');if(!t||!m)return;t.addEventListener('click',function(e){e.stopPropagation();var o=m.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});function close(){m.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');}document.addEventListener('click',function(e){if(m.classList.contains('open')&&!m.contains(e.target)&&e.target!==t)close();});})();
   </script>
 </body>
 </html>
