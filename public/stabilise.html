@@ -169,6 +169,34 @@
     .footer-links a:hover { color: rgba(255,255,255,0.65); }
     .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.2); max-width: 60ch; margin: 0 auto; line-height: 1.6; }
     .disclaimer { font-size: 0.72rem; color: rgba(255,255,255,0.28); max-width: 60ch; margin: 2rem auto 0; line-height: 1.65; text-align: center; }
+
+    /* ── SCHEDULE ── */
+    .schedule-grid { margin-top: 3rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .sched-phase-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); margin: 2rem 0 0.75rem; }
+    .sched-phase-label:first-child { margin-top: 0; }
+    .sched-row { display: grid; grid-template-columns: 64px 1fr; gap: 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); overflow: hidden; transition: border-color 0.2s; }
+    .sched-row:hover { border-color: rgba(255,255,255,0.14); }
+    .sched-row-checkin { border-color: rgba(232,75,42,0.3); background: rgba(232,75,42,0.04); }
+    .sched-row-checkin:hover { border-color: rgba(232,75,42,0.5); }
+    .sched-week { background: rgba(255,255,255,0.03); border-right: 1px solid rgba(255,255,255,0.07); padding: 1rem 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex-shrink: 0; }
+    .sched-row-checkin .sched-week { background: rgba(232,75,42,0.08); border-right-color: rgba(232,75,42,0.2); }
+    .sched-wk-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--ember); line-height: 1; }
+    .sched-wk-date { font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 0.3rem; line-height: 1.2; }
+    .sched-body { padding: 1rem 1.25rem; }
+    .sched-focus { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.35rem; line-height: 1.4; }
+    .sched-desc { font-size: 0.8rem; color: rgba(255,255,255,0.42); line-height: 1.6; margin-bottom: 0.75rem; }
+    .sched-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .sched-tag { font-size: 0.67rem; font-weight: 600; letter-spacing: 0.03em; padding: 0.25rem 0.6rem; border-radius: 6px; }
+    .sched-tag.mod { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
+    .sched-tag.checkin { background: rgba(232,75,42,0.15); color: var(--ember); border: 1px solid rgba(232,75,42,0.3); }
+    .sched-tag.out { background: rgba(15,110,86,0.15); color: #5dcaa5; border: 1px solid rgba(15,110,86,0.3); }
+    .sched-tag.comm { background: rgba(83,74,183,0.15); color: #afa9ec; border: 1px solid rgba(83,74,183,0.25); }
+    @media (max-width: 520px) {
+      .sched-row { grid-template-columns: 52px 1fr; }
+      .sched-wk-num { font-size: 0.95rem; }
+      .sched-body { padding: 0.85rem 1rem; }
+      .sched-focus { font-size: 0.88rem; }
+    }
   </style>
 </head>
 <body>
@@ -323,6 +351,149 @@
             <p>By Week 8 you have your Overload Map, Personal Recovery Protocol, and Boundary Starter Pack — and the option to move into Phase 2 to redesign how you work.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SCHEDULE -->
+  <section id="schedule" style="background: var(--ink-soft); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+    <div class="inner">
+      <div class="eyebrow center" style="justify-content:center;">The programme</div>
+      <h2 class="section-h" style="text-align:center;">Eight weeks, week by week.</h2>
+      <p class="price-anchor">One 60-minute live session per week with Werner, a guided exercise, and a practical action to apply before the next session. Designed to work on a busy week, not added to it.</p>
+
+      <div class="schedule-grid">
+
+        <div class="sched-phase-label">Phase A &mdash; Baseline and orientation</div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">01</span>
+            <span class="sched-wk-date">Wk 1</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Burnout Baseline and Overload Map</div>
+            <p class="sched-desc">Review your Burnout Baseline results as a group. Map the key drivers specific to you: demands, control, support, and values friction. You leave knowing exactly where your depletion is coming from, not guessing.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Session 1 &mdash; live with Werner</span>
+              <span class="sched-tag out">Output: Draft Overload Map</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">02</span>
+            <span class="sched-wk-date">Wk 2</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">The recovery cycle &mdash; how depletion actually works</div>
+            <p class="sched-desc">Sorensen&rsquo;s Burnout Cycle as a working model. Identify where you currently sit in the cycle. Introduce the self-tracking dashboard and set your first weekly recovery target.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Session 2 &mdash; live with Werner</span>
+              <span class="sched-tag mod">Dashboard: Week 1 baseline</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-phase-label">Phase B &mdash; Recovery foundations</div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">03</span>
+            <span class="sched-wk-date">Wk 3</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Sleep anchors and recovery rhythm</div>
+            <p class="sched-desc">Build your sleep consistency foundation and downshift routine. Identify the two to three non-negotiable recovery practices that hold on a low-capacity week, not just a good one.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Session 3 &mdash; live with Werner</span>
+              <span class="sched-tag mod">Dashboard: Sleep and recovery tracking</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">04</span>
+            <span class="sched-wk-date">Wk 4</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Micro-recovery and capacity management</div>
+            <p class="sched-desc">Ultradian rhythm and planned recovery breaks. Build micro-recovery into your working day without requiring structural change. Review your first month of dashboard data: what the pattern is telling you.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Session 4 &mdash; live with Werner</span>
+              <span class="sched-tag mod">Dashboard: Four-week pattern review</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-phase-label">Phase C &mdash; Cognitive load and mental overload</div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">05</span>
+            <span class="sched-wk-date">Wk 5</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Rumination and the &ldquo;switched-on&rdquo; pattern</div>
+            <p class="sched-desc">CBT-informed tools for the thoughts that keep you running even when you are offline. Identify your specific rumination triggers. Build the first cognitive defusion practices from the ACT toolkit.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Session 5 &mdash; live with Werner</span>
+              <span class="sched-tag mod">Dashboard: Workload and mental load tracking</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">06</span>
+            <span class="sched-wk-date">Wk 6</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Perfectionism, values, and the shutdown ritual</div>
+            <p class="sched-desc">Address the perfectionism and values friction identified in your Overload Map. Build your end-of-day shutdown ritual and next-day top-three. Create the protected deep-work blocks that survive a hard week.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Session 6 &mdash; live with Werner</span>
+              <span class="sched-tag mod">Dashboard: Boundary adherence tracking</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-phase-label">Phase D &mdash; Boundaries, language, and the recovery protocol</div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">07</span>
+            <span class="sched-wk-date">Wk 7</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Boundary scripts and capacity-signalling language</div>
+            <p class="sched-desc">Capacity-signalling language, trade-off phrasing, and meeting-decline scripts. The specific words for when &ldquo;no&rdquo; feels impossible. Practice one real conversation this week before the final session.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Session 7 &mdash; live with Werner</span>
+              <span class="sched-tag out">Output: Draft Boundary Starter Pack</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">08</span>
+            <span class="sched-wk-date">Wk 8</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Personal Recovery Protocol &mdash; close-out</div>
+            <p class="sched-desc">Consolidate your non-negotiables and early warning signs into your written Personal Recovery Protocol. Review eight weeks of dashboard data. Phase 2 pathway opens for those who are ready to redesign how they work.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Session 8 &mdash; live with Werner</span>
+              <span class="sched-tag out">Output: Personal Recovery Protocol</span>
+              <span class="sched-tag comm">Phase 2 pathway opens</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
