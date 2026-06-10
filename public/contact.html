@@ -114,8 +114,12 @@
     .nav-mobile a:last-child { border-bottom: none; }
     .nav-mobile a:hover { color: var(--white); }
     @media (max-width: 860px) {
+      nav { padding: 0 1rem; }
+      .nav-right { gap: 0.6rem; }
+      .logo { flex-shrink: 0; }
       .nav-link, .nav-divider { display: none; }
-      .nav-toggle { display: flex; }
+      .nav-toggle { display: flex; flex-shrink: 0; }
+      .nav-btn { padding: 0.4rem 0.7rem; font-size: 0.78rem; }
     }
 
     /* Hero */
