@@ -157,6 +157,34 @@
     .footer-links a:hover { color: rgba(255,255,255,0.65); }
     .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.2); max-width: 60ch; margin: 0 auto; line-height: 1.6; }
     .disclaimer { font-size: 0.72rem; color: rgba(255,255,255,0.28); max-width: 60ch; margin: 2rem auto 0; line-height: 1.65; }
+
+    /* ── SCHEDULE ── */
+    .schedule-grid { margin-top: 3rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .sched-phase-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); margin: 2rem 0 0.75rem; padding-left: 0; }
+    .sched-phase-label:first-child { margin-top: 0; }
+    .sched-row { display: grid; grid-template-columns: 64px 1fr; gap: 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); overflow: hidden; transition: border-color 0.2s; }
+    .sched-row:hover { border-color: rgba(255,255,255,0.14); }
+    .sched-row-checkin { border-color: rgba(232,75,42,0.3); background: rgba(232,75,42,0.04); }
+    .sched-row-checkin:hover { border-color: rgba(232,75,42,0.5); }
+    .sched-week { background: rgba(255,255,255,0.03); border-right: 1px solid rgba(255,255,255,0.07); padding: 1rem 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex-shrink: 0; }
+    .sched-row-checkin .sched-week { background: rgba(232,75,42,0.08); border-right-color: rgba(232,75,42,0.2); }
+    .sched-wk-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--ember); line-height: 1; }
+    .sched-wk-date { font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 0.3rem; line-height: 1.2; }
+    .sched-body { padding: 1rem 1.25rem; }
+    .sched-focus { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.35rem; line-height: 1.4; }
+    .sched-desc { font-size: 0.8rem; color: rgba(255,255,255,0.42); line-height: 1.6; margin-bottom: 0.75rem; }
+    .sched-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .sched-tag { font-size: 0.67rem; font-weight: 600; letter-spacing: 0.03em; padding: 0.25rem 0.6rem; border-radius: 6px; }
+    .sched-tag.mod { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
+    .sched-tag.checkin { background: rgba(232,75,42,0.15); color: var(--ember); border: 1px solid rgba(232,75,42,0.3); }
+    .sched-tag.out { background: rgba(15,110,86,0.15); color: #5dcaa5; border: 1px solid rgba(15,110,86,0.3); }
+    .sched-tag.comm { background: rgba(83,74,183,0.15); color: #afa9ec; border: 1px solid rgba(83,74,183,0.25); }
+    @media (max-width: 520px) {
+      .sched-row { grid-template-columns: 52px 1fr; }
+      .sched-wk-num { font-size: 0.95rem; }
+      .sched-body { padding: 0.85rem 1rem; }
+      .sched-focus { font-size: 0.88rem; }
+    }
   </style>
 </head>
 <body>
@@ -312,6 +340,149 @@
           <div class="step-num">4</div>
           <div><h3>Leave with your operating system</h3><p>By Week 8 you have a Leadership OS Plan, Delegation Ladder, Meeting Rules, and Stakeholder Script Pack — and the option to move into the Sustain Lab.</p></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SCHEDULE -->
+  <section id="schedule" style="background: var(--ink-soft); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+    <div class="inner">
+      <div class="eyebrow center" style="justify-content:center;">The programme</div>
+      <h2 class="section-h" style="text-align:center;">Eight weeks, week by week.</h2>
+      <p class="price-anchor">Implementation-first. Each module is designed to apply in under 60 minutes. Two structured check-ins keep the redesign on track. Four tangible outputs by week 8.</p>
+
+      <div class="schedule-grid">
+
+        <div class="sched-phase-label">Phase A &mdash; Diagnose &amp; clarify</div>
+
+        <div class="sched-row">
+          <div class="sched-week">
+            <span class="sched-wk-num">01</span>
+            <span class="sched-wk-date">Wk 1</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Role clarity and decision hygiene</div>
+            <p class="sched-desc">Map what you own versus what you influence. Set escalation rules. Identify the decisions currently bottlenecking through you.</p>
+            <div class="sched-tags">
+              <span class="sched-tag mod">Module 1</span>
+              <span class="sched-tag comm">Community onboarding</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-row">
+          <div class="sched-week">
+            <span class="sched-wk-num">02</span>
+            <span class="sched-wk-date">Wk 2</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Decision-review habit</div>
+            <p class="sched-desc">Build a repeatable weekly decision-review ritual. Categorise decisions by reversibility and scope. Cut the rework loop by removing ambiguous ownership.</p>
+            <div class="sched-tags">
+              <span class="sched-tag mod">Module 2</span>
+              <span class="sched-tag out">Output: Decision matrix</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-phase-label">Phase B &mdash; Redesign the calendar</div>
+
+        <div class="sched-row">
+          <div class="sched-week">
+            <span class="sched-wk-num">03</span>
+            <span class="sched-wk-date">Wk 3</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Meeting architecture &mdash; audit</div>
+            <p class="sched-desc">Audit your current meeting load. Apply default-duration rules and cancellation criteria. Identify which recurring meetings could be async.</p>
+            <div class="sched-tags">
+              <span class="sched-tag mod">Module 3</span>
+              <span class="sched-tag comm">Peer wins &amp; blocks</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">04</span>
+            <span class="sched-wk-date">Wk 4</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Meeting architecture &mdash; redesign</div>
+            <p class="sched-desc">Implement agenda rules and decision logs. Finalise calendar guardrails. Mid-programme review: what has shipped, what is stalled, what needs a different approach.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Check-in 1 &mdash; mid-programme</span>
+              <span class="sched-tag out">Output: Draft Meeting Rules</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-phase-label">Phase C &mdash; Delegation and capacity</div>
+
+        <div class="sched-row">
+          <div class="sched-week">
+            <span class="sched-wk-num">05</span>
+            <span class="sched-wk-date">Wk 5</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Delegation ladder &mdash; eliminate and automate</div>
+            <p class="sched-desc">Apply the five-tier filter: eliminate, automate, delegate, defer, do. Start with the first two tiers. Identify tasks where you are the bottleneck purely by habit.</p>
+            <div class="sched-tags">
+              <span class="sched-tag mod">Module 5</span>
+              <span class="sched-tag comm">Optional buddy pairing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-row">
+          <div class="sched-week">
+            <span class="sched-wk-num">06</span>
+            <span class="sched-wk-date">Wk 6</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Delegation ladder &mdash; delegate and capability build</div>
+            <p class="sched-desc">Define what genuine ownership requires from the people you delegate to. Build the capability gap map. Write handover conditions for each item you move off your plate.</p>
+            <div class="sched-tags">
+              <span class="sched-tag mod">Module 6</span>
+              <span class="sched-tag out">Output: Draft Delegation Ladder</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-phase-label">Phase D &mdash; Stakeholder expectations and OS plan</div>
+
+        <div class="sched-row">
+          <div class="sched-week">
+            <span class="sched-wk-num">07</span>
+            <span class="sched-wk-date">Wk 7</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Stakeholder alignment scripts</div>
+            <p class="sched-desc">Build your priority trade-off language. Practise expectation-reset conversations. Develop the specific scripts for &ldquo;what I am stopping&rdquo; and &ldquo;what I need to protect&rdquo;.</p>
+            <div class="sched-tags">
+              <span class="sched-tag mod">Module 7</span>
+              <span class="sched-tag out">Output: Draft Stakeholder Script Pack</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched-row sched-row-checkin">
+          <div class="sched-week">
+            <span class="sched-wk-num">08</span>
+            <span class="sched-wk-date">Wk 8</span>
+          </div>
+          <div class="sched-body">
+            <div class="sched-focus">Leadership OS Plan &mdash; close-out</div>
+            <p class="sched-desc">Consolidate all four outputs into your one-to-two page Leadership OS Plan. Final structured review with operating-system decisions that hold under pressure. Sustain Lab pathway opens.</p>
+            <div class="sched-tags">
+              <span class="sched-tag checkin">&#10003; Check-in 2 &mdash; close-out</span>
+              <span class="sched-tag out">Output: Leadership OS Plan</span>
+              <span class="sched-tag comm">Sustain Lab transition</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
