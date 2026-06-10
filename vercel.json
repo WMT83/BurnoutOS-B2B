@@ -16,13 +16,38 @@
       "permanent": false
     },
     {
+      "source": "/masterclass",
+      "destination": "/masterclass.html",
+      "permanent": false
+    },
+    {
       "source": "/calculator",
       "destination": "/calculator.html",
       "permanent": false
     },
     {
       "source": "/intensive",
-      "destination": "/intensive.html",
+      "destination": "/stabilise",
+      "permanent": true
+    },
+    {
+      "source": "/intensive.html",
+      "destination": "/stabilise",
+      "permanent": true
+    },
+    {
+      "source": "/stabilise",
+      "destination": "/stabilise.html",
+      "permanent": false
+    },
+    {
+      "source": "/redesign",
+      "destination": "/redesign.html",
+      "permanent": false
+    },
+    {
+      "source": "/sustain",
+      "destination": "/sustain.html",
       "permanent": false
     },
     {
@@ -57,8 +82,13 @@
     },
     {
       "source": "/burnoutprogramme",
-      "destination": "/burnoutprogramme.html",
-      "permanent": false
+      "destination": "/stabilise",
+      "permanent": true
+    },
+    {
+      "source": "/burnoutprogramme.html",
+      "destination": "/stabilise",
+      "permanent": true
     },
     {
       "source": "/organisations",

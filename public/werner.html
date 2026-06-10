@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Werner Teichert — AHPRA-registered Clinical Psychologist · BurnoutOS</title>
   <meta name="description" content="Werner Teichert is a Clinical Psychologist registered with AHPRA in Australia, and the founder of BurnoutOS. Clinical governance at the core of every product." />
+  <meta name="description" content="Werner Teichert is a Clinical Psychologist based in Australia, and the founder of BurnoutOS. Clinical governance at the core of every product." />
   <link rel="canonical" href="https://burnout-os.app/werner" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -103,6 +104,20 @@
       transition: background 0.2s;
     }
     .nav-btn:hover { background: var(--ember-dim); }
+    .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 4px; width: 34px; height: 34px; background: none; border: none; cursor: pointer; padding: 0; }
+    .nav-toggle span { display: block; height: 2px; width: 20px; margin: 0 auto; background: var(--white); border-radius: 2px; transition: transform .25s, opacity .25s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .nav-mobile { display: none; position: fixed; top: 56px; left: 0; right: 0; z-index: 99; flex-direction: column; background: rgba(12,16,24,0.97); backdrop-filter: blur(16px); border-bottom: 1px solid var(--rule); padding: 0.5rem 1rem 1rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-size: 1rem; color: rgba(255,255,255,0.75); text-decoration: none; padding: 0.85rem 0.5rem; border-bottom: 1px solid var(--rule); }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--white); }
+    @media (max-width: 860px) {
+      .nav-link, .nav-divider { display: none; }
+      .nav-toggle { display: flex; }
+    }
 
     /* Hero */
     #hero {
@@ -418,12 +433,19 @@
     <a href="/" class="logo">BurnoutOS <span class="logo-dot"></span></a>
     <div class="nav-right">
       <a href="/burnout-quiz" class="nav-link">Take the quiz</a>
-      <a href="/burnoutprogramme.html" class="nav-link">Programme</a>
+      <a href="/stabilise" class="nav-link">The pathway</a>
       <a href="/organisations.html" class="nav-link">For Organisations</a>
       <a href="https://app.burnout-os.app/auth" class="nav-link" style="opacity:0.75;">Sign in</a>
-      <a href="/intensive" class="nav-btn">Join Cohort</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <a href="/stabilise" class="nav-btn">Apply for Cohort 1</a>
     </div>
   </nav>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="/burnout-quiz">Take the quiz</a>
+    <a href="/stabilise">The pathway</a>
+    <a href="/organisations.html">For Organisations</a>
+    <a href="https://app.burnout-os.app/auth">Sign in</a>
+  </div>
 
   <section id="hero">
     <div class="hero-grid">
@@ -442,6 +464,7 @@
   <section id="intro">
     <p>
       Werner Teichert is a Clinical Psychologist practising in Australia,
+      Werner Teichert is a Clinical Psychologist based in Australia,
       and the founder of BurnoutOS. After years of watching
       capable professionals arrive at his practice depleted — having already
       tried every quick fix on offer — he built what he wishes had existed:
@@ -510,10 +533,10 @@
       <p>
         BurnoutOS occupies the space between. Clinician-developed,
         coaching-framed, designed for people who treat their recovery
-        seriously. From the Burnout Snapshot that begins with pattern
-        recognition, through the Self-Guided and Intensive programmes,
-        to one-to-one Executive Coaching for senior professionals working
-        at leadership scale.
+        seriously. A structured three-phase pathway: Performance Reset to
+        restore capacity, Operating System Redesign to change how the work
+        runs, and the Sustain Lab to hold the gains, with one-to-one
+        Executive Coaching for senior professionals working at leadership scale.
       </p>
     </div>
   </section>
@@ -528,6 +551,8 @@
         screening, informed consent, GP engagement requirements, and
         crisis response protocols. Professional indemnity insurance is
         maintained. The boundaries between coaching and clinical
+        crisis response protocols. Professional indemnity insurance covers
+        all clinical engagements. The boundaries between coaching and clinical
         care are named explicitly and held consistently.
       </p>
       <p>
@@ -545,11 +570,11 @@
     </div>
 
     <div class="cta-grid">
-      <a href="/#individual" class="cta-card">
+      <a href="/stabilise" class="cta-card">
         <div class="cta-card-tag">For personal recovery</div>
-        <h3>Explore the three tiers</h3>
-        <p>Burnout Snapshot, Self-Guided Recovery Programme, and the Burnout Recovery Intensive cohort.</p>
-        <span class="cta-card-link">See the tiers →</span>
+        <h3>Explore the three phases</h3>
+        <p>Performance Reset, Operating System Redesign, and the Sustain Lab — a structured pathway from capacity to durable change.</p>
+        <span class="cta-card-link">See the pathway →</span>
       </a>
 
       <a href="/coaching" class="cta-card">
@@ -573,8 +598,9 @@
     <div class="footer-links">
       <a href="/">Home</a>
       <a href="/burnout-quiz">Take the quiz</a>
-      <a href="/burnoutprogramme.html">Self-Guided</a>
-      <a href="/intensive">Intensive</a>
+      <a href="/stabilise">Performance Reset</a>
+      <a href="/redesign">OS Redesign</a>
+      <a href="/sustain">Sustain Lab</a>
       <a href="/coaching">Coaching</a>
       <a href="/organisations.html">For Organisations</a>
       <a href="/calculator">Cost calculator</a>
@@ -584,5 +610,8 @@
     <div class="footer-copy">© 2026 BurnoutOS. A product of Katalis Behavioural Health Pty Ltd. Werner Teichert is a Clinical Psychologist registered with AHPRA (Australia).</div>
   </footer>
 
+  <script>
+  (function(){var t=document.getElementById('nav-toggle'),m=document.getElementById('nav-mobile');if(!t||!m)return;t.addEventListener('click',function(e){e.stopPropagation();var o=m.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});function close(){m.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');}document.addEventListener('click',function(e){if(m.classList.contains('open')&&!m.contains(e.target)&&e.target!==t)close();});})();
+  </script>
 </body>
 </html>
