@@ -160,25 +160,28 @@
 
     /* ── SCHEDULE ── */
     .schedule-grid { margin-top: 3rem; display: flex; flex-direction: column; gap: 0.5rem; }
-    .sched-phase-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); margin: 2rem 0 0.75rem; padding-left: 0; }
+    .sched-phase-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); margin: 2rem 0 0.75rem; }
     .sched-phase-label:first-child { margin-top: 0; }
-    .sched-row { display: grid; grid-template-columns: 64px 1fr; gap: 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); overflow: hidden; transition: border-color 0.2s; }
-    .sched-row:hover { border-color: rgba(255,255,255,0.14); }
-    .sched-row-checkin { border-color: rgba(232,75,42,0.3); background: rgba(232,75,42,0.04); }
-    .sched-row-checkin:hover { border-color: rgba(232,75,42,0.5); }
-    .sched-week { background: rgba(255,255,255,0.03); border-right: 1px solid rgba(255,255,255,0.07); padding: 1rem 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex-shrink: 0; }
-    .sched-row-checkin .sched-week { background: rgba(232,75,42,0.08); border-right-color: rgba(232,75,42,0.2); }
+    .sched-row { display: grid; grid-template-columns: 64px 1fr; gap: 0; border-radius: 12px; border: 1px solid rgba(0,0,0,0.08); background: #ffffff; overflow: hidden; transition: border-color 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .sched-row:hover { border-color: rgba(0,0,0,0.16); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .sched-row-checkin { border-color: rgba(232,75,42,0.25); background: #fff8f6; }
+    .sched-row-checkin:hover { border-color: rgba(232,75,42,0.45); }
+    .sched-week { background: #f0ede9; border-right: 1px solid rgba(0,0,0,0.07); padding: 1rem 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex-shrink: 0; }
+    .sched-row-checkin .sched-week { background: rgba(232,75,42,0.08); border-right-color: rgba(232,75,42,0.15); }
     .sched-wk-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--ember); line-height: 1; }
-    .sched-wk-date { font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 0.3rem; line-height: 1.2; }
+    .sched-wk-date { font-size: 0.65rem; color: rgba(0,0,0,0.35); margin-top: 0.3rem; line-height: 1.2; }
     .sched-body { padding: 1rem 1.25rem; }
-    .sched-focus { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.35rem; line-height: 1.4; }
-    .sched-desc { font-size: 0.8rem; color: rgba(255,255,255,0.42); line-height: 1.6; margin-bottom: 0.75rem; }
+    .sched-focus { font-size: 0.95rem; font-weight: 600; color: #141218; margin-bottom: 0.35rem; line-height: 1.4; }
+    .sched-desc { font-size: 0.8rem; color: rgba(20,18,24,0.55); line-height: 1.6; margin-bottom: 0.75rem; }
     .sched-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .sched-tag { font-size: 0.67rem; font-weight: 600; letter-spacing: 0.03em; padding: 0.25rem 0.6rem; border-radius: 6px; }
-    .sched-tag.mod { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
-    .sched-tag.checkin { background: rgba(232,75,42,0.15); color: var(--ember); border: 1px solid rgba(232,75,42,0.3); }
-    .sched-tag.out { background: rgba(15,110,86,0.15); color: #5dcaa5; border: 1px solid rgba(15,110,86,0.3); }
-    .sched-tag.comm { background: rgba(83,74,183,0.15); color: #afa9ec; border: 1px solid rgba(83,74,183,0.25); }
+    .sched-tag.mod { background: rgba(20,18,24,0.05); color: rgba(20,18,24,0.5); border: 1px solid rgba(20,18,24,0.12); }
+    .sched-tag.checkin { background: rgba(232,75,42,0.1); color: #c73d20; border: 1px solid rgba(232,75,42,0.3); }
+    .sched-tag.out { background: rgba(15,110,86,0.1); color: #0a5240; border: 1px solid rgba(15,110,86,0.25); }
+    .sched-tag.comm { background: rgba(83,74,183,0.1); color: #3c3489; border: 1px solid rgba(83,74,183,0.2); }
+    #schedule .section-h { color: #141218; }
+    #schedule .price-anchor { color: rgba(20,18,24,0.6); }
+    #schedule .eyebrow { color: var(--ember); }
     @media (max-width: 520px) {
       .sched-row { grid-template-columns: 52px 1fr; }
       .sched-wk-num { font-size: 0.95rem; }
@@ -346,7 +349,7 @@
 
 
   <!-- SCHEDULE -->
-  <section id="schedule" style="background: var(--ink-soft); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+  <section id="schedule" style="background: #f5f3f0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08);">
     <div class="inner">
       <div class="eyebrow center" style="justify-content:center;">The programme</div>
       <h2 class="section-h" style="text-align:center;">Eight weeks, week by week.</h2>
