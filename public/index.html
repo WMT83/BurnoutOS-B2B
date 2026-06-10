@@ -100,11 +100,21 @@
       white-space: nowrap;
     }
     .nav-btn:hover { background: var(--ember-dim); }
-    .nav-toggle { display: none; }
+    .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 4px; width: 34px; height: 34px; background: none; border: none; cursor: pointer; padding: 0; }
+    .nav-toggle span { display: block; height: 2px; width: 20px; margin: 0 auto; background: var(--white); border-radius: 2px; transition: transform .25s, opacity .25s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .nav-mobile { display: none; position: fixed; top: 56px; left: 0; right: 0; z-index: 99; flex-direction: column; background: rgba(12,16,24,0.97); backdrop-filter: blur(16px); border-bottom: 1px solid var(--rule); padding: 0.5rem 1rem 1rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-size: 1rem; color: rgba(255,255,255,0.75); text-decoration: none; padding: 0.85rem 0.5rem; border-bottom: 1px solid var(--rule); }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--white); }
 
     @media (max-width: 860px) {
       .nav-right { gap: 0.75rem; }
       .nav-link, .nav-divider { display: none; }
+      .nav-toggle { display: flex; }
     }
 
     /* ── Hero ── */
@@ -433,9 +443,19 @@
       <a href="/organisations.html" class="nav-link">For organisations</a>
       <a href="/coaching" class="nav-link">Coaching</a>
       <div class="nav-divider"></div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
       <a href="/masterclass" class="nav-btn">Join the masterclass</a>
     </div>
   </nav>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="/stabilise">Reset</a>
+    <a href="/redesign">Redesign</a>
+    <a href="/sustain">Sustain</a>
+    <a href="/organisations.html">For organisations</a>
+    <a href="/coaching">Coaching</a>
+    <a href="/werner">About Werner</a>
+    <a href="/contact">Contact</a>
+  </div>
 
   <!-- Hero -->
   <section id="hero">
@@ -737,5 +757,8 @@
     </div>
   </footer>
 
+  <script>
+  (function(){var t=document.getElementById('nav-toggle'),m=document.getElementById('nav-mobile');if(!t||!m)return;t.addEventListener('click',function(e){e.stopPropagation();var o=m.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});function close(){m.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');}document.addEventListener('click',function(e){if(m.classList.contains('open')&&!m.contains(e.target)&&e.target!==t)close();});})();
+  </script>
 </body>
 </html>
