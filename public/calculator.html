@@ -4,40 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Burnout Cost Calculator — BurnoutOS</title>
+<meta name="description" content="Estimate what burnout is costing your organisation. Five inputs, an evidence-informed annual cost model your CFO will remember.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:        #0a0a0b;
-    --surface:   #111114;
-    --surface2:  #18181d;
-    --border:    #262630;
-    --border2:   #32323f;
-    --text:      #e8e8ec;
-    --muted:     #7a7a8a;
-    --accent:    #c8f060;
-    --accent2:   #a8d040;
-    --danger:    #ff6b4a;
-    --amber:     #f0a830;
-    --serif:     'DM Serif Display', Georgia, serif;
-    --sans:      'Instrument Sans', sans-serif;
-    --mono:      'DM Mono', monospace;
+    --ember:     #e84b2a;
+    --ember-dim: #c73d20;
+    --ink:       #0c1018;
+    --ink-soft:  #141a26;
+    --warm:      #f5f0e8;
+    --white:     #ffffff;
+    --rule:      rgba(255,255,255,0.08);
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 16px;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
     line-height: 1.6;
-    min-height: 100vh;
   }
 
-  /* Noise texture overlay */
   body::before {
     content: '';
     position: fixed;
@@ -47,492 +40,493 @@
     z-index: 0;
   }
 
+  /* ── Nav (matches site) ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(12,16,24,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .logo-dot {
+    width: 7px; height: 7px;
+    background: var(--ember);
+    border-radius: 50%;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .nav-right { display: flex; align-items: center; gap: 1.25rem; }
+  .nav-link {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--white); }
+  .nav-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.12); }
+  .nav-btn {
+    font-size: 0.825rem;
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    color: var(--white);
+    background: var(--ember);
+    padding: 0.45rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { background: var(--ember-dim); }
+  .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 4px; width: 34px; height: 34px; background: none; border: none; cursor: pointer; padding: 0; }
+  .nav-toggle span { display: block; height: 2px; width: 20px; margin: 0 auto; background: var(--white); border-radius: 2px; transition: transform .25s, opacity .25s; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .nav-mobile { display: none; position: fixed; top: 56px; left: 0; right: 0; z-index: 99; flex-direction: column; background: rgba(12,16,24,0.97); backdrop-filter: blur(16px); border-bottom: 1px solid var(--rule); padding: 0.5rem 1rem 1rem; }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a { font-size: 1rem; color: rgba(255,255,255,0.75); text-decoration: none; padding: 0.85rem 0.5rem; border-bottom: 1px solid var(--rule); }
+  .nav-mobile a:last-child { border-bottom: none; }
+  .nav-mobile a:hover { color: var(--white); }
+  @media (max-width: 900px) {
+    nav { padding: 0 1rem; }
+    .nav-right { gap: 0.6rem; }
+    .nav-link, .nav-divider { display: none; }
+    .nav-toggle { display: flex; flex-shrink: 0; }
+    .nav-btn { padding: 0.4rem 0.7rem; font-size: 0.78rem; }
+  }
+
+  /* ── Page layout ── */
   .wrapper {
     position: relative;
     z-index: 1;
-    max-width: 860px;
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 60px 24px 100px;
+    padding: calc(56px + 4rem) 2rem 5rem;
+  }
+  @media (max-width: 640px) {
+    .wrapper { padding: calc(56px + 2.5rem) 1.25rem 3.5rem; }
   }
 
-  /* Header */
-  .header {
-    margin-bottom: 56px;
-  }
+  /* ── Header ── */
+  .header { margin-bottom: 3.5rem; max-width: 720px; }
 
-  .brand {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    color: var(--accent);
+  .section-eyebrow {
+    font-size: 0.7rem;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 0.75rem;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0.5rem;
   }
-
-  .brand::before {
+  .section-eyebrow::before {
     content: '';
-    display: block;
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--ember);
+    display: inline-block;
   }
 
   h1 {
-    font-family: var(--serif);
-    font-size: clamp(36px, 6vw, 58px);
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
     line-height: 1.05;
-    font-weight: 400;
-    color: var(--text);
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
   }
-
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
+  h1 em { font-style: normal; color: var(--ember); }
 
   .subtitle {
-    font-size: 17px;
-    color: var(--muted);
-    max-width: 520px;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.5);
+    max-width: 58ch;
     line-height: 1.7;
   }
 
-  /* Two-col layout */
+  /* ── Two-col layout ── */
   .calculator-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 1.5rem;
     align-items: start;
   }
-
-  @media (max-width: 640px) {
+  @media (max-width: 760px) {
     .calculator-grid { grid-template-columns: 1fr; }
   }
 
-  /* Inputs panel */
+  /* ── Inputs panel ── */
   .panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px;
+    background: var(--ink-soft);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 2rem;
   }
-
   .panel-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: var(--muted);
+    font-size: 0.7rem;
     text-transform: uppercase;
-    margin-bottom: 28px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 1.5rem;
   }
 
-  .field {
-    margin-bottom: 24px;
-  }
-
-  .field:last-child { margin-bottom: 0; }
-
-  .field label {
+  .field { margin-bottom: 1.5rem; }
+  .field label,
+  .slider-header label {
     display: block;
-    font-size: 13px;
+    font-size: 0.85rem;
     font-weight: 500;
-    color: var(--muted);
-    margin-bottom: 8px;
-    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 0.5rem;
   }
-
   .field-row {
     display: flex;
     align-items: center;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
+    background: var(--ink);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
     transition: border-color 0.2s;
   }
-
-  .field-row:focus-within {
-    border-color: var(--accent);
-  }
-
+  .field-row:focus-within { border-color: var(--ember); }
   .field-prefix {
-    padding: 0 14px;
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--muted);
-    background: transparent;
-    border-right: 1px solid var(--border);
-    height: 48px;
-    display: flex;
-    align-items: center;
-    user-select: none;
+    padding: 0 0 0 0.9rem;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.9rem;
   }
-
   .field-row input {
     flex: 1;
     background: transparent;
     border: none;
     outline: none;
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 16px;
-    font-weight: 500;
-    padding: 0 16px;
-    height: 48px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    padding: 0.7rem 0.9rem 0.7rem 0.5rem;
     width: 100%;
   }
+  .field-row input::-webkit-outer-spin-button,
+  .field-row input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .field-row input[type=number] { -moz-appearance: textfield; appearance: textfield; }
 
-  .field-row input::placeholder { color: var(--border2); }
-
-  /* Slider field */
-  .slider-field { margin-bottom: 24px; }
-
+  .slider-field { margin-bottom: 1.5rem; }
+  .slider-field:last-child { margin-bottom: 0; }
   .slider-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 10px;
+    margin-bottom: 0.25rem;
   }
-
-  .slider-header label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-  }
-
   .slider-value {
-    font-family: var(--mono);
-    font-size: 15px;
-    color: var(--accent);
-    font-weight: 500;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--ember);
   }
-
-  input[type=range] {
-    -webkit-appearance: none;
+  input[type="range"] {
     width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
     height: 4px;
-    background: var(--border2);
+    background: rgba(255,255,255,0.12);
     border-radius: 2px;
     outline: none;
     cursor: pointer;
   }
-
-  input[type=range]::-webkit-slider-thumb {
+  input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    background: var(--accent);
+    appearance: none;
+    width: 16px; height: 16px;
     border-radius: 50%;
-    cursor: pointer;
+    background: var(--ember);
+    border: none;
     transition: transform 0.15s;
   }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--ember);
+    border: none;
+    cursor: pointer;
+  }
+  .slider-scale {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.3rem;
+  }
+  .slider-scale span { font-size: 0.7rem; color: rgba(255,255,255,0.3); }
 
-  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-
-  /* Results panel */
+  /* ── Results panel ── */
   .results-panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px;
-    position: sticky;
-    top: 24px;
+    background: var(--warm);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 2rem;
   }
-
   .total-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: var(--muted);
+    font-size: 0.7rem;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    letter-spacing: 0.1em;
+    color: rgba(12,16,24,0.45);
+    margin-bottom: 0.5rem;
   }
-
   .total-amount {
-    font-family: var(--serif);
-    font-size: clamp(38px, 7vw, 52px);
-    color: var(--danger);
-    line-height: 1;
-    margin-bottom: 6px;
-    transition: all 0.3s ease;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 4.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: var(--ink);
   }
-
+  .total-amount.animating { animation: tick 0.3s ease-out; }
+  @keyframes tick {
+    0% { opacity: 0.4; transform: translateY(3px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
   .total-sub {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 28px;
+    font-size: 0.85rem;
+    color: rgba(12,16,24,0.55);
+    margin-top: 0.25rem;
   }
 
-  .divider {
-    height: 1px;
-    background: var(--border);
-    margin-bottom: 24px;
-  }
+  .divider { height: 1px; background: rgba(12,16,24,0.1); margin: 1.5rem 0; }
 
-  /* Cost breakdown rows */
   .breakdown-row {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
+    gap: 1rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid rgba(12,16,24,0.06);
   }
-
   .breakdown-row:last-child { border-bottom: none; }
-
-  .breakdown-name {
-    font-size: 13px;
-    color: var(--muted);
-    flex: 1;
-  }
-
+  .breakdown-name { font-size: 0.85rem; color: rgba(12,16,24,0.6); }
   .breakdown-amount {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink);
     white-space: nowrap;
   }
 
-  /* Recoverable callout */
   .recoverable {
-    margin-top: 20px;
-    background: rgba(200, 240, 96, 0.06);
-    border: 1px solid rgba(200, 240, 96, 0.2);
-    border-radius: 10px;
-    padding: 16px 18px;
+    background: var(--ember);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
   }
-
   .recoverable-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 4px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 0.25rem;
   }
-
   .recoverable-amount {
-    font-family: var(--serif);
-    font-size: 24px;
-    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
   }
-
   .recoverable-note {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 4px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 0.4rem;
     line-height: 1.5;
   }
 
-  /* Gate section */
-  .gate-section {
-    margin-top: 28px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
-
+  /* ── Email gate ── */
+  .gate-section { margin-top: 1.5rem; }
   .gate-heading {
-    font-family: var(--serif);
-    font-size: 20px;
-    margin-bottom: 6px;
-    font-weight: 400;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
   }
-
   .gate-sub {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 16px;
-    line-height: 1.5;
+    font-size: 0.85rem;
+    color: rgba(12,16,24,0.6);
+    line-height: 1.6;
+    margin-bottom: 1rem;
   }
-
   .gate-input {
     width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    background: var(--white);
+    border: 1px solid rgba(12,16,24,0.15);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.75rem 0.9rem;
     outline: none;
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 15px;
-    padding: 14px 16px;
-    margin-bottom: 10px;
     transition: border-color 0.2s;
+    margin-bottom: 0.5rem;
   }
-
-  .gate-input:focus { border-color: var(--accent); }
-  .gate-input::placeholder { color: var(--border2); }
-
+  .gate-input:focus { border-color: var(--ember); }
+  .gate-input::placeholder { color: rgba(12,16,24,0.35); }
+  .error-msg {
+    display: none;
+    font-size: 0.78rem;
+    color: var(--ember-dim);
+    margin-bottom: 0.5rem;
+  }
+  .error-msg.show { display: block; }
   .gate-btn {
     width: 100%;
-    background: var(--accent);
-    color: #0a0a0b;
-    border: none;
-    border-radius: 10px;
-    font-family: var(--sans);
-    font-size: 15px;
+    font-family: 'Syne', sans-serif;
     font-weight: 600;
-    padding: 15px 24px;
+    font-size: 0.9rem;
+    color: var(--white);
+    background: var(--ember);
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem 1rem;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    letter-spacing: 0.01em;
+    transition: background 0.2s;
   }
-
-  .gate-btn:hover { background: var(--accent2); }
-  .gate-btn:active { transform: scale(0.99); }
-  .gate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
+  .gate-btn:hover { background: var(--ember-dim); }
+  .gate-btn:disabled { opacity: 0.6; cursor: default; }
   .gate-disclaimer {
-    font-size: 11px;
-    color: var(--muted);
+    font-size: 0.72rem;
+    color: rgba(12,16,24,0.4);
+    margin-top: 0.6rem;
     text-align: center;
-    margin-top: 10px;
-    line-height: 1.5;
   }
 
-  /* Success state */
-  .success-state {
-    display: none;
-    text-align: center;
-    padding: 16px 0;
-  }
-
+  /* ── Success state ── */
+  .success-state { display: none; margin-top: 1.5rem; text-align: center; }
   .success-state.show { display: block; }
-
   .success-icon {
-    width: 48px;
-    height: 48px;
-    background: rgba(200, 240, 96, 0.1);
-    border: 1px solid var(--accent);
+    width: 44px; height: 44px;
     border-radius: 50%;
+    background: var(--ember);
+    color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 16px;
-    font-size: 20px;
+    margin: 0 auto 0.75rem;
   }
-
   .success-heading {
-    font-family: var(--serif);
-    font-size: 22px;
-    margin-bottom: 8px;
-    font-weight: 400;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
   }
-
   .success-sub {
-    font-size: 13px;
-    color: var(--muted);
+    font-size: 0.85rem;
+    color: rgba(12,16,24,0.6);
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
   }
-
   .cta-btn {
     display: inline-block;
-    background: transparent;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    border-radius: 10px;
-    font-family: var(--sans);
-    font-size: 14px;
+    font-family: 'Syne', sans-serif;
     font-weight: 600;
-    padding: 12px 24px;
-    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--white);
+    background: var(--ink);
+    border-radius: 4px;
+    padding: 0.75rem 1.4rem;
     text-decoration: none;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s;
   }
+  .cta-btn:hover { background: var(--ink-soft); }
 
-  .cta-btn:hover {
-    background: var(--accent);
-    color: #0a0a0b;
-  }
-
-  /* Error msg */
-  .error-msg {
-    font-size: 12px;
-    color: var(--danger);
-    margin-top: 6px;
-    display: none;
-  }
-
-  .error-msg.show { display: block; }
-
-  /* Methodology note */
+  /* ── Methodology ── */
   .methodology {
-    margin-top: 40px;
-    padding: 24px 28px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 2rem;
+    max-width: 760px;
   }
-
   .methodology-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: var(--muted);
+    font-size: 0.7rem;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 0.75rem;
   }
-
   .methodology p {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.7;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.75;
   }
+  .methodology strong { color: rgba(255,255,255,0.6); font-weight: 500; }
 
-  .methodology strong { color: var(--text); font-weight: 500; }
-
-  /* Animation */
-  @keyframes countUp {
-    from { opacity: 0.4; transform: translateY(4px); }
-    to   { opacity: 1;   transform: translateY(0); }
-  }
-
-  .animating { animation: countUp 0.25s ease forwards; }
-
-  /* Badge */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255, 107, 74, 0.1);
-    border: 1px solid rgba(255, 107, 74, 0.25);
-    color: var(--danger);
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin-bottom: 24px;
-  }
-
-  .badge::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    background: var(--danger);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
+  /* ── Footer (matches site) ── */
+  footer { position: relative; z-index: 1; background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 2rem; }
+  .footer-inner { max-width: 1140px; margin: 0 auto; }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--white); letter-spacing: -0.03em; display: flex; align-items: center; gap: 0.35rem; }
+  .footer-logo-dot { width: 6px; height: 6px; background: var(--ember); border-radius: 50%; }
+  .footer-nav { position: static; height: auto; padding: 0; background: none; border: none; backdrop-filter: none; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+  .footer-nav a { font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+  .footer-nav a:hover { color: rgba(255,255,255,0.65); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  .footer-legal { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
+  .footer-email { font-size: 0.72rem; color: rgba(255,255,255,0.25); text-decoration: none; }
 </style>
 </head>
 <body>
 
+<nav>
+  <a href="/" class="logo">BurnoutOS<span class="logo-dot"></span></a>
+  <div class="nav-right">
+    <a href="/stabilise" class="nav-link">Reset</a>
+    <a href="/redesign" class="nav-link">Redesign</a>
+    <a href="/sustain" class="nav-link">Sustain</a>
+    <div class="nav-divider"></div>
+    <a href="/organisations.html" class="nav-link">For organisations</a>
+    <a href="/coaching" class="nav-link">Coaching</a>
+    <div class="nav-divider"></div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <a href="/masterclass" class="nav-btn">Join the masterclass</a>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="/stabilise">Reset</a>
+  <a href="/redesign">Redesign</a>
+  <a href="/sustain">Sustain</a>
+  <a href="/organisations.html">For organisations</a>
+  <a href="/coaching">Coaching</a>
+  <a href="/werner">About Werner</a>
+  <a href="/contact">Contact</a>
+</div>
+
 <div class="wrapper">
 
   <header class="header">
-    <div class="brand">BurnoutOS — Workforce Intelligence</div>
-    <div class="badge">Evidence-based methodology</div>
-    <h1>What is burnout <em>actually</em><br>costing your organisation?</h1>
-    <p class="subtitle">Five inputs. A number your CFO will remember. Based on peer-reviewed research across 200,000+ Australian workers.</p>
+    <div class="section-eyebrow">Workforce intelligence</div>
+    <h1>What is burnout <em>actually</em> costing your organisation?</h1>
+    <p class="subtitle">Five inputs. A number your CFO will remember. Evidence-informed modelling drawing on research across 200,000+ Australian workers.</p>
   </header>
 
   <div class="calculator-grid">
@@ -542,7 +536,7 @@
       <div class="panel-label">Your organisation</div>
 
       <div class="field">
-        <label>Number of employees</label>
+        <label for="employees">Number of employees</label>
         <div class="field-row">
           <span class="field-prefix">#</span>
           <input type="number" id="employees" min="10" max="10000" value="200" placeholder="200">
@@ -550,7 +544,7 @@
       </div>
 
       <div class="field">
-        <label>Average annual salary (AUD)</label>
+        <label for="salary">Average annual salary (AUD)</label>
         <div class="field-row">
           <span class="field-prefix">$</span>
           <input type="number" id="salary" min="30000" max="300000" value="85000" placeholder="85,000">
@@ -559,19 +553,19 @@
 
       <div class="slider-field">
         <div class="slider-header">
-          <label>Estimated burnout prevalence</label>
+          <label for="prevalence">Estimated burnout prevalence</label>
           <span class="slider-value" id="prevalenceVal">23%</span>
         </div>
         <input type="range" id="prevalence" min="5" max="60" value="23">
-        <div style="display:flex; justify-content:space-between; margin-top:4px;">
-          <span style="font-size:11px; color:var(--muted)">5% — low</span>
-          <span style="font-size:11px; color:var(--muted)">60% — crisis</span>
+        <div class="slider-scale">
+          <span>5% (low)</span>
+          <span>60% (crisis)</span>
         </div>
       </div>
 
       <div class="slider-field">
         <div class="slider-header">
-          <label>Industry turnover rate</label>
+          <label for="turnover">Industry turnover rate</label>
           <span class="slider-value" id="turnoverVal">18%</span>
         </div>
         <input type="range" id="turnover" min="5" max="50" value="18">
@@ -579,7 +573,7 @@
 
       <div class="slider-field">
         <div class="slider-header">
-          <label>Productivity loss from presenteeism</label>
+          <label for="presenteeism">Productivity loss from presenteeism</label>
           <span class="slider-value" id="presenteeismVal">35%</span>
         </div>
         <input type="range" id="presenteeism" min="10" max="60" value="35">
@@ -626,7 +620,7 @@
       <!-- Email gate -->
       <div class="gate-section" id="gateSection">
         <div class="gate-heading">Get your full report</div>
-        <div class="gate-sub">We'll send you a personalised cost breakdown with industry benchmarks and ROI model — ready to share with your leadership team.</div>
+        <div class="gate-sub">We'll send you a personalised cost breakdown with industry benchmarks and ROI model, ready to share with your leadership team.</div>
         <input type="email" class="gate-input" id="gateEmail" placeholder="you@company.com.au">
         <p class="error-msg" id="emailError">Please enter a valid work email address.</p>
         <button class="gate-btn" id="gateBtn" onclick="submitGate()">Send my cost report →</button>
@@ -652,7 +646,31 @@
 
 </div>
 
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">BurnoutOS<span class="footer-logo-dot"></span></div>
+      <nav class="footer-nav">
+        <a href="/stabilise">Performance Reset</a>
+        <a href="/redesign">OS Redesign</a>
+        <a href="/sustain">Sustain Lab</a>
+        <a href="/coaching">Coaching</a>
+        <a href="/organisations.html">For organisations</a>
+        <a href="/werner">About Werner</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-legal">© 2026 BurnoutOS. A product of Katalis Behavioural Health Pty Ltd. Werner Teichert is a Clinical Psychologist registered with AHPRA (Australia).</div>
+      <a href="mailto:hello@burnout-os.app" class="footer-email">hello@burnout-os.app</a>
+    </div>
+  </div>
+</footer>
+
 <script>
+  // ── Mobile nav (matches site) ──
+  (function(){var t=document.getElementById('nav-toggle'),m=document.getElementById('nav-mobile');if(!t||!m)return;t.addEventListener('click',function(e){e.stopPropagation();var o=m.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});function close(){m.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false');}document.addEventListener('click',function(e){if(m.classList.contains('open')&&!m.contains(e.target)&&e.target!==t)close();});})();
+
   // ── Inputs ──
   const $employees    = document.getElementById('employees');
   const $salary       = document.getElementById('salary');
@@ -685,7 +703,7 @@
     // Presenteeism: salary * prevalence * loss factor * 0.6 (partial year)
     const presenteeismCost = employees * salary * prevalence * presenteeismLoss * 0.6;
 
-    // Turnover: 60% of salary per replacement, applied to burnt employees at turnover rate
+    // Turnover: 65% of salary per replacement, applied to burnt employees at turnover rate
     const turnoverCost = burntEmployees * turnoverRate * salary * 0.65;
 
     // Healthcare: AUD 1,800 uplift per burnt employee
@@ -734,7 +752,7 @@
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!validEmail) {
       errorMsg.classList.add('show');
-      emailInput.style.borderColor = 'var(--danger)';
+      emailInput.style.borderColor = 'var(--ember)';
       return;
     }
 
@@ -746,7 +764,7 @@
     const d = window._calcData || {};
 
     try {
-      // Submit to MarketOS receive-enrolment
+      // Submit to MarketOS calculator-lead
       const res = await fetch('https://ewictbfujvtfjqomdalq.supabase.co/functions/v1/calculator-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
