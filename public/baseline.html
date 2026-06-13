@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The BurnoutOS Baseline · Free Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #141218;
+    --ember: #E84B2A;
+    --ember-light: rgba(232,75,42,0.1);
+    --white: #ffffff;
+    --off: #f7f6f4;
+    --muted: #6E6A72;
+    --border: rgba(20,18,24,0.1);
+    --dark: #1a1817;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; min-height: 100vh; flex-direction: column; }
+  .screen.active { display: flex; }
+
+  /* ── LANDING ── */
+  #screen-landing {
+    background: var(--dark);
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .landing-inner { max-width: 600px; width: 100%; }
+
+  .wordmark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.02em;
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  .wordmark .dot {
+    width: 5px; height: 5px;
+    background: var(--ember);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .landing-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 16px;
+  }
+
+  .landing-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 7vw, 64px);
+    line-height: 0.95;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .landing-title .ember-period {
+    color: var(--ember);
+  }
+
+  .landing-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 440px;
+    margin: 0 auto 36px;
+  }
+
+  .landing-meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+
+  .landing-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .landing-meta-item .tick {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: rgba(232,75,42,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    color: var(--ember);
+    flex-shrink: 0;
+  }
+
+  .btn-primary {
+    background: var(--ember);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .landing-disclaimer {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* ── QUESTION SCREEN ── */
+  #screen-question {
+    background: var(--white);
+    flex-direction: column;
+  }
+
+  .q-header {
+    padding: 20px 24px 0;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .q-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .q-wordmark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 2px;
+  }
+  .q-wordmark .dot { width: 4px; height: 4px; background: var(--ember); border-radius: 50%; }
+
+  .q-counter {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .progress-wrap {
+    height: 3px;
+    background: rgba(20,18,24,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--ember);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .q-dimension-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-top: 28px;
+    margin-bottom: 0;
+  }
+
+  .q-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 24px 32px;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .q-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(20px, 4vw, 28px);
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+
+  .q-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .scale-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--white);
+  }
+
+  .scale-option:hover {
+    border-color: rgba(232,75,42,0.4);
+    background: rgba(232,75,42,0.04);
+  }
+
+  .scale-option.selected {
+    border-color: var(--ember);
+    background: rgba(232,75,42,0.06);
+  }
+
+  .scale-option-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(20,18,24,0.06);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+
+  .scale-option.selected .scale-option-num {
+    background: var(--ember);
+    color: var(--white);
+  }
+
+  .scale-option-label {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .scale-option.selected .scale-option-label { font-weight: 500; }
+
+  .q-nav {
+    padding: 0 24px 32px;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-back {
+    font-size: 13px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 0;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-back:hover { color: var(--ink); }
+
+  .btn-next {
+    background: var(--ink);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.3;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .btn-next.enabled {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .btn-next.enabled:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* ── EMAIL GATE ── */
+  #screen-gate {
+    background: var(--dark);
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .gate-inner { max-width: 480px; width: 100%; }
+
+  .gate-icon {
+    width: 56px; height: 56px;
+    background: rgba(232,75,42,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 24px;
+  }
+
+  .gate-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+
+  .gate-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .gate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .gate-input {
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 5px;
+    padding: 14px 16px;
+    font-size: 15px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    width: 100%;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .gate-input::placeholder { color: rgba(255,255,255,0.3); }
+  .gate-input:focus { border-color: var(--ember); }
+
+  .gate-cta {
+    background: var(--ember);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.15s;
+    letter-spacing: 0.02em;
+  }
+
+  .gate-cta:hover { opacity: 0.9; }
+
+  .gate-privacy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    line-height: 1.5;
+  }
+
+  /* ── RESULTS ── */
+  #screen-results {
+    background: var(--white);
+    flex-direction: column;
+  }
+
+  .results-header {
+    background: var(--dark);
+    padding: 28px 24px 32px;
+    text-align: center;
+  }
+
+  .results-header .wordmark {
+    margin-bottom: 20px;
+  }
+
+  .results-name {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .results-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(24px, 5vw, 36px);
+    color: var(--white);
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+
+  .results-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+  }
+
+  .results-body {
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 32px 24px 40px;
+  }
+
+  /* Radar */
+  .radar-section {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .radar-wrap {
+    flex-shrink: 0;
+  }
+
+  .radar-legend {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 4px;
+  }
+
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+
+  .legend-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--ink);
+    min-width: 80px;
+  }
+
+  .legend-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: rgba(20,18,24,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .legend-bar-fill {
+    height: 100%;
+    background: var(--ember);
+    border-radius: 2px;
+    width: 0;
+    transition: width 1s ease;
+  }
+
+  .legend-pct {
+    font-size: 12px;
+    color: var(--muted);
+    min-width: 32px;
+    text-align: right;
+    font-weight: 500;
+  }
+
+  .legend-note {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* Interpretation cards */
+  .interp-section {
+    margin-bottom: 28px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 14px;
+  }
+
+  .interp-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .interp-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .interp-card.revealed { opacity: 1; transform: translateY(0); }
+
+  .interp-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .interp-dim {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  .interp-band {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  .band-high { background: rgba(232,75,42,0.12); color: var(--ember); }
+  .band-moderate { background: rgba(20,18,24,0.07); color: var(--muted); }
+  .band-low { background: rgba(20,180,100,0.1); color: #1a7a4a; }
+
+  .interp-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* Pathway section */
+  .pathway-section {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 24px 20px;
+    margin-bottom: 24px;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .pathway-section.revealed { opacity: 1; }
+
+  .pathway-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 6px;
+  }
+
+  .pathway-heading {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--white);
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+
+  .pathway-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .pathway-phases {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .phase-pill {
+    flex: 1;
+    min-width: 80px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 5px;
+    padding: 10px 12px;
+  }
+
+  .phase-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--ember);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .phase-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--white);
+  }
+
+  .phase-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 2px;
+  }
+
+  .cta-banner {
+    background: var(--ember);
+    border-radius: 5px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    text-decoration: none;
+  }
+
+  .cta-banner:hover { opacity: 0.92; }
+
+  .cta-banner-text {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--white);
+  }
+
+  .cta-banner-url {
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
+
+  .cta-disclaimer {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* Share / restart */
+  .results-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-outline {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* ── TRANSITIONS ── */
+  .fade-in {
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RADAR SVG ── */
+  #radar-svg { overflow: visible; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .radar-section { flex-direction: column; align-items: center; }
+    .radar-legend { width: 100%; }
+    .pathway-phases { gap: 6px; }
+    .phase-pill { min-width: 70px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 1: LANDING
+════════════════════════════════════════════════ -->
+<section class="screen active" id="screen-landing">
+  <div class="landing-inner">
+    <div class="wordmark">BurnoutOS<span class="dot"></span></div>
+
+    <div class="landing-eyebrow">Free Assessment</div>
+
+    <h1 class="landing-title">
+      The Burnout<br>Baseline<span class="ember-period">.</span>
+    </h1>
+
+    <p class="landing-sub">
+      Five dimensions. Twenty-five questions.<br>
+      Your personalised BurnoutOS Profile in under five minutes.
+    </p>
+
+    <div class="landing-meta">
+      <div class="landing-meta-item">
+        <span class="tick">✓</span>
+        <span>5 minutes</span>
+      </div>
+      <div class="landing-meta-item">
+        <span class="tick">✓</span>
+        <span>25 questions</span>
+      </div>
+      <div class="landing-meta-item">
+        <span class="tick">✓</span>
+        <span>Instant results</span>
+      </div>
+      <div class="landing-meta-item">
+        <span class="tick">✓</span>
+        <span>No login required</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="startAssessment()">Start the Baseline</button>
+
+    <p class="landing-disclaimer">
+      This is an educational self-reflection tool, not a clinical assessment.<br>
+      Werner Teichert · Clinical Psychologist (AHPRA) · MBA
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 2: QUESTIONS
+════════════════════════════════════════════════ -->
+<section class="screen" id="screen-question">
+  <div class="q-header">
+    <div class="q-header-top">
+      <div class="q-wordmark">BurnoutOS<span class="dot"></span></div>
+      <div class="q-counter" id="q-counter">1 of 25</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar" style="width:4%"></div>
+    </div>
+    <div class="q-dimension-tag" id="q-dimension-tag">LOAD</div>
+  </div>
+
+  <div class="q-body">
+    <div class="q-text" id="q-text">Loading...</div>
+
+    <div class="q-scale" id="q-scale">
+      <label class="scale-option" onclick="selectAnswer(0, this)">
+        <div class="scale-option-num">0</div>
+        <div class="scale-option-label">Not at all true for me</div>
+      </label>
+      <label class="scale-option" onclick="selectAnswer(1, this)">
+        <div class="scale-option-num">1</div>
+        <div class="scale-option-label">Rarely true</div>
+      </label>
+      <label class="scale-option" onclick="selectAnswer(2, this)">
+        <div class="scale-option-num">2</div>
+        <div class="scale-option-label">Sometimes true</div>
+      </label>
+      <label class="scale-option" onclick="selectAnswer(3, this)">
+        <div class="scale-option-num">3</div>
+        <div class="scale-option-label">Often true</div>
+      </label>
+      <label class="scale-option" onclick="selectAnswer(4, this)">
+        <div class="scale-option-num">4</div>
+        <div class="scale-option-label">Almost always true</div>
+      </label>
+    </div>
+  </div>
+
+  <div class="q-nav">
+    <button class="btn-back" id="btn-back" onclick="prevQuestion()">← Back</button>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Continue →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 3: EMAIL GATE
+════════════════════════════════════════════════ -->
+<section class="screen" id="screen-gate">
+  <div class="gate-inner">
+    <div class="wordmark">BurnoutOS<span class="dot"></span></div>
+
+    <div class="gate-icon">📊</div>
+
+    <h2 class="gate-title">Your profile is ready.</h2>
+    <p class="gate-sub">
+      Enter your details to see your BurnoutOS Profile — your five-dimension radar, personalised interpretation, and recommended entry point into the pathway.
+    </p>
+
+    <div class="gate-form">
+      <input class="gate-input" type="text" id="gate-name" placeholder="First name" autocomplete="given-name">
+      <input class="gate-input" type="email" id="gate-email" placeholder="Email address" autocomplete="email">
+      <button class="gate-cta" onclick="submitGate()">See My Profile →</button>
+    </div>
+
+    <p class="gate-privacy">
+      Your results will be sent to this address. No spam, ever.<br>
+      Werner Teichert · BurnoutOS · burnout-os.app
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 4: RESULTS
+════════════════════════════════════════════════ -->
+<section class="screen" id="screen-results">
+
+  <div class="results-header">
+    <div class="wordmark">BurnoutOS<span class="dot"></span></div>
+    <div class="results-name" id="results-name">Your BurnoutOS Profile</div>
+    <div class="results-title" id="results-headline">Loading your profile...</div>
+    <div class="results-sub" id="results-sub"></div>
+  </div>
+
+  <div class="results-body">
+
+    <!-- RADAR + BARS -->
+    <div class="radar-section">
+      <div class="radar-wrap">
+        <svg id="radar-svg" width="220" height="220" viewBox="-10 -10 220 220">
+          <!-- grid rings -->
+          <polygon points="100,10 173,55 173,145 100,190 27,145 27,55" fill="none" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <polygon points="100,32 156,67 156,133 100,168 44,133 44,67" fill="none" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <polygon points="100,54 138,79 138,121 100,146 62,121 62,79" fill="none" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <polygon points="100,76 121,91 121,109 100,124 79,109 79,91" fill="none" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <!-- axis lines -->
+          <line x1="100" y1="100" x2="100" y2="10" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="173" y2="55" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="173" y2="145" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="100" y2="190" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="27" y2="145" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="27" y2="55" stroke="rgba(20,18,24,0.07)" stroke-width="1"/>
+          <!-- profile shape -->
+          <polygon id="radar-shape" points="100,100 100,100 100,100 100,100 100,100" fill="rgba(232,75,42,0.15)" stroke="#E84B2A" stroke-width="2" stroke-linejoin="round"/>
+          <!-- axis labels -->
+          <text x="100" y="4" text-anchor="middle" font-family="DM Sans" font-size="10" font-weight="700" fill="#141218">LOAD</text>
+          <text x="180" y="53" text-anchor="start" font-family="DM Sans" font-size="10" fill="#6E6A72">FRICTION</text>
+          <text x="180" y="150" text-anchor="start" font-family="DM Sans" font-size="10" fill="#6E6A72">DESIGN</text>
+          <text x="100" y="202" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#6E6A72">RHYTHM</text>
+          <text x="20" y="150" text-anchor="end" font-family="DM Sans" font-size="10" fill="#6E6A72">CAPACITY</text>
+        </svg>
+      </div>
+
+      <div class="radar-legend" id="radar-legend">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <!-- INTERPRETATION -->
+    <div class="interp-section">
+      <div class="section-label">What this means</div>
+      <div class="interp-cards" id="interp-cards">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <!-- PATHWAY -->
+    <div class="pathway-section" id="pathway-section">
+      <div class="pathway-title">Your recommended entry point</div>
+      <div class="pathway-heading" id="pathway-heading">Reset</div>
+      <div class="pathway-note" id="pathway-note">Based on your profile</div>
+
+      <div class="pathway-phases">
+        <div class="phase-pill">
+          <div class="phase-num">01</div>
+          <div class="phase-name">Reset</div>
+          <div class="phase-sub">Stabilise capacity</div>
+        </div>
+        <div class="phase-pill" style="opacity:0.5">
+          <div class="phase-num">02</div>
+          <div class="phase-name">Redesign</div>
+          <div class="phase-sub">Change the structure</div>
+        </div>
+        <div class="phase-pill" style="opacity:0.5">
+          <div class="phase-num">03</div>
+          <div class="phase-name">Sustain</div>
+          <div class="phase-sub">Build rhythm</div>
+        </div>
+      </div>
+
+      <a class="cta-banner" href="https://burnout-os.app/stabilise" target="_blank">
+        <div class="cta-banner-text">Cohort 1 opens 29 July · Limited seats</div>
+        <div class="cta-banner-url">burnout-os.app/stabilise →</div>
+      </a>
+
+      <div class="cta-disclaimer">This assessment stands on its own. No obligation to proceed.</div>
+    </div>
+
+    <div class="results-footer">
+      <button class="btn-outline" onclick="restartAssessment()">Retake the assessment</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════ -->
+<script>
+// ─── QUESTION BANK ────────────────────────────────────────────────────────────
+const questions = [
+  // LOAD (5)
+  { dim: 'load', text: 'The total volume of what I am responsible for — work, leadership, caregiving, and life — feels like more than I can comfortably carry.' },
+  { dim: 'load', text: 'I regularly feel the weight of decisions that could go wrong, even when things are functioning.' },
+  { dim: 'load', text: 'The demands on my time, attention, and energy arrive faster than I can absorb them.' },
+  { dim: 'load', text: 'I find it difficult to separate from work mentally, even when I am not working.' },
+  { dim: 'load', text: 'The gap between what is expected of me and what I can realistically deliver is growing.' },
+
+  // FRICTION (5)
+  { dim: 'friction', text: 'When I feel behind or under pressure, my instinct is to work harder and longer rather than stop.' },
+  { dim: 'friction', text: 'I find it difficult to say no, even when I know I am already at capacity.' },
+  { dim: 'friction', text: 'I hold myself to standards that make most tasks cost more than they need to.' },
+  { dim: 'friction', text: 'I respond to uncomfortable situations by delaying, withdrawing, or keeping busy with less important things.' },
+  { dim: 'friction', text: 'I turn my own recovery or wellbeing into a project — researching systems, optimising routines — rather than simply resting.' },
+
+  // CAPACITY (5)
+  { dim: 'capacity', text: 'At the end of a typical week, I feel depleted rather than tired-but-recoverable.' },
+  { dim: 'capacity', text: 'Getting back from a hard stretch of work is taking noticeably longer than it used to.' },
+  { dim: 'capacity', text: 'My sleep is consistently interrupted, insufficient, or unrestorative.' },
+  { dim: 'capacity', text: 'I have less patience, flexibility, or emotional bandwidth than I did a year ago.' },
+  { dim: 'capacity', text: 'The things that used to restore me — exercise, connection, time off — are not working as well.' },
+
+  // DESIGN (5)
+  { dim: 'design', text: 'My work structure has grown organically and no one has ever deliberately designed it for sustainability.' },
+  { dim: 'design', text: 'I have limited control over how, when, or where I do my most important work.' },
+  { dim: 'design', text: 'I regularly attend meetings, take on tasks, or carry responsibilities that do not require me specifically.' },
+  { dim: 'design', text: 'The expectations placed on me — by others or by myself — are not clearly defined or regularly reviewed.' },
+  { dim: 'design', text: 'I am the first person to drop a boundary, and the last person to raise one.' },
+
+  // RHYTHM (5)
+  { dim: 'rhythm', text: 'I have tried to change my patterns before and the changes have not held past a few weeks.' },
+  { dim: 'rhythm', text: 'When my workload spikes, the first things I sacrifice are the habits that protect my recovery.' },
+  { dim: 'rhythm', text: 'I do not have a regular practice of reviewing how I am going and catching problems early.' },
+  { dim: 'rhythm', text: 'I maintain my wellbeing largely through willpower rather than structures that work even when I am depleted.' },
+  { dim: 'rhythm', text: 'I am better at starting recovery habits than maintaining them when things get hard again.' },
+];
+
+const DIMS = ['load','friction','capacity','design','rhythm'];
+const DIM_LABELS = { load:'Load', friction:'Friction', capacity:'Capacity', design:'Design', rhythm:'Rhythm' };
+const DIM_QUESTIONS = { load:[0,1,2,3,4], friction:[5,6,7,8,9], capacity:[10,11,12,13,14], design:[15,16,17,18,19], rhythm:[20,21,22,23,24] };
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let answers = new Array(25).fill(null);
+let currentQ = 0;
+let userName = '';
+let userEmail = '';
+let assessmentStartedAt = null;
+
+// ─── RADAR GEOMETRY ──────────────────────────────────────────────────────────
+// Pentagon: Load=top, Friction=top-right, Design=bottom-right, Rhythm=bottom, Capacity=bottom-left, Friction=top-right
+// Axes for 5-point pentagon (center=100,100, r=90)
+const CENTER = 100;
+const R_MAX = 90;
+const angles = [-90, -18, 54, 126, 198]; // degrees for Load, Friction, Design, Rhythm, Capacity... wait — let's match slide order
+// Slide order: Load(top), Friction(right), Design(bottom-right), Rhythm(bottom), Capacity(left)
+// Pentagon top=-90, then +72 each
+// Axes: 0=Load, 1=Friction, 2=Design(bottom-right), 3=Rhythm(bottom-left), 4=Capacity
+const AXES = [
+  { dim: 'load',     angle: -90 },
+  { dim: 'friction', angle: -18 },
+  { dim: 'design',   angle: 54  },
+  { dim: 'rhythm',   angle: 126 },
+  { dim: 'capacity', angle: 198 },
+];
+
+function toXY(angle, r) {
+  const rad = (angle * Math.PI) / 180;
+  return { x: CENTER + r * Math.cos(rad), y: CENTER + r * Math.sin(rad) };
+}
+
+// ─── SCORING ─────────────────────────────────────────────────────────────────
+function calcScores() {
+  const scores = {};
+  for (const dim of DIMS) {
+    const idxs = DIM_QUESTIONS[dim];
+    const raw = idxs.reduce((sum, i) => sum + (answers[i] || 0), 0);
+    scores[dim] = Math.round((raw / 20) * 100); // max 20 (5 questions × 4)
+  }
+  return scores;
+}
+
+function bandLabel(pct) {
+  if (pct >= 65) return { label: 'High', cls: 'band-high' };
+  if (pct >= 35) return { label: 'Moderate', cls: 'band-moderate' };
+  return { label: 'Low', cls: 'band-low' };
+}
+
+// ─── INTERPRETATION ──────────────────────────────────────────────────────────
+const interpretations = {
+  load: {
+    high: 'You are carrying a significant load. The demands on your attention, responsibility, and energy are high relative to what the system can sustainably hold. This is the most common starting condition.',
+    moderate: 'Your load is present but not yet at the point of consistent strain. The risk is that it tends to increase over time without deliberate management.',
+    low: 'Your load is currently well within range. The work is to protect this, particularly as demands increase.'
+  },
+  friction: {
+    high: 'Your patterns are significantly amplifying the cost of carrying your load. The good news: Friction is one of the most responsive dimensions to deliberate intervention.',
+    moderate: 'Some patterns are adding cost to your load. Identifying your primary Friction Pattern is the key next step.',
+    low: 'Your patterns are not currently adding significant cost. This is a protective factor worth maintaining.'
+  },
+  capacity: {
+    high: 'Your capacity is significantly depleted. You are running without the recovery infrastructure that makes sustained performance possible. This is the first dimension to address.',
+    moderate: 'Your capacity is partially maintained but fragile. It tends to be the first thing to compromise when load increases.',
+    low: 'Your capacity is currently well-maintained. This is a significant protective resource — guard it actively.'
+  },
+  design: {
+    high: 'The structure of your work is contributing to the problem. The demands are partly architectural, not purely personal. Redesign is required, not just better coping.',
+    moderate: 'There are structural factors worth examining. Some changes to how the work is organised would reduce load without requiring more of you personally.',
+    low: 'Your work design is currently supportive. Focus on maintaining the structural conditions that are working.'
+  },
+  rhythm: {
+    high: 'The absence of a maintenance rhythm is why previous resets have not held. Sustain is not the last phase — it is the one that makes the others durable.',
+    moderate: 'Your maintenance structures are partial. Under pressure, the gains tend to erode. Building a simple rhythm is the highest-leverage investment here.',
+    low: 'Your rhythm is currently consistent. This is a significant protective factor — it means improvements are more likely to hold.'
+  }
+};
+
+function getInterpText(dim, pct) {
+  if (pct >= 65) return interpretations[dim].high;
+  if (pct >= 35) return interpretations[dim].moderate;
+  return interpretations[dim].low;
+}
+
+// ─── PATHWAY LOGIC ───────────────────────────────────────────────────────────
+function getPathway(scores) {
+  if (scores.capacity >= 65) {
+    return { heading: 'Start with Reset.', note: 'Your capacity is significantly depleted. You cannot rebuild on empty.', phases: [0] };
+  }
+  if (scores.rhythm >= 65) {
+    return { heading: 'Start with Sustain.', note: 'Previous resets have not held. The rhythm is the missing piece.', phases: [2] };
+  }
+  if (scores.load >= 65 || scores.design >= 65) {
+    return { heading: 'Start with Redesign.', note: 'The structure is the source. Coping harder will not solve an architecture problem.', phases: [1] };
+  }
+  return { heading: 'Start with Reset.', note: 'Build the foundation before attempting structural change.', phases: [0] };
+}
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startAssessment() {
+  assessmentStartedAt = new Date().toISOString();
+  currentQ = 0;
+  answers = new Array(25).fill(null);
+  renderQuestion();
+  showScreen('screen-question');
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-counter').textContent = `${currentQ + 1} of 25`;
+  document.getElementById('progress-bar').style.width = `${((currentQ + 1) / 25) * 100}%`;
+  document.getElementById('q-dimension-tag').textContent = DIM_LABELS[q.dim].toUpperCase();
+  document.getElementById('btn-back').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+
+  // Reset options
+  const opts = document.querySelectorAll('.scale-option');
+  opts.forEach((opt, i) => {
+    opt.classList.remove('selected');
+    if (answers[currentQ] !== null && i === answers[currentQ]) {
+      opt.classList.add('selected');
+    }
+  });
+
+  updateNextBtn();
+
+  // Fade in
+  document.getElementById('q-text').classList.remove('fade-in');
+  void document.getElementById('q-text').offsetWidth;
+  document.getElementById('q-text').classList.add('fade-in');
+}
+
+function selectAnswer(val, el) {
+  answers[currentQ] = val;
+  document.querySelectorAll('.scale-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  updateNextBtn();
+
+  // Auto-advance after brief delay
+  setTimeout(() => {
+    if (currentQ < 24) {
+      currentQ++;
+      renderQuestion();
+    } else {
+      showScreen('screen-gate');
+    }
+  }, 280);
+}
+
+function updateNextBtn() {
+  const btn = document.getElementById('btn-next');
+  if (answers[currentQ] !== null) {
+    btn.classList.add('enabled');
+  } else {
+    btn.classList.remove('enabled');
+  }
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === null) return;
+  if (currentQ < 24) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    showScreen('screen-gate');
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+// ─── GATE ─────────────────────────────────────────────────────────────────────
+function submitGate() {
+  const name = document.getElementById('gate-name').value.trim();
+  const email = document.getElementById('gate-email').value.trim();
+
+  if (!name || !email || !email.includes('@')) {
+    document.getElementById('gate-email').focus();
+    return;
+  }
+
+  userName = name;
+  userEmail = email;
+
+  // Submit to MarketOS (fire-and-forget)
+  submitToMarketOS(name, email, calcScores());
+
+  // Show results
+  showResults();
+}
+
+function submitToMarketOS(name, email, scores) {
+  // Build raw answers object keyed by question id, values 0-4
+  const rawAnswers = {};
+  const qIds = [
+    'load_1','load_2','load_3','load_4','load_5',
+    'friction_1','friction_2','friction_3','friction_4','friction_5',
+    'capacity_1','capacity_2','capacity_3','capacity_4','capacity_5',
+    'design_1','design_2','design_3','design_4','design_5',
+    'rhythm_1','rhythm_2','rhythm_3','rhythm_4','rhythm_5'
+  ];
+  qIds.forEach((id, i) => { rawAnswers[id] = answers[i] ?? 0; });
+
+  // UTM params from URL
+  const params = new URLSearchParams(window.location.search);
+  const utm = {};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k => {
+    if (params.get(k)) utm[k] = params.get(k);
+  });
+
+  try {
+    fetch('https://ewictbfujvtfjqomdalq.supabase.co/functions/v1/scorecard-submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        scorecard_slug: 'burnout-baseline',
+        brand: 'burnoutos',
+        respondent: {
+          email: email,
+          first_name: name,
+          consent_marketing: true
+        },
+        answers: rawAnswers,
+        started_at: assessmentStartedAt,
+        utm: Object.keys(utm).length ? utm : undefined,
+        referrer: document.referrer || undefined,
+        user_agent: navigator.userAgent
+      })
+    });
+  } catch(e) {
+    // Fail silently — results still shown to participant
+  }
+}
+
+function getDominantDim(scores) {
+  return DIMS.reduce((a, b) => scores[a] > scores[b] ? a : b);
+}
+
+// ─── RESULTS ─────────────────────────────────────────────────────────────────
+function showResults() {
+  const scores = calcScores();
+  const pathway = getPathway(scores);
+
+  // Header
+  document.getElementById('results-name').textContent = `${userName}'s BurnoutOS Profile`;
+  const dominant = getDominantDim(scores);
+  document.getElementById('results-headline').textContent = `${DIM_LABELS[dominant]} is your primary lever.`;
+  document.getElementById('results-sub').textContent = 'Your personalised five-dimension profile.';
+
+  // Radar legend
+  const legend = document.getElementById('radar-legend');
+  legend.innerHTML = '';
+  DIMS.forEach(dim => {
+    const pct = scores[dim];
+    const { label, cls } = bandLabel(pct);
+    const row = document.createElement('div');
+    row.className = 'legend-row';
+    row.innerHTML = `
+      <div class="legend-dot" style="background:${pct >= 65 ? '#E84B2A' : 'rgba(20,18,24,0.18)'}"></div>
+      <div class="legend-label">${DIM_LABELS[dim]}</div>
+      <div class="legend-bar-wrap"><div class="legend-bar-fill" id="bar-${dim}"></div></div>
+      <div class="legend-pct">${pct}%</div>
+    `;
+    legend.appendChild(row);
+  });
+
+  // Note
+  const note = document.createElement('div');
+  note.className = 'legend-note';
+  note.textContent = 'High Load and Friction with low Capacity and Rhythm is the most common entry profile.';
+  legend.appendChild(note);
+
+  // Interpretation cards
+  const cards = document.getElementById('interp-cards');
+  cards.innerHTML = '';
+  DIMS.forEach(dim => {
+    const pct = scores[dim];
+    const { label, cls } = bandLabel(pct);
+    const card = document.createElement('div');
+    card.className = 'interp-card';
+    card.innerHTML = `
+      <div class="interp-card-header">
+        <div class="interp-dim">${DIM_LABELS[dim]}</div>
+        <div class="interp-band ${cls}">${label}</div>
+      </div>
+      <div class="interp-text">${getInterpText(dim, pct)}</div>
+    `;
+    cards.appendChild(card);
+  });
+
+  // Pathway
+  document.getElementById('pathway-heading').textContent = pathway.heading;
+  document.getElementById('pathway-note').textContent = pathway.note;
+
+  // Highlight correct phase pill
+  const pills = document.querySelectorAll('.phase-pill');
+  pills.forEach((p, i) => {
+    p.style.opacity = pathway.phases.includes(i) ? '1' : '0.35';
+  });
+
+  showScreen('screen-results');
+
+  // Animate
+  requestAnimationFrame(() => {
+    animateResults(scores);
+  });
+}
+
+function animateResults(scores) {
+  // Animate bars
+  setTimeout(() => {
+    DIMS.forEach(dim => {
+      const bar = document.getElementById(`bar-${dim}`);
+      if (bar) bar.style.width = scores[dim] + '%';
+    });
+  }, 200);
+
+  // Animate radar shape
+  setTimeout(() => {
+    const points = AXES.map(ax => {
+      const pct = scores[ax.dim] / 100;
+      const r = pct * R_MAX;
+      const { x, y } = toXY(ax.angle, r);
+      return `${x},${y}`;
+    });
+    document.getElementById('radar-shape').setAttribute('points', points.join(' '));
+  }, 400);
+
+  // Reveal interpretation cards with stagger
+  const cardEls = document.querySelectorAll('.interp-card');
+  cardEls.forEach((card, i) => {
+    setTimeout(() => { card.classList.add('revealed'); }, 600 + i * 120);
+  });
+
+  // Reveal pathway
+  setTimeout(() => {
+    document.getElementById('pathway-section').classList.add('revealed');
+  }, 1400);
+}
+
+function restartAssessment() {
+  currentQ = 0;
+  answers = new Array(25).fill(null);
+  userName = '';
+  userEmail = '';
+  document.getElementById('gate-name').value = '';
+  document.getElementById('gate-email').value = '';
+  startAssessment();
+}
+</script>
+</body>
+</html>

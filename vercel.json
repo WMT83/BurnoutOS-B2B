@@ -124,6 +124,11 @@
       "source": "/tour/registration-success",
       "destination": "/tour-registration-success.html",
       "permanent": false
+    },
+    {
+      "source": "/baseline",
+      "destination": "/baseline.html",
+      "permanent": false
     }
   ],
   "rewrites": [
