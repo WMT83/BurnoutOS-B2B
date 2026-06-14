@@ -950,9 +950,9 @@
         </div>
       </div>
 
-      <a class="cta-banner" href="https://burnout-os.app/stabilise" target="_blank">
-        <div class="cta-banner-text">Cohort 1 opens 29 July · Limited seats</div>
-        <div class="cta-banner-url">burnout-os.app/stabilise →</div>
+      <a class="cta-banner" id="results-cta-banner" href="https://burnout-os.app/stabilise" target="_blank">
+        <div class="cta-banner-text" id="results-cta-sub">Cohort 1 opens 29 July · Limited seats</div>
+        <div class="cta-banner-url" id="results-cta-label">Apply for Performance Reset →</div>
       </a>
 
       <div class="cta-disclaimer">This assessment stands on its own. No obligation to proceed.</div>
@@ -1094,16 +1094,58 @@ function getInterpText(dim, pct) {
 
 // ─── PATHWAY LOGIC ───────────────────────────────────────────────────────────
 function getPathway(scores) {
-  if (scores.capacity >= 65) {
-    return { heading: 'Start with Reset.', note: 'Your capacity is significantly depleted. You cannot rebuild on empty.', phases: [0] };
+  // Clinical routing based on JD-R framework (Bakker, Demerouti, Sanz-Vergel 2023)
+  // Threshold: 65% per dimension (score of 13/20)
+  // Reset indicators: Capacity and Friction (person-level resource variables)
+  // Redesign indicators: Load and Design (system-level structural variables)
+  // Exhaustion pathway takes clinical priority over disengagement pathway
+  // Sustain is reserved for post-programme graduates — not a Baseline outcome
+
+  const THRESHOLD = 65;
+  const resetTriggered  = scores.capacity >= THRESHOLD || scores.friction >= THRESHOLD;
+  const redesignTriggered = scores.load >= THRESHOLD || scores.design >= THRESHOLD;
+
+  if (resetTriggered) {
+    // Exhaustion pathway — resource restoration first
+    // If structural indicators also elevated, surface bundle note
+    const bundleRelevant = redesignTriggered;
+    return {
+      band: 'reset',
+      heading: 'Start with Reset.',
+      note: bundleRelevant
+        ? 'Your scores show both depleted capacity and structural load. Stabilisation comes first — structural change is not possible on empty. The Reset + Redesign bundle may be the right path.'
+        : 'Your capacity is significantly depleted. You cannot redesign a system when the person running it is running out of resource. Stabilisation is the first move.',
+      phases: [0],
+      url: 'https://burnout-os.app/stabilise',
+      cta_label: 'Apply for Performance Reset',
+      cta_sub: 'Cohort 1 opens 29 July · Limited seats'
+    };
   }
-  if (scores.rhythm >= 65) {
-    return { heading: 'Start with Sustain.', note: 'Previous resets have not held. The rhythm is the missing piece.', phases: [2] };
+
+  if (redesignTriggered) {
+    // Disengagement pathway — structural change is the primary lever
+    return {
+      band: 'redesign',
+      heading: 'Start with Redesign.',
+      note: 'The structure is the source. Your load and role design are the primary drivers. Coping harder will not solve an architecture problem.',
+      phases: [1],
+      url: 'https://burnout-os.app/redesign',
+      cta_label: 'Register your interest — OS Redesign',
+      cta_sub: 'Opening Q4 2026 · Register interest now'
+    };
   }
-  if (scores.load >= 65 || scores.design >= 65) {
-    return { heading: 'Start with Redesign.', note: 'The structure is the source. Coping harder will not solve an architecture problem.', phases: [1] };
-  }
-  return { heading: 'Start with Reset.', note: 'Build the foundation before attempting structural change.', phases: [0] };
+
+  // Default: early-stage, no dimension at threshold
+  // Early intervention — resource-building before exhaustion pathway activates
+  return {
+    band: 'reset',
+    heading: 'Start with Reset.',
+    note: 'No single dimension is at a critical threshold, but the pattern is worth addressing now. Early intervention prevents the exhaustion pathway from activating.',
+    phases: [0],
+    url: 'https://burnout-os.app/stabilise',
+    cta_label: 'Apply for Performance Reset',
+    cta_sub: 'Cohort 1 opens 29 July · Limited seats'
+  };
 }
 
 // ─── NAVIGATION ──────────────────────────────────────────────────────────────
@@ -1311,6 +1353,14 @@ function showResults() {
   // Pathway
   document.getElementById('pathway-heading').textContent = pathway.heading;
   document.getElementById('pathway-note').textContent = pathway.note;
+
+  // Update CTA banner dynamically based on pathway
+  const ctaBanner = document.getElementById('results-cta-banner');
+  const ctaLabel = document.getElementById('results-cta-label');
+  const ctaSub = document.getElementById('results-cta-sub');
+  if (ctaBanner) ctaBanner.href = pathway.url;
+  if (ctaLabel) ctaLabel.textContent = pathway.cta_label + ' →';
+  if (ctaSub) ctaSub.textContent = pathway.cta_sub;
 
   // Highlight correct phase pill
   const pills = document.querySelectorAll('.phase-pill');
