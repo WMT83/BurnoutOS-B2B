@@ -143,6 +143,10 @@
     {
       "source": "/login",
       "destination": "/app.html"
+    },
+    {
+      "source": "/report/:path*",
+      "destination": "https://ewictbfujvtfjqomdalq.supabase.co/storage/v1/object/public/scorecard-pdfs/:path*"
     }
   ]
 }
