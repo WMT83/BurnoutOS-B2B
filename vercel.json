@@ -41,6 +41,11 @@
       "permanent": false
     },
     {
+      "source": "/apply",
+      "destination": "https://app.burnout-os.app/stabilise/apply",
+      "permanent": false
+    },
+    {
       "source": "/redesign",
       "destination": "/redesign.html",
       "permanent": false
