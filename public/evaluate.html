@@ -161,6 +161,26 @@
     .cpd-suc-note { font-size: 13px; color: var(--muted); line-height: 1.55; }
     .cpd-suc-note a { color: var(--ember); text-decoration: none; }
 
+
+    /* ── Programme interest cards ── */
+    .prog-cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .prog-card { border: 2px solid var(--border); border-radius: 8px; padding: 14px 16px; cursor: pointer; transition: all 0.15s; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .prog-card:hover { border-color: var(--ember); }
+    .prog-card.selected { border-color: var(--ember); background: #fef4f1; }
+    .prog-card-info { flex: 1; }
+    .prog-card-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+    .prog-card-desc { font-size: 12px; color: var(--muted); line-height: 1.45; }
+    .prog-card-btn { padding: 7px 14px; border: 2px solid var(--border); border-radius: 6px; background: var(--white); color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all 0.15s; flex-shrink: 0; }
+    .prog-card.selected .prog-card-btn { border-color: var(--ember); background: var(--ember); color: var(--white); }
+    .interest-note { font-size: 12px; color: var(--muted-lt); line-height: 1.5; }
+    /* ── Consent ── */
+    .consent-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+    .consent-row:last-child { margin-bottom: 0; }
+    .consent-row input[type="checkbox"] { width: 18px; height: 18px; min-width: 18px; margin-top: 2px; accent-color: var(--ember); cursor: pointer; }
+    .consent-row label { font-size: 13px; color: var(--ink); line-height: 1.6; cursor: pointer; }
+    .popia-notice { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 16px; padding: 14px 16px; background: #f9f6f3; border-radius: 6px; border: 1px solid var(--border); }
+    .popia-notice strong { color: var(--ink); }
+    .mkt-row { padding-top: 14px; border-top: 1px solid var(--border); margin-top: 14px; }
     @media (max-width: 480px) {
       .lk-btn .l { font-size: 8px; }
       .pr-btn .l { font-size: 9px; }
@@ -238,9 +258,13 @@
         </select>
         <div class="ferr" id="e-country"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please select your country.</div>
       </div>
-      <div class="field" style="margin-bottom:0">
+      <div class="field">
         <label>Professional role or title (optional)</label>
         <input type="text" id="role" placeholder="e.g. Psychologist, HR Manager, Team Leader">
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Email address (optional)</label>
+        <input type="email" id="participantEmail" placeholder="For follow-up and future programme information">
       </div>
       <div class="sa-blk" id="saBlk">
         <div class="sa-lbl"><span class="sa-dot"></span><span class="sa-lbl-t">HPCSA CPD Requirements</span></div>
@@ -293,6 +317,66 @@
       <div class="field"><label>Specific strengths of this programme</label><textarea id="strengths" rows="3" placeholder="What worked particularly well..."></textarea></div>
       <div class="field"><label>Areas for improvement</label><textarea id="improvements" rows="3" placeholder="Suggestions for improvement..."></textarea></div>
       <div class="field" style="margin-bottom:0"><label>Any other comments</label><textarea id="otherComments" rows="2" placeholder="Anything else you would like to share..."></textarea></div>
+    </div>
+
+    <!-- What's next -->
+    <div class="card">
+      <div class="stitle">What&#8217;s next?</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:16px;">Let us know if you&#8217;d like more information about any of the following.</p>
+      <div class="prog-cards" id="progCards">
+
+        <div class="prog-card" id="pc-masterclass" onclick="toggleInterest('masterclass')">
+          <div class="prog-card-info">
+            <div class="prog-card-name">Always On Masterclass</div>
+            <div class="prog-card-desc">Free live session — next dates 6 and 20 July 2026</div>
+          </div>
+          <button type="button" class="prog-card-btn">Interested</button>
+        </div>
+
+        <div class="prog-card" id="pc-reset" onclick="toggleInterest('reset')">
+          <div class="prog-card-info">
+            <div class="prog-card-name">Phase 1: Performance Reset</div>
+            <div class="prog-card-desc">8-week group programme for burnout recovery</div>
+          </div>
+          <button type="button" class="prog-card-btn">Interested</button>
+        </div>
+
+        <div class="prog-card" id="pc-tour" onclick="toggleInterest('tour')">
+          <div class="prog-card-info">
+            <div class="prog-card-name">SA Workshop Tour</div>
+            <div class="prog-card-desc">Live workshops in Johannesburg and Cape Town — October 2026</div>
+          </div>
+          <button type="button" class="prog-card-btn">Interested</button>
+        </div>
+
+        <div class="prog-card" id="pc-sustain" onclick="toggleInterest('sustain')">
+          <div class="prog-card-info">
+            <div class="prog-card-name">Sustain Lab</div>
+            <div class="prog-card-desc">Monthly alumni community for ongoing support</div>
+          </div>
+          <button type="button" class="prog-card-btn">Interested</button>
+        </div>
+
+      </div>
+      <p class="interest-note">By selecting a programme, you agree to receive information about it. You can unsubscribe at any time.</p>
+    </div>
+
+    <!-- POPIA — SA only -->
+    <div class="card" id="popiaCard" style="display:none;">
+      <div id="popiaSection">
+        <p style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">POPIA Notice</p>
+        <div class="popia-notice">
+          <strong>Behavioural Health Pty Ltd (BurnoutOS)</strong> collects your personal information for CPD administration and programme quality monitoring. Your details will be shared with the accredited CPD provider solely for submission to the HPCSA. Your information will not be used for any other purpose without your consent. You have the right to access, correct, or request deletion of your information at any time by contacting <a href="mailto:hello@burnout-os.app" style="color:var(--ember);text-decoration:none;">hello@burnout-os.app</a>.
+        </div>
+        <div class="consent-row">
+          <input type="checkbox" id="popiaCheck" onchange="clearPopiErr()">
+          <label for="popiaCheck">I have read and understood the above and consent to the processing of my personal information in accordance with POPIA.<span class="req"> *</span></label>
+        </div>
+        <div class="ferr" id="e-popia" style="margin-top:6px;margin-bottom:0">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          You must acknowledge the POPIA notice before submitting.
+        </div>
+      </div>
     </div>
 
     <button class="sub-btn" id="subBtn" onclick="handleSubmit()">
@@ -420,6 +504,11 @@ function onCountry(val) {
   document.getElementById('saBlk').classList.toggle('on', sa);
   document.getElementById('cpdBadge').classList.toggle('on', sa);
   document.getElementById('cpdIntro').classList.toggle('on', sa);
+  document.getElementById('popiaCard').style.display = sa ? 'block' : 'none';
+}
+
+function clearPopiErr() {
+  document.getElementById('e-popia').classList.remove('on');
 }
 
 function val_() {
@@ -434,6 +523,8 @@ function val_() {
   }
   const unans = QUESTIONS.filter(q => !ratings[q.id]);
   if (unans.length) errs.push({id:null, msg:`${unans.length} rating question${unans.length>1?'s':''} still unanswered — highlighted below.`, ids:unans.map(q=>q.id)});
+  if (isSA && !document.getElementById('popiaCheck').checked)
+    errs.push({id:'e-popia', msg:'You must acknowledge the POPIA notice before submitting.'});
   if (!presenterRating) errs.push({id:'e-presenter', msg:'Rate the presenter.'});
   return errs;
 }
@@ -483,7 +574,10 @@ async function handleSubmit() {
     presenterRating,
     strengths:     document.getElementById('strengths').value     || undefined,
     improvements:  document.getElementById('improvements').value  || undefined,
-    otherComments: document.getElementById('otherComments').value || undefined,
+    otherComments:      document.getElementById('otherComments').value || undefined,
+    participantEmail:    document.getElementById('participantEmail').value.trim() || undefined,
+    popiaAcknowledged:   isSA ? document.getElementById('popiaCheck').checked : undefined,
+    programmeInterests:  selectedInterests.size > 0 ? Array.from(selectedInterests).map(k => INTEREST_LABELS[k]) : undefined,
   };
 
   try {
@@ -520,6 +614,28 @@ async function handleSubmit() {
   }
 }
 
+
+const selectedInterests = new Set();
+const INTEREST_LABELS = {
+  masterclass: 'Always On Masterclass',
+  reset:       'Phase 1: Performance Reset',
+  tour:        'SA Workshop Tour',
+  sustain:     'Sustain Lab',
+};
+
+function toggleInterest(key) {
+  const card = document.getElementById('pc-' + key);
+  const btn  = card.querySelector('.prog-card-btn');
+  if (selectedInterests.has(key)) {
+    selectedInterests.delete(key);
+    card.classList.remove('selected');
+    btn.textContent = 'Interested';
+  } else {
+    selectedInterests.add(key);
+    card.classList.add('selected');
+    btn.textContent = 'Selected';
+  }
+}
 buildRatings();
 buildPresenter();
 </script>
