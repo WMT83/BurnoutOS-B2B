@@ -210,6 +210,10 @@
         <label>Date of activity</label>
         <input type="date" id="actDate">
       </div>
+      <div class="field">
+        <label>Event code (optional)</label>
+        <input type="text" id="eventCode" placeholder="Provided at the start of the session" style="text-transform:uppercase">
+      </div>
       <div class="field" style="margin-bottom:0">
         <label>Reason for choosing this activity (optional)</label>
         <input type="text" id="reason" placeholder="e.g. recommended by a colleague, professional development requirement">
@@ -468,6 +472,7 @@ async function handleSubmit() {
   const payload = {
     activity,
     activityDate:  document.getElementById('actDate').value   || undefined,
+    eventCode:     document.getElementById('eventCode').value.trim().toUpperCase() || undefined,
     reason:        document.getElementById('reason').value    || undefined,
     country,
     role:          document.getElementById('role').value      || undefined,
