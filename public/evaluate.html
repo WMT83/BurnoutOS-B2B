@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programme Evaluation — BurnoutOS</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ember:      #e84b2a;
+      --ember-dim:  #c73d20;
+      --ink:        #141218;
+      --cream:      #fdf9f6;
+      --white:      #ffffff;
+      --border:     #e5ddd8;
+      --muted:      #6b6570;
+      --muted-lt:   #9a9299;
+      --red:        #dc2626;
+      --red-bg:     #fef2f2;
+      --red-border: #fca5a5;
+      --sa-bg:      #fef9f7;
+      --green:      #16a34a;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
+
+    /* ── Header ── */
+    .hdr { background: var(--ink); padding: 22px 20px 26px; }
+    .hdr-inner { max-width: 700px; margin: 0 auto; }
+    .wm { display: flex; align-items: baseline; margin-bottom: 5px; }
+    .wm-t { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--white); letter-spacing: -0.5px; }
+    .wm-d { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--ember); }
+    .hdr-sub { display: flex; align-items: center; gap: 10px; }
+    .hdr-title { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 500; }
+    .cpd-badge { padding: 2px 9px; background: var(--ember); border-radius: 4px; font-size: 11px; font-weight: 700; color: var(--white); display: none; }
+    .cpd-badge.on { display: inline-block; }
+
+    /* ── Layout ── */
+    .content { max-width: 700px; margin: 0 auto; padding: 24px 16px 64px; }
+
+    /* ── Card ── */
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; }
+    .card.compact { padding-bottom: 6px; }
+
+    /* ── Section title ── */
+    .stitle { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1.5px solid var(--border); }
+
+    /* ── Fields ── */
+    .field { margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .req { color: var(--ember); margin-left: 3px; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 6px;
+      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: var(--white);
+      outline: none; -webkit-appearance: none; appearance: none;
+    }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b6570' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; cursor: pointer;
+    }
+    .field textarea { resize: vertical; line-height: 1.5; }
+    .ferr { display: none; align-items: center; gap: 4px; margin-top: 5px; font-size: 12px; color: var(--red); }
+    .ferr.on { display: flex; }
+
+    /* ── SA block ── */
+    .sa-blk { display: none; background: var(--sa-bg); border: 2px solid var(--ember); border-radius: 8px; padding: 20px; margin-top: 10px; }
+    .sa-blk.on { display: block; }
+    .sa-lbl { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .sa-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ember); flex-shrink: 0; }
+    .sa-lbl-t { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; color: var(--ember); text-transform: uppercase; letter-spacing: 0.08em; }
+    .sa-note { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+
+    /* ── CPD intro badge ── */
+    .cpd-intro { display: none; align-items: center; gap: 8px; padding: 7px 14px; background: var(--ember); border-radius: 5px; margin-top: 14px; }
+    .cpd-intro.on { display: inline-flex; }
+    .cpd-intro-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--white); }
+    .cpd-intro-t { font-size: 11px; font-weight: 700; color: var(--white); }
+
+    /* ── Progress ── */
+    .prog-bar { display: flex; justify-content: space-between; align-items: center; padding: 0 2px; margin-bottom: 10px; }
+    .prog-hint { font-size: 12px; color: var(--muted); }
+    .prog-ct { font-size: 12px; color: var(--muted); }
+    .prog-ct.done { color: var(--green); font-weight: 600; }
+
+    /* ── Likert ── */
+    .lk-item { padding: 13px 0; border-bottom: 1px solid var(--border); }
+    .lk-item:last-child { border-bottom: none; }
+    .lk-item.flagged .q-text { color: var(--red); }
+    .lk-item.flagged .q-num { color: var(--red) !important; }
+    .q-text { font-size: 14px; line-height: 1.65; margin-bottom: 10px; }
+    .q-num { font-size: 10px; font-weight: 700; font-family: 'Syne', sans-serif; color: var(--border); margin-right: 8px; }
+    .btn-grp { display: flex; gap: 6px; }
+    .lk-btn {
+      flex: 1; padding: 8px 3px; border: 2px solid var(--border); border-radius: 7px;
+      background: var(--white); color: var(--ink); cursor: pointer; text-align: center;
+      transition: all 0.12s; font-family: 'DM Sans', sans-serif;
+    }
+    .lk-btn:hover { border-color: var(--ember); }
+    .lk-btn.on { border-color: var(--ember); background: var(--ember); color: var(--white); }
+    .lk-btn .v { display: block; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; }
+    .lk-btn .l { display: block; font-size: 9px; margin-top: 2px; line-height: 1.3; opacity: 0.5; white-space: pre; }
+    .lk-btn.on .l { opacity: 0.9; }
+
+    /* ── Presenter ── */
+    .pr-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+    .pr-cred { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+    .pr-grp { display: flex; gap: 8px; }
+    .pr-btn {
+      flex: 1; padding: 10px 3px; border: 2px solid var(--border); border-radius: 7px;
+      background: var(--white); color: var(--ink); cursor: pointer; text-align: center;
+      transition: all 0.12s; font-family: 'DM Sans', sans-serif;
+    }
+    .pr-btn:hover { border-color: var(--ember); }
+    .pr-btn.on { border-color: var(--ember); background: var(--ember); color: var(--white); }
+    .pr-btn .v { display: block; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; }
+    .pr-btn .l { display: block; font-size: 10px; margin-top: 3px; opacity: 0.55; }
+    .pr-btn.on .l { opacity: 0.9; }
+
+    /* ── Error summary ── */
+    .err-sum { display: none; background: var(--red-bg); border: 1.5px solid var(--red-border); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; align-items: flex-start; gap: 10px; }
+    .err-sum.on { display: flex; }
+    .err-ico { flex-shrink: 0; margin-top: 1px; color: var(--red); }
+    .err-title { font-size: 14px; font-weight: 600; color: var(--red); margin-bottom: 6px; }
+    .err-item { font-size: 13px; color: var(--red); margin-bottom: 3px; }
+    .err-item:last-child { margin-bottom: 0; }
+
+    /* ── Submit ── */
+    .sub-btn {
+      width: 100%; padding: 15px 24px; background: var(--ember); color: var(--white);
+      border: none; border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 15px; cursor: pointer; letter-spacing: -0.2px; transition: background 0.15s;
+      margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .sub-btn:hover { background: var(--ember-dim); }
+    .sub-btn:disabled { background: var(--muted-lt); cursor: not-allowed; }
+    .privacy { text-align: center; font-size: 12px; color: var(--muted-lt); line-height: 1.5; padding-bottom: 20px; }
+
+    /* ── Spinner ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
+    .spinner.on { display: block; }
+
+    /* ── Success ── */
+    .form-wrap.hidden { display: none; }
+    .success { display: none; }
+    .success.on { display: block; }
+    .suc-card { text-align: center; padding: 40px; margin-bottom: 16px; }
+    .suc-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--ember); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .suc-h { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: var(--ink); margin-bottom: 12px; }
+    .suc-p { font-size: 15px; color: var(--muted); line-height: 1.65; max-width: 400px; margin: 0 auto; }
+    .suc-act { font-size: 13px; color: var(--muted-lt); margin-top: 14px; font-style: italic; }
+    .cpd-suc { display: none; background: var(--sa-bg); border: 2px solid var(--ember); border-radius: 10px; padding: 24px; }
+    .cpd-suc.on { display: block; }
+    .cpd-suc-lbl { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .cpd-suc-lbl-t { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; color: var(--ember); text-transform: uppercase; letter-spacing: 0.08em; }
+    .cpd-suc-p { font-size: 14px; color: var(--ink); line-height: 1.65; margin-bottom: 10px; }
+    .cpd-suc-note { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .cpd-suc-note a { color: var(--ember); text-decoration: none; }
+
+    @media (max-width: 480px) {
+      .lk-btn .l { font-size: 8px; }
+      .pr-btn .l { font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="wm"><span class="wm-t">BurnoutOS</span><span class="wm-d">.</span></div>
+    <div class="hdr-sub">
+      <span class="hdr-title">Programme Evaluation</span>
+      <span class="cpd-badge" id="cpdBadge">HPCSA CPD</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="err-sum" id="errSum" role="alert">
+    <span class="err-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+    <div id="errList"></div>
+  </div>
+
+  <div class="form-wrap" id="formWrap">
+
+    <div class="card">
+      <p style="font-size:14px;color:var(--muted);line-height:1.65;">Please complete this feedback form. Your responses help improve the quality of every programme we run. For South African participants, this form contributes to your HPCSA CPD record.</p>
+      <div class="cpd-intro" id="cpdIntro"><span class="cpd-intro-dot"></span><span class="cpd-intro-t">HPCSA CPD Accredited Activity</span></div>
+    </div>
+
+    <div class="card">
+      <div class="stitle">Activity Details</div>
+      <div class="field">
+        <label>Which activity did you attend?<span class="req">*</span></label>
+        <select id="activity">
+          <option value="">Select activity</option>
+          <option>ACT for Burnout Workshop</option>
+          <option>BurnoutOS: Always On Masterclass</option>
+          <option>BurnoutOS: Phase 1 Performance Reset</option>
+          <option>Other</option>
+        </select>
+        <div class="ferr" id="e-activity"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please select the activity you attended.</div>
+      </div>
+      <div class="field">
+        <label>Date of activity</label>
+        <input type="date" id="actDate">
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Reason for choosing this activity (optional)</label>
+        <input type="text" id="reason" placeholder="e.g. recommended by a colleague, professional development requirement">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="stitle">About You</div>
+      <div class="field">
+        <label>Country<span class="req">*</span></label>
+        <select id="country" onchange="onCountry(this.value)">
+          <option value="">Select country</option>
+          <option>South Africa</option>
+          <option>Australia</option>
+          <option>New Zealand</option>
+          <option>United Kingdom</option>
+          <option>United States</option>
+          <option>Canada</option>
+          <option>Germany</option>
+          <option>Netherlands</option>
+          <option>Other</option>
+        </select>
+        <div class="ferr" id="e-country"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please select your country.</div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Professional role or title (optional)</label>
+        <input type="text" id="role" placeholder="e.g. Psychologist, HR Manager, Team Leader">
+      </div>
+      <div class="sa-blk" id="saBlk">
+        <div class="sa-lbl"><span class="sa-dot"></span><span class="sa-lbl-t">HPCSA CPD Requirements</span></div>
+        <p class="sa-note">To claim your CPD points, complete the fields below. Your details will appear on your attendance record and CPD certificate.</p>
+        <div class="field">
+          <label>Full name<span class="req">*</span></label>
+          <input type="text" id="fullName" placeholder="As registered with the HPCSA">
+          <div class="ferr" id="e-fullName"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Full name is required for CPD records.</div>
+        </div>
+        <div class="field">
+          <label>HPCSA registration number<span class="req">*</span></label>
+          <input type="text" id="hpcsaNo" placeholder="e.g. PSY0001234567">
+          <div class="ferr" id="e-hpcsaNo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>HPCSA registration number is required.</div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Professional board<span class="req">*</span></label>
+          <select id="board">
+            <option value="">Select professional board</option>
+            <option>Psychology</option>
+            <option>Medical and Dental</option>
+            <option>Nursing</option>
+            <option>Social Work and Social Service Professions</option>
+            <option>Occupational Therapy, Biokinetics and Physiotherapy</option>
+            <option>Dietetics and Nutrition</option>
+            <option>Emergency Care</option>
+            <option>Other</option>
+          </select>
+          <div class="ferr" id="e-board"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please select your professional board.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prog-bar">
+      <span class="prog-hint">1 = Strongly Disagree · 5 = Strongly Agree</span>
+      <span class="prog-ct" id="progCt">0/19 answered</span>
+    </div>
+
+    <div id="ratingSections"></div>
+
+    <div class="card">
+      <div class="stitle">Presenter Effectiveness</div>
+      <p class="pr-name">Werner Teichert</p>
+      <p class="pr-cred">Clinical Psychologist (AHPRA), MBA</p>
+      <div class="ferr" id="e-presenter" style="margin-bottom:10px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please rate the presenter.</div>
+      <div class="pr-grp" id="prBtns"></div>
+    </div>
+
+    <div class="card">
+      <div class="stitle">Additional Comments</div>
+      <div class="field"><label>Specific strengths of this programme</label><textarea id="strengths" rows="3" placeholder="What worked particularly well..."></textarea></div>
+      <div class="field"><label>Areas for improvement</label><textarea id="improvements" rows="3" placeholder="Suggestions for improvement..."></textarea></div>
+      <div class="field" style="margin-bottom:0"><label>Any other comments</label><textarea id="otherComments" rows="2" placeholder="Anything else you would like to share..."></textarea></div>
+    </div>
+
+    <button class="sub-btn" id="subBtn" onclick="handleSubmit()">
+      <span class="spinner" id="spinner"></span>
+      <span id="subLabel">Submit Evaluation</span>
+    </button>
+    <p class="privacy">Your responses are anonymous unless you provide your name for CPD purposes.</p>
+
+  </div>
+
+  <div class="success" id="success">
+    <div class="card suc-card">
+      <div class="suc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h1 class="suc-h">Thank you for your feedback.</h1>
+      <p class="suc-p">Your evaluation has been submitted. Every response helps improve the programme for the people who come next.</p>
+      <p class="suc-act" id="sucAct"></p>
+    </div>
+    <div class="card cpd-suc" id="cpdSuc">
+      <div class="cpd-suc-lbl"><span class="sa-dot"></span><span class="cpd-suc-lbl-t">CPD Record</span></div>
+      <p class="cpd-suc-p" id="cpdSucName"></p>
+      <p class="cpd-suc-p">A CPD certificate will be sent to your registered email address within 5 business days.</p>
+      <p class="cpd-suc-note">You may also submit directly to the HPCSA at <a href="mailto:cpd@hpcsa.co.za">cpd@hpcsa.co.za</a> or post to: CPD Department, P O Box 205, Pretoria, 0001.</p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const API_URL = 'https://kvsirypfqtnymooxicti.supabase.co/functions/v1/submit-programme-evaluation';
+const TOKEN   = 'bafc10c06083e4a26fda70f135d6ecb27761537cb9d1714bda52c83f9657f9d9';
+
+const QUESTIONS = [
+  {id:1,  text:'The programme met its stated objectives.',                                     g:'Programme Quality'},
+  {id:2,  text:'Overall, this activity met my expectations.',                                  g:'Programme Quality'},
+  {id:3,  text:'The programme content was relevant to my professional work.',                  g:'Programme Quality'},
+  {id:4,  text:'The programme extended my knowledge.',                                         g:'Programme Quality'},
+  {id:5,  text:'The duration and timing were appropriate.',                                    g:'Programme Quality'},
+  {id:6,  text:'The teaching format was appropriate for the subject matter.',                  g:'Programme Quality'},
+  {id:7,  text:'The method of presentation enhanced my learning experience.',                  g:'Programme Quality'},
+  {id:8,  text:'The audio-visual materials enhanced the presentation.',                        g:'Programme Quality'},
+  {id:9,  text:'This activity was good value for money.',                                      g:'Programme Quality'},
+  {id:10, text:'This activity was useful and caused me to learn something valuable.',          g:'Programme Quality'},
+  {id:11, text:'The online platform was conducive to learning.',                               g:'Platform and Delivery'},
+  {id:12, text:'Technical setup was adequate and appropriate.',                                g:'Platform and Delivery'},
+  {id:13, text:'I would recommend this programme to my colleagues.',                           g:'Learning Outcomes'},
+  {id:14, text:'This activity will assist in the improvement of my professional performance.', g:'Learning Outcomes'},
+  {id:15, text:'This activity will assist in the improvement of my competence.',               g:'Learning Outcomes'},
+  {id:16, text:'The programme was presented at a pace conducive to learning.',                 g:'Facilitation'},
+  {id:17, text:'The presenter delivered the material with knowledge and clarity.',             g:'Facilitation'},
+  {id:18, text:'The presenter provided adequate and helpful feedback.',                        g:'Facilitation'},
+  {id:19, text:'Applied examples illustrated real-world context effectively.',                 g:'Facilitation'},
+];
+const GROUPS  = ['Programme Quality','Platform and Delivery','Learning Outcomes','Facilitation'];
+const LIKERT  = {1:'Strongly\nDisagree',2:'Disagree',3:'Neutral',4:'Agree',5:'Strongly\nAgree'};
+const PR_LBL  = ['Poor','Fair','Satisfactory','Good','Excellent'];
+
+const ratings = {};
+let presenterRating = null;
+let tried = false;
+
+// Build Likert sections
+function buildRatings() {
+  const root = document.getElementById('ratingSections');
+  GROUPS.forEach(grp => {
+    const qs = QUESTIONS.filter(q => q.g === grp);
+    const card = document.createElement('div');
+    card.className = 'card compact';
+    card.innerHTML = `<div class="stitle">${grp}</div>`;
+    qs.forEach((q, i) => {
+      const item = document.createElement('div');
+      item.className = 'lk-item';
+      item.id = `lk-${q.id}`;
+      if (i === qs.length - 1) item.style.borderBottom = 'none';
+      item.innerHTML = `<p class="q-text"><span class="q-num">${String(q.id).padStart(2,'0')}</span>${q.text}</p><div class="btn-grp"></div>`;
+      const grpEl = item.querySelector('.btn-grp');
+      [1,2,3,4,5].forEach(v => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'lk-btn';
+        b.dataset.qid = q.id; b.dataset.v = v;
+        b.innerHTML = `<span class="v">${v}</span><span class="l">${LIKERT[v]}</span>`;
+        b.onclick = () => rate(q.id, v);
+        grpEl.appendChild(b);
+      });
+      card.appendChild(item);
+    });
+    root.appendChild(card);
+  });
+}
+
+// Build presenter buttons
+function buildPresenter() {
+  const root = document.getElementById('prBtns');
+  PR_LBL.forEach((lbl, i) => {
+    const v = i + 1;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'pr-btn'; b.dataset.v = v;
+    b.innerHTML = `<span class="v">${v}</span><span class="l">${lbl}</span>`;
+    b.onclick = () => ratePresenter(v);
+    root.appendChild(b);
+  });
+}
+
+function rate(qid, val) {
+  ratings[qid] = val;
+  document.querySelectorAll(`.lk-btn[data-qid="${qid}"]`).forEach(b => b.classList.toggle('on', +b.dataset.v === val));
+  const item = document.getElementById(`lk-${qid}`);
+  if (item) item.classList.remove('flagged');
+  updateProg();
+}
+
+function ratePresenter(val) {
+  presenterRating = val;
+  document.querySelectorAll('.pr-btn').forEach(b => b.classList.toggle('on', +b.dataset.v === val));
+  document.getElementById('e-presenter').classList.remove('on');
+}
+
+function updateProg() {
+  const n = Object.keys(ratings).length;
+  const el = document.getElementById('progCt');
+  el.textContent = `${n}/19 answered`;
+  el.className = `prog-ct${n === 19 ? ' done' : ''}`;
+}
+
+function onCountry(val) {
+  const sa = val === 'South Africa';
+  document.getElementById('saBlk').classList.toggle('on', sa);
+  document.getElementById('cpdBadge').classList.toggle('on', sa);
+  document.getElementById('cpdIntro').classList.toggle('on', sa);
+}
+
+function val_() {
+  const errs = [];
+  const isSA = document.getElementById('country').value === 'South Africa';
+  if (!document.getElementById('activity').value) errs.push({id:'e-activity', msg:'Select the activity you attended.'});
+  if (!document.getElementById('country').value)  errs.push({id:'e-country',  msg:'Select your country.'});
+  if (isSA) {
+    if (!document.getElementById('fullName').value.trim())  errs.push({id:'e-fullName', msg:'Full name is required for CPD records.'});
+    if (!document.getElementById('hpcsaNo').value.trim())   errs.push({id:'e-hpcsaNo',  msg:'HPCSA registration number is required.'});
+    if (!document.getElementById('board').value)             errs.push({id:'e-board',     msg:'Select your professional board.'});
+  }
+  const unans = QUESTIONS.filter(q => !ratings[q.id]);
+  if (unans.length) errs.push({id:null, msg:`${unans.length} rating question${unans.length>1?'s':''} still unanswered — highlighted below.`, ids:unans.map(q=>q.id)});
+  if (!presenterRating) errs.push({id:'e-presenter', msg:'Rate the presenter.'});
+  return errs;
+}
+
+function showErrs(errs) {
+  document.querySelectorAll('.ferr').forEach(e => e.classList.remove('on'));
+  document.querySelectorAll('.lk-item').forEach(e => e.classList.remove('flagged'));
+  const sum = document.getElementById('errSum');
+  const lst = document.getElementById('errList');
+  if (!errs.length) { sum.classList.remove('on'); return; }
+  lst.innerHTML = `<p class="err-title">Please fix the following before submitting.</p>`;
+  errs.forEach(e => {
+    const p = document.createElement('p'); p.className = 'err-item'; p.textContent = e.msg; lst.appendChild(p);
+    if (e.id) document.getElementById(e.id).classList.add('on');
+    if (e.ids) e.ids.forEach(id => { const el = document.getElementById(`lk-${id}`); if(el) el.classList.add('flagged'); });
+  });
+  sum.classList.add('on');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+async function handleSubmit() {
+  tried = true;
+  const errs = val_();
+  showErrs(errs);
+  if (errs.length) return;
+
+  const btn = document.getElementById('subBtn');
+  btn.disabled = true;
+  document.getElementById('spinner').classList.add('on');
+  document.getElementById('subLabel').textContent = 'Submitting...';
+
+  const country  = document.getElementById('country').value;
+  const isSA     = country === 'South Africa';
+  const activity = document.getElementById('activity').value;
+
+  const payload = {
+    activity,
+    activityDate:  document.getElementById('actDate').value   || undefined,
+    reason:        document.getElementById('reason').value    || undefined,
+    country,
+    role:          document.getElementById('role').value      || undefined,
+    fullName:      isSA ? document.getElementById('fullName').value  : undefined,
+    hpcsaNumber:   isSA ? document.getElementById('hpcsaNo').value   : undefined,
+    board:         isSA ? document.getElementById('board').value      : undefined,
+    ratings,
+    presenterRating,
+    strengths:     document.getElementById('strengths').value     || undefined,
+    improvements:  document.getElementById('improvements').value  || undefined,
+    otherComments: document.getElementById('otherComments').value || undefined,
+  };
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Authorization':`Bearer ${TOKEN}`},
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e.error || `Server error (${res.status})`);
+    }
+
+    document.getElementById('formWrap').classList.add('hidden');
+    document.getElementById('success').classList.add('on');
+    document.getElementById('sucAct').textContent = activity;
+    if (isSA) {
+      document.getElementById('cpdSuc').classList.add('on');
+      const name = document.getElementById('fullName').value;
+      const hpcsa = document.getElementById('hpcsaNo').value;
+      document.getElementById('cpdSucName').textContent = `Attendance recorded for ${name}${hpcsa?' (HPCSA: '+hpcsa+')':''}.`;
+    }
+    window.scrollTo({top:0, behavior:'smooth'});
+
+  } catch(err) {
+    const lst = document.getElementById('errList');
+    lst.innerHTML = `<p class="err-title">Submission failed.</p><p class="err-item">${err.message==='Failed to fetch'?'Unable to reach the server. Check your connection and try again.':err.message}</p>`;
+    document.getElementById('errSum').classList.add('on');
+    window.scrollTo({top:0, behavior:'smooth'});
+  } finally {
+    btn.disabled = false;
+    document.getElementById('spinner').classList.remove('on');
+    document.getElementById('subLabel').textContent = 'Submit Evaluation';
+  }
+}
+
+buildRatings();
+buildPresenter();
+</script>
+</body>
+</html>
