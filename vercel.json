@@ -121,6 +121,11 @@
       "permanent": false
     },
     {
+      "source": "/tour/capetown",
+      "destination": "/tour-capetown.html",
+      "permanent": false
+    },
+    {
       "source": "/tour/corporate",
       "destination": "/tour-corporate.html",
       "permanent": false
