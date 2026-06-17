@@ -134,6 +134,11 @@
       "source": "/baseline",
       "destination": "/baseline.html",
       "permanent": false
+    },
+    {
+      "source": "/evaluate",
+      "destination": "/evaluate.html",
+      "permanent": false
     }
   ],
   "rewrites": [
