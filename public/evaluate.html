@@ -259,6 +259,10 @@
         <div class="ferr" id="e-country"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please select your country.</div>
       </div>
       <div class="field">
+        <label>Name <span style="color:#9a9299;font-size:12px;font-weight:400;">(optional)</span></label>
+        <input type="text" id="participantName" placeholder="Your first name" autocomplete="given-name">
+      </div>
+      <div class="field">
         <label>Professional role or title (optional)</label>
         <input type="text" id="role" placeholder="e.g. Psychologist, HR Manager, Team Leader">
       </div>
@@ -574,6 +578,7 @@ async function handleSubmit() {
     eventCode:     document.getElementById('eventCode').value.trim().toUpperCase() || undefined,
     reason:        document.getElementById('reason').value    || undefined,
     country,
+    participantName: document.getElementById('participantName').value.trim() || undefined,
     role:          document.getElementById('role').value      || undefined,
     fullName:      isSA ? document.getElementById('fullName').value  : undefined,
     hpcsaNumber:   isSA ? document.getElementById('hpcsaNo').value   : undefined,
