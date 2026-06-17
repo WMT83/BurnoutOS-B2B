@@ -472,8 +472,8 @@
           <span class="price-flag">Most chosen</span>
           <div class="price-tag-label">Self-funded</div>
           <div class="price-name">Standard</div>
-          <div class="price-amount"><span class="cur">AUD</span>$2,495</div>
-          <div class="price-note">once-off · or 3 monthly payments of $900</div>
+          <div class="price-amount" data-zar="<span class='cur'>R</span>10,950"><span class="cur">AUD</span>$2,495</div>
+          <div class="price-note" data-zar="once-off · or 3 monthly payments of R3,650">once-off · or 3 monthly payments of $832</div>
           <div class="price-divider"></div>
           <ul class="price-list">
             <li>Eight weekly live group coaching sessions</li>
@@ -487,7 +487,7 @@
         <div class="price-card">
           <div class="price-tag-label">Employer or L&amp;D funded</div>
           <div class="price-name">Employer / Professional</div>
-          <div class="price-amount"><span class="cur">AUD</span>$3,995</div>
+          <div class="price-amount" data-zar="<span class='cur'>R</span>18,950"><span class="cur">AUD</span>$3,995</div>
           <div class="price-note">per participant · minimum 2 seats</div>
           <div class="price-divider"></div>
           <ul class="price-list">
@@ -542,5 +542,42 @@
     <p class="disclaimer">Performance Reset is a leadership performance and recovery coaching programme. It is evidence-informed and draws on well-established approaches used in performance and wellbeing contexts. Outcomes vary by individual and context; nothing here is a guarantee of results.</p>
   </footer>
 
+
+  <script>
+  /* BurnoutOS geo-pricing — ZA -> ZAR, all others -> AUD (default) */
+  (function () {
+    var CACHE_KEY = 'bos_region';
+    var CACHE_TTL = 86400000; // 24h
+
+    function applyRegion(region) {
+      if (region !== 'ZA') return;
+      document.querySelectorAll('[data-zar]').forEach(function (el) {
+        el.innerHTML = el.getAttribute('data-zar');
+      });
+    }
+
+    try {
+      var cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        var parsed = JSON.parse(cached);
+        if (Date.now() - parsed.ts < CACHE_TTL) {
+          applyRegion(parsed.region);
+          return;
+        }
+      }
+    } catch (e) {}
+
+    fetch('/api/region')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var region = data.region || 'AUD';
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ region: region, ts: Date.now() }));
+        } catch (e) {}
+        applyRegion(region);
+      })
+      .catch(function () {});
+  })();
+  </script>
 </body>
 </html>
