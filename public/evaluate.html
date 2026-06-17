@@ -341,6 +341,14 @@
           <button type="button" class="prog-card-btn">Interested</button>
         </div>
 
+        <div class="prog-card" id="pc-redesign" onclick="toggleInterest('redesign')">
+          <div class="prog-card-info">
+            <div class="prog-card-name">Phase 2: OS Redesign</div>
+            <div class="prog-card-desc">8-week follow-on programme — builds on the Performance Reset</div>
+          </div>
+          <button type="button" class="prog-card-btn">Interested</button>
+        </div>
+
         <div class="prog-card" id="pc-tour" onclick="toggleInterest('tour')">
           <div class="prog-card-info">
             <div class="prog-card-name">SA Workshop Tour</div>
@@ -619,6 +627,7 @@ const selectedInterests = new Set();
 const INTEREST_LABELS = {
   masterclass: 'Always On Masterclass',
   reset:       'Phase 1: Performance Reset',
+  redesign:    'Phase 2: OS Redesign',
   tour:        'SA Workshop Tour',
   sustain:     'Sustain Lab',
 };
