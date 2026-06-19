@@ -13,6 +13,7 @@
   const TOUR_SLUG = 'sa-2026';
 
   // Cohort UUIDs (fixed for SA Tour 2026)
+  // Cape Town is EOI only — not yet confirmed. Do not add to COHORTS until dates are locked.
   const COHORTS = {
     johannesburg: {
       id: 'b2b78683-06b0-463c-b63c-8419f9307f94',
@@ -20,13 +21,10 @@
       dates: 'Saturday 10 and Sunday 11 October 2026',
       seatsTotal: 20,
     },
-    cape_town: {
-      id: 'f1ff2f67-759b-4870-a438-d6326b7247f2',
-      label: 'Cape Town',
-      dates: 'Saturday 17 and Sunday 18 October 2026',
-      seatsTotal: 25,
-    },
   };
+
+  // Cape Town EOI page (not a bookable cohort yet)
+  const CPT_EOI_URL = '/tour/capetown';
 
   // Pricing (display only — server is authoritative)
   const PRICES = {
@@ -609,11 +607,23 @@
       `;
     });
 
+    // Cape Town EOI card — not a bookable cohort
+    cohortHtml += `
+      <a href="${CPT_EOI_URL}" class="bos-cohort-option" style="text-decoration:none;" data-action="cpt-eoi">
+        <div class="bos-cohort-city" style="display:flex;align-items:center;gap:0.5rem;">
+          Cape Town
+          <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.08);color:rgba(240,237,232,0.6);padding:2px 8px;border-radius:999px;">EOI open</span>
+        </div>
+        <div class="bos-cohort-dates">Dates to be confirmed — register your interest</div>
+        <div class="bos-cohort-availability">Express interest → we'll confirm dates and notify you</div>
+      </a>
+    `;
+
     renderModal(`
       <div class="bos-modal-header">
         <div class="bos-modal-eyebrow">${escapeHtml(tierLabel)}</div>
         <h2 class="bos-modal-title">Choose your cohort</h2>
-        <p class="bos-modal-subtitle">Two-day in-person intensive plus an 8-week structured integration phase. Same programme, different city.</p>
+        <p class="bos-modal-subtitle">Two-day Performance Reset plus an 8-week structured integration phase.</p>
       </div>
       <div class="bos-modal-body">
         ${stepDots(1, 3, false)}
