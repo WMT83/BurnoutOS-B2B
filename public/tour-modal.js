@@ -31,7 +31,7 @@
     individual_early_bird: 8950,
     individual_standard: 10950,
     individual_instalment_early_bird: 3650,
-    individual_instalment_standard: 4500,
+    individual_instalment_standard: 3650,
     corporate_per_seat: 12950,
     corporate_tier_3_5_pct: 10,
     corporate_tier_6_plus_pct: 15,
@@ -1263,7 +1263,7 @@
           <button type="button" class="bos-cohort-option" data-action="pick-individual">
             <div class="bos-cohort-city">As an individual</div>
             <div class="bos-cohort-dates">Self-paying · Pay now or 3 instalments</div>
-            <div class="bos-cohort-availability">From R8,950 (early-bird until 31 August)</div>
+            <div class="bos-cohort-availability">Early-bird R8,950 or 3 × R3,650 · Standard R10,950</div>
           </button>
           <button type="button" class="bos-cohort-option" data-action="pick-corporate">
             <div class="bos-cohort-city">For my team</div>
