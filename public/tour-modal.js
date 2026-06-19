@@ -30,8 +30,8 @@
   const PRICES = {
     individual_early_bird: 8950,
     individual_standard: 10950,
-    individual_instalment_early_bird: 4475,
-    individual_instalment_standard: 5475,
+    individual_instalment_early_bird: 3650,
+    individual_instalment_standard: 4500,
     corporate_per_seat: 12950,
     corporate_tier_3_5_pct: 10,
     corporate_tier_6_plus_pct: 15,
@@ -663,7 +663,7 @@
       <div class="bos-modal-header">
         <div class="bos-modal-eyebrow">${escapeHtml(cohort.label)} cohort</div>
         <h2 class="bos-modal-title">Choose your payment</h2>
-        <p class="bos-modal-subtitle">Full payment now or split into 2 instalments, no surcharge.</p>
+        <p class="bos-modal-subtitle">Full payment now or split into 3 instalments, no surcharge.</p>
       </div>
       <div class="bos-modal-body">
         ${stepDots(2, 3, false)}
@@ -679,10 +679,10 @@
             </button>
             <button type="button" class="bos-payment-option ${instalSelected}" data-action="select-payment" data-instalment="true">
               <div>
-                <div class="bos-payment-label">2 instalments</div>
-                <div class="bos-payment-sub">Today and 30 days later</div>
+                <div class="bos-payment-label">3 instalments</div>
+                <div class="bos-payment-sub">Today, 30 and 60 days later</div>
               </div>
-              <div class="bos-payment-amount">${formatZar(instalPrice)}<span style="font-size:0.7rem;color:rgba(240,237,232,0.55);font-weight:400">/mo × 2</span></div>
+              <div class="bos-payment-amount">${formatZar(instalPrice)}<span style="font-size:0.7rem;color:rgba(240,237,232,0.55);font-weight:400">/mo × 3</span></div>
             </button>
           </div>
         </div>
@@ -718,7 +718,7 @@
 
     renderModal(`
       <div class="bos-modal-header">
-        <div class="bos-modal-eyebrow">${escapeHtml(cohort.label)} · ${state.instalment ? '2 instalments' : 'Full payment'}</div>
+        <div class="bos-modal-eyebrow">${escapeHtml(cohort.label)} · ${state.instalment ? '3 instalments' : 'Full payment'}</div>
         <h2 class="bos-modal-title">Your details</h2>
         <p class="bos-modal-subtitle">We'll send confirmation, the onboarding call link, and pre-weekend reading to this email.</p>
       </div>
@@ -1262,7 +1262,7 @@
         <div class="bos-cohort-options">
           <button type="button" class="bos-cohort-option" data-action="pick-individual">
             <div class="bos-cohort-city">As an individual</div>
-            <div class="bos-cohort-dates">Self-paying · Pay now or 2 instalments</div>
+            <div class="bos-cohort-dates">Self-paying · Pay now or 3 instalments</div>
             <div class="bos-cohort-availability">From R8,950 (early-bird until 31 August)</div>
           </button>
           <button type="button" class="bos-cohort-option" data-action="pick-corporate">
