@@ -1017,6 +1017,11 @@ let currentQ = 0;
 let userName = '';
 let userEmail = '';
 let assessmentStartedAt = null;
+// Deterministic country from Vercel edge geo, prefetched on load so it is ready
+// by the time the assessment is submitted. Same-origin, no third party.
+// A null result degrades safely server-side (neutral pricing, never wrong currency).
+let detectedCountry = null;
+fetch('/api/geo').then(function(r){ return r.ok ? r.json() : null; }).then(function(d){ if (d && d.country) detectedCountry = d.country; }).catch(function(){});
 
 // ─── RADAR GEOMETRY ──────────────────────────────────────────────────────────
 // Pentagon: Load=top, Friction=top-right, Design=bottom-right, Rhythm=bottom, Capacity=bottom-left, Friction=top-right
@@ -1286,7 +1291,8 @@ function submitToMarketOS(name, email, scores) {
         started_at: assessmentStartedAt,
         utm: Object.keys(utm).length ? utm : undefined,
         referrer: document.referrer || undefined,
-        user_agent: navigator.userAgent
+        user_agent: navigator.userAgent,
+        country: detectedCountry || undefined
       })
     });
   } catch(e) {
