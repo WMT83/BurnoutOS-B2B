@@ -488,7 +488,7 @@
           <div class="price-tag-label">Employer or L&amp;D funded</div>
           <div class="price-name">Employer / Professional</div>
           <div class="price-amount" data-zar="<span class='cur'>R</span>18,950"><span class="cur">AUD</span>$3,995</div>
-          <div class="price-note">per participant · minimum 2 seats</div>
+          <div class="price-note" data-zar-note="per participant · or 3 monthly payments of R6,317 · minimum 2 seats">per participant · minimum 2 seats</div>
           <div class="price-divider"></div>
           <ul class="price-list">
             <li>Everything in the Standard programme</li>
@@ -544,39 +544,23 @@
 
 
   <script>
-  /* BurnoutOS geo-pricing — ZA -> ZAR, all others -> AUD (default) */
+  /* BurnoutOS geo-pricing — domain-based, zero-latency, no API call required.
+     .co.za  -> ZAR (South Africa)
+     .com.au -> AUD (Australia, default)
+     Scalable: add data-aud attributes when additional locales are needed. */
   (function () {
-    var CACHE_KEY = 'bos_region';
-    var CACHE_TTL = 86400000; // 24h
+    var host = window.location.hostname;
+    var isZA = host.indexOf('.co.za') !== -1;
 
-    function applyRegion(region) {
-      if (region !== 'ZA') return;
+    if (isZA) {
       document.querySelectorAll('[data-zar]').forEach(function (el) {
         el.innerHTML = el.getAttribute('data-zar');
       });
+      /* Also swap instalment note on employer card if present */
+      document.querySelectorAll('[data-zar-note]').forEach(function (el) {
+        el.textContent = el.getAttribute('data-zar-note');
+      });
     }
-
-    try {
-      var cached = localStorage.getItem(CACHE_KEY);
-      if (cached) {
-        var parsed = JSON.parse(cached);
-        if (Date.now() - parsed.ts < CACHE_TTL) {
-          applyRegion(parsed.region);
-          return;
-        }
-      }
-    } catch (e) {}
-
-    fetch('/api/region')
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        var region = data.region || 'AUD';
-        try {
-          localStorage.setItem(CACHE_KEY, JSON.stringify({ region: region, ts: Date.now() }));
-        } catch (e) {}
-        applyRegion(region);
-      })
-      .catch(function () {});
   })();
   </script>
 </body>
