@@ -285,8 +285,8 @@
           <span class="price-flag">Best value · save two months</span>
           <div class="price-tag-label">Annual</div>
           <div class="price-name">Sustain Lab — yearly</div>
-          <div class="price-amount"><span class="cur">AUD</span>$1,470<span class="per">/year</span></div>
-          <div class="price-note">works out to $122.50/month · two months free</div>
+          <div class="price-amount" data-zar="<span class='cur'>R</span>12,000<span class='per'>/year</span>"><span class="cur">AUD</span>$1,470<span class="per">/year</span></div>
+          <div class="price-note" data-zar-note="works out to R1,000/month · two months free">works out to $122.50/month · two months free</div>
           <div class="price-divider"></div>
           <ul class="price-list">
             <li>Monthly live Sustain Lab sessions</li>
@@ -300,8 +300,8 @@
         <div class="price-card">
           <div class="price-tag-label">Monthly</div>
           <div class="price-name">Sustain Lab — monthly</div>
-          <div class="price-amount"><span class="cur">AUD</span>$147<span class="per">/month</span></div>
-          <div class="price-note">cancel anytime · no minimum term</div>
+          <div class="price-amount" data-zar="<span class='cur'>R</span>1,200<span class='per'>/month</span>"><span class="cur">AUD</span>$147<span class="per">/month</span></div>
+          <div class="price-note" data-zar-note="cancel anytime · no minimum term">cancel anytime · no minimum term</div>
           <div class="price-divider"></div>
           <ul class="price-list">
             <li>Monthly live Sustain Lab sessions</li>
@@ -426,5 +426,20 @@
     });
   </script>
 
+  <script>
+  /* BurnoutOS geo-pricing — domain-based, zero-latency.
+     .co.za -> ZAR  |  .com.au -> AUD (default)
+     Pattern: data-zar on price-amount, data-zar-note on price-note */
+  (function () {
+    var isZA = window.location.hostname.indexOf('.co.za') !== -1;
+    if (!isZA) return;
+    document.querySelectorAll('[data-zar]').forEach(function (el) {
+      el.innerHTML = el.getAttribute('data-zar');
+    });
+    document.querySelectorAll('[data-zar-note]').forEach(function (el) {
+      el.textContent = el.getAttribute('data-zar-note');
+    });
+  })();
+  </script>
 </body>
 </html>

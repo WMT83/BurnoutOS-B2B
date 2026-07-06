@@ -462,8 +462,8 @@
         <div class="price-card">
           <div class="price-tag-label">Phase 2 only</div>
           <div class="price-name">Operating System Redesign</div>
-          <div class="price-amount"><span class="cur">AUD</span>$1,995</div>
-          <div class="price-note">For Phase 1 completers · opens week 4</div>
+          <div class="price-amount" data-zar="<span class='cur'>R</span>8,950"><span class="cur">AUD</span>$1,995</div>
+          <div class="price-note" data-zar-note="For Phase 1 completers · opens week 4">For Phase 1 completers · opens week 4</div>
           <div class="price-divider"></div>
           <ul class="price-list">
             <li>Eight implementation modules</li>
@@ -478,8 +478,8 @@
           <span class="price-flag">Best value</span>
           <div class="price-tag-label">Phase 1 + Phase 2</div>
           <div class="price-name">The full reset and redesign</div>
-          <div class="price-amount"><span class="cur">AUD</span>$3,995</div>
-          <div class="price-note">save $495 · or 6 monthly payments of $700</div>
+          <div class="price-amount" data-zar="<span class='cur'>R</span>18,950"><span class="cur">AUD</span>$3,995</div>
+          <div class="price-note" data-zar-note="save R950 · or 3 monthly payments of R6,500">save $495 · or 6 monthly payments of $700</div>
           <div class="price-divider"></div>
           <ul class="price-list">
             <li>Everything in Performance Reset (Phase 1)</li>
@@ -493,8 +493,8 @@
         <div class="price-card">
           <div class="price-tag-label">Employer or L&amp;D funded</div>
           <div class="price-name">Employer / Professional</div>
-          <div class="price-amount"><span class="cur">AUD</span>$2,995</div>
-          <div class="price-note">per participant · minimum 2 seats</div>
+          <div class="price-amount" data-zar="<span class='cur'>R</span>13,950"><span class="cur">AUD</span>$2,995</div>
+          <div class="price-note" data-zar-note="per participant · minimum 2 seats">per participant · minimum 2 seats</div>
           <div class="price-divider"></div>
           <ul class="price-list">
             <li>Phase 2 programme in full</li>
@@ -619,5 +619,20 @@
     });
   </script>
 
+  <script>
+  /* BurnoutOS geo-pricing — domain-based, zero-latency.
+     .co.za -> ZAR  |  .com.au -> AUD (default)
+     Pattern: data-zar on price-amount, data-zar-note on price-note */
+  (function () {
+    var isZA = window.location.hostname.indexOf('.co.za') !== -1;
+    if (!isZA) return;
+    document.querySelectorAll('[data-zar]').forEach(function (el) {
+      el.innerHTML = el.getAttribute('data-zar');
+    });
+    document.querySelectorAll('[data-zar-note]').forEach(function (el) {
+      el.textContent = el.getAttribute('data-zar-note');
+    });
+  })();
+  </script>
 </body>
 </html>
