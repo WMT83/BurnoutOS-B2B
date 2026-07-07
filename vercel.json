@@ -162,6 +162,10 @@
     {
       "source": "/report/:path*",
       "destination": "https://ewictbfujvtfjqomdalq.supabase.co/storage/v1/object/public/scorecard-pdfs/:path*"
+    },
+    {
+      "source": "/email-assets/:path*",
+      "destination": "https://ewictbfujvtfjqomdalq.supabase.co/storage/v1/object/public/email-assets/:path*"
     }
   ]
 }
