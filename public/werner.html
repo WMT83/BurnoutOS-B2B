@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Werner Teichert — AHPRA-registered Clinical Psychologist · BurnoutOS</title>
+  <title>Werner Teichert · AHPRA-registered Clinical Psychologist · BurnoutOS</title>
   <meta name="description" content="Werner Teichert is a Clinical Psychologist registered with AHPRA in Australia, and the founder of BurnoutOS. Clinical governance at the core of every product." />
   <link rel="canonical" href="https://burnout-os.app/werner" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,10 +16,6 @@
     :root {
       --ember:     #e84b2a;
       --ember-dim: #c73d20;
-      --violet:    #7c3aed;
-      --violet-soft:#a78bfa;
-      --teal:      #1a6b72;
-      --teal-soft: #4db8c0;
       --ink:       #0c1018;
       --ink-soft:  #2a3040;
       --ink-muted: #5a6480;
@@ -113,7 +109,7 @@
     .nav-mobile a { font-size: 1rem; color: rgba(255,255,255,0.75); text-decoration: none; padding: 0.85rem 0.5rem; border-bottom: 1px solid var(--rule); }
     .nav-mobile a:last-child { border-bottom: none; }
     .nav-mobile a:hover { color: var(--white); }
-    @media (max-width: 860px) {
+    @media (max-width: 1020px) {
       nav { padding: 0 1rem; }
       .nav-right { gap: 0.6rem; }
       .logo { flex-shrink: 0; }
@@ -193,7 +189,7 @@
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.1);
-      background: linear-gradient(135deg, rgba(232,75,42,0.08), rgba(124,58,237,0.05));
+      background: linear-gradient(135deg, rgba(232,75,42,0.10), rgba(232,75,42,0.02));
     }
     .hero-photo img {
       width: 100%;
@@ -239,22 +235,6 @@
     .content-wrap {
       max-width: 780px;
       margin: 0 auto;
-    }
-    .section-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ember);
-      margin-bottom: 1rem;
-    }
-    .section-eyebrow::before {
-      content: '';
-      width: 18px; height: 2px;
-      background: var(--ember);
     }
     h2 {
       font-family: 'Syne', sans-serif;
@@ -424,7 +404,6 @@
     }
     @media (max-width: 640px) {
       nav { padding: 1rem 1.25rem; }
-      .nav-link { display: none; }
       .nav-right { gap: 0.75rem; }
       #hero { padding-top: 6rem; }
     }
@@ -435,27 +414,35 @@
   <nav>
     <a href="/" class="logo">BurnoutOS <span class="logo-dot"></span></a>
     <div class="nav-right">
-      <a href="/burnout-quiz" class="nav-link">Take the quiz</a>
-      <a href="/stabilise" class="nav-link">The pathway</a>
-      <a href="/organisations.html" class="nav-link">For Organisations</a>
+      <a href="/stabilise" class="nav-link">Reset</a>
+      <a href="/redesign" class="nav-link">Redesign</a>
+      <a href="/sustain" class="nav-link">Sustain</a>
+      <a href="/baseline" class="nav-link">Free Assessment</a>
+      <a href="/organisations.html" class="nav-link">For organisations</a>
+      <a href="/coaching" class="nav-link">Coaching</a>
       <a href="https://app.burnout-os.app/auth" class="nav-link" style="opacity:0.75;">Sign in</a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-      <a href="/stabilise" class="nav-btn">Apply for Cohort 1</a>
+      <a href="/masterclass" class="nav-btn">Join the masterclass</a>
     </div>
   </nav>
   <div class="nav-mobile" id="nav-mobile">
-    <a href="/burnout-quiz">Take the quiz</a>
-    <a href="/stabilise">The pathway</a>
-    <a href="/organisations.html">For Organisations</a>
+    <a href="/stabilise">Reset</a>
+    <a href="/redesign">Redesign</a>
+    <a href="/sustain">Sustain</a>
+    <a href="/baseline">Free Assessment</a>
+    <a href="/organisations.html">For organisations</a>
+    <a href="/coaching">Coaching</a>
+    <a href="/contact">Contact</a>
     <a href="https://app.burnout-os.app/auth">Sign in</a>
   </div>
+
 
   <section id="hero">
     <div class="hero-grid">
       <div>
         <div class="hero-eyebrow">Founder and facilitator</div>
         <h1>Werner Teichert</h1>
-        <div class="hero-subline">AHPRA-registered Clinical Psychologist</div>
+        <div class="hero-subline">Clinical Psychologist (AHPRA), MBA</div>
         <div class="hero-role">Founder of BurnoutOS</div>
       </div>
       <div class="hero-photo">
@@ -466,114 +453,44 @@
 
   <section id="intro">
     <p>
-      Werner Teichert is a Clinical Psychologist based in Australia,
-      and the founder of BurnoutOS. After years of watching
-      capable professionals arrive at his practice depleted — having already
-      tried every quick fix on offer — he built what he wishes had existed:
-      a structured, evidence-based burnout recovery system delivered with
-      clinical depth and a coaching frame.
+      Werner Teichert is a Clinical Psychologist based in Australia and the
+      founder of BurnoutOS, an evidence-informed burnout recovery programme
+      for senior professionals and clinicians.
     </p>
   </section>
 
   <section class="content-section">
     <div class="content-wrap">
-      <div class="section-eyebrow">Clinical background</div>
-      <h2>Registered. Rigorously so.</h2>
+      <h2>Clinical registration and business intelligence</h2>
       <p>
-        Werner trained in clinical and occupational psychology, with postgraduate
-        qualifications in clinical and occupational psychology. His clinical work
-        has focused on the intersection of high-performance professionals and
-        chronic stress — working with clinicians, leaders, and senior operators
-        across healthcare, law, finance, and technology.
+        Werner holds postgraduate qualifications in clinical psychology,
+        leadership and business administration. His clinical work has focused
+        on the intersection of high-performance professionals and chronic
+        stress, working with clinicians and senior leaders across healthcare,
+        law, finance, and technology.
       </p>
       <p>He holds registration with:</p>
       <ul class="reg-list">
         <li>
           <strong>AHPRA</strong>
-          <span>Australian Health Practitioner Regulation Agency — Psychology Board of Australia</span>
+          <span>Australian Health Practitioner Regulation Agency, Psychology Board of Australia</span>
         </li>
       </ul>
-      <p>
-        This registration reflects a deliberate commitment to maintaining
-        professional standards and clinical accountability in every engagement.
-      </p>
     </div>
   </section>
 
-  <section class="content-section">
-    <div class="content-wrap">
-      <div class="section-eyebrow">The approach</div>
-      <h2>Evidence-based. Coaching-framed. Honestly scoped.</h2>
-      <p>
-        BurnoutOS is built on the Job Demands-Resources (JD-R) framework —
-        the most empirically validated model of burnout in the occupational
-        psychology literature. The work draws on Acceptance and Commitment
-        Therapy (ACT), sleep science, and evidence-based behavioural
-        health practices.
-      </p>
-      <p>
-        The frame is coaching, not therapy. Coaching suits high-functioning
-        professionals working on performance, meaning, and sustainable
-        rhythms. Therapy is appropriate for clinical concerns. Werner will
-        tell you, honestly, which one fits your situation — and decline
-        to coach people whose needs are better served elsewhere.
-      </p>
-    </div>
-  </section>
 
-  <section class="content-section">
-    <div class="content-wrap">
-      <div class="section-eyebrow">Why BurnoutOS exists</div>
-      <h2>The space between a wellness app and a therapist.</h2>
-      <p>
-        Most professionals who burn out don't need more information. They
-        need structure, clinical depth, and a system that works when
-        motivation runs out. What existed in the market was either too
-        soft — wellness apps without clinical foundation — or too clinical:
-        traditional therapy, hard to access, slow to operate.
-      </p>
-      <p>
-        BurnoutOS occupies the space between. Clinician-developed,
-        coaching-framed, designed for people who treat their recovery
-        seriously. A structured three-phase pathway: Performance Reset to
-        restore capacity, Operating System Redesign to change how the work
-        runs, and the Sustain Lab to hold the gains, with one-to-one
-        Executive Coaching for senior professionals working at leadership scale.
-      </p>
-    </div>
-  </section>
-
-  <section class="content-section">
-    <div class="content-wrap">
-      <div class="section-eyebrow">Clinical governance</div>
-      <h2>The boundaries are named. And held.</h2>
-      <p>
-        Werner takes clinical governance seriously. Every BurnoutOS product
-        operates within a defined scope of practice, with clear intake
-        screening, informed consent, GP engagement requirements, and
-        crisis response protocols. Professional indemnity insurance is
-        maintained. The boundaries between coaching and clinical
-        care are named explicitly and held consistently.
-      </p>
-      <p>
-        This is not standard for the wellness industry. It is standard for
-        a registered Clinical Psychologist running a scalable coaching business —
-        and it protects both participants and the integrity of the work.
-      </p>
-    </div>
-  </section>
 
   <section id="cta">
     <div class="cta-head">
       <h2>Working with Werner</h2>
-      <p>Three clear pathways depending on what you're working on.</p>
     </div>
 
     <div class="cta-grid">
       <a href="/stabilise" class="cta-card">
         <div class="cta-card-tag">For personal recovery</div>
         <h3>Explore the three phases</h3>
-        <p>Performance Reset, Operating System Redesign, and the Sustain Lab — a structured pathway from capacity to durable change.</p>
+        <p>Performance Reset, OS Redesign, and the Sustain Lab.</p>
         <span class="cta-card-link">See the pathway →</span>
       </a>
 
@@ -587,7 +504,7 @@
       <a href="/organisations.html" class="cta-card">
         <div class="cta-card-tag">For organisations</div>
         <h3>Request a consultation</h3>
-        <p>BurnoutOS delivers evidence-based diagnostics to organisations whose wellbeing programmes aren't moving the numbers.</p>
+        <p>Evidence-informed psychosocial risk diagnostics for organisations.</p>
         <span class="cta-card-link">Explore for organisations →</span>
       </a>
     </div>
@@ -597,17 +514,17 @@
     <div class="footer-logo">BurnoutOS</div>
     <div class="footer-links">
       <a href="/">Home</a>
-      <a href="/burnout-quiz">Take the quiz</a>
+      <a href="/baseline">Free Assessment</a>
       <a href="/stabilise">Performance Reset</a>
       <a href="/redesign">OS Redesign</a>
       <a href="/sustain">Sustain Lab</a>
       <a href="/coaching">Coaching</a>
-      <a href="/organisations.html">For Organisations</a>
-      <a href="/calculator">Cost calculator</a>
+      <a href="/organisations.html">For organisations</a>
+      <a href="/masterclass">Masterclass</a>
       <a href="/contact">Contact</a>
       <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>
     </div>
-    <div class="footer-copy">© 2026 BurnoutOS · Werner Teichert, Clinical Psychologist (AHPRA)</div>
+    <div class="footer-copy">© 2026 Behavioural Health Pty Ltd t/a BurnoutOS · Werner Teichert, Clinical Psychologist (AHPRA), MBA</div>
   </footer>
 
   <script>
