@@ -392,6 +392,21 @@
           <button type="button" class="prog-card-btn">Interested</button>
         </div>
 
+        <div class="org-blk" id="tourBlk">
+          <div class="sa-lbl"><span class="sa-dot"></span><span class="sa-lbl-t">Tour Location</span></div>
+          <p class="sa-note">Which city would you attend? Cape Town runs subject to demand, so this tells us where to open dates.</p>
+          <div class="field" style="margin-bottom:0">
+            <label>Preferred city<span class="req">*</span></label>
+            <select id="tourCity">
+              <option value="">Select a city</option>
+              <option>Johannesburg</option>
+              <option>Cape Town</option>
+              <option>Either</option>
+            </select>
+            <div class="ferr" id="e-tourCity"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Select a preferred city.</div>
+          </div>
+        </div>
+
         <div class="prog-card" id="pc-sustain" onclick="toggleInterest('sustain')">
           <div class="prog-card-info">
             <div class="prog-card-name">Sustain Lab</div>
@@ -568,6 +583,9 @@ function val_() {
     if (!document.getElementById('orgName').value.trim()) errs.push({id:'e-orgName', msg:'Organisation name is required.'});
     if (!document.getElementById('orgSize').value)        errs.push({id:'e-orgSize', msg:'Select an approximate headcount.'});
   }
+  if (selectedInterests.has('tour') && !document.getElementById('tourCity').value) {
+    errs.push({id:'e-tourCity', msg:'Select a preferred city for the SA tour.'});
+  }
   const unans = QUESTIONS.filter(q => !ratings[q.id]);
   if (unans.length) errs.push({id:null, msg:`${unans.length} rating question${unans.length>1?'s':''} still unanswered — highlighted below.`, ids:unans.map(q=>q.id)});
   if (isSA && !document.getElementById('popiaCheck').checked)
@@ -628,6 +646,7 @@ async function handleSubmit() {
     programmeInterests:  selectedInterests.size > 0 ? Array.from(selectedInterests).map(k => INTEREST_LABELS[k]) : undefined,
     organisationName:    selectedInterests.has('organisation') ? document.getElementById('orgName').value.trim() : undefined,
     organisationSize:    selectedInterests.has('organisation') ? document.getElementById('orgSize').value : undefined,
+    tourCity:            selectedInterests.has('tour') ? document.getElementById('tourCity').value : undefined,
   };
 
   try {
@@ -675,6 +694,11 @@ const INTEREST_LABELS = {
   sustain:      'Sustain Lab',
 };
 
+const CONDITIONAL_BLOCKS = {
+  organisation: { blk: 'orgBlk',  errs: ['e-orgName','e-orgSize'] },
+  tour:         { blk: 'tourBlk', errs: ['e-tourCity'] },
+};
+
 function toggleInterest(key) {
   const card = document.getElementById('pc-' + key);
   const btn  = card.querySelector('.prog-card-btn');
@@ -687,10 +711,11 @@ function toggleInterest(key) {
     card.classList.add('selected');
     btn.textContent = 'Selected';
   }
-  if (key === 'organisation') {
-    const on = selectedInterests.has('organisation');
-    document.getElementById('orgBlk').classList.toggle('on', on);
-    if (!on) ['e-orgName','e-orgSize'].forEach(id => document.getElementById(id).classList.remove('on'));
+  const cb = CONDITIONAL_BLOCKS[key];
+  if (cb) {
+    const on = selectedInterests.has(key);
+    document.getElementById(cb.blk).classList.toggle('on', on);
+    if (!on) cb.errs.forEach(id => document.getElementById(id).classList.remove('on'));
   }
 }
 buildRatings();
