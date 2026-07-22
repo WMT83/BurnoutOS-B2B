@@ -345,6 +345,14 @@
           <button type="button" class="prog-card-btn">Interested</button>
         </div>
 
+        <div class="prog-card" id="pc-organisation" onclick="toggleInterest('organisation')">
+          <div class="prog-card-info">
+            <div class="prog-card-name">Team or Organisation Programme</div>
+            <div class="prog-card-desc">For employers running this across a team, department or leadership group</div>
+          </div>
+          <button type="button" class="prog-card-btn">Interested</button>
+        </div>
+
         <div class="prog-card" id="pc-redesign" onclick="toggleInterest('redesign')">
           <div class="prog-card-info">
             <div class="prog-card-name">Phase 2: OS Redesign</div>
@@ -630,11 +638,12 @@ async function handleSubmit() {
 
 const selectedInterests = new Set();
 const INTEREST_LABELS = {
-  masterclass: 'Always On Masterclass',
-  reset:       'Phase 1: Performance Reset',
-  redesign:    'Phase 2: OS Redesign',
-  tour:        'SA Workshop Tour',
-  sustain:     'Sustain Lab',
+  masterclass:  'Always On Masterclass',
+  reset:        'Phase 1: Performance Reset',
+  organisation: 'Team or Organisation Programme',
+  redesign:     'Phase 2: OS Redesign',
+  tour:         'SA Workshop Tour',
+  sustain:      'Sustain Lab',
 };
 
 function toggleInterest(key) {
