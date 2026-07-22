@@ -268,8 +268,9 @@
         <input type="text" id="role" placeholder="e.g. Psychologist, HR Manager, Team Leader">
       </div>
       <div class="field" style="margin-bottom:0">
-        <label>Email address (optional)</label>
+        <label>Email address<span id="emailOpt"> (optional)</span><span class="req" id="emailReq" style="display:none">*</span></label>
         <input type="email" id="participantEmail" placeholder="For follow-up and future programme information">
+        <div class="ferr" id="e-participantEmail"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>An email address is required so we can send the information you asked for.</div>
       </div>
       <div class="sa-blk" id="saBlk">
         <div class="sa-lbl"><span class="sa-dot"></span><span class="sa-lbl-t">HPCSA CPD Requirements</span></div>
@@ -586,6 +587,9 @@ function val_() {
   if (selectedInterests.has('tour') && !document.getElementById('tourCity').value) {
     errs.push({id:'e-tourCity', msg:'Select a preferred city for the SA tour.'});
   }
+  if (selectedInterests.size > 0 && !document.getElementById('participantEmail').value.trim()) {
+    errs.push({id:'e-participantEmail', msg:'An email address is required when you select a programme.'});
+  }
   const unans = QUESTIONS.filter(q => !ratings[q.id]);
   if (unans.length) errs.push({id:null, msg:`${unans.length} rating question${unans.length>1?'s':''} still unanswered — highlighted below.`, ids:unans.map(q=>q.id)});
   if (isSA && !document.getElementById('popiaCheck').checked)
@@ -717,6 +721,16 @@ function toggleInterest(key) {
     document.getElementById(cb.blk).classList.toggle('on', on);
     if (!on) cb.errs.forEach(id => document.getElementById(id).classList.remove('on'));
   }
+  syncEmailRequirement();
+}
+
+// Email is optional for feedback alone, but required the moment someone asks
+// to hear about a programme. Without it the selection cannot be actioned.
+function syncEmailRequirement() {
+  const needed = selectedInterests.size > 0;
+  document.getElementById('emailOpt').style.display = needed ? 'none' : '';
+  document.getElementById('emailReq').style.display = needed ? '' : 'none';
+  if (!needed) document.getElementById('e-participantEmail').classList.remove('on');
 }
 buildRatings();
 buildPresenter();
