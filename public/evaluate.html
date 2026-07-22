@@ -67,8 +67,9 @@
     .ferr.on { display: flex; }
 
     /* ── SA block ── */
-    .sa-blk { display: none; background: var(--sa-bg); border: 2px solid var(--ember); border-radius: 8px; padding: 20px; margin-top: 10px; }
-    .sa-blk.on { display: block; }
+    .sa-blk, .org-blk { display: none; background: var(--sa-bg); border: 2px solid var(--ember); border-radius: 8px; padding: 20px; margin-top: 10px; }
+    .sa-blk.on, .org-blk.on { display: block; }
+    .org-blk { margin-top: 0; }
     .sa-lbl { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
     .sa-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ember); flex-shrink: 0; }
     .sa-lbl-t { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; color: var(--ember); text-transform: uppercase; letter-spacing: 0.08em; }
@@ -353,6 +354,28 @@
           <button type="button" class="prog-card-btn">Interested</button>
         </div>
 
+        <div class="org-blk" id="orgBlk">
+          <div class="sa-lbl"><span class="sa-dot"></span><span class="sa-lbl-t">Organisation Details</span></div>
+          <p class="sa-note">So we can size the programme correctly before getting in touch.</p>
+          <div class="field">
+            <label>Organisation name<span class="req">*</span></label>
+            <input type="text" id="orgName" placeholder="Your employer or client organisation">
+            <div class="ferr" id="e-orgName"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Organisation name is required.</div>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>Approximate headcount<span class="req">*</span></label>
+            <select id="orgSize">
+              <option value="">Select approximate headcount</option>
+              <option>Fewer than 50</option>
+              <option>50 to 249</option>
+              <option>250 to 999</option>
+              <option>1,000 to 4,999</option>
+              <option>5,000 or more</option>
+            </select>
+            <div class="ferr" id="e-orgSize"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Select an approximate headcount.</div>
+          </div>
+        </div>
+
         <div class="prog-card" id="pc-redesign" onclick="toggleInterest('redesign')">
           <div class="prog-card-info">
             <div class="prog-card-name">Phase 2: OS Redesign</div>
@@ -541,6 +564,10 @@ function val_() {
     if (!document.getElementById('hpcsaNo').value.trim())   errs.push({id:'e-hpcsaNo',  msg:'HPCSA registration number is required.'});
     if (!document.getElementById('board').value)             errs.push({id:'e-board',     msg:'Select your professional board.'});
   }
+  if (selectedInterests.has('organisation')) {
+    if (!document.getElementById('orgName').value.trim()) errs.push({id:'e-orgName', msg:'Organisation name is required.'});
+    if (!document.getElementById('orgSize').value)        errs.push({id:'e-orgSize', msg:'Select an approximate headcount.'});
+  }
   const unans = QUESTIONS.filter(q => !ratings[q.id]);
   if (unans.length) errs.push({id:null, msg:`${unans.length} rating question${unans.length>1?'s':''} still unanswered — highlighted below.`, ids:unans.map(q=>q.id)});
   if (isSA && !document.getElementById('popiaCheck').checked)
@@ -599,6 +626,8 @@ async function handleSubmit() {
     participantEmail:    document.getElementById('participantEmail').value.trim() || undefined,
     popiaAcknowledged:   isSA ? document.getElementById('popiaCheck').checked : undefined,
     programmeInterests:  selectedInterests.size > 0 ? Array.from(selectedInterests).map(k => INTEREST_LABELS[k]) : undefined,
+    organisationName:    selectedInterests.has('organisation') ? document.getElementById('orgName').value.trim() : undefined,
+    organisationSize:    selectedInterests.has('organisation') ? document.getElementById('orgSize').value : undefined,
   };
 
   try {
@@ -657,6 +686,11 @@ function toggleInterest(key) {
     selectedInterests.add(key);
     card.classList.add('selected');
     btn.textContent = 'Selected';
+  }
+  if (key === 'organisation') {
+    const on = selectedInterests.has('organisation');
+    document.getElementById('orgBlk').classList.toggle('on', on);
+    if (!on) ['e-orgName','e-orgSize'].forEach(id => document.getElementById(id).classList.remove('on'));
   }
 }
 buildRatings();
