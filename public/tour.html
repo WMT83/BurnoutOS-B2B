@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The BurnoutOS Programme · South Africa · October 2026</title>
-  <meta name="description" content="A 10-week burnout recovery programme. 2-day in-person intensive in Johannesburg or Cape Town, followed by 8 weeks of structured integration. Choose individual or corporate registration." />
+  <title>The Burnout Reset · a clinician's programme · South Africa · October 2026</title>
+  <meta name="description" content="The Burnout Reset, a clinician's programme. Two intensive days in Johannesburg or Cape Town, or live online, plus the ACT for Burnout workshop and three peer supervision sessions across eight weeks. 32 CPD points, in collaboration with PsySSA. Register as an individual clinician or as an organisation." />
   <link rel="canonical" href="https://burnout-os.app/tour" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -40,15 +40,6 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
     }
     a { color: inherit; text-decoration: none; }
 
@@ -119,7 +110,7 @@
     /* HUB HEAD */
     .hub-head {
       text-align: center;
-      max-width: 760px;
+      max-width: 780px;
       margin: 0 auto 4rem;
     }
     .badge {
@@ -132,7 +123,7 @@
       border: 1px solid var(--rule);
       font-size: 0.78rem;
       color: rgba(255,255,255,0.7);
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
     .badge .pulse {
       width: 7px; height: 7px;
@@ -146,23 +137,34 @@
       70%  { box-shadow: 0 0 0 10px rgba(232,75,42,0); }
       100% { box-shadow: 0 0 0 0 rgba(232,75,42,0); }
     }
+    .hub-kicker {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1.1rem;
+    }
+    .hub-kicker .brand { color: var(--ember); }
+    .hub-kicker .desc { color: var(--muted); }
     .hub-head h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+      font-size: clamp(2.3rem, 4.8vw, 3.6rem);
       font-weight: 800;
-      line-height: 1.06;
+      line-height: 1.04;
       letter-spacing: -0.025em;
       margin-bottom: 1.25rem;
     }
     .hub-head h1 em { font-style: normal; color: var(--ember); }
     .hub-head p {
-      font-size: clamp(1rem, 1.4vw, 1.18rem);
-      color: rgba(255,255,255,0.6);
-      max-width: 56ch;
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      color: rgba(255,255,255,0.62);
+      max-width: 60ch;
       margin: 0 auto;
-      line-height: 1.65;
+      line-height: 1.7;
       font-weight: 300;
     }
+    .hub-head p strong { color: rgba(255,255,255,0.9); font-weight: 500; }
 
     /* PATHS */
     .paths {
@@ -180,7 +182,7 @@
       display: flex;
       flex-direction: column;
       transition: border-color 0.25s, transform 0.25s, background 0.25s;
-      min-height: 340px;
+      min-height: 360px;
     }
     .path:hover {
       border-color: rgba(232,75,42,0.45);
@@ -281,20 +283,83 @@
     .meta-val {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       color: var(--white);
       letter-spacing: -0.02em;
       line-height: 1;
       margin-bottom: 0.4rem;
     }
-    .meta-val .unit { color: var(--ember); font-size: 0.7em; }
+    .meta-val .unit { color: var(--ember); font-size: 0.62em; margin-left: 0.15em; }
     .meta-lbl {
       font-size: 0.7rem;
       color: var(--muted);
       letter-spacing: 0.08em;
       text-transform: uppercase;
       font-weight: 500;
+      line-height: 1.4;
     }
+
+    /* VALUE STACK */
+    .valuestack {
+      margin: 3rem auto 0;
+      max-width: 960px;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.6rem;
+    }
+    @media (min-width: 900px) {
+      .valuestack { flex-direction: row; justify-content: center; align-items: stretch; gap: 0.4rem; }
+    }
+    .vs-item {
+      flex: 1 1 0;
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto;
+      padding: 1.4rem 1.4rem;
+      border-radius: 12px;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.025);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    @media (min-width: 900px) { .vs-item { margin: 0; } }
+    .vs-item.sum {
+      border-color: rgba(232,75,42,0.4);
+      background: linear-gradient(135deg, rgba(232,75,42,0.12) 0%, rgba(255,255,255,0.025) 100%);
+    }
+    .vs-main {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+    .vs-item.sum .vs-main { color: var(--ember); }
+    .vs-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.45;
+      font-weight: 300;
+    }
+    .vs-op {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--ember);
+      line-height: 1;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.15rem 0;
+    }
+    @media (min-width: 900px) { .vs-op { padding: 0 0.3rem; } }
 
     /* PARTNER */
     .partner {
@@ -351,10 +416,10 @@
 
 <nav>
   <a href="/" class="nav-back">
-    <span class="arrow">←</span>
+    <span class="arrow">&#8592;</span>
     <span>BurnoutOS</span>
   </a>
-  <div class="nav-right">October 2026 · Joburg &amp; Cape Town</div>
+  <div class="nav-right">October 2026 &middot; Joburg, Cape Town &amp; online</div>
 </nav>
 
 <main>
@@ -364,60 +429,64 @@
         <span class="pulse"></span>
         <span>Early-bird open until 31 August 2026</span>
       </div>
-      <h1>A 10-week <em>recovery programme</em>, with a 2-day in-person kickoff</h1>
-      <p>The full BurnoutOS programme delivered as a contained 10-week recovery arc. Two days in-person in Johannesburg or Cape Town, followed by 8 weeks of structured integration. Two ways to register depending on whether you're coming on your own or sending people through your organisation.</p>
+      <div class="hub-kicker"><span class="brand">The Burnout Reset</span> <span class="desc">&middot; a clinician's programme</span></div>
+      <h1>Too busy <em>not to</em> slow down.</h1>
+      <p>Learn how to assess, formulate and treat the burnout cases that keep circling back. <strong>Two intensive days</strong> in Johannesburg or Cape Town, or live online. The ACT for Burnout workshop is included. <strong>Three peer supervision sessions</strong> follow across eight weeks. 32 CPD points, in collaboration with PsySSA. Choose how you are registering below.</p>
     </div>
 
     <div class="paths">
       <a href="/tour/individual" class="path">
-        <div class="label">For individuals</div>
+        <div class="label">For individual clinicians</div>
         <h2>I'm registering myself</h2>
-        <p>For professionals enrolling themselves in the programme. Self-payment, individual onboarding, and the option to pay across three instalments.</p>
+        <p>For clinicians enrolling themselves. Card payment, individual onboarding, and the option to pay across instalments.</p>
         <ul>
           <li>Individual registration and card payment</li>
-          <li>From R8,950 on early-bird</li>
-          <li>Three-instalment option, no surcharge</li>
-          <li>32 CPD points (3 ethics) for eligible clinicians</li>
+          <li>From R5,950 online, or R8,950 in person, on early-bird</li>
+          <li>Instalment option available</li>
+          <li>32 CPD points, 30 contact hours, with PsySSA</li>
         </ul>
         <div class="path-cta">
           <span>Individual path</span>
-          <span class="arrow">→</span>
+          <span class="arrow">&#8594;</span>
         </div>
       </a>
 
       <a href="/tour/corporate" class="path corporate">
         <div class="label">For organisations</div>
         <h2>I'm sending my team</h2>
-        <p>For HR, People &amp; Culture, executive teams sending senior staff or high performers. Invoiced registration with team rates.</p>
+        <p>For clinical leads, HR, or people and culture registering staff. Invoiced registration with team rates.</p>
         <ul>
-          <li>Invoiced registration in your company's name</li>
-          <li>From R12,950 early-bird per place with invoiced registration</li>
-          <li>Post-programme debrief plus internal rollout materials</li>
+          <li>Invoiced registration in your organisation's name</li>
+          <li>Team rates and group onboarding</li>
+          <li>Post-programme debrief and rollout materials</li>
           <li>PO numbers, VAT invoice, B-BBEE paperwork</li>
         </ul>
         <div class="path-cta">
           <span>Corporate path</span>
-          <span class="arrow">→</span>
+          <span class="arrow">&#8594;</span>
         </div>
       </a>
     </div>
 
-    <div class="tour-meta">
-      <div>
-        <div class="meta-val">10<span class="unit">weeks</span></div>
-        <div class="meta-lbl">Recovery arc</div>
+    <div class="valuestack">
+      <div class="vs-item">
+        <div class="vs-main">Two intensive days</div>
+        <div class="vs-sub">Joburg, Cape Town, or live online</div>
       </div>
-      <div>
-        <div class="meta-val">2<span class="unit">days</span></div>
-        <div class="meta-lbl">In-person kickoff</div>
+      <div class="vs-op">+</div>
+      <div class="vs-item">
+        <div class="vs-main">ACT for Burnout</div>
+        <div class="vs-sub">A full workshop, included</div>
       </div>
-      <div>
-        <div class="meta-val">Capped</div>
-        <div class="meta-lbl">Group size</div>
+      <div class="vs-op">+</div>
+      <div class="vs-item">
+        <div class="vs-main">Eight-week arc</div>
+        <div class="vs-sub">Three peer supervision sessions</div>
       </div>
-      <div>
-        <div class="meta-val">Limited</div>
-        <div class="meta-lbl">Cohort intake</div>
+      <div class="vs-op">=</div>
+      <div class="vs-item sum">
+        <div class="vs-main">32 CPD points</div>
+        <div class="vs-sub">30 contact hours, with PsySSA</div>
       </div>
     </div>
 
@@ -430,7 +499,7 @@
 </main>
 
 <footer>
-  © 2026 Behavioural Health Pty Ltd t/a BurnoutOS ·
+  &copy; 2026 Behavioural Health Pty Ltd t/a BurnoutOS &middot;
   <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>
 </footer>
 
