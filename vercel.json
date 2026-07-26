@@ -122,7 +122,12 @@
     },
     {
       "source": "/tour/capetown",
-      "destination": "/tour-capetown.html",
+      "destination": "/tour-individual.html",
+      "permanent": false
+    },
+    {
+      "source": "/tour-capetown.html",
+      "destination": "/tour-individual.html",
       "permanent": false
     },
     {
