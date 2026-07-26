@@ -17,13 +17,13 @@
     johannesburg: {
       id: 'b2b78683-06b0-463c-b63c-8419f9307f94',
       label: 'Johannesburg',
-      dates: '10 to 12 October 2026',
+      dates: '10 to 11 October 2026',
       seatsTotal: 20,
     },
     capetown: {
       id: 'f1ff2f67-759b-4870-a438-d6326b7247f2',
       label: 'Cape Town',
-      dates: '16 to 18 October 2026',
+      dates: '16 to 17 October 2026',
       seatsTotal: 20,
     },
   };
