@@ -47,7 +47,7 @@
     individual_early_bird: 8950,
     individual_standard: 10950,
     individual_instalment_early_bird: 1890,
-    individual_instalment_standard: 1890,
+    individual_instalment_standard: 2250,
     online_early_bird: 5950,
     online_standard: 6950,
     corporate_early_bird: 10950,
@@ -693,7 +693,7 @@
       <div class="bos-modal-header">
         <div class="bos-modal-eyebrow">${escapeHtml(cohort.label)} cohort</div>
         <h2 class="bos-modal-title">Choose your payment</h2>
-        <p class="bos-modal-subtitle">Full payment now or split into 5 monthly instalments, no surcharge.</p>
+        <p class="bos-modal-subtitle">Full payment now or split into 5 monthly instalments.</p>
       </div>
       <div class="bos-modal-body">
         ${stepDots(2, 3, false)}
