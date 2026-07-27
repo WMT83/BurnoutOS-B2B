@@ -26,6 +26,13 @@
       dates: '16 to 17 October 2026',
       seatsTotal: 20,
     },
+    online: {
+      id: 'd357e86f-d376-49e6-8cb3-14494c9e05c4',
+      label: 'Online',
+      dates: 'Live · 10 to 11 October 2026',
+      seatsTotal: 50,
+      online: true,
+    },
   };
 
   // Pricing (display only — server is authoritative)
@@ -34,7 +41,10 @@
     individual_standard: 10950,
     individual_instalment_early_bird: 1890,
     individual_instalment_standard: 1890,
-    corporate_per_seat: 12950,
+    online_early_bird: 5950,
+    online_standard: 6950,
+    corporate_early_bird: 10950,
+    corporate_standard: 12950,
     corporate_tier_3_5_pct: 10,
     corporate_tier_6_plus_pct: 15,
   };
@@ -83,9 +93,25 @@
     return 0;
   }
 
-  function computeCorporateTotal(places) {
+  function cohortIsOnline(key) {
+    return !!(COHORTS[key] && COHORTS[key].online);
+  }
+
+  function individualFullPrice(key) {
+    const eb = isEarlyBird();
+    if (cohortIsOnline(key)) return eb ? PRICES.online_early_bird : PRICES.online_standard;
+    return eb ? PRICES.individual_early_bird : PRICES.individual_standard;
+  }
+
+  function corporatePerSeat(key) {
+    const eb = isEarlyBird();
+    if (cohortIsOnline(key)) return eb ? PRICES.online_early_bird : PRICES.online_standard;
+    return eb ? PRICES.corporate_early_bird : PRICES.corporate_standard;
+  }
+
+  function computeCorporateTotal(places, perSeat) {
     const discount = computeCorporateDiscount(places);
-    const subtotal = places * PRICES.corporate_per_seat;
+    const subtotal = places * perSeat;
     return Math.round(subtotal * (100 - discount) / 100);
   }
 
@@ -613,7 +639,7 @@
       <div class="bos-modal-header">
         <div class="bos-modal-eyebrow">${escapeHtml(tierLabel)}</div>
         <h2 class="bos-modal-title">Choose your cohort</h2>
-        <p class="bos-modal-subtitle">Two-day Performance Reset plus an 8-week structured integration phase.</p>
+        <p class="bos-modal-subtitle">Two intensive days plus an eight-week supervision arc.</p>
       </div>
       <div class="bos-modal-body">
         ${stepDots(1, 3, false)}
@@ -635,8 +661,15 @@
     });
     modalEl.querySelector('[data-action="next-cohort"]').addEventListener('click', () => {
       if (!state.cohortKey) return;
-      state.step = 2;
-      renderIndividualStep2();
+      if (cohortIsOnline(state.cohortKey)) {
+        // Online has no instalment option — skip the payment step.
+        state.instalment = false;
+        state.step = 3;
+        renderIndividualStep3();
+      } else {
+        state.step = 2;
+        renderIndividualStep2();
+      }
     });
   }
 
@@ -702,18 +735,18 @@
 
   function renderIndividualStep3() {
     const cohort = COHORTS[state.cohortKey];
-    const earlyBird = isEarlyBird();
-    const fullPrice = earlyBird ? PRICES.individual_early_bird : PRICES.individual_standard;
+    const online = cohortIsOnline(state.cohortKey);
+    const fullPrice = individualFullPrice(state.cohortKey);
     const errorHtml = state.error ? renderError(state.error) : '';
 
     renderModal(`
       <div class="bos-modal-header">
         <div class="bos-modal-eyebrow">${escapeHtml(cohort.label)} · ${state.instalment ? '5 monthly instalments' : 'Full payment'}</div>
         <h2 class="bos-modal-title">Your details</h2>
-        <p class="bos-modal-subtitle">We'll send confirmation, the onboarding call link, and pre-weekend reading to this email.</p>
+        <p class="bos-modal-subtitle">We'll send confirmation, the onboarding call link, and pre-programme reading to this email.</p>
       </div>
       <div class="bos-modal-body">
-        ${stepDots(3, 3, false)}
+        ${stepDots(online ? 2 : 3, online ? 2 : 3, false)}
         ${errorHtml}
         <div class="bos-step-section">
           <div class="bos-form-grid">
@@ -766,8 +799,13 @@
       });
     });
     modalEl.querySelector('[data-action="back"]').addEventListener('click', () => {
-      state.step = 2;
-      renderIndividualStep2();
+      if (cohortIsOnline(state.cohortKey)) {
+        state.step = 1;
+        renderIndividualStep1();
+      } else {
+        state.step = 2;
+        renderIndividualStep2();
+      }
     });
     modalEl.querySelector('[data-action="submit"]').addEventListener('click', submitIndividual);
   }
@@ -902,9 +940,10 @@
   function renderCorporateStep2() {
     const cohort = COHORTS[state.cohortKey];
     const places = state.places || 3;
+    const perSeat = corporatePerSeat(state.cohortKey);
     const discount = computeCorporateDiscount(places);
-    const total = computeCorporateTotal(places);
-    const subtotal = places * PRICES.corporate_per_seat;
+    const total = computeCorporateTotal(places, perSeat);
+    const subtotal = places * perSeat;
     const discountAmount = subtotal - total;
 
     renderModal(`
@@ -924,7 +963,7 @@
         </div>
         <div class="bos-summary">
           <div class="bos-summary-row">
-            <span class="bos-summary-label">${places} place${places > 1 ? 's' : ''} × ${formatZar(PRICES.corporate_per_seat)}</span>
+            <span class="bos-summary-label">${places} place${places > 1 ? 's' : ''} × ${formatZar(perSeat)}</span>
             <span class="bos-summary-value">${formatZar(subtotal)}</span>
           </div>
           ${discount > 0 ? `
