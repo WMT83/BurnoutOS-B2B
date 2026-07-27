@@ -26,10 +26,17 @@
       dates: '16 to 17 October 2026',
       seatsTotal: 20,
     },
-    online: {
+    online_oct10: {
       id: 'd357e86f-d376-49e6-8cb3-14494c9e05c4',
       label: 'Online',
       dates: 'Live · 10 to 11 October 2026',
+      seatsTotal: 50,
+      online: true,
+    },
+    online_oct16: {
+      id: '0fdad3f3-2a52-44fc-a639-24a741388b62',
+      label: 'Online',
+      dates: 'Live · 16 to 17 October 2026',
       seatsTotal: 50,
       online: true,
     },
