@@ -744,6 +744,8 @@
     const cohort = COHORTS[state.cohortKey];
     const online = cohortIsOnline(state.cohortKey);
     const fullPrice = individualFullPrice(state.cohortKey);
+    const instalPrice = isEarlyBird() ? PRICES.individual_instalment_early_bird : PRICES.individual_instalment_standard;
+    const summaryTotal = state.instalment ? instalPrice * 5 : fullPrice;
     const errorHtml = state.error ? renderError(state.error) : '';
 
     renderModal(`
@@ -789,7 +791,7 @@
           </div>
           <div class="bos-summary-row">
             <span class="bos-summary-label">${state.instalment ? 'Total commitment' : 'Total today'}</span>
-            <span class="bos-summary-total">${formatZar(fullPrice)}</span>
+            <span class="bos-summary-total">${formatZar(summaryTotal)}</span>
           </div>
         </div>
         <div class="bos-button-row">
