@@ -154,9 +154,28 @@
       "source": "/evaluate",
       "destination": "/evaluate.html",
       "permanent": false
+    },
+    {
+      "source": "/r/wa",
+      "destination": "/tour/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=whatsapp",
+      "permanent": false
+    },
+    {
+      "source": "/r/fb",
+      "destination": "/tour/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=facebook",
+      "permanent": false
+    },
+    {
+      "source": "/r/li",
+      "destination": "/tour/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=linkedin",
+      "permanent": false
     }
   ],
   "rewrites": [
+    {
+      "source": "/tour/register",
+      "destination": "/tour-register.html"
+    },
     {
       "source": "/diagnostic/:path*",
       "destination": "/app.html"

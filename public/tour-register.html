@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour Registration — BurnoutOS</title>
+  <meta name="description" content="Register for the BurnoutOS South Africa tour. Two intensive days, the ACT for Burnout workshop, and three peer supervision sessions. Johannesburg, Cape Town, or live online. 32 CPD points, 30 contact hours, in collaboration with PsySSA.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ember:      #e84b2a;
+      --ember-dim:  #c73d20;
+      --ink:        #141218;
+      --cream:      #fdf9f6;
+      --white:      #ffffff;
+      --border:     #e5ddd8;
+      --muted:      #6b6570;
+      --muted-lt:   #9a9299;
+      --red:        #dc2626;
+      --red-bg:     #fef2f2;
+      --red-border: #fca5a5;
+      --sa-bg:      #fef9f7;
+      --green:      #16a34a;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
+
+    /* ── Header ── */
+    .hdr { background: var(--ink); padding: 22px 20px 26px; }
+    .hdr-inner { max-width: 700px; margin: 0 auto; }
+    .wm { display: flex; align-items: baseline; margin-bottom: 5px; }
+    .wm-t { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--white); letter-spacing: -0.5px; }
+    .wm-d { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--ember); }
+    .hdr-sub { display: flex; align-items: center; gap: 10px; }
+    .hdr-title { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 500; }
+
+    /* ── Layout ── */
+    .content { max-width: 700px; margin: 0 auto; padding: 24px 16px 64px; }
+
+    /* ── Card ── */
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; }
+    .card.hidden { display: none; }
+
+    /* ── Section title ── */
+    .stitle { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1.5px solid var(--border); }
+
+    /* ── Body copy ── */
+    .lead { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .intro-list { list-style: none; margin-top: 14px; }
+    .intro-list li { position: relative; padding-left: 26px; font-size: 14px; line-height: 1.55; color: var(--ink); margin-bottom: 11px; }
+    .intro-list li:last-child { margin-bottom: 0; }
+    .intro-list li::before { content: ''; position: absolute; left: 4px; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--ember); }
+
+    /* ── Fields ── */
+    .field { margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .req { color: var(--ember); margin-left: 3px; }
+    .opt { color: var(--muted-lt); font-size: 12px; font-weight: 400; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 6px;
+      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: var(--white);
+      outline: none; -webkit-appearance: none; appearance: none;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ember); }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b6570' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; cursor: pointer;
+    }
+    .field textarea { resize: vertical; line-height: 1.5; }
+    .field-row { display: flex; gap: 12px; }
+    .field-row > .field { flex: 1; }
+    .ferr { display: none; align-items: center; gap: 4px; margin-top: 5px; font-size: 12px; color: var(--red); }
+    .ferr.on { display: flex; }
+    .ferr svg { flex-shrink: 0; }
+
+    /* ── Highlighted block (requestor) ── */
+    .org-blk { background: var(--sa-bg); border: 2px solid var(--ember); border-radius: 8px; padding: 20px; margin-top: 16px; }
+    .sa-lbl { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .sa-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ember); flex-shrink: 0; }
+    .sa-lbl-t { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; color: var(--ember); text-transform: uppercase; letter-spacing: 0.08em; }
+    .sa-note { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+
+    /* ── Choice cards ── */
+    .choice-grid { display: flex; flex-direction: column; gap: 10px; }
+    .choice-card {
+      display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%;
+      border: 2px solid var(--border); border-radius: 8px; padding: 14px 16px; cursor: pointer;
+      background: var(--white); text-align: left; font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+    }
+    .choice-card:hover { border-color: var(--ember); }
+    .choice-card:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+    .choice-card.selected { border-color: var(--ember); background: #fef4f1; }
+    .cc-info { flex: 1; }
+    .cc-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+    .cc-desc { font-size: 12px; color: var(--muted); line-height: 1.45; }
+    .cc-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: var(--ink); white-space: nowrap; }
+    .cc-price .cc-per { display: block; font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 10px; color: var(--muted-lt); text-align: right; margin-top: 1px; }
+    .choice-card.selected .cc-price { color: var(--ember); }
+
+    /* ── Payment note ── */
+    .pay-note { font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 14px; padding: 12px 14px; background: #f9f6f3; border-radius: 6px; border: 1px solid var(--border); }
+    .pay-note strong { color: var(--ink); }
+
+    /* ── Summary ── */
+    .sum-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .sum-row:last-child { border-bottom: none; }
+    .sum-label { color: var(--muted); }
+    .sum-value { font-weight: 600; color: var(--ink); }
+    .sum-row.total { padding-top: 13px; }
+    .sum-row.total .sum-label { color: var(--ink); font-weight: 600; }
+    .sum-row.total .sum-value { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--ember); }
+    .sum-row.discount .sum-value { color: var(--green); }
+    .sum-fine { font-size: 12px; color: var(--muted-lt); line-height: 1.55; margin-top: 14px; }
+
+    /* ── Consent ── */
+    .consent-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+    .consent-row:last-child { margin-bottom: 0; }
+    .consent-row input[type="checkbox"] { width: 18px; height: 18px; min-width: 18px; margin-top: 2px; accent-color: var(--ember); cursor: pointer; }
+    .consent-row label { font-size: 13px; color: var(--ink); line-height: 1.6; cursor: pointer; }
+    .popia-notice { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 16px; padding: 14px 16px; background: #f9f6f3; border-radius: 6px; border: 1px solid var(--border); }
+    .popia-notice strong { color: var(--ink); }
+    .popia-notice a { color: var(--ember); text-decoration: none; }
+    .doc-check { padding-top: 6px; }
+    .doc-check .consent-row label { font-weight: 500; }
+    .doc-hint { font-size: 12px; color: var(--muted-lt); line-height: 1.5; margin-top: 2px; }
+
+    /* ── Error summary ── */
+    .err-sum { display: none; background: var(--red-bg); border: 1.5px solid var(--red-border); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; align-items: flex-start; gap: 10px; }
+    .err-sum.on { display: flex; }
+    .err-ico { flex-shrink: 0; margin-top: 1px; color: var(--red); }
+    .err-title { font-size: 14px; font-weight: 600; color: var(--red); margin-bottom: 6px; }
+    .err-item { font-size: 13px; color: var(--red); margin-bottom: 3px; }
+    .err-item:last-child { margin-bottom: 0; }
+
+    /* ── Submit ── */
+    .sub-btn {
+      width: 100%; padding: 15px 24px; background: var(--ember); color: var(--white);
+      border: none; border-radius: 8px; font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 15px; cursor: pointer; letter-spacing: -0.2px; transition: background 0.15s;
+      margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .sub-btn.hidden { display: none; }
+    .sub-btn:hover { background: var(--ember-dim); }
+    .sub-btn:disabled { background: var(--muted-lt); cursor: not-allowed; }
+    .privacy { text-align: center; font-size: 12px; color: var(--muted-lt); line-height: 1.5; padding-bottom: 20px; }
+    .privacy.hidden { display: none; }
+
+    /* ── Spinner ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
+    .spinner.on { display: block; }
+
+    /* ── Success ── */
+    .form-wrap.hidden { display: none; }
+    .success { display: none; }
+    .success.on { display: block; }
+    .suc-card { text-align: center; padding: 40px; margin-bottom: 16px; }
+    .suc-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--ember); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .suc-h { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: var(--ink); margin-bottom: 12px; }
+    .suc-p { font-size: 15px; color: var(--muted); line-height: 1.65; max-width: 440px; margin: 0 auto 10px; }
+    .suc-quote { background: var(--sa-bg); border: 2px solid var(--ember); border-radius: 10px; padding: 24px; text-align: left; }
+    .suc-quote-lbl { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+    @media (max-width: 480px) {
+      .field-row { flex-direction: column; gap: 0; }
+      .cc-price { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="wm"><span class="wm-t">BurnoutOS</span><span class="wm-d">.</span></div>
+    <div class="hdr-sub">
+      <span class="hdr-title">Tour Registration · South Africa 2026</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="err-sum" id="errSum" role="alert">
+    <span class="err-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+    <div id="errList"></div>
+  </div>
+
+  <div class="form-wrap" id="formWrap">
+
+    <!-- Intro -->
+    <div class="card">
+      <p class="lead">One registration for the South Africa tour. Two intensive days, then peer supervision on your own caseload across eight weeks. Your registration covers the following.</p>
+      <ul class="intro-list">
+        <li>The eight-session Performance Reset protocol, worked through as a clinician</li>
+        <li>The ACT for Burnout workshop, included and valued at R2,950</li>
+        <li>Three peer supervision sessions on your own caseload, recorded if you cannot attend live</li>
+        <li>32 CPD points across 30 contact hours, in collaboration with PsySSA</li>
+        <li>Materials for the two days</li>
+        <li>Catering on the in-person days</li>
+      </ul>
+    </div>
+
+    <!-- Who is registering -->
+    <div class="card">
+      <div class="stitle">Who is registering</div>
+      <div class="choice-grid">
+        <button type="button" class="choice-card" data-audience="individual" onclick="chooseAudience('individual')">
+          <div class="cc-info">
+            <div class="cc-name">Individual clinician</div>
+            <div class="cc-desc">Register yourself and pay by card</div>
+          </div>
+        </button>
+        <button type="button" class="choice-card" data-audience="corporate" onclick="chooseAudience('corporate')">
+          <div class="cc-info">
+            <div class="cc-name">A team, invoiced to an organisation</div>
+            <div class="cc-desc">Reserve several places and request a proforma invoice</div>
+          </div>
+        </button>
+      </div>
+      <div class="ferr" id="e-audience"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Choose who is registering.</div>
+    </div>
+
+    <!-- Format -->
+    <div class="card hidden" id="sec-format">
+      <div class="stitle">Choose your dates</div>
+      <p class="lead" style="margin-bottom:16px">The same two-day programme runs in each format, with the same clinical lead.</p>
+      <div class="choice-grid" id="cohortGrid"></div>
+      <div class="ferr" id="e-cohort"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Choose a cohort.</div>
+    </div>
+
+    <!-- Payment (individual in-person only) -->
+    <div class="card hidden" id="sec-payment">
+      <div class="stitle">Payment</div>
+      <div class="choice-grid">
+        <button type="button" class="choice-card" data-payment="full" onclick="choosePayment('full')">
+          <div class="cc-info">
+            <div class="cc-name">Pay in full</div>
+            <div class="cc-desc" id="pay-full-desc">One payment by card</div>
+          </div>
+          <div class="cc-price" id="pay-full-price"></div>
+        </button>
+        <button type="button" class="choice-card" data-payment="instalment" onclick="choosePayment('instalment')">
+          <div class="cc-info">
+            <div class="cc-name">Five monthly payments</div>
+            <div class="cc-desc" id="pay-inst-desc">Spread across five months from registration</div>
+          </div>
+          <div class="cc-price" id="pay-inst-price"></div>
+        </button>
+      </div>
+      <div class="pay-note" id="payNote"></div>
+      <div class="ferr" id="e-payment" style="margin-top:10px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Choose a payment option.</div>
+    </div>
+
+    <!-- Details -->
+    <div class="card hidden" id="sec-details">
+      <div class="stitle">Your details</div>
+
+      <!-- Individual -->
+      <div id="ind-details">
+        <div class="field">
+          <label>Full name<span class="req">*</span></label>
+          <input type="text" id="ind-name" autocomplete="name" placeholder="Your name">
+          <div class="ferr" id="e-ind-name"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter your full name.</div>
+        </div>
+        <div class="field">
+          <label>Email address<span class="req">*</span></label>
+          <input type="email" id="ind-email" autocomplete="email" placeholder="Where we send your confirmation">
+          <div class="ferr" id="e-ind-email"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter a valid email address.</div>
+        </div>
+        <div class="field">
+          <label>Mobile <span class="opt">(optional)</span></label>
+          <input type="tel" id="ind-phone" autocomplete="tel" placeholder="For day-of updates">
+        </div>
+        <div class="field">
+          <label>Professional role <span class="opt">(optional)</span></label>
+          <input type="text" id="ind-role" placeholder="e.g. Clinical Psychologist">
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Practice or organisation <span class="opt">(optional)</span></label>
+          <input type="text" id="ind-org" placeholder="Where you practise">
+        </div>
+      </div>
+
+      <!-- Corporate -->
+      <div id="corp-details" style="display:none">
+        <div class="field">
+          <label>Number of places<span class="req">*</span></label>
+          <input type="number" id="corp-places" min="1" max="20" step="1" value="3" inputmode="numeric">
+          <div class="ferr" id="e-corp-places"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter a number of places between 1 and 20.</div>
+        </div>
+        <div class="field">
+          <label>Organisation name<span class="req">*</span></label>
+          <input type="text" id="corp-company" placeholder="The organisation to be invoiced">
+          <div class="ferr" id="e-corp-company"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter the organisation name.</div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>VAT number <span class="opt">(optional)</span></label>
+            <input type="text" id="corp-vat" placeholder="For the invoice">
+          </div>
+          <div class="field">
+            <label>Purchase order <span class="opt">(optional)</span></label>
+            <input type="text" id="corp-po" placeholder="PO number">
+          </div>
+        </div>
+        <div class="field">
+          <label>Billing email<span class="req">*</span></label>
+          <input type="email" id="corp-billing-email" placeholder="Where the invoice is sent">
+          <div class="ferr" id="e-corp-billing-email"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter a valid billing email address.</div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Billing contact name <span class="opt">(optional)</span></label>
+          <input type="text" id="corp-billing-contact" placeholder="Accounts payable contact">
+        </div>
+
+        <div class="org-blk">
+          <div class="sa-lbl"><span class="sa-dot"></span><span class="sa-lbl-t">Requestor</span></div>
+          <p class="sa-note">The person we deal with on this booking. This can be the same as the billing contact.</p>
+          <div class="field">
+            <label>Your name<span class="req">*</span></label>
+            <input type="text" id="corp-req-name" placeholder="Who to reply to">
+            <div class="ferr" id="e-corp-req-name"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter your name.</div>
+          </div>
+          <div class="field">
+            <label>Your email<span class="req">*</span></label>
+            <input type="email" id="corp-req-email" placeholder="Where we send the quote">
+            <div class="ferr" id="e-corp-req-email"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter a valid email address.</div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Your role <span class="opt">(optional)</span></label>
+              <input type="text" id="corp-req-role" placeholder="e.g. L&amp;D Manager">
+            </div>
+            <div class="field">
+              <label>Your phone <span class="opt">(optional)</span></label>
+              <input type="tel" id="corp-req-phone" placeholder="Direct line">
+            </div>
+          </div>
+          <div class="doc-check">
+            <p style="font-size:13px;font-weight:600;color:var(--ink);margin:4px 0 12px">Procurement documents you need</p>
+            <div class="consent-row">
+              <input type="checkbox" id="doc-bbee">
+              <label for="doc-bbee">B-BBEE certificate<div class="doc-hint">Our current B-BBEE certificate for your supplier file.</div></label>
+            </div>
+            <div class="consent-row">
+              <input type="checkbox" id="doc-sdl">
+              <label for="doc-sdl">SDL coordinator letter<div class="doc-hint">A letter for your skills development levy claim.</div></label>
+            </div>
+            <div class="consent-row">
+              <input type="checkbox" id="doc-briefing">
+              <label for="doc-briefing">Two-page clinical briefing<div class="doc-hint">A short briefing on the programme for internal sign-off.</div></label>
+            </div>
+          </div>
+          <div class="field" style="margin-top:16px;margin-bottom:0">
+            <label>Notes <span class="opt">(optional)</span></label>
+            <textarea id="corp-notes" rows="3" placeholder="Anything we should know before quoting"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="card hidden" id="sec-summary">
+      <div class="stitle">Summary</div>
+      <div id="summaryBody"></div>
+    </div>
+
+    <!-- Consent -->
+    <div class="card hidden" id="sec-consent">
+      <div class="stitle">Consent</div>
+      <div class="popia-notice">
+        <strong>Behavioural Health Pty Ltd (BurnoutOS)</strong> collects your personal information to process your registration for the South Africa tour. We use it to administer your place and to arrange payment or invoicing. We share it with our payment processor, Stripe, to complete your transaction. Your information will not be used for any other purpose without your consent. You have the right to access, correct, or request deletion of your information at any time by contacting <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>.
+      </div>
+      <div class="consent-row">
+        <input type="checkbox" id="consent-popia" onchange="clearErr('e-consent-popia')">
+        <label for="consent-popia">I have read the notice and consent to the processing of my personal information in accordance with POPIA.<span class="req"> *</span></label>
+      </div>
+      <div class="ferr" id="e-consent-popia" style="margin:2px 0 12px 30px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Acknowledge the POPIA notice to continue.</div>
+      <div class="consent-row">
+        <input type="checkbox" id="consent-terms" onchange="clearErr('e-consent-terms')">
+        <label for="consent-terms">I understand that if I cannot attend, my place transfers to the next cohort or to a colleague I nominate, and that a full refund applies only if the cohort is cancelled.<span class="req"> *</span></label>
+      </div>
+      <div class="ferr" id="e-consent-terms" style="margin:2px 0 0 30px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Confirm you understand the transfer and refund terms.</div>
+    </div>
+
+    <button class="sub-btn hidden" id="subBtn" onclick="handleSubmit()">
+      <span class="spinner" id="spinner"></span>
+      <span id="subLabel">Continue</span>
+    </button>
+    <p class="privacy hidden" id="privacyLine">Payments are processed securely by Stripe. We never see your card details.</p>
+
+  </div>
+
+  <div class="success" id="success">
+    <div class="card suc-card">
+      <div class="suc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h1 class="suc-h" id="sucH">Thank you.</h1>
+      <p class="suc-p" id="sucP"></p>
+    </div>
+    <div class="card suc-quote" id="sucQuote" style="display:none">
+      <div class="suc-quote-lbl"><span class="sa-dot"></span><span class="sa-lbl-t">Your quote</span></div>
+      <div id="sucQuoteBody"></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  // ─── Configuration (verified against deployed edge functions) ───
+  const SUPABASE_URL = 'https://kvsirypfqtnymooxicti.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_Azjgh5OVpFG2Z2oyQqt0Ig_E0tVk2W8';
+  const TOUR_SLUG = 'sa-2026';
+  const EARLY_BIRD_END = '2026-08-31';
+
+  const COHORTS = {
+    johannesburg: { id: 'b2b78683-06b0-463c-b63c-8419f9307f94', label: 'Johannesburg', dates: '10 to 11 October 2026', seatsTotal: 20 },
+    capetown:     { id: 'f1ff2f67-759b-4870-a438-d6326b7247f2', label: 'Cape Town', dates: '16 to 17 October 2026', seatsTotal: 20 },
+    online_oct10: { id: 'd357e86f-d376-49e6-8cb3-14494c9e05c4', label: 'Live online', dates: '10 to 11 October 2026', seatsTotal: 50, online: true },
+    online_oct16: { id: '0fdad3f3-2a52-44fc-a639-24a741388b62', label: 'Live online', dates: '16 to 17 October 2026', seatsTotal: 50, online: true },
+  };
+  const COHORT_ORDER = ['johannesburg', 'capetown', 'online_oct10', 'online_oct16'];
+
+  const PRICES = {
+    individual_early_bird: 8950,
+    individual_standard: 10950,
+    individual_instalment_early_bird: 1890,
+    individual_instalment_standard: 2250,
+    online_early_bird: 5950,
+    online_standard: 6950,
+    corporate_early_bird: 10950,
+    corporate_standard: 12950,
+    corporate_tier_3_5_pct: 10,
+    corporate_tier_6_plus_pct: 15,
+  };
+  const INSTALMENT_COUNT = 5;
+
+  // ─── Utilities ───
+  function isEarlyBird() {
+    return new Date().toISOString().slice(0, 10) <= EARLY_BIRD_END;
+  }
+  // Manual grouping: toLocaleString('en-ZA') produces spaces in some engines.
+  function formatZar(amount) {
+    return 'R' + String(Math.round(amount)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+  function validEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  function cohortIsOnline(key) {
+    return !!(COHORTS[key] && COHORTS[key].online);
+  }
+  function individualFullPrice(key) {
+    const eb = isEarlyBird();
+    if (cohortIsOnline(key)) return eb ? PRICES.online_early_bird : PRICES.online_standard;
+    return eb ? PRICES.individual_early_bird : PRICES.individual_standard;
+  }
+  function individualInstalmentPerMonth() {
+    return isEarlyBird() ? PRICES.individual_instalment_early_bird : PRICES.individual_instalment_standard;
+  }
+  function corporatePerSeat(key) {
+    const eb = isEarlyBird();
+    if (cohortIsOnline(key)) return eb ? PRICES.online_early_bird : PRICES.online_standard;
+    return eb ? PRICES.corporate_early_bird : PRICES.corporate_standard;
+  }
+  function corporateDiscount(places) {
+    if (places >= 6) return PRICES.corporate_tier_6_plus_pct;
+    if (places >= 3) return PRICES.corporate_tier_3_5_pct;
+    return 0;
+  }
+  function getUtmParams() {
+    const params = new URLSearchParams(window.location.search);
+    const utm = {};
+    ['source', 'medium', 'campaign', 'content', 'term'].forEach(key => {
+      const v = params.get('utm_' + key);
+      if (v) utm[key] = v;
+    });
+    return Object.keys(utm).length ? utm : null;
+  }
+  function getReferrer() {
+    return document.referrer || null;
+  }
+  function el(id) { return document.getElementById(id); }
+
+  // ─── State ───
+  const state = { audience: null, cohortKey: null, payment: null };
+
+  // ─── Choice: audience ───
+  window.chooseAudience = function (type) {
+    state.audience = type;
+    document.querySelectorAll('[data-audience]').forEach(b => b.classList.toggle('selected', b.dataset.audience === type));
+    clearErr('e-audience');
+    el('ind-details').style.display = type === 'individual' ? '' : 'none';
+    el('corp-details').style.display = type === 'corporate' ? '' : 'none';
+    renderCohortGrid();
+    el('sec-format').classList.remove('hidden');
+    updateVisibility();
+    renderSummary();
+  };
+
+  // ─── Choice: cohort ───
+  function renderCohortGrid() {
+    const grid = el('cohortGrid');
+    grid.innerHTML = '';
+    COHORT_ORDER.forEach(key => {
+      const c = COHORTS[key];
+      const price = state.audience === 'corporate' ? corporatePerSeat(key) : individualFullPrice(key);
+      const per = state.audience === 'corporate' ? 'per seat' : '';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'choice-card' + (state.cohortKey === key ? ' selected' : '');
+      btn.dataset.cohort = key;
+      btn.innerHTML =
+        '<div class="cc-info">' +
+          '<div class="cc-name">' + c.label + '</div>' +
+          '<div class="cc-desc">' + c.dates + ' · ' + c.seatsTotal + ' seats</div>' +
+        '</div>' +
+        '<div class="cc-price">' + formatZar(price) + (per ? '<span class="cc-per">' + per + '</span>' : '') + '</div>';
+      btn.onclick = function () { chooseCohort(key); };
+      grid.appendChild(btn);
+    });
+  }
+
+  function chooseCohort(key) {
+    state.cohortKey = key;
+    document.querySelectorAll('[data-cohort]').forEach(b => b.classList.toggle('selected', b.dataset.cohort === key));
+    clearErr('e-cohort');
+    // Online cohorts have no instalment tier: default to a single payment.
+    if (cohortIsOnline(key)) state.payment = 'full';
+    else if (state.audience === 'individual' && state.payment === null) { /* leave unchosen */ }
+    updatePaymentSection();
+    updateVisibility();
+    renderSummary();
+  }
+
+  // ─── Choice: payment ───
+  window.choosePayment = function (opt) {
+    state.payment = opt;
+    document.querySelectorAll('[data-payment]').forEach(b => b.classList.toggle('selected', b.dataset.payment === opt));
+    clearErr('e-payment');
+    renderSummary();
+  };
+
+  function paymentApplies() {
+    return state.audience === 'individual' && state.cohortKey && !cohortIsOnline(state.cohortKey);
+  }
+
+  function updatePaymentSection() {
+    const sec = el('sec-payment');
+    if (!paymentApplies()) {
+      sec.classList.add('hidden');
+      document.querySelectorAll('[data-payment]').forEach(b => b.classList.remove('selected'));
+      return;
+    }
+    const full = individualFullPrice(state.cohortKey);
+    const perMonth = individualInstalmentPerMonth();
+    const instTotal = perMonth * INSTALMENT_COUNT;
+    const surcharge = instTotal - full;
+    el('pay-full-price').textContent = formatZar(full);
+    el('pay-inst-price').innerHTML = formatZar(perMonth) + '<span class="cc-per">per month</span>';
+    el('pay-full-desc').textContent = 'One payment of ' + formatZar(full) + ' by card';
+    el('pay-inst-desc').textContent = INSTALMENT_COUNT + ' payments of ' + formatZar(perMonth) + ', ' + formatZar(instTotal) + ' in total';
+    el('payNote').innerHTML = 'Pay in full at <strong>' + formatZar(full) + '</strong>, or spread it across ' + INSTALMENT_COUNT +
+      ' monthly payments of <strong>' + formatZar(perMonth) + '</strong>. The payment plan comes to <strong>' + formatZar(instTotal) +
+      '</strong> in total, a ' + formatZar(surcharge) + ' surcharge over the once-off rate. Payments run monthly from registration.';
+    // Reflect current selection state
+    document.querySelectorAll('[data-payment]').forEach(b => b.classList.toggle('selected', b.dataset.payment === state.payment));
+    sec.classList.remove('hidden');
+  }
+
+  // ─── Visibility ───
+  function updateVisibility() {
+    const ready = !!(state.audience && state.cohortKey);
+    ['sec-details', 'sec-summary', 'sec-consent'].forEach(id => el(id).classList.toggle('hidden', !ready));
+    el('subBtn').classList.toggle('hidden', !ready);
+    el('privacyLine').classList.toggle('hidden', !ready);
+    if (ready) {
+      el('subLabel').textContent = state.audience === 'individual' ? 'Continue to payment' : 'Request a quote';
+      el('privacyLine').textContent = state.audience === 'individual'
+        ? 'Payments are processed securely by Stripe. We never see your card details.'
+        : 'We reply with a proforma invoice within one business day.';
+    }
+  }
+
+  // ─── Summary ───
+  function renderSummary() {
+    const body = el('summaryBody');
+    if (!state.audience || !state.cohortKey) { body.innerHTML = ''; return; }
+    const c = COHORTS[state.cohortKey];
+    const eb = isEarlyBird();
+    let rows = '';
+    rows += row('Cohort', c.label + ', ' + c.dates);
+
+    if (state.audience === 'individual') {
+      const full = individualFullPrice(state.cohortKey);
+      if (paymentApplies() && state.payment === 'instalment') {
+        const perMonth = individualInstalmentPerMonth();
+        const instTotal = perMonth * INSTALMENT_COUNT;
+        rows += row('Payment plan', INSTALMENT_COUNT + ' monthly payments of ' + formatZar(perMonth));
+        rows += totalRow('Total commitment', instTotal);
+      } else {
+        rows += totalRow('Total today', full);
+      }
+    } else {
+      const places = clampPlaces(parseInt(el('corp-places').value, 10));
+      const perSeat = corporatePerSeat(state.cohortKey);
+      const subtotal = places * perSeat;
+      const discount = corporateDiscount(places);
+      const total = Math.round(subtotal * (100 - discount) / 100);
+      rows += row('Per seat', formatZar(perSeat) + ' × ' + places);
+      rows += row('Subtotal', formatZar(subtotal));
+      if (discount > 0) rows += discountRow('Team rate', discount + '% off');
+      rows += totalRow('Quote total, excl. VAT', total);
+    }
+
+    rows += '<p class="sum-fine">' + (eb
+      ? 'Early-bird rate, held until 31 August 2026. Prices in ZAR.'
+      : 'Standard rate. Prices in ZAR.') + ' Materials and catering on the in-person days are included. Travel and accommodation are not included.</p>';
+    body.innerHTML = rows;
+  }
+  function row(label, value) {
+    return '<div class="sum-row"><span class="sum-label">' + label + '</span><span class="sum-value">' + value + '</span></div>';
+  }
+  function discountRow(label, value) {
+    return '<div class="sum-row discount"><span class="sum-label">' + label + '</span><span class="sum-value">' + value + '</span></div>';
+  }
+  function totalRow(label, amount) {
+    return '<div class="sum-row total"><span class="sum-label">' + label + '</span><span class="sum-value">' + formatZar(amount) + '</span></div>';
+  }
+  function clampPlaces(n) {
+    if (isNaN(n)) return 0;
+    return n;
+  }
+
+  // ─── Errors ───
+  window.clearErr = function (id) { const e = el(id); if (e) e.classList.remove('on'); };
+
+  function showErrors(errs) {
+    document.querySelectorAll('.ferr').forEach(e => e.classList.remove('on'));
+    const sum = el('errSum');
+    const list = el('errList');
+    if (!errs.length) { sum.classList.remove('on'); return; }
+    list.innerHTML = '<p class="err-title">Please fix the following before continuing.</p>';
+    errs.forEach(e => {
+      const p = document.createElement('p');
+      p.className = 'err-item';
+      p.textContent = e.msg;
+      list.appendChild(p);
+      if (e.id) { const f = el(e.id); if (f) f.classList.add('on'); }
+    });
+    sum.classList.add('on');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function validate() {
+    const errs = [];
+    if (!state.audience) errs.push({ id: 'e-audience', msg: 'Choose who is registering.' });
+    if (!state.cohortKey) errs.push({ id: 'e-cohort', msg: 'Choose a cohort.' });
+    if (paymentApplies() && !state.payment) errs.push({ id: 'e-payment', msg: 'Choose a payment option.' });
+
+    if (state.audience === 'individual') {
+      if (el('ind-name').value.trim().length < 2) errs.push({ id: 'e-ind-name', msg: 'Enter your full name.' });
+      if (!validEmail(el('ind-email').value.trim())) errs.push({ id: 'e-ind-email', msg: 'Enter a valid email address.' });
+    } else if (state.audience === 'corporate') {
+      const places = parseInt(el('corp-places').value, 10);
+      if (isNaN(places) || places < 1 || places > 20) errs.push({ id: 'e-corp-places', msg: 'Enter a number of places between 1 and 20.' });
+      if (!el('corp-company').value.trim()) errs.push({ id: 'e-corp-company', msg: 'Enter the organisation name.' });
+      if (!validEmail(el('corp-billing-email').value.trim())) errs.push({ id: 'e-corp-billing-email', msg: 'Enter a valid billing email address.' });
+      if (!el('corp-req-name').value.trim()) errs.push({ id: 'e-corp-req-name', msg: 'Enter your name.' });
+      if (!validEmail(el('corp-req-email').value.trim())) errs.push({ id: 'e-corp-req-email', msg: 'Enter a valid email address for the requestor.' });
+    }
+
+    if (!el('consent-popia').checked) errs.push({ id: 'e-consent-popia', msg: 'Acknowledge the POPIA notice to continue.' });
+    if (!el('consent-terms').checked) errs.push({ id: 'e-consent-terms', msg: 'Confirm you understand the transfer and refund terms.' });
+    return errs;
+  }
+
+  // ─── Submit ───
+  window.handleSubmit = async function () {
+    const errs = validate();
+    showErrors(errs);
+    if (errs.length) return;
+
+    const btn = el('subBtn');
+    btn.disabled = true;
+    el('spinner').classList.add('on');
+    const label = el('subLabel');
+    const original = label.textContent;
+    label.textContent = state.audience === 'individual' ? 'Creating reservation…' : 'Sending request…';
+
+    try {
+      if (state.audience === 'individual') {
+        await submitIndividual();
+      } else {
+        await submitCorporate();
+      }
+    } catch (err) {
+      const list = el('errList');
+      list.innerHTML = '<p class="err-title">We could not complete that.</p><p class="err-item">' +
+        (err && err.message === 'Failed to fetch'
+          ? 'Unable to reach the server. Check your connection and try again.'
+          : (err && err.message ? err.message : 'Please try again, or email hello@burnout-os.app.')) + '</p>';
+      el('errSum').classList.add('on');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } finally {
+      btn.disabled = false;
+      el('spinner').classList.remove('on');
+      label.textContent = original;
+    }
+  };
+
+  async function submitIndividual() {
+    const cohort = COHORTS[state.cohortKey];
+    const payload = {
+      tour_slug: TOUR_SLUG,
+      cohort_id: cohort.id,
+      audience_type: 'individual',
+      instalment_plan: paymentApplies() && state.payment === 'instalment',
+      attendee: {
+        full_name: el('ind-name').value.trim(),
+        email: el('ind-email').value.trim().toLowerCase(),
+        phone: el('ind-phone').value.trim() || undefined,
+        role: el('ind-role').value.trim() || undefined,
+        organisation: el('ind-org').value.trim() || undefined,
+      },
+      utm: getUtmParams(),
+      referrer: getReferrer(),
+    };
+    const res = await fetch(SUPABASE_URL + '/functions/v1/create-tour-checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'apikey': SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Server error (' + res.status + '). Please try again or email hello@burnout-os.app.');
+    if (!data.checkout_url) throw new Error('The server did not return a checkout link. Please email hello@burnout-os.app.');
+    window.location.href = data.checkout_url;
+  }
+
+  async function submitCorporate() {
+    const cohort = COHORTS[state.cohortKey];
+    const places = parseInt(el('corp-places').value, 10);
+    const payload = {
+      tour_slug: TOUR_SLUG,
+      cohort_id: cohort.id,
+      places_count: places,
+      company_name: el('corp-company').value.trim(),
+      company_vat_number: el('corp-vat').value.trim() || undefined,
+      billing_email: el('corp-billing-email').value.trim().toLowerCase(),
+      billing_contact_name: el('corp-billing-contact').value.trim() || undefined,
+      po_number: el('corp-po').value.trim() || undefined,
+      requestor_name: el('corp-req-name').value.trim(),
+      requestor_email: el('corp-req-email').value.trim().toLowerCase(),
+      requestor_role: el('corp-req-role').value.trim() || undefined,
+      requestor_phone: el('corp-req-phone').value.trim() || undefined,
+      needs_b_bbee_doc: el('doc-bbee').checked,
+      needs_sdl_doc: el('doc-sdl').checked,
+      needs_clinical_briefing: el('doc-briefing').checked,
+      notes: el('corp-notes').value.trim() || undefined,
+      utm: getUtmParams(),
+      referrer: getReferrer(),
+    };
+    const res = await fetch(SUPABASE_URL + '/functions/v1/request-corporate-quote', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'apikey': SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Server error (' + res.status + '). Please try again or email hello@burnout-os.app.');
+
+    const total = formatZar((data.total_amount_cents || 0) / 100);
+    let heldUntil = '';
+    if (data.held_until) {
+      const d = new Date(data.held_until);
+      heldUntil = isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+    const firstName = payload.requestor_name.split(' ')[0] || 'there';
+
+    el('sucH').textContent = 'Thanks, ' + firstName + '.';
+    el('sucP').textContent = 'We have your request for ' + places + ' place' + (places > 1 ? 's' : '') + ' in the ' +
+      COHORTS[state.cohortKey].label + ' cohort. Werner will review it and email a proforma invoice within one business day. A confirmation is on its way to ' + payload.requestor_email + '.';
+
+    let quoteRows = '<div class="sum-row total"><span class="sum-label">Quote total, excl. VAT</span><span class="sum-value">' + total + '</span></div>';
+    if (heldUntil) quoteRows += '<div class="sum-row"><span class="sum-label">Places held until</span><span class="sum-value">' + heldUntil + '</span></div>';
+    el('sucQuoteBody').innerHTML = quoteRows;
+    el('sucQuote').style.display = 'block';
+
+    el('formWrap').classList.add('hidden');
+    el('success').classList.add('on');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ─── Field wiring: clear errors and refresh summary ───
+  function wire(id, errId) {
+    const e = el(id);
+    if (!e) return;
+    const handler = function () { if (errId) clearErr(errId); renderSummary(); };
+    e.addEventListener('input', handler);
+    e.addEventListener('change', handler);
+  }
+  wire('ind-name', 'e-ind-name');
+  wire('ind-email', 'e-ind-email');
+  wire('corp-places', 'e-corp-places');
+  wire('corp-company', 'e-corp-company');
+  wire('corp-billing-email', 'e-corp-billing-email');
+  wire('corp-req-name', 'e-corp-req-name');
+  wire('corp-req-email', 'e-corp-req-email');
+
+  // ─── Deep links ───
+  function applyDeepLinks() {
+    const params = new URLSearchParams(window.location.search);
+    const as = params.get('as');
+    if (as === 'individual' || as === 'corporate') chooseAudience(as);
+    const cohort = params.get('cohort');
+    if (cohort && COHORTS[cohort]) {
+      if (!state.audience) chooseAudience('individual');
+      chooseCohort(cohort);
+    }
+  }
+  applyDeepLinks();
+})();
+</script>
+</body>
+</html>
