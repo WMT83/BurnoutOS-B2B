@@ -111,6 +111,11 @@
       "permanent": false
     },
     {
+      "source": "/register",
+      "destination": "/register.html",
+      "permanent": false
+    },
+    {
       "source": "/tour",
       "destination": "/tour.html",
       "permanent": false
