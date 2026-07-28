@@ -137,7 +137,7 @@
     },
     {
       "source": "/tour/corporate",
-      "destination": "/tour-corporate.html",
+      "destination": "/register?as=corporate",
       "permanent": false
     },
     {
@@ -153,6 +153,26 @@
     {
       "source": "/evaluate",
       "destination": "/evaluate.html",
+      "permanent": false
+    },
+    {
+      "source": "/r/wa",
+      "destination": "/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=whatsapp",
+      "permanent": false
+    },
+    {
+      "source": "/r/fb",
+      "destination": "/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=facebook",
+      "permanent": false
+    },
+    {
+      "source": "/r/li",
+      "destination": "/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=linkedin",
+      "permanent": false
+    },
+    {
+      "source": "/tour/register",
+      "destination": "/register",
       "permanent": false
     }
   ],
