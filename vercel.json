@@ -137,7 +137,7 @@
     },
     {
       "source": "/tour/corporate",
-      "destination": "/tour-corporate.html",
+      "destination": "/register?as=corporate",
       "permanent": false
     },
     {
@@ -157,25 +157,26 @@
     },
     {
       "source": "/r/wa",
-      "destination": "/tour/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=whatsapp",
+      "destination": "/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=whatsapp",
       "permanent": false
     },
     {
       "source": "/r/fb",
-      "destination": "/tour/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=facebook",
+      "destination": "/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=facebook",
       "permanent": false
     },
     {
       "source": "/r/li",
-      "destination": "/tour/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=linkedin",
+      "destination": "/register?utm_source=poster&utm_medium=qr&utm_campaign=sa_tour_2026&utm_content=linkedin",
+      "permanent": false
+    },
+    {
+      "source": "/tour/register",
+      "destination": "/register",
       "permanent": false
     }
   ],
   "rewrites": [
-    {
-      "source": "/tour/register",
-      "destination": "/tour-register.html"
-    },
     {
       "source": "/diagnostic/:path*",
       "destination": "/app.html"
