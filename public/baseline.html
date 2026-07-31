@@ -404,6 +404,37 @@
 
   .gate-cta:hover { opacity: 0.9; }
 
+  .gate-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+  .gate-select option { background: #141218; color: #fff; }
+
+  .gate-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+    margin-bottom: 14px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+  }
+  .gate-check input {
+    appearance: auto;
+    margin: 2px 0 0 0;
+    flex-shrink: 0;
+    accent-color: var(--ember);
+    cursor: pointer;
+  }
+  .gate-check strong { color: rgba(255,255,255,0.8); font-weight: 600; display: block; margin-bottom: 2px; }
+
   .gate-privacy {
     font-size: 11px;
     color: rgba(255,255,255,0.2);
@@ -862,6 +893,58 @@
     <div class="gate-form">
       <input class="gate-input" type="text" id="gate-name" placeholder="First name" autocomplete="given-name">
       <input class="gate-input" type="email" id="gate-email" placeholder="Email address" autocomplete="email">
+
+      <select class="gate-input gate-select" id="gate-practitioner" onchange="toggleProfBlock()">
+        <option value="">Are you a registered health practitioner?</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      <div id="gate-prof-block" style="display:none;">
+        <input class="gate-input" type="text" id="gate-role" placeholder="Your role, for example Clinical Psychologist">
+
+        <select class="gate-input gate-select" id="gate-board" onchange="toggleRegCat()">
+          <option value="">Professional board</option>
+          <option value="Psychology">Psychology</option>
+          <option value="Medical and Dental">Medical and Dental</option>
+          <option value="Social Work and Social Service Professions">Social Work and Social Service Professions</option>
+          <option value="Occupational Therapy, Biokinetics and Physiotherapy">Occupational Therapy, Biokinetics and Physiotherapy</option>
+          <option value="Other">Other or not applicable</option>
+        </select>
+
+        <select class="gate-input gate-select" id="gate-regcat" style="display:none;">
+          <option value="">Registration category</option>
+          <option value="Clinical">Clinical</option>
+          <option value="Counselling">Counselling</option>
+          <option value="Educational">Educational</option>
+          <option value="Industrial">Industrial</option>
+          <option value="Research">Research</option>
+          <option value="Neuropsychology">Neuropsychology</option>
+          <option value="Registered Counsellor">Registered Counsellor</option>
+          <option value="Psychometrist">Psychometrist</option>
+          <option value="Intern or Student">Intern or Student</option>
+        </select>
+
+        <select class="gate-input gate-select" id="gate-context">
+          <option value="">Practice setting</option>
+          <option value="private_practice">Private practice</option>
+          <option value="health_service">Hospital or health service</option>
+          <option value="education_institution">School or university</option>
+          <option value="public_sector">Public sector</option>
+          <option value="organisation">Organisation, in-house</option>
+        </select>
+      </div>
+
+      <label class="gate-check">
+        <input type="checkbox" id="gate-consent-research">
+        <span><strong>Research use, optional</strong>I agree that my de-identified responses may be used for aggregate research and to develop population norms. My name and email address will not form part of any research dataset. My results are the same either way.</span>
+      </label>
+
+      <label class="gate-check">
+        <input type="checkbox" id="gate-consent-marketing">
+        <span><strong>Updates, optional</strong>Send me occasional emails about BurnoutOS programmes. You can unsubscribe at any time.</span>
+      </label>
+
       <button class="gate-cta" onclick="submitGate()">See My Profile →</button>
     </div>
 
@@ -1237,6 +1320,18 @@ function prevQuestion() {
 }
 
 // ─── GATE ─────────────────────────────────────────────────────────────────────
+function toggleProfBlock() {
+  const v = document.getElementById('gate-practitioner').value;
+  document.getElementById('gate-prof-block').style.display = (v === 'yes') ? 'block' : 'none';
+}
+
+function toggleRegCat() {
+  const v = document.getElementById('gate-board').value;
+  const el = document.getElementById('gate-regcat');
+  el.style.display = (v === 'Psychology') ? 'block' : 'none';
+  if (v !== 'Psychology') el.value = '';
+}
+
 function submitGate() {
   const name = document.getElementById('gate-name').value.trim();
   const email = document.getElementById('gate-email').value.trim();
@@ -1268,6 +1363,14 @@ function submitToMarketOS(name, email, scores) {
   ];
   qIds.forEach((id, i) => { rawAnswers[id] = answers[i] ?? 0; });
 
+  // Professional attributes and consent, read at submit time.
+  // Consent is explicit only: an unticked box sends false, never null-to-true.
+  const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  const chk = id => { const el = document.getElementById(id); return el ? !!el.checked : false; };
+  const isPractitioner = val('gate-practitioner') === 'yes';
+  const consentResearch = chk('gate-consent-research');
+  const consentMarketing = chk('gate-consent-marketing');
+
   // UTM params from URL
   const params = new URLSearchParams(window.location.search);
   const utm = {};
@@ -1285,12 +1388,23 @@ function submitToMarketOS(name, email, scores) {
         respondent: {
           email: email,
           first_name: name,
-          consent_marketing: true
+          consent_marketing: consentMarketing
+        },
+        professional: isPractitioner ? {
+          role: val('gate-role') || undefined,
+          professional_board: val('gate-board') || undefined,
+          registration_category: val('gate-regcat') || undefined,
+          practice_context: val('gate-context') || undefined
+        } : undefined,
+        consent: {
+          research: consentResearch,
+          marketing: consentMarketing
         },
         answers: rawAnswers,
         started_at: assessmentStartedAt,
         utm: Object.keys(utm).length ? utm : undefined,
         referrer: document.referrer || undefined,
+        landing_path: window.location.pathname || undefined,
         user_agent: navigator.userAgent,
         country: detectedCountry || undefined
       })
@@ -1421,6 +1535,14 @@ function restartAssessment() {
   userEmail = '';
   document.getElementById('gate-name').value = '';
   document.getElementById('gate-email').value = '';
+  ['gate-practitioner','gate-role','gate-board','gate-regcat','gate-context'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  ['gate-consent-research','gate-consent-marketing'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.checked = false;
+  });
+  document.getElementById('gate-prof-block').style.display = 'none';
+  document.getElementById('gate-regcat').style.display = 'none';
   startAssessment();
 }
 </script>
