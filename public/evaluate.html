@@ -65,6 +65,9 @@
     .field textarea { resize: vertical; line-height: 1.5; }
     .ferr { display: none; align-items: center; gap: 4px; margin-top: 5px; font-size: 12px; color: var(--red); }
     .ferr.on { display: flex; }
+    .fwarn { display: none; align-items: flex-start; gap: 5px; margin-top: 6px; font-size: 12px; color: #b45309; line-height: 1.45; }
+    .fwarn.on { display: flex; }
+    .fwarn svg { flex-shrink: 0; margin-top: 2px; }
 
     /* ── SA block ── */
     .sa-blk, .org-blk { display: none; background: var(--sa-bg); border: 2px solid var(--ember); border-radius: 8px; padding: 20px; margin-top: 10px; }
@@ -218,18 +221,17 @@
       <div class="stitle">Activity Details</div>
       <div class="field">
         <label>Which activity did you attend?<span class="req">*</span></label>
-        <select id="activity">
+        <select id="activity" onchange="onActivity()">
           <option value="">Select activity</option>
-          <option>ACT for Burnout Workshop</option>
-          <option>BurnoutOS: Always On Masterclass</option>
-          <option>BurnoutOS: Phase 1 Performance Reset</option>
-          <option>Other</option>
         </select>
         <div class="ferr" id="e-activity"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please select the activity you attended.</div>
       </div>
-      <div class="field">
-        <label>Date of activity</label>
-        <input type="date" id="actDate">
+      <div class="field" id="sessionField" style="display:none">
+        <label>Which session did you attend?<span class="req">*</span></label>
+        <select id="session">
+          <option value="">Select session</option>
+        </select>
+        <div class="ferr" id="e-session"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Please select the session you attended.</div>
       </div>
       <div class="field">
         <label>Event code (optional)</label>
@@ -282,8 +284,9 @@
         </div>
         <div class="field">
           <label>HPCSA registration number<span class="req">*</span></label>
-          <input type="text" id="hpcsaNo" placeholder="e.g. PSY0001234567">
+          <input type="text" id="hpcsaNo" placeholder="e.g. PS0123456" onblur="checkHpcsa()" oninput="document.getElementById('e-hpcsaNo').classList.remove('on')">
           <div class="ferr" id="e-hpcsaNo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>HPCSA registration number is required.</div>
+          <div class="fwarn" id="w-hpcsaNo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>This does not look like an HPCSA registration number. Please check it. You can still submit.</div>
         </div>
         <div class="field" style="margin-bottom:0">
           <label>Professional board<span class="req">*</span></label>
@@ -466,6 +469,123 @@
 const API_URL = 'https://kvsirypfqtnymooxicti.supabase.co/functions/v1/submit-programme-evaluation';
 const TOKEN   = 'bafc10c06083e4a26fda70f135d6ecb27761537cb9d1714bda52c83f9657f9d9';
 
+// Read-only access to the accredited activity catalogue and delivered sessions.
+// The publishable key is scoped by row-level security; both tables are world-readable.
+const SB_URL = 'https://kvsirypfqtnymooxicti.supabase.co';
+const SB_KEY = 'sb_publishable_Azjgh5OVpFG2Z2oyQqt0Ig_E0tVk2W8';
+
+// The one non-accredited programme a delegate may pick. It carries no CPD.
+const OTHER_TITLE = 'BurnoutOS: Phase 1 Performance Reset';
+
+// Same rule the database uses: uppercase, strip everything that is not alphanumeric.
+const HPCSA_RE = /^(PSIN|PRC|PS|PR|MP|OT|DT|PT|MT|OP|SP|AR|CD|EC|RT)[0-9]{6,7}$/;
+function normReg(s) { return (s || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); }
+
+const activityTitleById = {};
+
+async function sbGet(path) {
+  const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
+    headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` },
+  });
+  if (!res.ok) throw new Error(`read failed (${res.status})`);
+  return await res.json();
+}
+
+function fmtDate(iso) {
+  if (!iso) return 'Session';
+  const d = new Date(iso + 'T00:00:00Z');
+  const m = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${d.getUTCDate()} ${m[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+
+function isAccredited() {
+  const v = document.getElementById('activity').value;
+  return !!v && v !== 'other';
+}
+
+async function loadActivities() {
+  const sel = document.getElementById('activity');
+  const other = document.createElement('optgroup');
+  other.label = 'Other programmes';
+  const oo = document.createElement('option');
+  oo.value = 'other';
+  oo.textContent = OTHER_TITLE;
+  other.appendChild(oo);
+  try {
+    const rows = await sbGet('cpd_activities?is_active=eq.true&select=id,title&order=title.asc');
+    const frag = document.createDocumentFragment();
+    rows.forEach(r => {
+      activityTitleById[r.id] = r.title;
+      const o = document.createElement('option');
+      o.value = r.id;
+      o.textContent = r.title;
+      frag.appendChild(o);
+    });
+    sel.appendChild(frag);
+  } catch (e) {
+    console.error('[eval] activities:', e);
+  }
+  sel.appendChild(other);
+}
+
+async function loadSessions(activityId) {
+  const sel = document.getElementById('session');
+  sel.innerHTML = '<option value="">Loading sessions...</option>';
+  try {
+    const rows = await sbGet(`cpd_sessions?activity_id=eq.${activityId}&accepts_evaluations=eq.true&select=id,label,session_date&order=session_date.desc`);
+    if (!rows.length) {
+      sel.innerHTML = '<option value="">No sessions available</option>';
+      return;
+    }
+    sel.innerHTML = '<option value="">Select session</option>';
+    rows.forEach(r => {
+      const o = document.createElement('option');
+      o.value = r.id;
+      o.textContent = r.label || fmtDate(r.session_date);
+      sel.appendChild(o);
+    });
+  } catch (e) {
+    console.error('[eval] sessions:', e);
+    sel.innerHTML = '<option value="">Could not load sessions</option>';
+  }
+}
+
+function onActivity() {
+  const accredited = isAccredited();
+  const sf = document.getElementById('sessionField');
+  if (accredited) {
+    loadSessions(document.getElementById('activity').value);
+    sf.style.display = '';
+  } else {
+    sf.style.display = 'none';
+    document.getElementById('session').innerHTML = '<option value="">Select session</option>';
+    document.getElementById('e-session').classList.remove('on');
+  }
+  document.getElementById('e-activity').classList.remove('on');
+  syncCpdVisibility();
+}
+
+// The HPCSA block and CPD badges belong only to an accredited activity attended
+// by a South African delegate. A non-accredited programme carries no CPD, so the
+// block stays hidden even for a South African delegate. The POPIA notice stays
+// tied to country, as before.
+function syncCpdVisibility() {
+  const isSA = document.getElementById('country').value === 'South Africa';
+  const cpd = isSA && isAccredited();
+  document.getElementById('saBlk').classList.toggle('on', cpd);
+  document.getElementById('cpdBadge').classList.toggle('on', cpd);
+  document.getElementById('cpdIntro').classList.toggle('on', cpd);
+  document.getElementById('popiaCard').style.display = isSA ? 'block' : 'none';
+}
+
+function checkHpcsa() {
+  const el = document.getElementById('hpcsaNo');
+  const norm = normReg(el.value);
+  el.value = norm;
+  const w = document.getElementById('w-hpcsaNo');
+  w.classList.toggle('on', !!norm && !HPCSA_RE.test(norm));
+}
+
 const QUESTIONS = [
   {id:1,  text:'The programme met its stated objectives.',                                     g:'Programme Quality'},
   {id:2,  text:'Overall, this activity met my expectations.',                                  g:'Programme Quality'},
@@ -558,12 +678,8 @@ function updateProg() {
   el.className = `prog-ct${n === 19 ? ' done' : ''}`;
 }
 
-function onCountry(val) {
-  const sa = val === 'South Africa';
-  document.getElementById('saBlk').classList.toggle('on', sa);
-  document.getElementById('cpdBadge').classList.toggle('on', sa);
-  document.getElementById('cpdIntro').classList.toggle('on', sa);
-  document.getElementById('popiaCard').style.display = sa ? 'block' : 'none';
+function onCountry() {
+  syncCpdVisibility();
 }
 
 function clearPopiErr() {
@@ -573,9 +689,11 @@ function clearPopiErr() {
 function val_() {
   const errs = [];
   const isSA = document.getElementById('country').value === 'South Africa';
+  const accredited = isAccredited();
   if (!document.getElementById('activity').value) errs.push({id:'e-activity', msg:'Select the activity you attended.'});
+  if (accredited && !document.getElementById('session').value) errs.push({id:'e-session', msg:'Select the session you attended.'});
   if (!document.getElementById('country').value)  errs.push({id:'e-country',  msg:'Select your country.'});
-  if (isSA) {
+  if (isSA && accredited) {
     if (!document.getElementById('fullName').value.trim())  errs.push({id:'e-fullName', msg:'Full name is required for CPD records.'});
     if (!document.getElementById('hpcsaNo').value.trim())   errs.push({id:'e-hpcsaNo',  msg:'HPCSA registration number is required.'});
     if (!document.getElementById('board').value)             errs.push({id:'e-board',     msg:'Select your professional board.'});
@@ -625,21 +743,24 @@ async function handleSubmit() {
   document.getElementById('spinner').classList.add('on');
   document.getElementById('subLabel').textContent = 'Submitting...';
 
-  const country  = document.getElementById('country').value;
-  const isSA     = country === 'South Africa';
-  const activity = document.getElementById('activity').value;
+  const country   = document.getElementById('country').value;
+  const isSA      = country === 'South Africa';
+  const accredited = isAccredited();
+  const activity  = accredited ? (activityTitleById[document.getElementById('activity').value] || '') : OTHER_TITLE;
+  const cpdSessionId = accredited ? (document.getElementById('session').value || undefined) : undefined;
+  const cpd = isSA && accredited;
 
   const payload = {
     activity,
-    activityDate:  document.getElementById('actDate').value   || undefined,
+    cpdSessionId,
     eventCode:     document.getElementById('eventCode').value.trim().toUpperCase() || undefined,
     reason:        document.getElementById('reason').value    || undefined,
     country,
     participantName: document.getElementById('participantName').value.trim() || undefined,
     role:          document.getElementById('role').value      || undefined,
-    fullName:      isSA ? document.getElementById('fullName').value  : undefined,
-    hpcsaNumber:   isSA ? document.getElementById('hpcsaNo').value   : undefined,
-    board:         isSA ? document.getElementById('board').value      : undefined,
+    fullName:      cpd ? document.getElementById('fullName').value  : undefined,
+    hpcsaNumber:   cpd ? normReg(document.getElementById('hpcsaNo').value) : undefined,
+    board:         cpd ? document.getElementById('board').value      : undefined,
     ratings,
     presenterRating,
     strengths:     document.getElementById('strengths').value     || undefined,
@@ -667,7 +788,7 @@ async function handleSubmit() {
     document.getElementById('formWrap').classList.add('hidden');
     document.getElementById('success').classList.add('on');
     document.getElementById('sucAct').textContent = activity;
-    if (isSA) {
+    if (cpd) {
       document.getElementById('cpdSuc').classList.add('on');
       const name = document.getElementById('fullName').value;
       const hpcsa = document.getElementById('hpcsaNo').value;
@@ -734,6 +855,7 @@ function syncEmailRequirement() {
 }
 buildRatings();
 buildPresenter();
+loadActivities();
 </script>
 </body>
 </html>
