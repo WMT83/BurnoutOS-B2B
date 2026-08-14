@@ -36,10 +36,10 @@ h1 em{color:#E84B2A;font-style:normal;}
 .sq .dates{font-size:21px;white-space:nowrap;}
 .dates b{font-family:'Syne';font-variation-settings:'wght' 800;}
 .dates i{color:var(--dim);font-style:normal;margin:0 9px;}
-.pill{align-self:flex-start;border:2px solid rgba(232,75,42,.55);border-radius:100px;color:#E84B2A;font-weight:700;}
-.sq .pill{font-size:23px;padding:12px 26px;} .ld .pill{font-size:19px;padding:9px 21px;}
-.pill s{text-decoration:none;letter-spacing:.16em;font-size:.78em;opacity:.85;margin-right:9px;}
-.headwrap{display:flex;flex-direction:column;align-items:center;text-align:center;z-index:3;}
+.scarce{color:#E84B2A;font-weight:700;letter-spacing:.01em;}
+.sq .scarce{font-size:24px;} .ld .scarce{font-size:20px;}
+.headwrap{display:flex;flex-direction:column;align-items:center;text-align:center;z-index:3;flex:0 0 auto;}
+.sq .headwrap{width:230px;} .ld .headwrap{width:200px;}
 .headwrap img{border-radius:50%;border:4px solid #E84B2A;object-fit:cover;}
 .sq .headwrap img{width:128px;height:128px;} .ld .headwrap img{width:92px;height:92px;}
 .hname{font-family:'Syne';font-variation-settings:'wght' 800;color:var(--fg);margin-top:13px;}
@@ -49,21 +49,20 @@ h1 em{color:#E84B2A;font-style:normal;}
 .spacer{flex:1;}
 .vs{display:flex;align-items:stretch;gap:10px;z-index:3;}
 .vsi{flex:1 1 0;min-width:0;hyphens:none;overflow-wrap:normal;border:1px solid var(--line);border-radius:16px;background:var(--cardbg);display:flex;flex-direction:column;justify-content:center;text-align:center;}
-.sq .vsi{padding:26px 10px;} .ld .vsi{padding:16px 10px;}
+.sq .vsi{padding:34px 12px;} .ld .vsi{padding:22px 10px;}
 .vsi.sum{border-color:rgba(232,75,42,.55);background:linear-gradient(150deg,rgba(232,75,42,.20),rgba(232,75,42,.04));}
 .vsm{font-family:'Syne';font-variation-settings:'wght' 800;letter-spacing:-.025em;line-height:1.03;color:var(--fg);}
-.sq .vsm{font-size:28px;} .ld .vsm{font-size:24px;}
+.sq .vsm{font-size:30px;} .ld .vsm{font-size:26px;}
 .vsi.sum .vsm{color:#E84B2A;}
 .vss{color:var(--mut);line-height:1.28;font-weight:500;}
-.sq .vss{font-size:20px;margin-top:10px;} .ld .vss{font-size:15px;margin-top:7px;}
+.sq .vss{font-size:21px;margin-top:12px;} .ld .vss{font-size:15px;margin-top:7px;}
 .vso{display:flex;align-items:center;justify-content:center;flex:0 0 34px;font-family:'Syne';font-variation-settings:'wght' 800;color:#E84B2A;}
 .sq .vso{font-size:46px;} .ld .vso{font-size:34px;}
-.foot{display:flex;justify-content:space-between;align-items:flex-end;gap:26px;z-index:3;border-top:1px solid var(--line);}
-.foot>div:first-child{min-width:0;}
-.qrw{flex-shrink:0;}
+.foot{z-index:3;border-top:1px solid var(--line);}
+
 .sq .foot{padding-top:32px;} .ld .foot{padding-top:22px;}
 .url{font-family:'Syne';font-variation-settings:'wght' 800;letter-spacing:-.03em;color:var(--fg);}
-.sq .url{font-size:40px;} .ld .url{font-size:32px;}
+.sq .url{font-size:46px;} .ld .url{font-size:32px;}
 .sub{color:var(--dim);margin-top:9px;}
 .sq .sub{font-size:21px;} .ld .sub{font-size:17px;}
 .qrw{text-align:center;}
@@ -94,15 +93,14 @@ def stack():
 
 
 HEAD = ('<div class="headwrap"><img src="' + HS + '"><div class="hname">Werner Teichert</div>'
-        '<div class="hcred">Clinical Psychologist<br>(AHPRA) &middot; MBA</div></div>')
+        '<div class="hcred">Clinical Psychologist (AHPRA), MBA</div></div>')
 
 
 def square(pid, theme, qr):
     return """
 <div class="p sq {th}" id="{pid}">
- <div class="rule"></div>
  {arc}
- <div class="top"><div class="wm">BurnoutOS<i>.</i></div><div class="loc">South Africa &middot; Oct 2026</div></div>
+ <div class="top"><div class="wm">BurnoutOS<i>.</i></div></div>
  <div style="height:26px"></div>
  <div style="display:flex;gap:34px;align-items:flex-start;z-index:3">
    <div style="flex:1">
@@ -117,13 +115,12 @@ def square(pid, theme, qr):
    {head}
  </div>
  <div style="height:24px"></div>
- <div class="pill"><s>Limited</s>20 in-person places per city</div>
+ <div class="scarce">20 in-person places per city</div>
  <div class="spacer"></div>
  {vs}
  <div class="spacer"></div>
  <div class="foot">
    <div><div class="url">burnoutos.co.za/register</div><div class="sub">Early bird until 31 August &middot; In collaboration with PsySSA</div></div>
-   <div class="qrw"><img src="{qr}"><div class="qrl">Scan to register</div></div>
  </div>
 </div>""".format(pid=pid, th=theme, qr=qr, head=HEAD, vs=stack(),
                  arc=arc(1080, 1080, "M 700 -120 C 1180 240, 1220 760, 760 1180"))
@@ -131,9 +128,8 @@ def square(pid, theme, qr):
 
 LD = """
 <div class="p ld dark" id="p-linkedin">
- <div class="rule"></div>
  {arc}
- <div class="top"><div class="wm">BurnoutOS<i>.</i></div><div class="loc">South Africa &middot; October 2026</div></div>
+ <div class="top"><div class="wm">BurnoutOS<i>.</i></div></div>
  <div style="height:18px"></div>
  <div style="display:flex;gap:32px;align-items:flex-start;z-index:3">
    <div style="flex:1">
@@ -147,13 +143,12 @@ LD = """
    {head}
  </div>
  <div style="height:16px"></div>
- <div class="pill"><s>Limited</s>20 in-person places per city</div>
+ <div class="scarce">20 in-person places per city</div>
  <div class="spacer"></div>
  {vs}
  <div class="spacer"></div>
  <div class="foot">
    <div><div class="url">burnoutos.co.za/register</div><div class="sub">Early bird until 31 August &middot; In collaboration with PsySSA</div></div>
-   <div class="qrw"><img src="{qr}"><div class="qrl">Scan to register</div></div>
  </div>
 </div>""".format(qr=QR["linkedin"], head=HEAD, vs=stack(),
                  arc=arc(1200, 627, "M 820 -120 C 1240 120, 1260 500, 880 700"))
