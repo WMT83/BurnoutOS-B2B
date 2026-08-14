@@ -371,6 +371,24 @@
     .step-list li:not(:last-child)::after { left: 0.875rem; }
   }
 </style>
+
+<!-- Meta pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1005751582432108');
+fbq('track','PageView');
+
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta pixel -->
 </head>
 <body>
   <header class="nav">
@@ -480,6 +498,18 @@
         document.body.classList.add('no-session');
         return;
       }
+
+      // Purchase fires only on a genuine return from Stripe, never on the
+      // cancelled or defensive paths handled above.
+      try {
+        if (window.fbq && sessionId) {
+          fbq('track', 'Purchase', {
+            currency: 'ZAR',
+            content_name: 'The Burnout Reset',
+            content_category: 'CPD programme'
+          }, { eventID: sessionId });
+        }
+      } catch (e) {}
 
       // Populate the receipt block with what we have
       const receipt = document.getElementById('receipt');
