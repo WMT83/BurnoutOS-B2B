@@ -39,6 +39,10 @@ h1 em{color:#E84B2A;font-style:normal;}
 .dates b{font-family:'Syne';font-variation-settings:'wght' 800;}
 .dates i{color:var(--dim);font-style:normal;margin:0 9px;}
 .scarce{color:#E84B2A;font-weight:700;letter-spacing:.01em;}
+.pay{color:var(--mut);}
+.pay b{font-family:'Syne';font-variation-settings:'wght' 800;color:var(--fg);}
+.pay i{color:var(--dim);font-style:normal;margin:0 9px;}
+.sq .pay{font-size:23px;} .ld .pay{font-size:20px;}
 .sq .scarce{font-size:24px;} .ld .scarce{font-size:20px;}
 .headwrap{display:flex;flex-direction:column;align-items:center;text-align:center;z-index:3;flex:0 0 auto;}
 .sq .headwrap{width:230px;} .ld .headwrap{width:200px;}
@@ -118,6 +122,8 @@ def square(pid, theme, qr):
  <div class="dates"><b>Joburg</b> 10&ndash;11 Oct<i>&middot;</i><b>Cape Town</b> 16&ndash;17 Oct<i>&middot;</i><b>Online</b> live</div>
  <div style="height:14px"></div>
  <div class="scarce">20 in-person places per city</div>
+ <div style="height:12px"></div>
+ <div class="pay"><b>In person</b> R8,950 or five monthly payments of R1,890<i>&middot;</i><b>Live online</b> R5,950</div>
  <div class="spacer"></div>
  {vs}
  <div class="spacer"></div>
@@ -147,6 +153,8 @@ LD = """
  <div class="dates"><b>Joburg</b> 10&ndash;11 Oct<i>&middot;</i><b>Cape Town</b> 16&ndash;17 Oct<i>&middot;</i><b>Online</b> live</div>
  <div style="height:10px"></div>
  <div class="scarce">20 in-person places per city</div>
+ <div style="height:9px"></div>
+ <div class="pay"><b>In person</b> R8,950 or five monthly payments of R1,890<i>&middot;</i><b>Live online</b> R5,950</div>
  <div class="spacer"></div>
  {vs}
  <div class="spacer"></div>
