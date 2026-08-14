@@ -58,9 +58,9 @@ HTML = """<!doctype html><html><head><meta charset="utf-8"><style>""" + CSS + ""
   </svg>
   <div class="wm">BurnoutOS<i>.</i></div>
   <div style="height:34px"></div>
-  <div class="eyebrow">The Burnout Reset &middot; CPD arithmetic</div>
+  <div class="eyebrow">The Burnout Reset &middot; What is included</div>
   <div style="height:20px"></div>
-  <h1>32 CPD points,<br><em>itemised.</em></h1>
+  <h1>Three parts.<br><em>32 CPD points.</em></h1>
   <div style="height:40px"></div>
   <div class="rows">""" + rows + """</div>
   <div class="spacer"></div>
