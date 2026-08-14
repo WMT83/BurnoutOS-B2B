@@ -23,7 +23,7 @@ h1 em{color:#E84B2A;font-style:normal;}
 .rows{z-index:2;}
 .r{display:flex;align-items:baseline;justify-content:space-between;gap:24px;
    padding:22px 0;border-bottom:1px solid var(--line);}
-.r .k{font-size:31px;color:var(--mut);}
+.r .k{font-size:31px;font-weight:700;color:var(--fg);}
 .r .v{font-family:'Syne';font-variation-settings:'wght' 800;font-size:46px;color:var(--fg);
       letter-spacing:-.02em;white-space:nowrap;}
 .r.total{border-bottom:none;border-top:2px solid rgba(232,75,42,.5);margin-top:6px;padding-top:26px;}
@@ -37,7 +37,6 @@ h1 em{color:#E84B2A;font-style:normal;}
 .pv{font-family:'Syne';font-variation-settings:'wght' 800;font-size:52px;color:var(--fg);
     letter-spacing:-.03em;margin-top:6px;}
 .pc.online .pv{color:#E84B2A;}
-.pp{font-size:23px;color:var(--mut);margin-top:10px;}
 .spacer{flex:1;}
 .foot{z-index:2;border-top:1px solid var(--line);padding-top:30px;}
 .url{font-family:'Syne';font-variation-settings:'wght' 800;font-size:44px;letter-spacing:-.03em;color:var(--fg);}
@@ -68,12 +67,10 @@ HTML = """<!doctype html><html><head><meta charset="utf-8"><style>""" + CSS + ""
     <div class="pc">
       <div class="pl">In person, Joburg or Cape Town</div>
       <div class="pv">R8,950</div>
-      <div class="pp">R280 per CPD point</div>
     </div>
     <div class="pc online">
       <div class="pl">Live online</div>
       <div class="pv">R5,950</div>
-      <div class="pp">R186 per CPD point</div>
     </div>
   </div>
   <div class="spacer"></div>
