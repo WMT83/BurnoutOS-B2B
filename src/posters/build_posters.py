@@ -33,7 +33,9 @@ h1 em{color:#E84B2A;font-style:normal;}
 .sq .lede{font-size:25px;} .ld .lede{font-size:19px;}
 .lede b{font-family:'Syne';font-variation-settings:'wght' 800;color:var(--fg);}
 .dates{color:var(--fg);}
-.sq .dates{font-size:21px;white-space:nowrap;}
+.sq .dates{font-size:27px;}
+.ld .dates{font-size:24px;}
+.dates{white-space:nowrap;}
 .dates b{font-family:'Syne';font-variation-settings:'wght' 800;}
 .dates i{color:var(--dim);font-style:normal;margin:0 9px;}
 .scarce{color:#E84B2A;font-weight:700;letter-spacing:.01em;}
@@ -47,16 +49,16 @@ h1 em{color:#E84B2A;font-style:normal;}
 .hcred{color:var(--dim);line-height:1.3;}
 .sq .hcred{font-size:18px;} .ld .hcred{font-size:15px;}
 .spacer{flex:1;}
-.vs{display:flex;align-items:stretch;gap:10px;z-index:3;}
+.vs{display:flex;align-items:stretch;gap:8px;z-index:3;}
 .vsi{flex:1 1 0;min-width:0;hyphens:none;overflow-wrap:normal;border:1px solid var(--line);border-radius:16px;background:var(--cardbg);display:flex;flex-direction:column;justify-content:center;text-align:center;}
 .sq .vsi{padding:34px 12px;} .ld .vsi{padding:22px 10px;}
 .vsi.sum{border-color:rgba(232,75,42,.55);background:linear-gradient(150deg,rgba(232,75,42,.20),rgba(232,75,42,.04));}
 .vsm{font-family:'Syne';font-variation-settings:'wght' 800;letter-spacing:-.025em;line-height:1.03;color:var(--fg);}
-.sq .vsm{font-size:30px;} .ld .vsm{font-size:26px;}
+.sq .vsm{font-size:29px;} .ld .vsm{font-size:26px;}
 .vsi.sum .vsm{color:#E84B2A;}
 .vss{color:var(--mut);line-height:1.28;font-weight:500;}
 .sq .vss{font-size:21px;margin-top:12px;} .ld .vss{font-size:15px;margin-top:7px;}
-.vso{display:flex;align-items:center;justify-content:center;flex:0 0 34px;font-family:'Syne';font-variation-settings:'wght' 800;color:#E84B2A;}
+.vso{display:flex;align-items:center;justify-content:center;flex:0 0 26px;font-family:'Syne';font-variation-settings:'wght' 800;color:#E84B2A;}
 .sq .vso{font-size:46px;} .ld .vso{font-size:34px;}
 .foot{z-index:3;border-top:1px solid var(--line);}
 
@@ -79,9 +81,9 @@ def arc(w, h, path):
 
 
 def stack():
-    items = [("Two intensive days", "Joburg, Cape Town or online"),
-             ("ACT for Burnout", "A full workshop, included"),
-             ("Eight-week arc", "Three peer supervision sessions")]
+    items = [("Two days", "Intensive. Joburg, Cape Town or online"),
+             ("ACT day", "ACT for Burnout, a full workshop"),
+             ("Eight weeks", "Three peer supervision sessions")]
     parts = []
     for n, s in items:
         parts.append('<div class="vsi"><div class="vsm">%s</div><div class="vss">%s</div></div>' % (n, s))
@@ -109,12 +111,12 @@ def square(pid, theme, qr):
      <h1>Too busy not to<br><em>slow down.</em></h1>
      <div style="height:24px"></div>
      <div class="lede">Learn how to assess, formulate and treat the burnout cases that keep circling back.</div>
-     <div style="height:22px"></div>
-     <div class="dates"><b>Joburg</b> 10&ndash;11 Oct<i>&middot;</i><b>Cape Town</b> 16&ndash;17 Oct<i>&middot;</i><b>Online</b> live</div>
    </div>
    {head}
  </div>
- <div style="height:24px"></div>
+ <div style="height:26px"></div>
+ <div class="dates"><b>Joburg</b> 10&ndash;11 Oct<i>&middot;</i><b>Cape Town</b> 16&ndash;17 Oct<i>&middot;</i><b>Online</b> live</div>
+ <div style="height:14px"></div>
  <div class="scarce">20 in-person places per city</div>
  <div class="spacer"></div>
  {vs}
@@ -137,12 +139,13 @@ LD = """
      <div style="height:11px"></div>
      <h1>Too busy not to <em>slow down.</em></h1>
      <div style="height:14px"></div>
-     <div class="lede">Assess, formulate and treat the burnout cases that keep circling back.<br>
-       <b>Joburg</b> 10&ndash;11 Oct &middot; <b>Cape Town</b> 16&ndash;17 Oct &middot; <b>Online</b> live</div>
+     <div class="lede">Assess, formulate and treat the burnout cases that keep circling back.</div>
    </div>
    {head}
  </div>
- <div style="height:16px"></div>
+ <div style="height:18px"></div>
+ <div class="dates"><b>Joburg</b> 10&ndash;11 Oct<i>&middot;</i><b>Cape Town</b> 16&ndash;17 Oct<i>&middot;</i><b>Online</b> live</div>
+ <div style="height:10px"></div>
  <div class="scarce">20 in-person places per city</div>
  <div class="spacer"></div>
  {vs}
