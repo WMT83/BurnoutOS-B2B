@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<title>SA Tour posters — source of truth</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ember:#e84b2a; --ember2:#EA580C; --ink:#141218; --cream:#FAF7F4;
+  --fg:#FAF7F4; --fg-mut:rgba(250,247,244,0.80); --fg-dim:rgba(250,247,244,0.58);
+  --line:rgba(232,75,42,0.22);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+body{background:#2a2a2a;display:flex;flex-wrap:wrap;gap:40px;padding:40px;font-family:'DM Sans',sans-serif;}
+
+.poster{position:relative;overflow:hidden;color:var(--fg);
+  background:radial-gradient(680px 520px at 92% -10%,rgba(232,75,42,0.16),transparent 55%),
+             linear-gradient(160deg,#151318 0%,#100e13 55%,#0d0c10 100%);}
+.sq{width:1080px;height:1080px;}
+.wide{width:1200px;height:627px;}
+.rule{position:absolute;inset:26px;border:1px solid var(--line);border-radius:3px;z-index:2;}
+.arc{position:absolute;z-index:1;pointer-events:none;}
+.inner{position:relative;z-index:6;height:100%;display:flex;flex-direction:column;}
+.sq .inner{padding:54px 58px;}
+.wide .inner{padding:36px 46px;}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;}
+.wm{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-0.02em;}
+.sq .wm{font-size:38px;} .wide .wm{font-size:32px;}
+.wm .dot{color:var(--ember);}
+.region{font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg-dim);}
+.sq .region{font-size:19px;} .wide .region{font-size:16px;}
+
+.eyebrow{font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember2);}
+.eyebrow .muted{color:var(--fg-dim);letter-spacing:0.02em;text-transform:none;font-weight:500;}
+.sq .eyebrow{font-size:19px;} .wide .eyebrow{font-size:16px;}
+
+h1{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-0.035em;line-height:0.94;}
+.sq h1{font-size:54px;} .wide h1{font-size:44px;}
+h1 .em{color:var(--ember);}
+
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:28px;}
+.face{flex-shrink:0;text-align:center;}
+.face img{border-radius:50%;object-fit:cover;border:3px solid var(--ember);display:block;}
+.sq .face img{width:118px;height:118px;} .wide .face img{width:96px;height:96px;}
+.face .nm{font-weight:700;margin-top:12px;}
+.face .cr{color:var(--fg-dim);line-height:1.3;}
+.sq .face .nm{font-size:21px;} .sq .face .cr{font-size:17px;}
+.wide .face .nm{font-size:18px;} .wide .face .cr{font-size:15px;}
+
+.dates{color:var(--fg-mut);}
+.dates b{color:var(--fg);font-weight:700;}
+.sq .dates{font-size:23px;} .wide .dates{font-size:20px;}
+
+.pill{display:inline-flex;align-items:center;gap:12px;align-self:flex-start;
+  border:1px solid rgba(232,75,42,0.55);border-radius:100px;background:rgba(232,75,42,0.10);}
+.sq .pill{padding:13px 26px;} .wide .pill{padding:10px 20px;}
+.pill .lb{font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember2);}
+.pill .tx{font-weight:700;color:var(--fg);}
+.sq .pill .lb{font-size:17px;} .sq .pill .tx{font-size:23px;}
+.wide .pill .lb{font-size:14px;} .wide .pill .tx{font-size:19px;}
+
+/* ---- value stack: the hero element ---- */
+.stack{display:flex;flex-direction:column;}
+.srow{display:flex;align-items:stretch;}
+.sq .srow{gap:16px;} .wide .srow{gap:12px;}
+.card{flex:1 1 0;border:1px solid var(--line);border-radius:16px;
+  background:rgba(232,75,42,0.045);display:flex;flex-direction:column;justify-content:center;}
+.sq .card{padding:24px 24px;} .wide .card{padding:18px 16px;}
+.card.sum{border-color:rgba(232,75,42,0.60);
+  background:linear-gradient(135deg,rgba(232,75,42,0.20) 0%,rgba(232,75,42,0.04) 100%);}
+.card .t{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-0.025em;line-height:1.0;}
+.sq .card .t{font-size:38px;} .wide .card .t{font-size:28px;}
+.card.sum .t{color:var(--ember);}
+.card .s{color:var(--fg-mut);line-height:1.32;}
+.sq .card .s{font-size:19px;margin-top:10px;} .wide .card .s{font-size:15px;margin-top:8px;}
+.op{font-family:'Syne',sans-serif;font-weight:800;color:var(--ember);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sq .op{font-size:46px;width:34px;} .wide .op{font-size:34px;width:26px;}
+
+.spacer{flex:1;}
+.foot{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;
+  border-top:1px solid var(--line);}
+.sq .foot{padding-top:24px;} .wide .foot{padding-top:22px;}
+.url{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-0.03em;}
+.sq .url{font-size:37px;} .wide .url{font-size:33px;}
+.sub{color:var(--fg-dim);margin-top:10px;}
+.sq .sub{font-size:20px;} .wide .sub{font-size:16px;}
+.qr{text-align:center;flex-shrink:0;}
+.qr img{border-radius:10px;display:block;background:#fff;}
+.sq .qr img{width:128px;height:128px;padding:7px;}
+.wide .qr img{width:104px;height:104px;padding:6px;}
+.qr .cap{font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--fg-dim);margin-top:9px;}
+.sq .qr .cap{font-size:14px;} .wide .qr .cap{font-size:12px;}
+</style>
+</head>
+<body>
+
+<!-- ============ WHATSAPP 1080x1080 ============ -->
+<div class="poster sq" id="p-whatsapp">
+  <div class="rule"></div>
+  <svg class="arc" width="1080" height="1080" viewBox="0 0 1080 1080" fill="none">
+    <path d="M1180 -40 C 700 180, 640 640, 1120 900" stroke="rgba(232,75,42,0.20)" stroke-width="2"/>
+  </svg>
+  <div class="inner">
+    <div class="topbar">
+      <div class="wm">BurnoutOS<span class="dot">.</span></div>
+      <div class="region">South Africa &middot; Oct 2026</div>
+    </div>
+    <div style="height:30px"></div>
+    <div class="head">
+      <div>
+        <div class="eyebrow">The Burnout Reset <span class="muted">&middot; a clinician's programme</span></div>
+        <div style="height:16px"></div>
+        <h1>Too busy not to<br><span class="em">slow down.</span></h1>
+      </div>
+      <div class="face">
+        <img src="../brand/werner-hero.jpg" alt="">
+        <div class="nm">Werner Teichert</div>
+        <div class="cr">Clinical Psychologist<br>(AHPRA) &middot; MBA</div>
+      </div>
+    </div>
+    <div style="height:22px"></div>
+    <div class="dates"><b>Joburg</b> 10&ndash;11 Oct &nbsp;&middot;&nbsp; <b>Cape Town</b> 16&ndash;17 Oct &nbsp;&middot;&nbsp; <b>Online</b> live</div>
+    <div style="height:22px"></div>
+    <div class="pill"><span class="lb">Limited</span><span class="tx">20 in-person places per city</span></div>
+
+    <div class="spacer"></div>
+    <div class="stack">
+      <div class="srow">
+        <div class="card"><div class="t">Two intensive days</div><div class="s">Joburg, Cape Town, or live online</div></div>
+        <div class="op">+</div>
+        <div class="card"><div class="t">ACT for Burnout</div><div class="s">A full workshop, included</div></div>
+      </div>
+      <div style="height:16px"></div>
+      <div class="srow">
+        <div class="card"><div class="t">Eight-week arc</div><div class="s">Three peer supervision sessions</div></div>
+        <div class="op">=</div>
+        <div class="card sum"><div class="t">32 CPD points</div><div class="s">30 contact hours, with PsySSA</div></div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+
+    <div class="foot">
+      <div>
+        <div class="url">burnoutos.co.za/register</div>
+        <div class="sub">Early bird until 31 August &middot; In collaboration with PsySSA</div>
+      </div>
+      <div class="qr"><img src="qr/qr-whatsapp.png" alt=""><div class="cap">Scan to register</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FACEBOOK GROUPS 1080x1080 ============ -->
+<div class="poster sq" id="p-facebook">
+  <div class="rule"></div>
+  <svg class="arc" width="1080" height="1080" viewBox="0 0 1080 1080" fill="none">
+    <path d="M1180 -40 C 700 180, 640 640, 1120 900" stroke="rgba(232,75,42,0.20)" stroke-width="2"/>
+  </svg>
+  <div class="inner">
+    <div class="topbar">
+      <div class="wm">BurnoutOS<span class="dot">.</span></div>
+      <div class="region">South Africa &middot; Oct 2026</div>
+    </div>
+    <div style="height:30px"></div>
+    <div class="head">
+      <div>
+        <div class="eyebrow">The Burnout Reset <span class="muted">&middot; a clinician's programme</span></div>
+        <div style="height:16px"></div>
+        <h1>Too busy not to<br><span class="em">slow down.</span></h1>
+      </div>
+      <div class="face">
+        <img src="../brand/werner-hero.jpg" alt="">
+        <div class="nm">Werner Teichert</div>
+        <div class="cr">Clinical Psychologist<br>(AHPRA) &middot; MBA</div>
+      </div>
+    </div>
+    <div style="height:22px"></div>
+    <div class="dates"><b>Joburg</b> 10&ndash;11 Oct &nbsp;&middot;&nbsp; <b>Cape Town</b> 16&ndash;17 Oct &nbsp;&middot;&nbsp; <b>Online</b> live</div>
+    <div style="height:22px"></div>
+    <div class="pill"><span class="lb">Limited</span><span class="tx">20 in-person places per city</span></div>
+
+    <div class="spacer"></div>
+    <div class="stack">
+      <div class="srow">
+        <div class="card"><div class="t">Two intensive days</div><div class="s">Joburg, Cape Town, or live online</div></div>
+        <div class="op">+</div>
+        <div class="card"><div class="t">ACT for Burnout</div><div class="s">A full workshop, included</div></div>
+      </div>
+      <div style="height:16px"></div>
+      <div class="srow">
+        <div class="card"><div class="t">Eight-week arc</div><div class="s">Three peer supervision sessions</div></div>
+        <div class="op">=</div>
+        <div class="card sum"><div class="t">32 CPD points</div><div class="s">30 contact hours, with PsySSA</div></div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+
+    <div class="foot">
+      <div>
+        <div class="url">burnoutos.co.za/register</div>
+        <div class="sub">Early bird until 31 August &middot; In collaboration with PsySSA</div>
+      </div>
+      <div class="qr"><img src="qr/qr-facebook.png" alt=""><div class="cap">Scan to register</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LINKEDIN 1200x627 ============ -->
+<div class="poster wide" id="p-linkedin">
+  <div class="rule"></div>
+  <svg class="arc" width="1200" height="627" viewBox="0 0 1200 627" fill="none">
+    <path d="M1300 -60 C 860 120, 820 480, 1260 620" stroke="rgba(232,75,42,0.20)" stroke-width="2"/>
+  </svg>
+  <div class="inner">
+    <div class="topbar">
+      <div class="wm">BurnoutOS<span class="dot">.</span></div>
+      <div class="region">South Africa &middot; October 2026</div>
+    </div>
+    <div style="height:18px"></div>
+    <div class="head">
+      <div>
+        <div class="eyebrow">The Burnout Reset <span class="muted">&middot; a clinician's programme</span></div>
+        <div style="height:10px"></div>
+        <h1>Too busy not to <span class="em">slow down.</span></h1>
+        <div style="height:14px"></div>
+        <div class="dates"><b>Joburg</b> 10&ndash;11 Oct &nbsp;&middot;&nbsp; <b>Cape Town</b> 16&ndash;17 Oct &nbsp;&middot;&nbsp; <b>Online</b> live</div>
+        <div style="height:14px"></div>
+        <div class="pill"><span class="lb">Limited</span><span class="tx">20 in-person places per city</span></div>
+      </div>
+      <div class="face">
+        <img src="../brand/werner-hero.jpg" alt="">
+        <div class="nm">Werner Teichert</div>
+        <div class="cr">Clinical Psychologist<br>(AHPRA) &middot; MBA</div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="stack">
+      <div class="srow">
+        <div class="card"><div class="t">Two intensive days</div><div class="s">In person or live online</div></div>
+        <div class="op">+</div>
+        <div class="card"><div class="t">ACT for Burnout</div><div class="s">A full workshop, included</div></div>
+        <div class="op">+</div>
+        <div class="card"><div class="t">Eight-week arc</div><div class="s">Three peer supervision sessions</div></div>
+        <div class="op">=</div>
+        <div class="card sum"><div class="t">32 CPD points</div><div class="s">30 contact hours, with PsySSA</div></div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+
+    <div class="foot">
+      <div>
+        <div class="url">burnoutos.co.za/register</div>
+        <div class="sub">Early bird until 31 August &middot; In collaboration with PsySSA</div>
+      </div>
+      <div class="qr"><img src="qr/qr-linkedin.png" alt=""><div class="cap">Scan to register</div></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
