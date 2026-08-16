@@ -432,7 +432,15 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
     online_oct16: { id: '0fdad3f3-2a52-44fc-a639-24a741388b62', label: 'Live online',  dates: '16 to 17 October 2026', detail: 'The full programme delivered live online.', seatsTotal: 50, online: true }
   };
 
+  // Online instalment: flip to true once the Stripe price exists and
+  // tours.metadata.stripe_products.online_early_bird.price_instalment is set.
+  // Until then create-tour-checkout returns 400 for online instalment requests.
+  var ONLINE_INSTALMENT_ENABLED = false;
+
+  var INSTALMENT_CYCLES = { individual: 5, online: 3 };
+
   var PRICES = {
+    online_instalment_early_bird: 2050,
     individual_early_bird: 8950,
     individual_standard: 10950,
     individual_instalment_early_bird: 1890,
@@ -461,8 +469,19 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
     if (isOnline(key)) return isEarlyBird() ? PRICES.online_early_bird : PRICES.online_standard;
     return isEarlyBird() ? PRICES.individual_early_bird : PRICES.individual_standard;
   }
-  function individualInstalment() {
+  function individualInstalment(key) {
+    if (isOnline(key)) return PRICES.online_instalment_early_bird;
     return isEarlyBird() ? PRICES.individual_instalment_early_bird : PRICES.individual_instalment_standard;
+  }
+  function instalmentCycles(key) {
+    return isOnline(key) ? INSTALMENT_CYCLES.online : INSTALMENT_CYCLES.individual;
+  }
+  // Online instalments are early-bird only. There is no standard-window
+  // online instalment price, so the option disappears from 1 September.
+  function instalmentOffered(key) {
+    if (!key) return false;
+    if (isOnline(key)) return ONLINE_INSTALMENT_ENABLED && isEarlyBird();
+    return true;
   }
   function corporatePerSeat(key) {
     if (isOnline(key)) return isEarlyBird() ? PRICES.online_early_bird : PRICES.online_standard;
@@ -520,8 +539,11 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
   function renderPayment() {
     var wrap = el('paymentSet');
     var full = individualFull(S.cohortKey);
-    var inst = individualInstalment();
-    var instTotal = inst * 5;
+    var inst = individualInstalment(S.cohortKey);
+    var cycles = instalmentCycles(S.cohortKey);
+    var instTotal = inst * cycles;
+    var cycleWord = cycles === 3 ? 'Three' : 'Five';
+    var afterWord = cycles === 3 ? 'two months' : 'four months';
     wrap.innerHTML =
       '<button type="button" class="choice' + (S.instalment === false ? ' selected' : '') + '" data-pay="full">' +
         '<div class="choice-info"><div class="choice-name">Pay in full</div>' +
@@ -530,10 +552,10 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
         '<div class="choice-amt-sub">once off</div></div>' +
       '</button>' +
       '<button type="button" class="choice' + (S.instalment === true ? ' selected' : '') + '" data-pay="instalment">' +
-        '<div class="choice-info"><div class="choice-name">Five monthly payments</div>' +
-        '<div class="choice-desc">Today, then monthly for four months. ' + zar(instTotal) + ' in total, a ' + zar(instTotal - full) + ' payment plan surcharge.</div></div>' +
+        '<div class="choice-info"><div class="choice-name">' + cycleWord + ' monthly payments</div>' +
+        '<div class="choice-desc">Today, then monthly for ' + afterWord + '. ' + zar(instTotal) + ' in total, a ' + zar(instTotal - full) + ' payment plan surcharge.</div></div>' +
         '<div class="choice-side"><div class="choice-amt">' + zar(inst) + '</div>' +
-        '<div class="choice-amt-sub">per month &times; 5</div></div>' +
+        '<div class="choice-amt-sub">per month &times; ' + cycles + '</div></div>' +
       '</button>';
     Array.prototype.forEach.call(wrap.querySelectorAll('[data-pay]'), function (b) {
       b.onclick = function () {
@@ -557,11 +579,14 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
     if (S.audience === 'individual') {
       var full = individualFull(S.cohortKey);
       if (S.instalment === true) {
-        var inst = individualInstalment();
-        rows += row('Payment', 'Five monthly payments of ' + zar(inst));
-        rows += row('Total commitment', zar(inst * 5), true);
-        fine = 'Charged in ZAR, VAT inclusive. The first payment is taken today, then monthly for four months.';
-      } else if (S.instalment === false || isOnline(S.cohortKey)) {
+        var inst = individualInstalment(S.cohortKey);
+        var cycles = instalmentCycles(S.cohortKey);
+        var cycleWord = cycles === 3 ? 'Three' : 'Five';
+        var afterWord = cycles === 3 ? 'two months' : 'four months';
+        rows += row('Payment', cycleWord + ' monthly payments of ' + zar(inst));
+        rows += row('Total commitment', zar(inst * cycles), true);
+        fine = 'Charged in ZAR, VAT inclusive. The first payment is taken today, then monthly for ' + afterWord + '.';
+      } else if (S.instalment === false || !instalmentOffered(S.cohortKey)) {
         rows += row('Payment', 'One card payment');
         rows += row('Total today', zar(full), true);
         fine = 'Charged in ZAR, VAT inclusive. Travel and accommodation are not included.';
@@ -626,7 +651,7 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
 
   function selectCohort(key) {
     S.cohortKey = key;
-    if (isOnline(key)) S.instalment = false;
+    if (!instalmentOffered(key)) S.instalment = false;
     clearErr('e-cohort');
     renderCohorts();
     applyPaymentVisibility();
@@ -634,7 +659,7 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
   }
 
   function applyPaymentVisibility() {
-    var needsPayment = S.audience === 'individual' && S.cohortKey && !isOnline(S.cohortKey);
+    var needsPayment = S.audience === 'individual' && S.cohortKey && instalmentOffered(S.cohortKey);
     show('cardPayment', needsPayment);
     if (needsPayment) renderPayment();
   }
@@ -646,7 +671,7 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
     if (S.audience && !S.cohortKey) errs.push({ id: 'e-cohort', msg: 'Choose a format.' });
 
     if (S.audience === 'individual') {
-      if (S.cohortKey && !isOnline(S.cohortKey) && S.instalment === null) {
+      if (S.cohortKey && instalmentOffered(S.cohortKey) && S.instalment === null) {
         errs.push({ id: 'e-payment', msg: 'Choose a payment option.' });
       }
       if (v('fullName').length < 2) errs.push({ id: 'e-fullName', msg: 'Enter your full name.' });
