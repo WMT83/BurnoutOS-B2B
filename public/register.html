@@ -89,6 +89,8 @@
     .choice-info { flex: 1; }
     .choice-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
     .choice-desc { font-size: 12px; color: var(--muted); line-height: 1.45; }
+    .choice-desc + .choice-desc { margin-top: 3px; }
+    .choice-desc strong { color: var(--ink); font-weight: 600; }
     .choice-side { text-align: right; flex-shrink: 0; }
     .choice-amt { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: var(--ink); letter-spacing: -0.02em; }
     .choice-amt-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
@@ -425,11 +427,59 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
   var TOUR_SLUG = 'sa-2026';
   var EARLY_BIRD_END = '2026-08-31';
 
+  // Card lines mirror public.tour_cohorts on kvsirypfqtnymooxicti:
+  // start_date/end_date, act_workshop_on, act_delivery_format,
+  // integration_starts_on/integration_ends_on, cohort_call_1..3_at.
+  // Keep these in step with that table until the cards read it directly.
   var COHORTS = {
-    johannesburg: { id: 'b2b78683-06b0-463c-b63c-8419f9307f94', label: 'Johannesburg', dates: '10 to 11 October 2026', detail: 'In person. ACT for Burnout workshop live.', seatsTotal: 20 },
-    capetown:     { id: 'f1ff2f67-759b-4870-a438-d6326b7247f2', label: 'Cape Town',    dates: '16 to 17 October 2026', detail: 'In person. ACT for Burnout workshop online.', seatsTotal: 20 },
-    online_oct10: { id: 'd357e86f-d376-49e6-8cb3-14494c9e05c4', label: 'Live online',  dates: '10 to 11 October 2026', detail: 'The full programme delivered live online.', seatsTotal: 50, online: true },
-    online_oct16: { id: '0fdad3f3-2a52-44fc-a639-24a741388b62', label: 'Live online',  dates: '16 to 17 October 2026', detail: 'The full programme delivered live online.', seatsTotal: 50, online: true }
+    johannesburg: {
+      id: 'b2b78683-06b0-463c-b63c-8419f9307f94',
+      label: 'Johannesburg',
+      dates: '10 to 11 October 2026',
+      lines: [
+        ['Intensive days', '10 to 11 October 2026, in person.'],
+        ['ACT for Burnout', '12 October, a separate day. In person in Johannesburg or live online.'],
+        ['Integration', '12 October to 6 December. Peer supervision 28 October, 18 November, 3 December.']
+      ],
+      seatsTotal: 20
+    },
+    capetown: {
+      id: 'f1ff2f67-759b-4870-a438-d6326b7247f2',
+      label: 'Cape Town',
+      dates: '16 to 17 October 2026',
+      lines: [
+        ['Intensive days', '16 to 17 October 2026, in person.'],
+        ['ACT for Burnout', '12 October, a separate day. Live online, or in person in Johannesburg.'],
+        ['Integration', '19 October to 6 December. Peer supervision 28 October, 18 November, 3 December.']
+      ],
+      seatsTotal: 20
+    },
+    online_oct10: {
+      id: 'd357e86f-d376-49e6-8cb3-14494c9e05c4',
+      label: 'Live online',
+      title: 'Live online &middot; 10 to 11 October',
+      dates: '10 to 11 October 2026',
+      lines: [
+        ['Intensive days', '10 to 11 October 2026, live online.'],
+        ['ACT for Burnout', '12 October, a separate day, live online.'],
+        ['Integration', '12 October to 6 December. Peer supervision 28 October, 18 November, 3 December.']
+      ],
+      seatsTotal: 50,
+      online: true
+    },
+    online_oct16: {
+      id: '0fdad3f3-2a52-44fc-a639-24a741388b62',
+      label: 'Live online',
+      title: 'Live online &middot; 16 to 17 October',
+      dates: '16 to 17 October 2026',
+      lines: [
+        ['Intensive days', '16 to 17 October 2026, live online.'],
+        ['ACT for Burnout', '12 October, a separate day, live online.'],
+        ['Integration', '19 October to 6 December. Peer supervision 28 October, 18 November, 3 December.']
+      ],
+      seatsTotal: 50,
+      online: true
+    }
   };
 
   // Online instalment: flip to true once the Stripe price exists and
@@ -523,8 +573,10 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
       b.className = 'choice' + (S.cohortKey === key ? ' selected' : '');
       b.innerHTML =
         '<div class="choice-info">' +
-          '<div class="choice-name">' + c.label + '</div>' +
-          '<div class="choice-desc">' + c.dates + '. ' + c.detail + '</div>' +
+          '<div class="choice-name">' + (c.title || c.label) + '</div>' +
+          c.lines.map(function (l) {
+            return '<div class="choice-desc"><strong>' + l[0] + ':</strong> ' + l[1] + '</div>';
+          }).join('') +
           '<div class="choice-tag">' + c.seatsTotal + ' places</div>' +
         '</div>' +
         '<div class="choice-side">' +
