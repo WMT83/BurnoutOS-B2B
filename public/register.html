@@ -192,6 +192,7 @@ fbq('track','ViewContent',{content_name:'The Burnout Reset registration',content
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta pixel -->
+<script src="/attr.js"></script>
 </head>
 <body>
 
@@ -547,11 +548,21 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
     return (Number.isInteger(n) && n >= 1 && n <= 20) ? n : null;
   }
   function utm() {
+    // Prefer the touch captured on the landing page. The query string on
+    // /register is clean, so reading it alone lost every paid click.
+    if (window.BOSAttr) {
+      var held = window.BOSAttr.utm();
+      if (held) return held;
+    }
     var p = new URLSearchParams(window.location.search), o = {};
     ['source', 'medium', 'campaign', 'content', 'term'].forEach(function (k) {
       var val = p.get('utm_' + k); if (val) o[k] = val;
     });
     return Object.keys(o).length ? o : null;
+  }
+  // Click identifiers for the server-side Conversions API event.
+  function attr() {
+    return window.BOSAttr ? window.BOSAttr : null;
   }
   function clearErr(id) { var n = el(id); if (n) n.classList.remove('on'); }
   window.clearErr = clearErr;
@@ -795,7 +806,11 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
           organisation: v('organisation') || undefined
         },
         utm: utm(),
-        referrer: document.referrer || null
+        referrer: (attr() && attr().referrer()) || document.referrer || null,
+        fbclid: attr() ? attr().fbclid() : null,
+        fbc: attr() ? attr().fbc() : null,
+        fbp: attr() ? attr().fbp() : null,
+        landing_url: attr() ? attr().landingUrl() : window.location.href
       };
       try {
         var res = await post('create-tour-checkout', payload);
@@ -838,7 +853,9 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
       needs_clinical_briefing: el('docBriefing').checked,
       notes: v('notes') || undefined,
       utm: utm(),
-      referrer: document.referrer || null
+      referrer: (attr() && attr().referrer()) || document.referrer || null,
+      fbclid: attr() ? attr().fbclid() : null,
+      landing_url: attr() ? attr().landingUrl() : window.location.href
     };
     try {
       var cres = await post('request-corporate-quote', corpPayload);
