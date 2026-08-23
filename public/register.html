@@ -43,6 +43,17 @@
     .content { max-width: 700px; margin: 0 auto; padding: 24px 16px 64px; }
 
     /* ── Card ── */
+
+    .proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 14px; }
+    .proof { margin: 0; display: flex; flex-direction: column; border-top: 2px solid var(--ember); padding-top: 12px; }
+    .proof blockquote { margin: 0; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; line-height: 1.25; letter-spacing: -0.01em; color: var(--ink); }
+    .proof figcaption { margin-top: auto; padding-top: 12px; font-size: 12px; line-height: 1.45; color: var(--ink); font-weight: 600; }
+    .proof figcaption span { font-weight: 400; color: var(--muted); }
+    .proof-score { display: flex; align-items: center; gap: 14px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .proof-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 34px; line-height: 1; letter-spacing: -0.03em; color: var(--ember); }
+    .proof-lab { font-size: 13px; line-height: 1.5; color: var(--muted); }
+    .proof-note { margin-top: 12px; font-size: 11px; line-height: 1.5; color: var(--muted); }
+    @media (max-width: 640px) { .proof-grid { grid-template-columns: 1fr; gap: 14px; } }
     .card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; }
     .card.hidden { display: none; }
 
@@ -226,6 +237,31 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
         <li>All frameworks and worksheets to take back to practice</li>
         <li>Lunch and refreshments across the in-person days</li>
       </ul>
+    </div>
+
+
+    <!-- Proof -->
+    <div class="card">
+      <div class="stitle">What clinicians say</div>
+      <div class="proof-grid">
+        <figure class="proof">
+          <blockquote>&ldquo;The training was perfect.&rdquo;</blockquote>
+          <figcaption>Shariefa Hendricks<br><span>Psychologist</span></figcaption>
+        </figure>
+        <figure class="proof">
+          <blockquote>&ldquo;Sound clinical knowledge and a faultless presentation.&rdquo;</blockquote>
+          <figcaption>Sumari van Rooyen<br><span>Psychologist</span></figcaption>
+        </figure>
+        <figure class="proof">
+          <blockquote>&ldquo;I took away skills I could immediately use.&rdquo;</blockquote>
+          <figcaption>Ziphozakhe Kili<br><span>Psychologist</span></figcaption>
+        </figure>
+      </div>
+      <div class="proof-score">
+        <span class="proof-num">4.96</span>
+        <span class="proof-lab">Instructor rating across CPD workshops to July 2026.<br>Every attending clinician scored 4 or higher.</span>
+      </div>
+      <p class="proof-note">Comments relate to previous workshops presented by Werner Teichert. No clinical outcome claims are made.</p>
     </div>
 
     <!-- Who is registering -->
