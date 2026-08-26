@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACT for Burnout · CPD workshop · BurnoutOS</title>
+<meta name="description" content="ACT for Burnout, a one-day CPD workshop for practitioners. Live online on 18 September, or in Johannesburg and online on 12 October. 16 CPD points. Includes ACT in Practice on demand." />
+<link rel="canonical" href="https://burnout-os.app/actworkshop" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ember:#e84b2a; --ember-dim:#c73d20; --ink:#141218; --cream:#fdf9f6;
+    --white:#fff; --border:#e5ddd8; --muted:#6b6570; --muted-lt:#9a9299;
+    --red:#dc2626; --red-bg:#fef2f2; --red-border:#fca5a5;
+  }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); min-height:100vh; }
+
+  .hdr { background:var(--ink); padding:22px 20px 26px; }
+  .hdr-inner { max-width:640px; margin:0 auto; }
+  .wm { display:flex; align-items:baseline; margin-bottom:5px; }
+  .wm-t { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:var(--white); letter-spacing:-0.5px; }
+  .wm-d { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:var(--ember); }
+  .hdr-sub { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .hdr-title { font-size:13px; color:rgba(255,255,255,0.55); font-weight:500; }
+  .tier-badge { padding:2px 9px; background:var(--ember); border-radius:4px; font-size:11px; font-weight:700; color:var(--white); }
+
+  .content { max-width:640px; margin:0 auto; padding:24px 16px 64px; }
+  .card { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:20px 22px; margin-bottom:16px; }
+  .card.hidden { display:none; }
+  .stitle { font-family:'Syne',sans-serif; font-weight:700; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:16px; padding-bottom:10px; border-bottom:1.5px solid var(--border); }
+  h1.lead { font-family:'Syne',sans-serif; font-weight:800; font-size:26px; letter-spacing:-0.02em; margin-bottom:10px; }
+  .lede { font-size:14px; color:var(--muted); line-height:1.65; }
+  .lede + .lede { margin-top:10px; }
+  .lede strong { color:var(--ink); font-weight:600; }
+
+  .inc { list-style:none; margin-top:14px; }
+  .inc li { position:relative; padding:7px 0 7px 18px; font-size:13px; color:var(--muted); line-height:1.55; border-top:1px solid var(--border); }
+  .inc li:first-child { border-top:none; }
+  .inc li::before { content:''; position:absolute; left:0; top:15px; width:9px; height:1px; background:var(--ember); }
+
+  .choice-set { display:flex; flex-direction:column; gap:10px; }
+  .choice { border:2px solid var(--border); border-radius:8px; padding:14px 16px; cursor:pointer;
+    transition:border-color .15s, background .15s; display:flex; justify-content:space-between;
+    align-items:center; gap:16px; background:var(--white); width:100%; text-align:left; font-family:'DM Sans',sans-serif; }
+  .choice:hover { border-color:var(--ember); }
+  .choice.selected { border-color:var(--ember); background:#fef4f1; }
+  .choice-info { flex:1; }
+  .choice-name { font-size:14px; font-weight:600; margin-bottom:2px; }
+  .choice-desc { font-size:12px; color:var(--muted); line-height:1.45; }
+  .choice-desc + .choice-desc { margin-top:3px; }
+  .choice-side { text-align:right; flex-shrink:0; }
+  .choice-amt { font-family:'Syne',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.02em; }
+  .choice-amt-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+  .choice-tag { display:inline-block; margin-top:6px; font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--ember); }
+
+  .field { margin-bottom:14px; }
+  .field:last-child { margin-bottom:0; }
+  .field label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; }
+  .opt { color:var(--muted-lt); font-size:12px; font-weight:400; }
+  .req { color:var(--ember); margin-left:3px; }
+  .field input { width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:6px;
+    font-family:'DM Sans',sans-serif; font-size:14px; color:var(--ink); background:var(--white); outline:none; -webkit-appearance:none; appearance:none; }
+  .field input:focus { border-color:var(--ember); }
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .grid-2 .field { margin-bottom:0; }
+  @media (max-width:520px) { .grid-2 { grid-template-columns:1fr; } }
+  .ferr { display:none; align-items:center; gap:4px; margin-top:5px; font-size:12px; color:var(--red); }
+  .ferr.on { display:flex; }
+
+  .sum-row { display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; }
+  .sum-row:last-of-type { border-bottom:none; }
+  .sum-lbl { color:var(--muted); }
+  .sum-val { font-weight:600; text-align:right; }
+  .sum-row.total .sum-val { font-family:'Syne',sans-serif; font-weight:800; font-size:20px; color:var(--ember); letter-spacing:-0.02em; }
+  .sum-fine { font-size:12px; color:var(--muted-lt); line-height:1.55; margin-top:12px; }
+
+  .popia-notice { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:16px; padding:14px 16px; background:#f9f6f3; border-radius:6px; border:1px solid var(--border); }
+  .popia-notice strong { color:var(--ink); }
+  .popia-notice a { color:var(--ember); text-decoration:none; }
+  .consent-row { display:flex; gap:12px; align-items:flex-start; }
+  .consent-row input[type="checkbox"] { width:18px; height:18px; min-width:18px; margin-top:2px; accent-color:var(--ember); cursor:pointer; }
+  .consent-row label { font-size:13px; line-height:1.6; cursor:pointer; }
+
+  .err-sum { display:none; background:var(--red-bg); border:1.5px solid var(--red-border); border-radius:8px; padding:14px 18px; margin-bottom:20px; align-items:flex-start; gap:10px; }
+  .err-sum.on { display:flex; }
+  .err-ico { flex-shrink:0; margin-top:1px; color:var(--red); }
+  .err-title { font-size:14px; font-weight:600; color:var(--red); margin-bottom:6px; }
+  .err-item { font-size:13px; color:var(--red); margin-bottom:3px; }
+
+  .sub-btn { width:100%; padding:15px 24px; background:var(--ember); color:var(--white); border:none; border-radius:8px;
+    font-family:'Syne',sans-serif; font-weight:700; font-size:15px; cursor:pointer; letter-spacing:-0.2px;
+    transition:background .15s; margin-bottom:12px; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .sub-btn:hover { background:var(--ember-dim); }
+  .sub-btn:disabled { background:var(--muted-lt); cursor:not-allowed; }
+  .sub-btn.hidden { display:none; }
+  .privacy { text-align:center; font-size:12px; color:var(--muted-lt); line-height:1.5; padding-bottom:20px; }
+  .privacy a { color:var(--muted); }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .8s linear infinite; display:none; }
+  .spinner.on { display:block; }
+  .loading { text-align:center; padding:30px; font-size:13px; color:var(--muted); }
+  @media (prefers-reduced-motion:reduce) { * { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+</style>
+
+<!-- Meta pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1005751582432108');
+fbq('track','PageView');
+fbq('track','ViewContent',{content_name:'ACT for Burnout workshop',content_category:'CPD workshop'});
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></noscript>
+<script src="/attr.js"></script>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="wm"><span class="wm-t">BurnoutOS</span><span class="wm-d">.</span></div>
+    <div class="hdr-sub">
+      <span class="hdr-title">ACT for Burnout &middot; CPD workshop</span>
+      <span class="tier-badge" id="tierBadge">16 CPD points</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="err-sum" id="errSum" role="alert">
+    <span class="err-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+    <div id="errList"></div>
+  </div>
+
+  <div id="formWrap">
+
+    <div class="card">
+      <h1 class="lead">ACT for Burnout</h1>
+      <p class="lede">A one-day workshop for practitioners seeing burnout in the room and wanting a clearer way to work with it. Acceptance and commitment therapy applied to clients who cannot change their circumstances quickly.</p>
+      <ul class="inc">
+        <li>How burnout presents differently from depression, and what changes in your formulation</li>
+        <li>Working with values when a client feels they have no room to choose</li>
+        <li>Committed action sized for someone with no capacity left</li>
+        <li>Defusion for the thought patterns that keep people in overextension</li>
+        <li>16 CPD points, and the ACT in Practice on-demand course included</li>
+        <li>Recording access afterwards, and a full materials pack</li>
+      </ul>
+      <p class="lede" style="margin-top:16px;"><strong>Already registered for The Burnout Reset?</strong> The 12 October day is included in your programme and there is nothing further to pay. The 18 September date is separate, and open to you at the price below. <a href="/register" style="color:var(--ember);text-decoration:none;">See The Burnout Reset</a>.</p>
+    </div>
+
+    <div class="card">
+      <div class="stitle">Choose a date</div>
+      <div class="choice-set" id="dateSet"><div class="loading">Loading available dates</div></div>
+      <div class="ferr" id="e-cohort" style="margin-top:10px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Choose a date.</div>
+    </div>
+
+    <div class="card hidden" id="cardAttendee">
+      <div class="stitle">Your details</div>
+      <p class="lede" style="margin-bottom:16px;">Joining details and your CPD certificate go to this address.</p>
+      <div class="field">
+        <label>Full name<span class="req">*</span></label>
+        <input type="text" id="fullName" autocomplete="name" placeholder="As it should appear on your CPD certificate">
+        <div class="ferr" id="e-fullName"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter your full name.</div>
+      </div>
+      <div class="field">
+        <label>Email address<span class="req">*</span></label>
+        <input type="email" id="email" autocomplete="email" placeholder="you@practice.co.za">
+        <div class="ferr" id="e-email"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter a valid email address.</div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Professional role <span class="opt">(optional)</span></label>
+          <input type="text" id="role" placeholder="e.g. Clinical Psychologist">
+        </div>
+        <div class="field">
+          <label>Mobile <span class="opt">(optional)</span></label>
+          <input type="tel" id="phone" autocomplete="tel" placeholder="For joining reminders">
+        </div>
+      </div>
+    </div>
+
+    <div class="card hidden" id="cardSummary">
+      <div class="stitle">Summary</div>
+      <div id="summaryBody"></div>
+    </div>
+
+    <div class="card hidden" id="cardPopia">
+      <div class="stitle">POPIA notice</div>
+      <div class="popia-notice">
+        <strong>Behavioural Health Pty Ltd, trading as BurnoutOS,</strong> collects your personal information to administer your registration, issue your CPD certificate, and contact you about this workshop. Your details are shared with the accredited CPD provider only for the purpose of CPD submission. Payment details are handled by Stripe and are never stored by us. You can access, correct, or request deletion of your information at any time by writing to <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>.
+      </div>
+      <div class="consent-row">
+        <input type="checkbox" id="popiaCheck">
+        <label for="popiaCheck">I have read the notice above and consent to the processing of my personal information in accordance with POPIA.<span class="req"> *</span></label>
+      </div>
+      <div class="ferr" id="e-popia" style="margin-top:6px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Acknowledge the POPIA notice before continuing.</div>
+    </div>
+
+    <div class="card">
+      <div class="stitle">Looking for the full programme</div>
+      <p class="lede">The Burnout Reset is a two-day intensive plus an eight-week applied arc and three peer supervision sessions. It carries 32 CPD points and includes the 12 October ACT day in the price. Johannesburg 10 and 11 October, Cape Town 16 and 17 October, or live online on either date.</p>
+      <p class="lede" style="margin-top:10px;"><a href="/register" style="color:var(--ember);text-decoration:none;font-weight:600;">See The Burnout Reset</a></p>
+    </div>
+
+    <button class="sub-btn hidden" id="subBtn">
+      <span class="spinner" id="spinner"></span>
+      <span id="subLabel">Continue to secure payment</span>
+    </button>
+    <p class="privacy">Card payments are processed by Stripe. If you cannot attend, your place transfers to the next date or to a colleague you nominate. Questions go to <a href="mailto:hello@burnout-os.app">hello@burnout-os.app</a>.</p>
+
+  </div>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var SUPABASE_URL = 'https://kvsirypfqtnymooxicti.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_Azjgh5OVpFG2Z2oyQqt0Ig_E0tVk2W8';
+
+  // Both ACT tours. Cohorts, prices and dates are read live from Supabase
+  // rather than hardcoded. The anon read policies on tours and tour_cohorts
+  // only expose open statuses, so a cancelled cohort disappears from this
+  // page without a redeploy. That is the failure /register has today.
+  var TOUR_SLUGS = ['act-burnout-sep-2026', 'act-burnout-oct-2026'];
+
+  // Cohorts, prices and seat counts are read live from Supabase. The anon
+  // read policies expose open statuses only, so a cancelled cohort drops off
+  // this page without a redeploy.
+  //
+  // FALLBACK mirrors production at the time of writing and is used only when
+  // the request itself fails, never when it succeeds and returns nothing.
+  // Without it a network blip during the early bird week means the page
+  // renders no way to buy anything. Keep it in step when dates change.
+  var FALLBACK = [
+    { tour_slug:'act-burnout-sep-2026', cohort_id:'f8cdc32f-8917-4a3b-9ebf-fa8468b4ce30',
+      city:'Online', date:'2026-09-18', format:'Live online', start:'08:30', end:'17:00',
+      amount:195000, earlyBird:true, ebUntil:'2026-09-11', seatsLeft:198, capped:false },
+    { tour_slug:'act-burnout-oct-2026', cohort_id:'38c0d95a-306b-4aa8-aac3-d0a5f59e5f64',
+      city:'Johannesburg', date:'2026-10-12', format:'Johannesburg, in person', start:'08:30', end:'17:00',
+      amount:295000, earlyBird:true, ebUntil:'2026-09-11', seatsLeft:20, capped:true },
+    { tour_slug:'act-burnout-oct-2026', cohort_id:'74e83c5e-c7be-464e-8d22-f83a2e08f42c',
+      city:'Online', date:'2026-10-12', format:'Live online', start:'08:30', end:'17:00',
+      amount:195000, earlyBird:true, ebUntil:'2026-09-11', seatsLeft:200, capped:false }
+  ];
+
+  var OPTIONS = [];
+  var S = { idx: null };
+
+  function el(id){ return document.getElementById(id); }
+  function v(id){ var n = el(id); return n ? n.value.trim() : ''; }
+  function show(id,on){ el(id).classList.toggle('hidden', !on); }
+  function zar(c){ return 'R' + String(Math.round(c/100)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function validEmail(x){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x || ''); }
+  function clearErr(id){ var n = el(id); if (n) n.classList.remove('on'); }
+  function today(){ return new Date().toISOString().slice(0,10); }
+
+  function fmtDate(d){
+    var p = d.split('-');
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return parseInt(p[2],10) + ' ' + months[parseInt(p[1],10)-1] + ' ' + p[0];
+  }
+
+  // Mirrors create-tour-checkout exactly: family from cohort pricing_key,
+  // tier from tours.early_bird_until. If either resolves to a tier that is
+  // not configured, the option is dropped rather than shown at a wrong price.
+  function resolvePrice(tour, cohort) {
+    var isOnline = (cohort.metadata || {}).pricing_key === 'online';
+    var family = isOnline ? 'online' : 'individual';
+    var earlyBird = !!tour.early_bird_until && today() <= tour.early_bird_until;
+    var key = family + '_' + (earlyBird ? 'early_bird' : 'standard');
+    var cfg = ((tour.metadata || {}).stripe_products || {})[key];
+    if (!cfg || !cfg.price_full) return null;
+    return { amount: cfg.price_full.amount_cents, earlyBird: earlyBird, ebUntil: tour.early_bird_until };
+  }
+
+  function rest(path) {
+    return fetch(SUPABASE_URL + '/rest/v1/' + path, {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    }).then(function (r) { if (!r.ok) throw new Error('rest ' + r.status); return r.json(); });
+  }
+
+  function fetchJson(path, ms) {
+    var ctrl = ('AbortController' in window) ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, ms || 8000);
+    return fetch(SUPABASE_URL + '/rest/v1/' + path, {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY },
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function (r) {
+      clearTimeout(timer);
+      if (!r.ok) throw new Error('rest ' + r.status);
+      return r.json();
+    }, function (e) { clearTimeout(timer); throw e; });
+  }
+
+  function buildOptions(tours, cohorts) {
+    var byId = {};
+    tours.forEach(function (t) { byId[t.id] = t; });
+    var out = [];
+    cohorts.forEach(function (c) {
+      var t = byId[c.tour_id];
+      if (!t) return;
+      var p = resolvePrice(t, c);
+      if (!p) return;
+      var seatsLeft = c.seats_total - c.seats_filled;
+      if (seatsLeft <= 0) return;
+      out.push({
+        tour_slug: t.slug, cohort_id: c.id,
+        city: c.city_name, date: c.start_date,
+        format: c.delivery_format === 'online' ? 'Live online' : c.city_name + ', in person',
+        start: (c.start_time || '08:30').slice(0, 5), end: (c.end_time || '17:00').slice(0, 5),
+        amount: p.amount, earlyBird: p.earlyBird, ebUntil: p.ebUntil,
+        seatsLeft: seatsLeft, capped: c.seats_total <= 40
+      });
+    });
+    return out;
+  }
+
+  function load() {
+    fetchJson('tours?select=id,slug,name,currency,early_bird_until,metadata&slug=in.(' + TOUR_SLUGS.join(',') + ')')
+      .then(function (tours) {
+        if (!tours.length) throw new Error('no tours');
+        var ids = tours.map(function (t) { return t.id; }).join(',');
+        return fetchJson('tour_cohorts?select=id,tour_id,city_name,start_date,start_time,end_time,delivery_format,seats_total,seats_filled,status,metadata&tour_id=in.(' + ids + ')&status=eq.open&order=start_date.asc')
+          .then(function (cohorts) { return buildOptions(tours, cohorts); });
+      })
+      .then(function (opts) {
+        // A successful read that returns nothing genuinely means nothing is
+        // open. Do not paper over that with the fallback.
+        OPTIONS = opts;
+        render();
+      })
+      .catch(function (e) {
+        if (window.console && console.warn) console.warn('[actworkshop] live read failed, using fallback:', e && e.message);
+        OPTIONS = FALLBACK.slice();
+        render();
+      });
+  }
+
+  function render() {
+    var wrap = el('dateSet');
+    if (!OPTIONS.length) {
+      wrap.innerHTML = '<div class="loading">No dates are open at the moment. Write to hello@burnout-os.app to be told when the next one opens.</div>';
+      return;
+    }
+    wrap.innerHTML = '';
+    OPTIONS.forEach(function (o, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'choice' + (S.idx === i ? ' selected' : '');
+      var sub = o.earlyBird ? 'early bird to ' + fmtDate(o.ebUntil) : 'standard';
+      var tag = o.capped && o.seatsLeft <= 20 ? '<div class="choice-tag">' + o.seatsLeft + ' places left</div>' : '';
+      b.innerHTML =
+        '<div class="choice-info">' +
+          '<div class="choice-name">' + fmtDate(o.date) + '</div>' +
+          '<div class="choice-desc">' + o.format + '</div>' +
+          '<div class="choice-desc">' + o.start + ' to ' + o.end + ' SAST</div>' +
+          tag +
+        '</div>' +
+        '<div class="choice-side">' +
+          '<div class="choice-amt">' + zar(o.amount) + '</div>' +
+          '<div class="choice-amt-sub">' + sub + '</div>' +
+        '</div>';
+      b.onclick = function () { select(i); };
+      wrap.appendChild(b);
+    });
+  }
+
+  function select(i) {
+    S.idx = i;
+    clearErr('e-cohort');
+    render();
+    show('cardAttendee', true);
+    show('cardPopia', true);
+    show('subBtn', true);
+    renderSummary();
+  }
+
+  function renderSummary() {
+    if (S.idx === null) { show('cardSummary', false); return; }
+    var o = OPTIONS[S.idx];
+    el('summaryBody').innerHTML =
+      '<div class="sum-row"><span class="sum-lbl">Workshop</span><span class="sum-val">ACT for Burnout</span></div>' +
+      '<div class="sum-row"><span class="sum-lbl">Date</span><span class="sum-val">' + fmtDate(o.date) + '</span></div>' +
+      '<div class="sum-row"><span class="sum-lbl">Format</span><span class="sum-val">' + o.format + '</span></div>' +
+      '<div class="sum-row"><span class="sum-lbl">CPD</span><span class="sum-val">16 points</span></div>' +
+      '<div class="sum-row total"><span class="sum-lbl">Total today</span><span class="sum-val">' + zar(o.amount) + '</span></div>' +
+      '<p class="sum-fine">Charged in ZAR, VAT inclusive. One card payment. Includes the ACT in Practice on-demand course and recording access.' +
+      (o.earlyBird ? ' The early bird rate applies until ' + fmtDate(o.ebUntil) + '.' : '') + '</p>';
+    show('cardSummary', true);
+  }
+
+  function utm() {
+    if (window.BOSAttr) { var held = window.BOSAttr.utm(); if (held) return held; }
+    var p = new URLSearchParams(window.location.search), o = {};
+    ['source','medium','campaign','content','term'].forEach(function (k) {
+      var val = p.get('utm_' + k); if (val) o[k] = val;
+    });
+    return Object.keys(o).length ? o : null;
+  }
+  function attr(){ return window.BOSAttr ? window.BOSAttr : null; }
+
+  function showErrs(errs) {
+    Array.prototype.forEach.call(document.querySelectorAll('.ferr'), function (e) { e.classList.remove('on'); });
+    var sum = el('errSum'), list = el('errList');
+    if (!errs.length) { sum.classList.remove('on'); return; }
+    list.innerHTML = '<p class="err-title">Fix the following before continuing.</p>';
+    errs.forEach(function (e) {
+      var p = document.createElement('p');
+      p.className = 'err-item'; p.textContent = e.msg;
+      list.appendChild(p);
+      if (e.id && el(e.id)) el(e.id).classList.add('on');
+    });
+    sum.classList.add('on');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function showFailure(m) {
+    el('errList').innerHTML = '<p class="err-title">Registration could not be completed.</p><p class="err-item">' + m + '</p>';
+    el('errSum').classList.add('on');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function setBusy(on, label) {
+    el('subBtn').disabled = on;
+    el('spinner').classList.toggle('on', on);
+    el('subLabel').textContent = label;
+  }
+
+  function validate() {
+    var errs = [];
+    if (S.idx === null) errs.push({ id:'e-cohort', msg:'Choose a date.' });
+    if (v('fullName').length < 2) errs.push({ id:'e-fullName', msg:'Enter your full name.' });
+    if (!validEmail(v('email'))) errs.push({ id:'e-email', msg:'Enter a valid email address.' });
+    if (!el('popiaCheck').checked) errs.push({ id:'e-popia', msg:'Acknowledge the POPIA notice before continuing.' });
+    return errs;
+  }
+
+  async function handleSubmit() {
+    var errs = validate();
+    showErrs(errs);
+    if (errs.length) return;
+    el('errSum').classList.remove('on');
+    var o = OPTIONS[S.idx];
+    setBusy(true, 'Holding your place');
+    var payload = {
+      tour_slug: o.tour_slug,
+      cohort_id: o.cohort_id,
+      audience_type: 'individual',
+      instalment_plan: false,
+      attendee: {
+        full_name: v('fullName'),
+        email: v('email').toLowerCase(),
+        phone: v('phone') || undefined,
+        role: v('role') || undefined
+      },
+      utm: utm(),
+      referrer: (attr() && attr().referrer()) || document.referrer || null,
+      fbclid: attr() ? attr().fbclid() : null,
+      fbc: attr() ? attr().fbc() : null,
+      fbp: attr() ? attr().fbp() : null,
+      landing_url: attr() ? attr().landingUrl() : window.location.href
+    };
+    try {
+      var res = await fetch(SUPABASE_URL + '/functions/v1/create-tour-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'apikey': SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify(payload)
+      });
+      var data = await res.json();
+      if (!res.ok) { setBusy(false,'Continue to secure payment'); showFailure(data.error || 'Server error ' + res.status + '. Try again, or write to hello@burnout-os.app.'); return; }
+      if (!data.checkout_url) { setBusy(false,'Continue to secure payment'); showFailure('No payment link was returned. Write to hello@burnout-os.app and your place will be held.'); return; }
+      try {
+        if (window.fbq) fbq('track','Lead',{ content_name:'ACT for Burnout workshop', content_category:'CPD workshop' });
+      } catch (e) {}
+      setBusy(true,'Taking you to secure payment');
+      window.location.href = data.checkout_url;
+    } catch (err) {
+      setBusy(false,'Continue to secure payment');
+      showFailure('The connection failed. Check your network and try again.');
+    }
+  }
+
+  el('subBtn').addEventListener('click', handleSubmit);
+
+  // Paint from the baked-in set first so the page is usable instantly,
+  // then replace it with live data as soon as the read returns.
+  OPTIONS = FALLBACK.slice();
+  render();
+  load();
+})();
+</script>
+</body>
+</html>
