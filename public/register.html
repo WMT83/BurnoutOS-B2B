@@ -330,17 +330,20 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
       </div>
       <div class="grid-2" style="margin-bottom:14px;">
         <div class="field">
-          <label>Mobile <span class="opt">(optional)</span></label>
+          <label>Mobile<span class="req">*</span></label>
           <input type="tel" id="phone" autocomplete="tel" placeholder="For venue and joining reminders">
+          <div class="ferr" id="e-phone"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter a mobile number.</div>
         </div>
         <div class="field">
-          <label>Professional role <span class="opt">(optional)</span></label>
+          <label>Professional role<span class="req">*</span></label>
           <input type="text" id="role" placeholder="e.g. Clinical Psychologist">
+          <div class="ferr" id="e-role"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter your professional role.</div>
         </div>
       </div>
       <div class="field">
-        <label>Practice or organisation <span class="opt">(optional)</span></label>
-        <input type="text" id="organisation" placeholder="Useful if your employer is contributing toward the cost">
+        <label>Practice or organisation<span class="req">*</span></label>
+        <input type="text" id="organisation" placeholder="Your practice name, or Private practice">
+        <div class="ferr" id="e-organisation"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Enter your practice or organisation.</div>
       </div>
     </div>
 
@@ -776,6 +779,9 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
       }
       if (v('fullName').length < 2) errs.push({ id: 'e-fullName', msg: 'Enter your full name.' });
       if (!validEmail(v('email'))) errs.push({ id: 'e-email', msg: 'Enter a valid email address.' });
+      if (v('phone').replace(/[^0-9]/g, '').length < 9) errs.push({ id: 'e-phone', msg: 'Enter a mobile number.' });
+      if (v('role').length < 2) errs.push({ id: 'e-role', msg: 'Enter your professional role.' });
+      if (v('organisation').length < 2) errs.push({ id: 'e-organisation', msg: 'Enter your practice or organisation.' });
     }
 
     if (S.audience === 'corporate') {
