@@ -412,6 +412,17 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
   }
   function attr(){ return window.BOSAttr ? window.BOSAttr : null; }
 
+  // A single id shared by the browser Lead event and the server-side Lead
+  // fired from create-tour-checkout, so Meta deduplicates the pair rather
+  // than counting two leads. Browser-only Lead events are stripped by ad
+  // blockers and by iOS, which is why the server copy exists at all.
+  function newLeadEventId() {
+    try {
+      if (window.crypto && window.crypto.randomUUID) return 'lead_' + window.crypto.randomUUID();
+    } catch (e) {}
+    return 'lead_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 12);
+  }
+
   function showErrs(errs) {
     Array.prototype.forEach.call(document.querySelectorAll('.ferr'), function (e) { e.classList.remove('on'); });
     var sum = el('errSum'), list = el('errList');
@@ -453,7 +464,9 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
     el('errSum').classList.remove('on');
     var o = OPTIONS[S.idx];
     setBusy(true, 'Holding your place');
+    var leadEventId = newLeadEventId();
     var payload = {
+      lead_event_id: leadEventId,
       tour_slug: o.tour_slug,
       cohort_id: o.cohort_id,
       audience_type: 'individual',
@@ -485,7 +498,7 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
       if (!res.ok) { setBusy(false,'Continue to secure payment'); showFailure(data.error || 'Server error ' + res.status + '. Try again, or write to hello@burnout-os.app.'); return; }
       if (!data.checkout_url) { setBusy(false,'Continue to secure payment'); showFailure('No payment link was returned. Write to hello@burnout-os.app and your place will be held.'); return; }
       try {
-        if (window.fbq) fbq('track','Lead',{ content_name:'ACT for Burnout workshop', content_category:'CPD workshop' });
+        if (window.fbq) fbq('track','Lead',{ content_name:'ACT for Burnout workshop', content_category:'CPD workshop' }, { eventID: leadEventId });
       } catch (e) {}
       setBusy(true,'Taking you to secure payment');
       window.location.href = data.checkout_url;
