@@ -523,15 +523,17 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
     }
   };
 
-  // Online instalment: flip to true once the Stripe price exists and
-  // tours.metadata.stripe_products.online_early_bird.price_instalment is set.
-  // Until then create-tour-checkout returns 400 for online instalment requests.
+  // Online instalment prices now exist for both windows on sa-2026:
+  //   online_early_bird  R2,050 x 3  price_1U51b4IXh8NpOtrx6wl9VHnj
+  //   online_standard    R2,400 x 3  price_1U9by1IXh8NpOtrxaeLtspvW
+  // Kept as a kill switch rather than a readiness gate.
   var ONLINE_INSTALMENT_ENABLED = true;
 
   var INSTALMENT_CYCLES = { individual: 5, online: 3 };
 
   var PRICES = {
     online_instalment_early_bird: 2050,
+    online_instalment_standard: 2400,
     individual_early_bird: 8950,
     individual_standard: 10950,
     individual_instalment_early_bird: 1890,
@@ -561,17 +563,17 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
     return isEarlyBird() ? PRICES.individual_early_bird : PRICES.individual_standard;
   }
   function individualInstalment(key) {
-    if (isOnline(key)) return PRICES.online_instalment_early_bird;
+    if (isOnline(key)) return isEarlyBird() ? PRICES.online_instalment_early_bird : PRICES.online_instalment_standard;
     return isEarlyBird() ? PRICES.individual_instalment_early_bird : PRICES.individual_instalment_standard;
   }
   function instalmentCycles(key) {
     return isOnline(key) ? INSTALMENT_CYCLES.online : INSTALMENT_CYCLES.individual;
   }
-  // Online instalments are early-bird only. There is no standard-window
-  // online instalment price, so the option disappears from 1 September.
+  // Both windows carry an online instalment price, so the option survives
+  // the 1 September tier flip rather than disappearing with the early bird.
   function instalmentOffered(key) {
     if (!key) return false;
-    if (isOnline(key)) return ONLINE_INSTALMENT_ENABLED && isEarlyBird();
+    if (isOnline(key)) return ONLINE_INSTALMENT_ENABLED;
     return true;
   }
   function corporatePerSeat(key) {
