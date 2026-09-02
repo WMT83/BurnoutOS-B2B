@@ -244,13 +244,18 @@ src="https://www.facebook.com/tr?id=1005751582432108&ev=PageView&noscript=1"/></
   // the request itself fails, never when it succeeds and returns nothing.
   // Without it a network blip during the early bird week means the page
   // renders no way to buy anything. Keep it in step when dates change.
+  //
+  // The 12 October Johannesburg in-person cohort is deliberately absent. It is
+  // held until 18 September so the free PsySSA room stays available to Reset
+  // registrants, who already hold that day in their price. The live read drops
+  // it because the cohort is on_hold, so a fallback entry would be the only
+  // place it could still appear, and create-tour-checkout would refuse the
+  // resulting purchase at the payment step. Restore it only once the hold on
+  // tours.metadata.standalone_in_person_hold has lifted.
   var FALLBACK = [
     { tour_slug:'act-burnout-sep-2026', cohort_id:'f8cdc32f-8917-4a3b-9ebf-fa8468b4ce30',
       city:'Online', date:'2026-09-18', format:'Live online', start:'08:30', end:'17:00',
       amount:195000, earlyBird:true, ebUntil:'2026-09-11', seatsLeft:198, capped:false },
-    { tour_slug:'act-burnout-oct-2026', cohort_id:'38c0d95a-306b-4aa8-aac3-d0a5f59e5f64',
-      city:'Johannesburg', date:'2026-10-12', format:'Johannesburg, in person', start:'08:30', end:'17:00',
-      amount:295000, earlyBird:true, ebUntil:'2026-09-11', seatsLeft:20, capped:true },
     { tour_slug:'act-burnout-oct-2026', cohort_id:'74e83c5e-c7be-464e-8d22-f83a2e08f42c',
       city:'Online', date:'2026-10-12', format:'Live online', start:'08:30', end:'17:00',
       amount:195000, earlyBird:true, ebUntil:'2026-09-11', seatsLeft:200, capped:false }
