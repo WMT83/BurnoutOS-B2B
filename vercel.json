@@ -151,6 +151,11 @@
       "permanent": false
     },
     {
+      "source": "/inpractice",
+      "destination": "/inpractice.html",
+      "permanent": false
+    },
+    {
       "source": "/evaluate",
       "destination": "/evaluate.html",
       "permanent": false
