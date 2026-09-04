@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Burnout Formulation Check &middot; BurnoutOS</title>
+<meta name="description" content="A five minute self-assessment for clinicians treating burnout presentations. Maps how you differentiate, formulate, work under constraint, size intervention and define recovery.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="The Burnout Formulation Check">
+<meta property="og:description" content="Burnout presents like depression and does not respond like it. Seventeen questions on how you handle that. Five minutes, free.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://burnout-os.app/inpractice">
+<link rel="icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #141218;
+    --ember: #E84B2A;
+    --ember-light: rgba(232,75,42,0.1);
+    --white: #ffffff;
+    --off: #f7f6f4;
+    --muted: #6E6A72;
+    --border: rgba(20,18,24,0.1);
+    --dark: #1a1817;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; min-height: 100vh; flex-direction: column; }
+  .screen.active { display: flex; }
+
+  /* ── LANDING ── */
+  #screen-landing {
+    background: var(--dark);
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .landing-inner { max-width: 600px; width: 100%; }
+
+  .wordmark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.02em;
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  .wordmark .dot {
+    width: 5px; height: 5px;
+    background: var(--ember);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .landing-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 16px;
+  }
+
+  .landing-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 7vw, 64px);
+    line-height: 0.95;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .landing-title .ember-period {
+    color: var(--ember);
+  }
+
+  .landing-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 440px;
+    margin: 0 auto 36px;
+  }
+
+  .landing-meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+
+  .landing-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .landing-meta-item .tick {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: rgba(232,75,42,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    color: var(--ember);
+    flex-shrink: 0;
+  }
+
+  .btn-primary {
+    background: var(--ember);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .landing-disclaimer {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* ── QUESTION SCREEN ── */
+  #screen-question {
+    background: var(--white);
+    flex-direction: column;
+  }
+
+  .q-header {
+    padding: 20px 24px 0;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .q-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .q-wordmark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 2px;
+  }
+  .q-wordmark .dot { width: 4px; height: 4px; background: var(--ember); border-radius: 50%; }
+
+  .q-counter {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .progress-wrap {
+    height: 3px;
+    background: rgba(20,18,24,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--ember);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .q-dimension-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-top: 28px;
+    margin-bottom: 0;
+  }
+
+  .q-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 24px 32px;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .q-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(20px, 4vw, 28px);
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+
+  .q-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .scale-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--white);
+  }
+
+  .scale-option:hover {
+    border-color: rgba(232,75,42,0.4);
+    background: rgba(232,75,42,0.04);
+  }
+
+  .scale-option.selected {
+    border-color: var(--ember);
+    background: rgba(232,75,42,0.06);
+  }
+
+  .scale-option-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(20,18,24,0.06);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+
+  .scale-option.selected .scale-option-num {
+    background: var(--ember);
+    color: var(--white);
+  }
+
+  .scale-option-label {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .scale-option.selected .scale-option-label { font-weight: 500; }
+
+  .q-nav {
+    padding: 0 24px 32px;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-back {
+    font-size: 13px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 0;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-back:hover { color: var(--ink); }
+
+  .btn-next {
+    background: var(--ink);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.3;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .btn-next.enabled {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .btn-next.enabled:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* ── EMAIL GATE ── */
+  #screen-gate {
+    background: var(--dark);
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .gate-inner { max-width: 480px; width: 100%; }
+
+  .gate-icon {
+    width: 56px; height: 56px;
+    background: rgba(232,75,42,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 24px;
+  }
+
+  .gate-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+
+  .gate-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .gate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .gate-input {
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 5px;
+    padding: 14px 16px;
+    font-size: 15px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    width: 100%;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .gate-input::placeholder { color: rgba(255,255,255,0.3); }
+  .gate-input:focus { border-color: var(--ember); }
+
+  .gate-cta {
+    background: var(--ember);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.15s;
+    letter-spacing: 0.02em;
+  }
+
+  .gate-cta:hover { opacity: 0.9; }
+
+  .gate-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+  .gate-select option { background: #141218; color: #fff; }
+
+  .gate-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+    margin-bottom: 14px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+  }
+  .gate-check input {
+    appearance: auto;
+    margin: 2px 0 0 0;
+    flex-shrink: 0;
+    accent-color: var(--ember);
+    cursor: pointer;
+  }
+  .gate-check strong { color: rgba(255,255,255,0.8); font-weight: 600; display: block; margin-bottom: 2px; }
+
+  .gate-privacy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    line-height: 1.5;
+  }
+
+  /* ── RESULTS ── */
+  #screen-results {
+    background: var(--white);
+    flex-direction: column;
+  }
+
+  .results-header {
+    background: var(--dark);
+    padding: 28px 24px 32px;
+    text-align: center;
+  }
+
+  .results-header .wordmark {
+    margin-bottom: 20px;
+  }
+
+  .results-name {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .results-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(24px, 5vw, 36px);
+    color: var(--white);
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+
+  .results-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+  }
+
+  .results-body {
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 32px 24px 40px;
+  }
+
+  /* Radar */
+  .radar-section {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .radar-wrap {
+    flex-shrink: 0;
+  }
+
+  .radar-legend {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 4px;
+  }
+
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+
+  .legend-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--ink);
+    min-width: 80px;
+  }
+
+  .legend-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: rgba(20,18,24,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .legend-bar-fill {
+    height: 100%;
+    background: var(--ember);
+    border-radius: 2px;
+    width: 0;
+    transition: width 1s ease;
+  }
+
+  .legend-pct {
+    font-size: 12px;
+    color: var(--muted);
+    min-width: 32px;
+    text-align: right;
+    font-weight: 500;
+  }
+
+  .legend-note {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* Interpretation cards */
+  .interp-section {
+    margin-bottom: 28px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 14px;
+  }
+
+  .interp-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .interp-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .interp-card.revealed { opacity: 1; transform: translateY(0); }
+
+  .interp-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .interp-dim {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  .interp-band {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  .band-high { background: rgba(232,75,42,0.12); color: var(--ember); }
+  .band-moderate { background: rgba(20,18,24,0.07); color: var(--muted); }
+  .band-low { background: rgba(20,180,100,0.1); color: #1a7a4a; }
+
+  .interp-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* Pathway section */
+  .pathway-section {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 24px 20px;
+    margin-bottom: 24px;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .pathway-section.revealed { opacity: 1; }
+
+  .pathway-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 6px;
+  }
+
+  .pathway-heading {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--white);
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+
+  .pathway-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .pathway-phases {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .phase-pill {
+    flex: 1;
+    min-width: 80px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 5px;
+    padding: 10px 12px;
+  }
+
+  .phase-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--ember);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .phase-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--white);
+  }
+
+  .phase-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 2px;
+  }
+
+  .cta-banner {
+    background: var(--ember);
+    border-radius: 5px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    text-decoration: none;
+  }
+
+  .cta-banner:hover { opacity: 0.92; }
+
+  .cta-banner-text {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--white);
+  }
+
+  .cta-banner-url {
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
+
+  .cta-disclaimer {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* Share / restart */
+  .results-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-outline {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* ── TRANSITIONS ── */
+  .fade-in {
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RADAR SVG ── */
+  #radar-svg { overflow: visible; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .radar-section { flex-direction: column; align-items: center; }
+    .radar-legend { width: 100%; }
+    .pathway-phases { gap: 6px; }
+    .phase-pill { min-width: 70px; }
+  }
+
+  /* inpractice additions */
+  .dim-rows { display:flex; flex-direction:column; gap:18px; }
+  .dim-row { }
+  .dim-row-top { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px; }
+  .dim-row-label { font-size:15px; font-weight:700; color:var(--ink); }
+  .dim-row-pct { font-size:13px; font-weight:700; color:var(--muted); }
+  .dim-track { height:8px; border-radius:4px; background:rgba(20,18,24,0.08); overflow:hidden; }
+  .dim-fill { height:100%; border-radius:4px; background:var(--ember); transition:width .7s ease; }
+  .dim-note { font-size:13px; line-height:1.55; color:var(--muted); margin-top:7px; }
+  .dim-row.is-low .dim-fill { background:#3f8f6f; }
+  .dim-row.is-med .dim-fill { background:#c8801f; }
+  .not-assessment { font-size:12px; line-height:1.55; color:var(--muted);
+    border-left:2px solid var(--border); padding-left:14px; margin-top:26px; }
+
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<section class="screen active" id="screen-landing">
+  <div class="landing-inner">
+    <div class="wordmark">BurnoutOS<span class="dot"></span></div>
+    <div class="landing-eyebrow">For clinicians</div>
+    <h1 class="landing-title">The Burnout<br>Formulation Check<span class="ember-period">.</span></h1>
+    <p class="landing-sub">Burnout presents like depression and does not respond like it. Seventeen questions on how you currently handle that, across five dimensions of clinical practice.</p>
+    <div class="landing-meta">
+      <div class="landing-meta-item">17 questions</div>
+      <div class="landing-meta-item">5 minutes</div>
+      <div class="landing-meta-item">Free</div>
+    </div>
+    <button class="btn-primary" onclick="startCheck()">Begin</button>
+    <p class="landing-disclaimer">This is a structured self-reflection tool for clinical development. It is not a competency assessment and it is not a judgement about fitness to practise.</p>
+  </div>
+</section>
+
+<!-- QUESTIONS -->
+<section class="screen" id="screen-q">
+  <div class="q-header">
+    <div class="q-header-top">
+      <div class="q-wordmark">BurnoutOS<span class="dot"></span></div>
+      <div class="q-counter" id="q-counter"></div>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+  </div>
+  <div class="q-body">
+    <div class="q-dimension-tag" id="q-dim"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="q-scale" id="q-scale"></div>
+  </div>
+  <div class="q-nav">
+    <button class="btn-back" id="btn-back" onclick="prevQ()">&larr; Back</button>
+    <button class="btn-next" id="btn-next" onclick="nextQ()">Next &rarr;</button>
+  </div>
+</section>
+
+<!-- GATE -->
+<section class="screen" id="screen-gate">
+  <div class="gate-inner">
+    <div class="wordmark">BurnoutOS<span class="dot"></span></div>
+    <h2 class="gate-title">Your profile is ready.</h2>
+    <p class="gate-sub">Enter your details to see your five dimension profile, what each score means, and where the development work sits.</p>
+    <div class="gate-form">
+      <input class="gate-input" type="text" id="gate-name" placeholder="First name" autocomplete="given-name">
+      <input class="gate-input" type="email" id="gate-email" placeholder="Email address" autocomplete="email">
+      <input class="gate-input" type="text" id="gate-role" placeholder="Your role, for example Clinical Psychologist">
+      <select class="gate-input gate-select" id="gate-board" onchange="toggleRegCat()">
+        <option value="">Professional board</option>
+        <option value="Psychology">Psychology</option>
+        <option value="Medical and Dental">Medical and Dental</option>
+        <option value="Social Work and Social Service Professions">Social Work and Social Service Professions</option>
+        <option value="Occupational Therapy, Biokinetics and Physiotherapy">Occupational Therapy, Biokinetics and Physiotherapy</option>
+        <option value="Other">Other or not applicable</option>
+      </select>
+      <select class="gate-input gate-select" id="gate-regcat" style="display:none;">
+        <option value="">Registration category</option>
+        <option value="Clinical">Clinical</option>
+        <option value="Counselling">Counselling</option>
+        <option value="Educational">Educational</option>
+        <option value="Industrial">Industrial</option>
+        <option value="Neuropsychology">Neuropsychology</option>
+        <option value="Registered Counsellor">Registered Counsellor</option>
+        <option value="Intern or Student">Intern or Student</option>
+      </select>
+      <select class="gate-input gate-select" id="gate-context">
+        <option value="">Practice setting</option>
+        <option value="private_practice">Private practice</option>
+        <option value="health_service">Hospital or health service</option>
+        <option value="education_institution">School or university</option>
+        <option value="public_sector">Public sector</option>
+        <option value="organisation">Organisation, in-house</option>
+      </select>
+      <label class="gate-check">
+        <input type="checkbox" id="gate-consent-marketing">
+        <span><strong>Send me the results and related CPD information</strong>You can unsubscribe from any email.</span>
+      </label>
+      <label class="gate-check">
+        <input type="checkbox" id="gate-consent-research">
+        <span><strong>Use my anonymised responses for research</strong>Optional. Your answers would contribute to a dataset on how clinicians formulate burnout. Never identifiable.</span>
+      </label>
+      <button class="gate-cta" onclick="submitGate()">See my profile &rarr;</button>
+      <p class="gate-privacy">We use your details to send your results and information about our CPD training. We do not sell or share your data.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="screen" id="screen-results">
+  <div class="results-header">
+    <div class="wordmark">BurnoutOS<span class="dot"></span></div>
+    <div class="results-name" id="res-name"></div>
+    <h2 class="results-title" id="res-band"></h2>
+    <p class="results-sub" id="res-headline"></p>
+  </div>
+  <div class="results-body">
+    <div class="interp-section">
+      <p class="interp-text" id="res-summary"></p>
+    </div>
+    <div class="interp-section">
+      <h3 class="pathway-heading">Your five dimensions</h3>
+      <p class="interp-text" id="res-intro"></p>
+      <div class="dim-rows" id="res-dims"></div>
+    </div>
+    <div class="interp-section">
+      <h3 class="pathway-heading">Reading the profile</h3>
+      <p class="interp-text" id="res-framework"></p>
+    </div>
+    <div class="interp-section">
+      <h3 class="pathway-heading">Where this goes next</h3>
+      <p class="interp-text" id="res-outlook"></p>
+      <p class="interp-text" id="res-cta-text" style="margin-top:14px;"></p>
+      <a class="btn-primary" id="res-cta" href="#" style="display:inline-block;margin-top:18px;text-decoration:none;"></a>
+    </div>
+    <p class="not-assessment">This is a structured self-reflection tool for clinical development planning. It is not a diagnostic instrument, not a competency assessment, and not a judgement about fitness to practise. Werner Teichert, Clinical Psychologist (AHPRA), MBA.</p>
+  </div>
+  <div class="results-footer">BurnoutOS<span class="dot"></span></div>
+</section>
+
+<script>
+var D = {"questions": [{"id": "q_001", "prompt": "A client presents with exhaustion, low mood and withdrawal that began after eighteen months of sustained work overload. How do you approach the diagnostic question?", "options": ["I formally differentiate burnout from depression before choosing a treatment direction", "I hold both in mind and let the formulation settle over the first few sessions", "I treat the depressive presentation and revisit if it does not respond", "I work with what the client brings rather than the diagnostic category", "I would treat this as depression"], "dimension": "differential", "calib": false}, {"id": "q_002", "prompt": "How confident are you in describing what distinguishes burnout from a depressive episode to a colleague?", "options": ["Very confident, I could set out the differences clearly", "Reasonably confident on the main points", "I have a working sense of it", "I would want to look it up first", "Not confident"], "dimension": "differential", "calib": false}, {"id": "q_003", "prompt": "When a client presentation does not respond to a standard depression protocol, what happens next?", "options": ["I revisit the formulation before changing the protocol", "I adjust the protocol and monitor", "I extend the course and give it more time", "I consider referral or medication review", "This has not come up in a way I have needed to address"], "dimension": "differential", "calib": false}, {"id": "q_004", "prompt": "How often do you see clients whose exhaustion is driven by circumstances that are unlikely to change in the next year?", "options": ["Regularly, it is a substantial part of my caseload", "Fairly often", "Occasionally", "Rarely", "Almost never"], "dimension": "differential", "calib": true}, {"id": "q_005", "prompt": "At what point in a burnout presentation do you develop a written formulation?", "options": ["Before treatment targets are set, every time", "Usually in the first few sessions", "Once I have a sense of the case", "Informally, held in mind rather than written", "I work without a formal formulation"], "dimension": "formulation", "calib": false}, {"id": "q_006", "prompt": "How is the formulation shared with the client?", "options": ["Collaboratively, as a working document we both use", "I talk it through and check it lands", "I share the parts that seem useful", "I use it to guide my own thinking", "It is not usually shared"], "dimension": "formulation", "calib": false}, {"id": "q_007", "prompt": "When treatment stalls, what do you return to first?", "options": ["The formulation, to check what I have misread", "The therapeutic relationship", "The treatment targets, to re-prioritise", "The client engagement and motivation", "I introduce a different technique"], "dimension": "formulation", "calib": false}, {"id": "q_008", "prompt": "A client says they cannot leave the job, cannot reduce their hours, and cannot change the manager. Where does the work go?", "options": ["Values work under the constraint, without implying the constraint should change", "Acceptance work, then a review of what remains within their control", "Problem solving to find room they may not have considered", "Building resilience for the current conditions", "I would keep exploring whether change is genuinely impossible"], "dimension": "constraint", "calib": false}, {"id": "q_009", "prompt": "How do you handle values work when a client believes they have no room to choose?", "options": ["I work with values as direction rather than as choices requiring capacity", "I start small and build a sense of agency", "I use values to motivate change in the situation", "I focus on what is workable rather than on values", "Values work tends not to land with these clients"], "dimension": "constraint", "calib": false}, {"id": "q_010", "prompt": "How often does committed action in these cases end up assuming spare time or energy the client does not have?", "options": ["Rarely, I size it deliberately", "Occasionally, and I catch it", "Sometimes, and I notice afterwards", "Fairly often", "This is a recurring difficulty"], "dimension": "constraint", "calib": false}, {"id": "q_011", "prompt": "When a client circumstances are genuinely harmful rather than merely difficult, how do you hold that?", "options": ["I name it directly and adjust the treatment aim accordingly", "I acknowledge it and work within what is changeable", "I focus on the client response to the circumstances", "I encourage them toward change where I can", "I find this one of the harder parts of the work"], "dimension": "constraint", "calib": false}, {"id": "q_012", "prompt": "How do you set between-session work for a client with very little left?", "options": ["I size it explicitly to their current capacity, and say so", "I keep it small and check it is manageable", "I set what the protocol calls for and adapt if it does not happen", "I leave it to the client to decide what is realistic", "I do not usually set between-session work with these clients"], "dimension": "capacity", "calib": false}, {"id": "q_013", "prompt": "A client has not completed between-session work for three sessions running. What is your first reading?", "options": ["The task was mis-sized for their capacity", "Something in the formulation is off", "Engagement or motivation needs attention", "Their circumstances got in the way", "I would explore it with them without a prior reading"], "dimension": "capacity", "calib": false}, {"id": "q_014", "prompt": "How do you pace sessions with a client who is depleted rather than distressed?", "options": ["I deliberately reduce cognitive load in the session itself", "I slow the pace and check in more often", "I keep the usual structure but allow more time", "I follow the client lead", "I have not adjusted my pacing for this specifically"], "dimension": "capacity", "calib": false}, {"id": "q_015", "prompt": "How confident are you that your standard between-session tasks are appropriate for a burnt-out client?", "options": ["Confident, I adapt them specifically", "Fairly confident", "I adapt some of them", "I have not reviewed them with this in mind", "Not confident"], "dimension": "capacity", "calib": false}, {"id": "q_016", "prompt": "What does recovery mean for a burnout client whose circumstances have not changed?", "options": ["I have a defined view of this and set it with the client", "I have a working sense of it", "It emerges through the work", "Improved functioning and mood", "I have not needed to define it explicitly"], "dimension": "endpoint", "calib": false}, {"id": "q_017", "prompt": "How do you decide when to end with a burnout client?", "options": ["Against the endpoint we set at the start", "When the treatment targets are met", "When the client feels ready", "When progress plateaus", "This is often unclear to me"], "dimension": "endpoint", "calib": false}], "drivers": [{"id": "differential", "label": "Differential clarity"}, {"id": "formulation", "label": "Formulation"}, {"id": "constraint", "label": "Working under constraint"}, {"id": "capacity", "label": "Capacity-sized intervention"}, {"id": "endpoint", "label": "Endpoint and review"}], "narratives": {"capacity": {"low": "Between-session work is sized to actual capacity, and non-completion is read as mis-sizing before it is read as motivation.", "high": "Between-session work is likely assuming capacity the client does not have. This is the most common single reason burnout cases appear disengaged when they are simply empty.", "medium": "Some sizing is happening, but standard tasks may not yet have been reviewed against what a depleted client can carry."}, "endpoint": {"low": "Recovery is defined with the client and reviewed against, so ending is a decision rather than a drift.", "high": "Recovery is not currently defined for these cases. Without an endpoint, the work runs long and neither of you has a way to judge progress.", "medium": "There is a working sense of the endpoint but it may not be explicit or reviewed at intervals."}, "constraint": {"low": "You work with values as direction rather than as choices requiring capacity, and you name the constraint rather than implying the client should remove it.", "high": "The approach currently implies the situation should change. Clients in this position already know it will not, and that gap is often why the work does not land.", "medium": "You are working with the constraint but the approach may still assume more room to choose than the client has."}, "formulation": {"low": "Formulation precedes treatment targets, is shared with the client, and is the first thing you return to when progress stops.", "high": "Formulation is not currently anchoring these cases. Without it, a stalled case tends to prompt a change of technique rather than a change of understanding.", "medium": "Formulation is present but may be informal, unshared, or not the thing you return to first when a case stalls."}, "differential": {"low": "You are actively differentiating burnout from depression and letting that distinction set the treatment direction.", "high": "The differential is not currently shaping your treatment direction. This is the dimension with the largest downstream effect, because everything after it follows from what you decide you are treating.", "medium": "The differential is being made some of the time, or held loosely. Where it is not made explicitly, the default protocol tends to take over."}}, "bands": {"protocol_led": {"label": "Protocol Led", "headline": "You are treating burnout with tools built for something else.", "summary": "Your results show a standard depression or anxiety approach being applied to a presentation that does not respond to it. Most of the sector is here, and it is a function of what training covers rather than of clinical ability. Burnout was not in the curriculum as a distinct presentation, so the protocols you were taught are the ones you have. The gap this surfaces is not knowledge. It is that the model you are reaching for was built for a client who has withdrawn from life, and burnout is a client exhausted by a life they cannot put down.", "outlook": "The change that moves these cases is not more technique. It is a formulation that treats the constraint as real and sizes the intervention to the capacity actually available. That is what a working day on ACT applied to burnout gives you, and it transfers to every case of this kind you see afterwards.", "min": 70, "max": 100}, "adapting": {"label": "Adapting", "headline": "You have adapted. The adaptation is not yet a method.", "summary": "Your results show a clinician who has noticed that these presentations behave differently and has changed what they do about it. That is real clinical judgement and it is ahead of most of the field. What the profile also shows is that the adaptation is happening case by case, from instinct, rather than from a formulation you could hand to a colleague. It works unevenly, and it does not transfer cleanly to the next client.", "outlook": "The step from here is consolidation rather than new learning. Putting a repeatable formulation underneath what you are already doing well is what makes it consistent across a caseload, and what lets you notice earlier which cases need it.", "min": 40, "max": 69}, "formulation_led": {"label": "Formulation Led", "headline": "Your formulation is doing the work. The gaps are narrower than you expected.", "summary": "Your results place you in the smallest of the three groups. Formulation precedes targets, the constraint is named rather than worked around, and intervention is sized to what the client actually has. This is strong practice and you are unlikely to find an introductory day on ACT for burnout worth your time. Saying so is more useful to you than selling you one.", "outlook": "Where practitioners at this level tend to gain is from peer supervision on the difficult cases rather than from further content. The two-day intensive and the eight-week supervision arc are built for that, and the room is made up of clinicians working at a similar level.", "min": 0, "max": 39}}, "routing": {"adapting": {"url": "https://www.burnoutos.co.za/actworkshop?utm_source=scorecard&utm_medium=owned&utm_campaign=formulation_check&utm_content=adapting", "label": "See ACT for Burnout"}, "protocol_led": {"url": "https://www.burnoutos.co.za/actworkshop?utm_source=scorecard&utm_medium=owned&utm_campaign=formulation_check&utm_content=protocol_led", "label": "See ACT for Burnout"}, "formulation_led": {"url": "https://www.burnoutos.co.za/tour?utm_source=scorecard&utm_medium=owned&utm_campaign=formulation_check&utm_content=formulation_led", "label": "See the October intensive"}}, "intro": "Your results map how you currently approach burnout presentations across five clinical dimensions. Each score reflects what you do in practice rather than what you know, which is where the difference between burnout and depression usually shows up. Higher scores indicate a wider gap.", "cta_section": "Your profile gives you a specific picture of where your approach to burnout holds and where it thins out. ACT for Burnout is a working day on exactly this: formulation first, then acceptance and commitment strategies sized for a client who cannot change their circumstances quickly. 16 CPD points across two accredited activities.", "framework": "The five dimension scores form a practice map. The band describes the overall position, the dimension scores show where the development work sits. Most clinicians score unevenly, and the two dimensions that most often show a gap are working under constraint and capacity-sized intervention. Neither is usually covered in core training, and both are the difference between a burnout case that moves and one that circles."};
+var answers = new Array(D.questions.length).fill(null);
+var currentQ = 0, userName = '', startedAt = null, detectedCountry = null;
+
+fetch('/api/geo').then(function(r){ return r.ok ? r.json() : null; })
+  .then(function(d){ if (d && d.country) detectedCountry = d.country; }).catch(function(){});
+
+function show(id) {
+  var s = document.querySelectorAll('.screen');
+  for (var i = 0; i < s.length; i++) s[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startCheck() { startedAt = new Date().toISOString(); currentQ = 0; renderQ(); show('screen-q'); }
+
+function renderQ() {
+  var q = D.questions[currentQ];
+  var dim = null;
+  for (var i = 0; i < D.drivers.length; i++) if (D.drivers[i].id === q.dimension) dim = D.drivers[i];
+  document.getElementById('q-counter').textContent = (currentQ + 1) + ' of ' + D.questions.length;
+  document.getElementById('progress-bar').style.width = (((currentQ + 1) / D.questions.length) * 100) + '%';
+  document.getElementById('q-dim').textContent = dim ? dim.label : '';
+  document.getElementById('q-text').textContent = q.prompt;
+
+  var wrap = document.getElementById('q-scale');
+  wrap.innerHTML = '';
+  for (var j = 0; j < q.options.length; j++) {
+    (function(idx){
+      var el = document.createElement('button');
+      el.className = 'scale-option' + (answers[currentQ] === idx ? ' active' : '');
+      el.innerHTML = '<span class="scale-option-label">' + q.options[idx] + '</span>';
+      el.onclick = function(){ pick(idx); };
+      wrap.appendChild(el);
+    })(j);
+  }
+  document.getElementById('btn-back').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  var next = document.getElementById('btn-next');
+  next.classList.toggle('enabled', answers[currentQ] !== null);
+  next.textContent = currentQ === D.questions.length - 1 ? 'See results \u2192' : 'Next \u2192';
+}
+
+function pick(i) {
+  answers[currentQ] = i;
+  renderQ();
+  setTimeout(function(){ if (answers[currentQ] !== null) nextQ(); }, 220);
+}
+
+function nextQ() {
+  if (answers[currentQ] === null) return;
+  if (currentQ < D.questions.length - 1) { currentQ++; renderQ(); }
+  else show('screen-gate');
+}
+
+function prevQ() { if (currentQ > 0) { currentQ--; renderQ(); } }
+
+function toggleRegCat() {
+  var v = document.getElementById('gate-board').value;
+  var el = document.getElementById('gate-regcat');
+  el.style.display = (v === 'Psychology') ? 'block' : 'none';
+  if (v !== 'Psychology') el.value = '';
+}
+
+// Mirrors the server: each scored answer contributes index*25 into its driver,
+// normalised against that driver's maximum. Calibration items score nothing.
+function calcScores() {
+  var raw = {}, max = {};
+  for (var i = 0; i < D.drivers.length; i++) { raw[D.drivers[i].id] = 0; max[D.drivers[i].id] = 0; }
+  for (var k = 0; k < D.questions.length; k++) {
+    var q = D.questions[k];
+    if (q.calib || answers[k] === null) continue;
+    raw[q.dimension] += answers[k] * 25;
+    max[q.dimension] += 100;
+  }
+  var out = {};
+  for (var d in raw) out[d] = max[d] > 0 ? Math.round((raw[d] / max[d]) * 100) : 0;
+  return out;
+}
+
+function bandFor(scores) {
+  var top = 0;
+  for (var d in scores) if (scores[d] > top) top = scores[d];
+  for (var b in D.bands) if (top >= D.bands[b].min && top <= D.bands[b].max) return b;
+  return 'adapting';
+}
+
+function submitGate() {
+  var name = document.getElementById('gate-name').value.trim();
+  var email = document.getElementById('gate-email').value.trim();
+  if (!name || !email || email.indexOf('@') === -1) { document.getElementById('gate-email').focus(); return; }
+  userName = name;
+  submitToMarketOS(name, email);
+  showResults();
+}
+
+function submitToMarketOS(name, email) {
+  var rawAnswers = {};
+  for (var i = 0; i < D.questions.length; i++) rawAnswers[D.questions[i].id] = answers[i] === null ? 0 : answers[i];
+
+  var val = function(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  var chk = function(id){ var el = document.getElementById(id); return el ? !!el.checked : false; };
+
+  var params = new URLSearchParams(window.location.search);
+  var utm = {};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){
+    if (params.get(k)) utm[k] = params.get(k);
+  });
+
+  try {
+    fetch('https://ewictbfujvtfjqomdalq.supabase.co/functions/v1/scorecard-submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        scorecard_slug: 'burnout-formulation-check',
+        brand: 'burnoutos',
+        respondent: { email: email, first_name: name, consent_marketing: chk('gate-consent-marketing') },
+        professional: {
+          role: val('gate-role') || undefined,
+          professional_board: val('gate-board') || undefined,
+          registration_category: val('gate-regcat') || undefined,
+          practice_context: val('gate-context') || undefined
+        },
+        consent: { research: chk('gate-consent-research'), marketing: chk('gate-consent-marketing') },
+        answers: rawAnswers,
+        started_at: startedAt,
+        utm: Object.keys(utm).length ? utm : undefined,
+        referrer: document.referrer || undefined,
+        landing_path: window.location.pathname || undefined,
+        user_agent: navigator.userAgent,
+        country: detectedCountry || undefined
+      })
+    });
+  } catch (e) { /* results still shown */ }
+}
+
+function showResults() {
+  var scores = calcScores();
+  var band = bandFor(scores);
+  var B = D.bands[band];
+  var R = D.routing[band];
+
+  document.getElementById('res-name').textContent = userName ? userName + "'s profile" : 'Your profile';
+  document.getElementById('res-band').textContent = B.label;
+  document.getElementById('res-headline').textContent = B.headline;
+  document.getElementById('res-summary').textContent = B.summary;
+  document.getElementById('res-intro').textContent = D.intro;
+  document.getElementById('res-framework').textContent = D.framework;
+  document.getElementById('res-outlook').textContent = B.outlook;
+  document.getElementById('res-cta-text').textContent = D.cta_section;
+
+  var cta = document.getElementById('res-cta');
+  cta.textContent = R.label;
+  cta.href = R.url;
+
+  var wrap = document.getElementById('res-dims');
+  wrap.innerHTML = '';
+  var ordered = D.drivers.slice().sort(function(a, b){ return scores[b.id] - scores[a.id]; });
+  for (var i = 0; i < ordered.length; i++) {
+    var d = ordered[i], v = scores[d.id];
+    var level = v >= 70 ? 'high' : (v >= 40 ? 'medium' : 'low');
+    var cls = v >= 70 ? '' : (v >= 40 ? 'is-med' : 'is-low');
+    var row = document.createElement('div');
+    row.className = 'dim-row ' + cls;
+    row.innerHTML =
+      '<div class="dim-row-top"><span class="dim-row-label"></span><span class="dim-row-pct"></span></div>' +
+      '<div class="dim-track"><div class="dim-fill" style="width:0%"></div></div>' +
+      '<div class="dim-note"></div>';
+    row.querySelector('.dim-row-label').textContent = d.label;
+    row.querySelector('.dim-row-pct').textContent = v + '%';
+    row.querySelector('.dim-note').textContent = D.narratives[d.id][level];
+    wrap.appendChild(row);
+    (function(el, width){ setTimeout(function(){ el.style.width = width + '%'; }, 80); })(row.querySelector('.dim-fill'), v);
+  }
+  show('screen-results');
+}
+</script>
+</body>
+</html>
